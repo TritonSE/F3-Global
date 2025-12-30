@@ -1,0 +1,216 @@
+#!/bin/sh
+# Use sh for maximum cross-platform compatibility. GitHub Desktop on Windows
+# produces a "cannot spawn" error with a bash shebang, since it uses dash.
+# However, dash is not available on many Unix-like systems.
+
+# shellcheck disable=SC2317
+
+log() {
+	echo "${0}: ${*}" >&2
+}
+
+warn() {
+	log "${format_warn}${*}${format_clear}"
+}
+
+error() {
+	log "${format_error}${*}${format_clear}"
+}
+
+parse_yes_no() {
+	case "${1}" in
+		[yY]|[yY][eE][sS])
+			echo "yes"
+			;;
+		[nN]|[nN][oO])
+			echo "no"
+			;;
+		"")
+			echo ""
+			;;
+		*)
+			echo "invalid"
+	esac
+}
+
+ask_yes_no() {
+	prompt="${1}"
+	default_selection="$(parse_yes_no "${2}")"
+
+	case "${default_selection}" in
+		yes)
+			yn_letters="Y/n"
+			default_status=0
+			;;
+		no)
+			yn_letters="y/N"
+			default_status=1
+			;;
+		*)
+			error "An internal error occurred."
+			error " The default selection is missing or invalid."
+			exit 1
+			;;
+	esac
+
+	prompt="${prompt} [${yn_letters}] "
+
+	if [ "${interactive}" -eq 0 ]; then
+		log "${prompt}"
+		warn "Skipping interactive prompt (stdin not available)."
+		warn " Choosing default selection '${default_selection}'."
+		return "${default_status}"
+	fi
+
+	while :; do
+		printf "%s: %s" "${0}" "${prompt}"
+		read -r selection
+		selection="$(parse_yes_no "${selection}")"
+
+		case "${selection}" in
+			yes)
+				return 0
+				;;
+			no)
+				return 1
+				;;
+			'')
+				return "${default_status}"
+				;;
+			*)
+				warn "Invalid input."
+				log " Please type 'y' or 'n' and press Enter."
+				;;
+		esac
+	done
+}
+
+explain_no_verify() {
+	log "If you wish to bypass the lint check entirely,"
+	log "use the following command:"
+	log "    NO_LINT=1 git commit"
+}
+
+dir_check() {
+	for dir in $node_dirs; do
+		if ! [ -d "${dir}" ]; then
+			error "Directory '${dir}' does not exist. Please"
+			error " edit the 'node_dirs' variable in the config:"
+			error "    ${config_file}"
+			exit 1
+		fi
+	done
+}
+
+autocrlf_check() {
+	core_autocrlf="$(git config --get core.autocrlf || echo "false")"
+	if [ "${core_autocrlf}" != "false" ]; then
+		warn "core.autocrlf is set to '${core_autocrlf}' in the git config."
+		warn " This might produce CRLF line endings in the working"
+		warn " tree when Prettier expects LF. This can be fixed by"
+		warn " running the following command:"
+		warn "    git config core.autocrlf false"
+	fi
+}
+
+unstaged_changes_check() {
+	if git status --porcelain | grep -qv '^[MARCD] '; then
+		git status
+
+		warn "The working tree has unstaged changes, which"
+		warn " may result in an incorrect lint check result."
+		if ! ask_yes_no "Proceed with lint check anyway?" "yes"; then
+			log "Please stage (or stash) any unstaged changes,"
+			log " then try again."
+			exit 1
+		fi
+	fi
+}
+
+lint_check() {
+	failed_dirs=''
+	for dir in $node_dirs; do
+		log "Running lint check in '${dir}'..."
+		if ! (cd "${dir}" && $check_command); then
+			failed_dirs="${failed_dirs} ${dir}"
+		fi
+	done
+
+	if [ ! "${failed_dirs}" ]; then
+		log "Lint check passed."
+		return 0
+	fi
+
+	warn "Lint check failed in the following directories:"
+	for dir in $failed_dirs; do
+		warn "    ${dir}"
+	done
+
+	if ask_yes_no "Proceed with commit anyway?" "no"; then
+		return 0
+	fi
+
+	log "The lint autofix command is:"
+	log "    ${fix_command}"
+	if ask_yes_no "Run this command in each failed directory?" "no"; then
+		for dir in $failed_dirs; do
+			log "Running autofix command in '${dir}'..."
+			(cd "${dir}" && $fix_command)
+		done
+
+		log "Please manually fix any remaining lint errors,"
+		log " then stage your changes and try again."
+	else
+		log "Please fix the lint errors, then stage your"
+		log " changes and try again."
+	fi
+
+	explain_no_verify
+	return 1
+}
+
+cancel() {
+	echo >&2
+	log "Lint check canceled."
+	explain_no_verify
+	exit 0
+}
+
+main() {
+	config_file="$(dirname "${0}")/lint-config.sh"
+
+	# shellcheck source=./lint-config.sh
+	if ! . "${config_file}"; then
+		error "Error while sourcing config file '${config_file}'."
+		exit 1
+	fi
+
+	secret_scan_script="$(dirname "${0}")/../.secret-scan/secret-scan.js"
+	node "${secret_scan_script}" || exit
+
+	if [ "${enabled}" = 0 ] || [ "${NO_LINT}" = 1 ]; then
+		warn "Lint check has been disabled."
+		exit 0
+	fi
+
+	trap cancel INT
+	log "Starting lint check. Use Ctrl+C to cancel."
+
+	interactive=1
+	if ! [ -c /dev/tty ] || ! true < /dev/tty; then
+		warn "Cannot open stdin. Disabling interactive prompts."
+		warn " If you are currently using a graphical Git tool,"
+		warn " consider using Git from the command line to enable"
+		warn " interactive prompts for warnings and quick fixes."
+		interactive=0
+	else
+		exec < /dev/tty
+	fi
+
+	dir_check
+	autocrlf_check
+	unstaged_changes_check
+	lint_check
+}
+
+main "${@}"

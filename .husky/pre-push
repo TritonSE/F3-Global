@@ -1,0 +1,3 @@
+#!/bin/sh
+secret_scan_script="$(dirname "${0}")/../.secret-scan/secret-scan.js"
+node "${secret_scan_script}"
