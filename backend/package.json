@@ -1,0 +1,38 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mongoose": "^8.21.0",
+    "nodemon": "^3.1.11"
+  },
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "@antfu/eslint-config": "^6.7.3",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.0.3",
+    "eslint": "^9.39.2",
+    "husky": "^9.1.7",
+    "prettier": "^3.7.4",
+    "ts-node-dev": "^2.0.0",
+    "tsc-alias": "^1.8.16",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "start": "nodemon src/app.ts",
+    "build": "npm ci && tsc && tsc-alias",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check-git-hooks": "cd .. && node .secret-scan/secret-scan.js -- --check-git-hooks",
+    "format": "npm run check-git-hooks && prettier --write .",
+    "lint-fix": "npm run check-git-hooks && (eslint --fix --cache --report-unused-disable-directives . || true) && prettier --write .",
+    "lint-check": "npm run check-git-hooks && eslint --cache --report-unused-disable-directives . && prettier --check .",
+    "prepare": "cd .. && husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
