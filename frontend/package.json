@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check-git-hooks": "echo Git hooks not configured yet. You SHOULD NOT see this message unless you are still setting up linting.",
+    "format": "npm run check-git-hooks && prettier --write .",
+    "lint-fix": "npm run check-git-hooks && (eslint --fix --cache --report-unused-disable-directives . || true) && prettier --write .",
+    "lint-check": "npm run check-git-hooks && eslint --cache --report-unused-disable-directives . && prettier --check ."
   },
   "dependencies": {
     "next": "16.1.0",
@@ -14,12 +18,14 @@
     "react-dom": "19.2.3"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^6.7.3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
+    "eslint": "^9.39.2",
     "eslint-config-next": "16.1.0",
+    "prettier": "^3.7.4",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

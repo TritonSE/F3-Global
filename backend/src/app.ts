@@ -1,8 +1,7 @@
 import cors from "cors";
 import express from "express";
-import mongoose from "mongoose";
 
-import { FRONTEND_ORIGIN, MONGO_URI, PORT } from "./config";
+import { FRONTEND_ORIGIN, PORT } from "./config";
 import errorHandler from "./middleware/errorHandler";
 import log from "./middleware/logger";
 
@@ -12,7 +11,7 @@ app.use(
   cors({
     origin: FRONTEND_ORIGIN,
     methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
-  })
+  }),
 );
 
 app.use(express.json());

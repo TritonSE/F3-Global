@@ -1,8 +1,7 @@
 import { CustomError } from "./errors";
 const NO_APP_PORT_MESSAGE = "Could not find app port env variable";
 const NO_MONGO_URI_MESSAGE = "Could not find Mongo URI env variable";
-const NO_FRONTEND_ORIGIN_MESSAGE =
-  "Could not find frontend origin env variable";
+const NO_FRONTEND_ORIGIN_MESSAGE = "Could not find frontend origin env variable";
 
 export class InternalError extends CustomError {
   constructor(code: number, message: string) {

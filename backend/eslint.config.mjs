@@ -17,8 +17,6 @@ export default antfu({
     "**/vite-env.d.ts",
   ],
 
-  nextjs: true,
-
   // Disables stylistic rules to avoid conflicts with Prettier
   stylistic: false,
 
@@ -45,18 +43,6 @@ export default antfu({
       "warn",
       {
         varsIgnorePattern: "^_",
-        argsIgnorePattern: "^_",
-        destructuredArrayIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_",
-      },
-    ],
-    "unused-imports/no-unused-vars": [
-      "warn",
-      {
-        varsIgnorePattern: "^_",
-        argsIgnorePattern: "^_",
-        destructuredArrayIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_",
       },
     ],
     "array-callback-return": "error",
@@ -100,9 +86,5 @@ export default antfu({
     "ts/switch-exhaustiveness-check": "off",
     "ts/return-await": "off", // Has parsing bug with nested async functions
     "jsdoc/check-param-names": "off",
-    "react-hooks/exhaustive-deps": "off",
-    "react/no-leaked-conditional-rendering": "off",
-    "react-hooks-extra/no-direct-set-state-in-use-effect": "off",
-    "react-hooks-extra/no-direct-set-state-in-use-layout-effect": "off",
   },
 });
