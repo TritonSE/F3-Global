@@ -1,7 +1,8 @@
 import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
-import { FRONTEND_ORIGIN, PORT, MONGO_URI } from "./config";
+
+import { FRONTEND_ORIGIN, MONGO_URI, PORT } from "./config";
 import errorHandler from "./middleware/errorHandler";
 import log from "./middleware/logger";
 
