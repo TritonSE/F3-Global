@@ -1,40 +1,39 @@
 import Image from "next/image";
 
-import styles from "./Footer.module.css";
 import { FooterMiniBtn } from "./FooterMiniBtn";
 
 export const Footer = function Footer() {
   return (
-    <div className={styles.footerContainer}>
-      <div className={styles.textContainer}>
-        <div className={styles.contactContainer}>
-          <div className={styles.headerContainer}>
-            <p className={styles.header}>
+    <div className="flex flex-col items-center self-stretch py-[100px] bg-[#f4f4f4]">
+      <div className="flex w-[1313px] justify-between items-start">
+        <div className="flex flex-col items-start gap-[15px] ">
+          <div className="flex flex-col w-[392px] h-[60px] justify-center">
+            <p
+              className="text-[#172447] text-[64px]"
+              style={{ fontFamily: '"Ethic New", sans-serif' }}
+            >
               <i>F3</i>GLOBAL
             </p>
           </div>
 
-          <a className={styles.bodyText} href="tel:19496683568">
-            949.668.3568
-          </a>
-          <a className={styles.link} href="mailto:info@f3-global.org">
-            f3global@email.com
-          </a>
+          <a href="tel:19496683568">949.668.3568</a>
           <a
-            className={styles.bodyText}
-            href="https://maps.app.goo.gl/M1onQnhbgSESpYtU6"
-            target="_blank"
+            className="underline decoration-[7%] decoration-solid underline-offset-2"
+            href="mailto:info@f3-global.org"
           >
+            info@f3-global.org
+          </a>
+          <a href="https://maps.app.goo.gl/M1onQnhbgSESpYtU6" target="_blank">
             8 The Green STE <br /> A Dover, DE 19901
           </a>
-          <div className={styles.socialsContainer}>
+          <div className="flex items-start gap-[30px]">
             <a href="https://www.linkedin.com/company/f3global/" target="_blank">
               <Image
                 src="/imgs/linkedin.png"
                 alt="linkedin icon"
                 width={40}
                 height={40}
-                className={styles.icon}
+                className="aspect-square rounded-lg"
               />
             </a>
 
@@ -47,18 +46,18 @@ export const Footer = function Footer() {
                 alt="instagram icon"
                 width={40}
                 height={40}
-                className={styles.icon}
+                className="aspect-square rounded-lg"
               />
             </a>
           </div>
-          <p className={styles.copyrightText}>
+          <p className="text-[#5d5d5d]">
             ©2025 F3Global. All rights reserved. <br />
             F3 Global is a 501(c)(3) non-profit organization.
           </p>
         </div>
-        <div className={styles.linksContainer}>
-          <div className={styles.linkCol}>
-            <p className={styles.labelText}>Services</p>
+        <div className="flex w-[554px] items-start gap-[70px] shrink-0">
+          <div className="flex flex-col items-start gap-[15px]">
+            <p className="font-semibold">Services</p>
             <FooterMiniBtn text="Donors" />
             <FooterMiniBtn text="Clients" />
             <FooterMiniBtn text="Members" />
@@ -69,8 +68,8 @@ export const Footer = function Footer() {
               link="https://my-apply.vercel.app/org/f3-global-foundation"
             />
           </div>
-          <div className={styles.linkCol}>
-            <p className={styles.labelText}>Company</p>
+          <div className="flex flex-col items-start gap-[15px]">
+            <p className="font-semibold">Company</p>
             <FooterMiniBtn text="About" />
             <FooterMiniBtn text="News" />
             <FooterMiniBtn text="Events" />
