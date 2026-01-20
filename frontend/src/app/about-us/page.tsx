@@ -18,7 +18,10 @@ export default function About() {
             Our programs offer tailored microloans and business support, ensuring that our clients
             have the knowledge and resources necessary for long-term success.
           </p>
-          <Button text="JOIN US NOW" onClick_link="/" />
+          <Button
+            text="JOIN US NOW"
+            onClick_link="https://my-apply.vercel.app/org/f3-global-foundation"
+          />
         </div>
         <div>
           <Image src="/imgs/image.png" alt="About us image" width={646} height={581} />
@@ -43,7 +46,7 @@ export default function About() {
             success.
           </p>
         </div>
-        <Button text="MORE ABOUT OUR TEAM" onClick_link="/" />
+        <Button text="MORE ABOUT OUR TEAM" onClick_link="/members" />
       </div>
     </div>
   );
