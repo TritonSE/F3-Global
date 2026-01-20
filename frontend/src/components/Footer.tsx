@@ -16,14 +16,18 @@ export const Footer = function Footer() {
             </p>
           </div>
 
-          <a href="tel:19496683568">949.668.3568</a>
+          <p>949.668.3568</p>
           <a
-            className="underline decoration-[7%] decoration-solid underline-offset-2"
+            className="hover:underline decoration-[7%] decoration-solid underline-offset-2"
             href="mailto:info@f3-global.org"
           >
             info@f3-global.org
           </a>
-          <a href="https://maps.app.goo.gl/M1onQnhbgSESpYtU6" target="_blank">
+          <a
+            href="https://maps.app.goo.gl/M1onQnhbgSESpYtU6"
+            target="_blank"
+            className="hover:underline decoration-[7%] decoration-solid underline-offset-2"
+          >
             8 The Green STE <br /> A Dover, DE 19901
           </a>
           <div className="flex items-start gap-[30px]">
@@ -33,7 +37,7 @@ export const Footer = function Footer() {
                 alt="linkedin icon"
                 width={40}
                 height={40}
-                className="aspect-square rounded-lg"
+                className="aspect-square rounded-lg hover:opacity-60"
               />
             </a>
 
@@ -46,7 +50,7 @@ export const Footer = function Footer() {
                 alt="instagram icon"
                 width={40}
                 height={40}
-                className="aspect-square rounded-lg"
+                className="aspect-square rounded-lg hover:opacity-60"
               />
             </a>
           </div>

@@ -17,7 +17,7 @@ export const FooterMiniBtn = React.forwardRef<HTMLButtonElement, FooterMiniBtnPr
         ref={ref}
         onClick={() => router.push(link || "/")}
         {...props}
-        className="cursor-pointer"
+        className="hover:text-[#1169B0] cursor-pointer"
       >
         <p>{text}</p>
       </button>
