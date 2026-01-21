@@ -10,6 +10,20 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --font-dm: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-ethic: "Ethic New", sans-serif;
+
+  --animate-marquee: marquee 30s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,6 +31,50 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+}
+
+/* Ethic New */
+
+@font-face {
+  font-family: "Ethic New";
+  src: url("/fonts/EthicNew-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ethic New";
+  src: url("/fonts/EthicNew-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Ethic New";
+  src: url("/fonts/EthicNew-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Ethic New";
+  src: url("/fonts/EthicNew-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ethic New";
+  src: url("/fonts/EthicNew-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ethic New";
+  src: url("/fonts/EthicNew-LightItalic.woff2") format("woff2");
+  font-weight: 300;
+  font-style: italic;
 }
 
 body {

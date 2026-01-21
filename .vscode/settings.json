@@ -33,5 +33,10 @@
     "scss",
     "pcss",
     "postcss"
-  ]
+  ],
+  "chat.mcp.serverSampling": {
+    "F3-Global/.vscode/mcp.json: figma-desktop": {
+      "allowedModels": ["copilot/auto"]
+    }
+  }
 }
