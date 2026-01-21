@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
+/* Ethic New */
 @font-face {
   font-family: "Ethic New";
   src: url("/fonts/EthicNew-Light.ttf") format("opentype");
@@ -14,6 +16,52 @@
   font-weight: 300;
   font-style: italic;
   font-display: swap;
+}
+
+@font-face {
+  font-family: "Ethic New";
+  src:
+    url("/fonts/ethicnew-bold-1.otf") format("opentype"),
+    url("/fonts/ethicnew-bold-1.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ethic New";
+  src:
+    url("/fonts/ethicnew-bolditalic-1.otf") format("opentype"),
+    url("/fonts/ethicnew-bolditalic-1.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Ethic New";
+  src:
+    url("/fonts/ethicnew-italic-1.otf") format("opentype"),
+    url("/fonts/ethicnew-italic-1.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Ethic New";
+  src:
+    url("/fonts/ethicnew-light-1.otf") format("opentype"),
+    url("/fonts/ethicnew-light-1.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* Ethic Serif */
+@font-face {
+  font-family: "Ethic Serif";
+  src:
+    url("/fonts/ethicserif-regular-1.otf") format("opentype"),
+    url("/fonts/ethicserif-regular-1.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
 }
 
 body {
