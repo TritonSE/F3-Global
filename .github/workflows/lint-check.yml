@@ -10,19 +10,19 @@ jobs:
     name: Backend lint and style check
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-    - working-directory: backend
-      run: |
-        npm ci
-        npm run lint-check
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - working-directory: backend
+        run: |
+          npm ci
+          npm run lint-check
   frontend:
     name: Frontend lint and style check
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-    - working-directory: frontend
-      run: |
-        npm ci
-        npm run lint-check
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - working-directory: frontend
+        run: |
+          npm ci
+          npm run lint-check
