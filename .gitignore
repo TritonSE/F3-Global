@@ -143,3 +143,5 @@ vite.config.ts.timestamp-*
 
 # System specific files
 .DS_Store
+
+.vscode/mcp.json
