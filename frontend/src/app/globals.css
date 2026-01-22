@@ -11,6 +11,20 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --font-dm: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-ethic: "Ethic New", sans-serif;
+
+  --animate-marquee: marquee 30s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
