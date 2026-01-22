@@ -12,7 +12,7 @@ export const Footer = function Footer() {
     const headings = Array.from(document.querySelectorAll("h1, h2, h3, h4, h5, h6"));
     const contactSection = headings.find((heading) => {
       const text = heading.textContent?.toLowerCase() || "";
-      return text.includes("contact");
+      return text.includes("contact us");
     });
 
     if (contactSection) {
