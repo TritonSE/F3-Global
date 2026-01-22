@@ -80,11 +80,11 @@ export const Footer = function Footer() {
         </div>
         <div className="flex w-[554px] items-start gap-[70px] shrink-0">
           <div className="flex flex-col items-start gap-[15px]">
-            <p className="font-semibold">Services</p>
-            <FooterMiniBtn text="Donors" />
-            <FooterMiniBtn text="Clients" />
-            <FooterMiniBtn text="Members" />
-            <FooterMiniBtn text="What We Do" />
+            <h3 className="font-semibold">Services</h3>
+            <FooterMiniBtn text="Donors" link="/donors" />
+            <FooterMiniBtn text="Clients" link="/clients" />
+            <FooterMiniBtn text="Members" link="/members" />
+            <FooterMiniBtn text="What We Do" link="/about-us" />
             <FooterMiniBtn text="Contact" onClick={handleContactClick} />
             <FooterMiniBtn
               text="Member Application"
@@ -92,11 +92,11 @@ export const Footer = function Footer() {
             />
           </div>
           <div className="flex flex-col items-start gap-[15px]">
-            <p className="font-semibold">Company</p>
-            <FooterMiniBtn text="About" />
+            <h3 className="font-semibold">Company</h3>
+            <FooterMiniBtn text="About" link="/about-us" />
             <FooterMiniBtn text="News" />
             <FooterMiniBtn text="Events" />
-            <FooterMiniBtn text="Meet The Team" />
+            <FooterMiniBtn text="Meet The Team" link="/meet-the-team" />
             <FooterMiniBtn text="Privacy Policy" />
             <FooterMiniBtn text="Terms & Conditions" />
           </div>
