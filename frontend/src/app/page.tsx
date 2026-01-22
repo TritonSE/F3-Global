@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { Button } from "@/components/button";
+
 export default function Home() {
   const cities = [
     "Hong Kong",
@@ -53,18 +55,17 @@ export default function Home() {
               underserved communities worldwide.
             </p>
             <div className="absolute left-0 right-0 flex justify-center items-center gap-[30px] mt-10">
-              <Link
-                href="/clients"
-                className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-[#172447] rounded-[99px] text-white font-dm text-[16px] leading-[1.5] uppercase transition-colors duration-450 ease-in-out hover:bg-[#1169B0]"
-              >
-                become a client
-              </Link>
-              <Link
-                href="/members"
-                className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-white border-[1.5px] border-[#C7C7C7] rounded-[99px] text-[#172447] font-dm text-[16px] leading-[1.5] uppercase transition-colors duration-450 ease-in-out hover:bg-[#C7C7C7] hover:border-black"
-              >
-                join as a member
-              </Link>
+              <Button
+                text="become a client"
+                onClick_link="/clients"
+                className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] [&_p]:uppercase [&_p]:font-normal"
+              />
+              <Button
+                text="join as a member"
+                onClick_link="/members"
+                className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-white border-[1.5px] border-[#C7C7C7] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#C7C7C7] hover:border-black [&_p]:text-[#172447] [&_p]:uppercase [&_p]:font-normal"
+              />
+              z
             </div>
           </div>
           <div className="w-full mt-38 overflow-hidden flex">
