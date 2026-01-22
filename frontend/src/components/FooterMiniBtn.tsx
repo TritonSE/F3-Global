@@ -12,10 +12,20 @@ export const FooterMiniBtn = React.forwardRef<HTMLButtonElement, FooterMiniBtnPr
   ({ text, link, ...props }, ref) => {
     const router = useRouter();
 
+    const handleClick = () => {
+      if (!link) return;
+
+      if (link.startsWith("http")) {
+        window.open(link, "_blank", "noopener,noreferrer");
+      } else {
+        router.push(link);
+      }
+    };
+
     return (
       <button
         ref={ref}
-        onClick={() => router.push(link || "/")}
+        onClick={handleClick}
         {...props}
         className="hover:text-[#1169B0] cursor-pointer"
       >
