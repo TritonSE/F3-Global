@@ -23,7 +23,7 @@ export default function Home() {
           <div className="absolute top-0 left-0 w-full h-screen pointer-events-none select-none overflow-hidden">
             <div className="absolute -top-[35%] -right-[55%] w-[120%] h-[120%] opacity-25">
               <Image
-                src="/worldmap.png"
+                src="/imgs/worldmap.png"
                 alt="World Map Background"
                 fill
                 className="object-cover"
@@ -64,7 +64,6 @@ export default function Home() {
                 onClick_link="/members"
                 className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-white border-[1.5px] border-[#C7C7C7] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#C7C7C7] hover:border-black [&_p]:text-[#172447] [&_p]:uppercase [&_p]:font-normal"
               />
-              z
             </div>
           </div>
           <div className="w-full mt-38 overflow-hidden flex">

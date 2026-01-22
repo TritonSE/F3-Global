@@ -37,6 +37,22 @@
 /* Ethic New */
 @font-face {
   font-family: "Ethic New";
+  src: url("/fonts/EthicNew-Light.ttf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ethic New";
+  src: url("/fonts/EthicNew-LightItalic.ttf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ethic New";
   src:
     url("/fonts/ethicnew-bold-1.otf") format("opentype"),
     url("/fonts/ethicnew-bold-1.ttf") format("truetype");
@@ -82,7 +98,7 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: "DM Sans", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  color: var(--Text-Black, #1e1e1e);
 }

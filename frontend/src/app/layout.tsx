@@ -1,5 +1,7 @@
 import { DM_Sans, Geist, Geist_Mono } from "next/font/google";
 
+import { Footer } from "../components/Footer";
+
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -36,6 +38,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} antialiased`}
       >
         {children}
+        <Footer />
       </body>
     </html>
   );
