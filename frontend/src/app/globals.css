@@ -3,6 +3,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* F3 Global Design System Colors */
+  --f3-blue: #172447;
+  --background-grey: #F4F4F4;
+  --text-black: #1E1E1E;
+  --secondary-text-grey: #5D5D5D;
 }
 
 @theme inline {

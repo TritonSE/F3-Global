@@ -1,0 +1,99 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding: 50px 100px 100px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1311px;
+}
+
+.title {
+  font-family: "DM Sans", sans-serif;
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.96px;
+  color: var(--f3-blue, #172447);
+  margin: 0;
+}
+
+.navigation {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.navButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: white;
+  border: none;
+  border-radius: 99px;
+  cursor: pointer;
+  color: var(--text-black, #1e1e1e);
+  transition: all 0.2s ease;
+}
+
+.navButton:hover {
+  background: var(--background-grey, #f4f4f4);
+}
+
+.navButton:active {
+  transform: scale(0.95);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  align-items: center;
+  width: 100%;
+}
+
+.cardsContainer {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.paginationDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--secondary-text-grey, #5d5d5d);
+  opacity: 0.3;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.paginationDot.active {
+  width: 70px;
+  border-radius: 6px;
+  background: var(--f3-blue, #172447);
+  opacity: 1;
+}
+
+.paginationDot:hover:not(.active) {
+  opacity: 0.5;
+}

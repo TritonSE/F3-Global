@@ -1,0 +1,184 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  background: var(--background-grey, #f4f4f4);
+  position: relative;
+  width: 468px;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  text-align: left;
+  transition: opacity 0.3s ease;
+}
+
+.card:not(.inactive) {
+  cursor: default;
+}
+
+.card:disabled {
+  cursor: default;
+}
+
+.card.inactive {
+  opacity: 0.6;
+  width: 374.4px;
+  border-radius: 12.8px;
+}
+
+.card.inactive .imageContainer {
+  height: 204.8px;
+  border-radius: 12.8px 12.8px 0 0;
+}
+
+.card.inactive .image {
+  height: 204.8px;
+  border-radius: 12.8px 12.8px 0 0;
+}
+
+.card.inactive .content {
+  padding: 25.6px 12.8px;
+  gap: 19.2px;
+}
+
+.card.inactive .textContent {
+  padding: 0 16px;
+  gap: 6.4px;
+}
+
+.card.inactive .quote {
+  font-size: 19.2px;
+}
+
+.card.inactive .previewText {
+  font-size: 12.8px;
+  line-height: 19.2px;
+}
+
+.card.inactive .learnMoreButton {
+  padding: 9.6px 12px;
+  gap: 8px;
+}
+
+.card.inactive .learnMoreButton span {
+  font-size: 12.8px;
+}
+
+.card.inactive .arrow {
+  width: 19.2px;
+  height: 19.2px;
+}
+
+.card.inactive .quoteIcon {
+  font-size: 76.8px;
+  right: 16px;
+  bottom: 28px;
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 256px;
+  overflow: hidden;
+  border-radius: 16px 16px 0 0;
+}
+
+.image {
+  width: 100%;
+  height: 256px;
+  object-fit: cover;
+  display: block;
+  border-radius: 16px 16px 0 0;
+}
+
+.gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(56, 88, 173, 0) 52.539%,
+    var(--f3-blue, #172447) 107.81%
+  );
+  pointer-events: none;
+  border-radius: 16px 16px 0 0;
+}
+
+.quoteIcon {
+  position: absolute;
+  right: 20px;
+  bottom: 35px;
+  font-family: "Ethic New", sans-serif;
+  font-size: 96px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--background-grey, #f4f4f4);
+  pointer-events: none;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 16px;
+  width: 100%;
+  border-radius: 0 0 16px 16px;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.quote {
+  font-family: "DM Sans", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-black, #1e1e1e);
+  margin: 0;
+}
+
+.previewText {
+  font-family: "DM Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--secondary-text-grey, #5d5d5d);
+  margin: 0;
+}
+
+.learnMoreButton {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 15px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.learnMoreButton span {
+  font-family: "DM Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-black, #1e1e1e);
+}
+
+.learnMoreButton:hover span {
+  text-decoration: underline;
+}
+
+.arrow {
+  width: 24px;
+  height: 24px;
+  color: var(--text-black, #1e1e1e);
+  flex-shrink: 0;
+}
