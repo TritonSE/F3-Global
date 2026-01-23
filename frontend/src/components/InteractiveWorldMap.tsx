@@ -37,6 +37,23 @@ const COLORS = {
   border: "#FFFFFF",
 };
 
+// Ex input data:
+/* 
+const countryData: CountryData[] = [
+  { code: "USA", name: "United States", employeeCount: 10 },
+  { code: "CAN", name: "Canada", employeeCount: 3 },
+  { code: "BRA", name: "Brazil", employeeCount: 6 },
+  { code: "FRA", name: "France", employeeCount: 2 },
+  { code: "DEU", name: "Germany", employeeCount: 8 },
+  { code: "CHN", name: "China", employeeCount: 1 },
+  { code: "AUS", name: "Australia", employeeCount: 5 },
+  { code: "GRC", name: "Greece", employeeCount: 4 },
+  { code: "ZAF", name: "South Africa", employeeCount: 7 },
+  { code: "IND", name: "India", employeeCount: 12 },
+  { code: "JPN", name: "Japan", employeeCount: 3 },
+];
+*/
+
 // CONTAINS LEGEND & TITLE
 export const InteractiveWorldMap: React.FC<WorldMapProps> = ({ data = [] }) => {
   const countryLookup = useMemo(() => {
