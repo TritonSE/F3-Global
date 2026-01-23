@@ -1,7 +1,14 @@
 "use client";
 
-import React, { useMemo } from "react";
-import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import {
+  ComposableMap,
+  createCoordinates,
+  Geographies,
+  Geography,
+} from "@vnedyalk0v/react19-simple-maps";
+import React, { useEffect, useMemo, useState } from "react";
+
+import type { Feature, FeatureCollection, Geometry } from "geojson";
 
 export type CountryData = {
   code: string; // ISO 3 letter country code so : "USA" "JPN" "GBR" etc.
@@ -19,11 +26,11 @@ type GeoJsonProperties = {
   [key: string]: string | number | undefined;
 };
 
-type GeoJsonFeature = {
+type GeoJsonFeature = Feature<Geometry, GeoJsonProperties> & {
   rsmKey: string;
-  id: string;
-  properties: GeoJsonProperties;
 };
+
+type RotationAngles = [number, number, number] & { __brand: "rotationAngles" };
 
 // highest res 10:1 geo.json causes some lag on my goated machine so opted
 // for this 50:1, can go lower yet to `/lowest-res.geo.json` but it looks kinda trash
@@ -56,6 +63,18 @@ const countryData: CountryData[] = [
 
 // CONTAINS LEGEND & TITLE
 export const InteractiveWorldMap: React.FC<WorldMapProps> = ({ data = [] }) => {
+  const [geoData, setGeoData] = useState<FeatureCollection | null>(null);
+
+  useEffect(() => {
+    fetch(GEO_URL)
+      .then(async (res) => {
+        if (!res.ok) throw new Error("network response was not ok");
+        return res.json() as Promise<FeatureCollection>;
+      })
+      .then((fetchedData) => setGeoData(fetchedData))
+      .catch((err) => console.error("failed to load map data:", err));
+  }, []);
+
   const countryLookup = useMemo(() => {
     const lookup: Record<string, number> = {};
     data.forEach((d) => {
@@ -108,66 +127,79 @@ export const InteractiveWorldMap: React.FC<WorldMapProps> = ({ data = [] }) => {
         </div>
       </div>
 
-      <div className="w-full h-220">
-        <ComposableMap
-          projection="geoMercator"
-          width={980}
-          height={450}
-          projectionConfig={{
-            rotate: [-10, 0, 0],
-            scale: 145,
-            center: [0, 45],
-          }}
-          style={{ width: "100%", height: "100%" }}
-        >
-          <Geographies geography={GEO_URL}>
-            {({ geographies }: { geographies: GeoJsonFeature[] }) =>
-              geographies.map((geo) => {
-                const props = geo.properties || {};
-                const curCountryCode = props.ISO_A3 || props.adm0_a3 || geo.id; // normalizes the country code
-                const count = countryLookup[curCountryCode] || 0;
+      <div className="w-full h-240 min-h-[400px]">
+        {geoData ? (
+          <ComposableMap
+            projection="geoMercator"
+            width={980}
+            height={450}
+            projectionConfig={{
+              rotate: [-10, 0, 0] as unknown as RotationAngles,
+              scale: 145,
+              center: createCoordinates(0, 45),
+            }}
+            style={{ width: "100%", height: "100%" }}
+          >
+            <Geographies geography={geoData}>
+              {({ geographies }: { geographies: any[] }) =>
+                geographies.map((geoItem, i) => {
+                  const geo = geoItem as GeoJsonFeature;
 
-                let fillColor = COLORS.default;
-                let isClickable = false;
+                  const uniqueKey = geo.rsmKey || geo.properties?.ISO_A3 || geo.id || `geo-${i}`;
 
-                if (count > 0) {
-                  isClickable = true;
-                  fillColor = count >= 5 ? COLORS.darkBlue : COLORS.lightBlue;
-                }
+                  const props = geo.properties || {};
 
-                return (
-                  <Geography
-                    key={geo.rsmKey}
-                    geography={geo}
-                    onClick={() => handleCountryClick(curCountryCode)}
-                    style={{
-                      default: {
-                        fill: fillColor,
-                        stroke: COLORS.border,
-                        strokeWidth: 0.5,
-                        outline: "none",
-                        transition: "all 250ms",
-                      },
-                      hover: {
-                        fill: isClickable ? COLORS.hover : fillColor,
-                        stroke: COLORS.border,
-                        strokeWidth: 0.5,
-                        outline: "none",
-                        cursor: isClickable ? "pointer" : "default",
-                      },
-                      pressed: {
-                        fill: isClickable ? COLORS.darkBlue : fillColor,
-                        stroke: COLORS.border,
-                        strokeWidth: 0.5,
-                        outline: "none",
-                      },
-                    }}
-                  />
-                );
-              })
-            }
-          </Geographies>
-        </ComposableMap>
+                  const rawId = typeof geo.id === "number" ? String(geo.id) : geo.id || "";
+                  const curCountryCode = props.ISO_A3 || props.adm0_a3 || rawId; // normalizes the country code
+
+                  const count = countryLookup[curCountryCode] || 0;
+
+                  let fillColor = COLORS.default;
+                  let isClickable = false;
+
+                  if (count > 0) {
+                    isClickable = true;
+                    fillColor = count >= 5 ? COLORS.darkBlue : COLORS.lightBlue;
+                  }
+
+                  return (
+                    <Geography
+                      key={uniqueKey}
+                      geography={geo}
+                      onClick={() => handleCountryClick(curCountryCode)}
+                      style={{
+                        default: {
+                          fill: fillColor,
+                          stroke: COLORS.border,
+                          strokeWidth: 0.5,
+                          outline: "none",
+                          transition: "all 250ms",
+                        },
+                        hover: {
+                          fill: isClickable ? COLORS.hover : fillColor,
+                          stroke: COLORS.border,
+                          strokeWidth: 0.5,
+                          outline: "none",
+                          cursor: isClickable ? "pointer" : "default",
+                        },
+                        pressed: {
+                          fill: isClickable ? COLORS.darkBlue : fillColor,
+                          stroke: COLORS.border,
+                          strokeWidth: 0.5,
+                          outline: "none",
+                        },
+                      }}
+                    />
+                  );
+                })
+              }
+            </Geographies>
+          </ComposableMap>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-gray-500">
+            Loading Map...
+          </div>
+        )}
       </div>
     </div>
   );

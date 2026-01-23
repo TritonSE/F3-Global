@@ -14,12 +14,12 @@
     "prepare": "cd .. && husky"
   },
   "dependencies": {
+    "@vnedyalk0v/react19-simple-maps": "^1.2.1",
     "autoprefixer": "^10.4.23",
     "next": "16.1.0",
     "postcss": "^8.5.6",
     "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "react-simple-maps": "^3.0.0"
+    "react-dom": "19.2.3"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^6.7.3",
