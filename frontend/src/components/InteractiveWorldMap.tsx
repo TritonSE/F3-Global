@@ -51,7 +51,7 @@ export const InteractiveWorldMap: React.FC<WorldMapProps> = ({ data = [] }) => {
     const count = countryLookup[geoId];
     if (!count) return;
 
-    //constructs the id of the target section and if it exists, smooth scroll to it
+    // constructs id and finds it on page, if it exists, smooth scroll to it
     const sectionId = `members-${geoId}`;
     const element = document.getElementById(sectionId);
 
