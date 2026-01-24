@@ -5,6 +5,7 @@ import {
   createCoordinates,
   Geographies,
   Geography,
+  type ProjectionConfig,
 } from "@vnedyalk0v/react19-simple-maps";
 import React, { useEffect, useMemo, useState } from "react";
 
@@ -29,8 +30,6 @@ type GeoJsonProperties = {
 type GeoJsonFeature = Feature<Geometry, GeoJsonProperties> & {
   rsmKey: string;
 };
-
-type RotationAngles = [number, number, number] & { __brand: "rotationAngles" };
 
 // highest res 10:1 geo.json causes some lag on my goated machine so opted
 // for this 50:1, can go lower yet to `/lowest-res.geo.json` but it looks kinda trash
@@ -134,7 +133,7 @@ export const InteractiveWorldMap: React.FC<WorldMapProps> = ({ data = [] }) => {
             width={980}
             height={450}
             projectionConfig={{
-              rotate: [-10, 0, 0] as unknown as RotationAngles,
+              rotate: [-10, 0, 0] as unknown as NonNullable<ProjectionConfig["rotate"]>,
               scale: 145,
               center: createCoordinates(0, 45),
             }}
