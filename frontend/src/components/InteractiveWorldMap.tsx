@@ -19,6 +19,7 @@ export type CountryData = {
 
 type WorldMapProps = {
   data?: CountryData[];
+  onCountrySelect?: (code: string) => void;
 };
 
 type GeoJsonProperties = {
@@ -61,17 +62,24 @@ const countryData: CountryData[] = [
 */
 
 // CONTAINS LEGEND & TITLE
-export const InteractiveWorldMap: React.FC<WorldMapProps> = ({ data = [] }) => {
+export const InteractiveWorldMap: React.FC<WorldMapProps> = ({ data = [], onCountrySelect }) => {
   const [geoData, setGeoData] = useState<FeatureCollection | null>(null);
+  const controller = new AbortController();
 
   useEffect(() => {
-    fetch(GEO_URL)
+    fetch(GEO_URL, { signal: controller.signal })
       .then(async (res) => {
         if (!res.ok) throw new Error("network response was not ok");
         return res.json() as Promise<FeatureCollection>;
       })
       .then((fetchedData) => setGeoData(fetchedData))
-      .catch((err) => console.error("failed to load map data:", err));
+      .catch((err: unknown) => {
+        if (err instanceof Error) {
+          if (err.name !== "AbortError") console.error(err);
+        }
+      });
+
+    return () => controller.abort();
   }, []);
 
   const countryLookup = useMemo(() => {
@@ -83,6 +91,11 @@ export const InteractiveWorldMap: React.FC<WorldMapProps> = ({ data = [] }) => {
   }, [data]);
 
   const handleCountryClick = (geoId: string) => {
+    if (onCountrySelect) {
+      onCountrySelect(geoId);
+      return;
+    }
+
     const count = countryLookup[geoId];
     if (!count) return;
 
