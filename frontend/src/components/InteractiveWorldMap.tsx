@@ -37,8 +37,8 @@ const GEO_URL = "/medium-res.geo.json";
 
 const COLORS = {
   default: "#CCCCCC",
-  lightBlue: "#1169B0",
-  darkBlue: "#012060",
+  primary: "#012060",
+  secondary: "#1169B0",
   hover: "#A5D0F2",
   border: "#FFFFFF",
 };
@@ -60,18 +60,91 @@ const countryData: CountryData[] = [
 ];
 */
 
+let cachedGeoData: FeatureCollection | null = null;
+
+const CountryPath = React.memo(
+  ({
+    geo,
+    count,
+    onClick,
+  }: {
+    geo: GeoJsonFeature;
+    count: number;
+    onClick: (id: string) => void;
+  }) => {
+    const uniqueKey = geo.rsmKey || geo.properties?.ISO_A3 || geo.id || "";
+    const props = geo.properties || {};
+    const rawId = typeof geo.id === "number" ? String(geo.id) : geo.id || "";
+    const curCountryCode = props.ISO_A3 || props.adm0_a3 || rawId;
+
+    let fillColor = COLORS.default;
+    let isClickable = false;
+
+    if (count > 0) {
+      isClickable = true;
+      fillColor = count >= 5 ? COLORS.primary : COLORS.secondary;
+    }
+
+    return (
+      <Geography
+        key={uniqueKey}
+        geography={geo}
+        onClick={() => onClick(curCountryCode)}
+        style={{
+          default: {
+            fill: fillColor,
+            stroke: COLORS.border,
+            strokeWidth: 0.5,
+            outline: "none",
+          },
+          hover: {
+            fill: isClickable ? COLORS.hover : fillColor,
+            stroke: COLORS.border,
+            strokeWidth: 0.5,
+            outline: "none",
+            cursor: isClickable ? "pointer" : "default",
+          },
+          pressed: {
+            fill: isClickable ? COLORS.primary : fillColor,
+            stroke: COLORS.border,
+            strokeWidth: 0.5,
+            outline: "None",
+          },
+        }}
+      />
+    );
+  },
+  (prev, next) => {
+    return (
+      prev.count === next.count &&
+      prev.geo.rsmKey === next.geo.rsmKey &&
+      prev.onClick === next.onClick
+    );
+  },
+);
+
+CountryPath.displayName = "CountryPath";
+
 // CONTAINS LEGEND & TITLE
 export const InteractiveWorldMap: React.FC<WorldMapProps> = ({ data = [], onCountrySelect }) => {
-  const [geoData, setGeoData] = useState<FeatureCollection | null>(null);
-  const controller = new AbortController();
+  const [geoData, setGeoData] = useState<FeatureCollection | null>(cachedGeoData);
 
   useEffect(() => {
+    if (cachedGeoData) {
+      setGeoData(cachedGeoData);
+      return;
+    }
+
+    const controller = new AbortController();
     fetch(GEO_URL, { signal: controller.signal })
       .then(async (res) => {
         if (!res.ok) throw new Error("network response was not ok");
         return res.json() as Promise<FeatureCollection>;
       })
-      .then((fetchedData) => setGeoData(fetchedData))
+      .then((fetchedData) => {
+        cachedGeoData = fetchedData;
+        setGeoData(fetchedData);
+      })
       .catch((err: unknown) => {
         if (err instanceof Error) {
           if (err.name !== "AbortError") console.error(err);
@@ -89,33 +162,32 @@ export const InteractiveWorldMap: React.FC<WorldMapProps> = ({ data = [], onCoun
     return lookup;
   }, [data]);
 
-  const handleCountryClick = (geoId: string) => {
-    if (onCountrySelect) {
-      onCountrySelect(geoId);
-      return;
-    }
+  const handleCountryClick = React.useCallback(
+    (geoId: string) => {
+      if (onCountrySelect) {
+        onCountrySelect(geoId);
+        return;
+      }
 
-    const count = countryLookup[geoId];
-    if (!count) return;
+      const count = countryLookup[geoId];
+      if (!count) return;
 
-    // constructs id and finds it on page, if it exists, smooth scroll to it
-    const sectionId = `members-${geoId}`;
-    const element = document.getElementById(sectionId);
+      const sectionId = `members-${geoId}`;
+      const element = document.getElementById(sectionId);
 
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    },
+    [countryLookup, onCountrySelect],
+  );
 
   return (
     <div className="w-full bg-white flex flex-col justify-center items-center py-12 px-4 relative">
       <div className="w-full max-w-[1400px] flex flex-col items-start mb-6 px-4">
         <div className="flex flex-col gap-3 mb-6">
           <div className="flex items-center gap-3 ml-8">
-            <div
-              className="w-8 h-8 rounded-full"
-              style={{ backgroundColor: COLORS.darkBlue }}
-            ></div>
+            <div className="w-8 h-8 rounded-full" style={{ backgroundColor: COLORS.primary }}></div>
             <span className="text-[#1E1E1E] text-center font-['DM_Sans'] text-base font-normal leading-6">
               Countries with 5+ F3 Global Team Members
             </span>
@@ -123,7 +195,7 @@ export const InteractiveWorldMap: React.FC<WorldMapProps> = ({ data = [], onCoun
           <div className="flex items-center gap-3 ml-8">
             <div
               className="w-8 h-8 rounded-full"
-              style={{ backgroundColor: COLORS.lightBlue }}
+              style={{ backgroundColor: COLORS.secondary }}
             ></div>
             <span className="text-[#1E1E1E] text-center font-['DM_Sans'] text-base font-normal leading-6">
               Countries with F3 Global Team Members
@@ -153,13 +225,12 @@ export const InteractiveWorldMap: React.FC<WorldMapProps> = ({ data = [], onCoun
           >
             <Geographies geography={geoData}>
               {({ geographies }: { geographies: any[] }) =>
-                geographies.map((geoItem, i) => {
+                geographies.map((geoItem) => {
                   const geo = geoItem as GeoJsonFeature;
 
-                  const uniqueKey = geo.rsmKey || geo.properties?.ISO_A3 || geo.id || `geo-${i}`;
+                  const uniqueKey = geo.rsmKey || geo.properties?.ISO_A3 || geo.id || Math.random();
 
                   const props = geo.properties || {};
-
                   const rawId = typeof geo.id === "number" ? String(geo.id) : geo.id || "";
                   const curCountryCode = props.ISO_A3 || props.adm0_a3 || rawId; // normalizes the country code
 
@@ -170,7 +241,7 @@ export const InteractiveWorldMap: React.FC<WorldMapProps> = ({ data = [], onCoun
 
                   if (count > 0) {
                     isClickable = true;
-                    fillColor = count >= 5 ? COLORS.darkBlue : COLORS.lightBlue;
+                    fillColor = count >= 5 ? COLORS.primary : COLORS.secondary;
                   }
 
                   return (
@@ -194,7 +265,7 @@ export const InteractiveWorldMap: React.FC<WorldMapProps> = ({ data = [], onCoun
                           cursor: isClickable ? "pointer" : "default",
                         },
                         pressed: {
-                          fill: isClickable ? COLORS.darkBlue : fillColor,
+                          fill: isClickable ? COLORS.primary : fillColor,
                           stroke: COLORS.border,
                           strokeWidth: 0.5,
                           outline: "none",
