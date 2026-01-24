@@ -32,8 +32,7 @@ type GeoJsonFeature = Feature<Geometry, GeoJsonProperties> & {
   rsmKey: string;
 };
 
-// highest res 10:1 geo.json causes some lag on my goated machine so opted
-// for this 50:1, can go lower yet to `/lowest-res.geo.json` but it looks kinda trash
+// can gen lower res w/ https://geojson-maps.kyd.au/
 const GEO_URL = "/medium-res.geo.json";
 
 const COLORS = {
