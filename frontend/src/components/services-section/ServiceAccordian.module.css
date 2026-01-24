@@ -1,0 +1,15 @@
+.accordian {
+  width: 647px;
+  flex-shrink: 0;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1024px) {
+  .accordian {
+    width: 100%;
+  }
+}
