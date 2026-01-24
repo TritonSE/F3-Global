@@ -1,8 +1,27 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { FooterMiniBtn } from "./FooterMiniBtn";
 
 export const Footer = function Footer() {
+  const router = useRouter();
+  // looks for header tags that contain `contact`
+  const handleContactClick = () => {
+    const headings = Array.from(document.querySelectorAll("h1, h2, h3, h4, h5, h6"));
+    const contactSection = headings.find((heading) => {
+      const text = heading.textContent?.toLowerCase() || "";
+      return text.includes("contact us");
+    });
+
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // defaults to home page if not found
+      router.push("/?contact=true");
+    }
+  };
   return (
     <div className="flex flex-col items-center self-stretch py-[100px] bg-[#f4f4f4]">
       <div className="flex w-[1313px] justify-between items-start">
@@ -66,7 +85,7 @@ export const Footer = function Footer() {
             <FooterMiniBtn text="Clients" link="/clients" />
             <FooterMiniBtn text="Members" link="/members" />
             <FooterMiniBtn text="What We Do" link="/about-us" />
-            <FooterMiniBtn text="Contact" />
+            <FooterMiniBtn text="Contact" onClick={handleContactClick} />
             <FooterMiniBtn
               text="Member Application"
               link="https://my-apply.vercel.app/org/f3-global-foundation"

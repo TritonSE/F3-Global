@@ -1,8 +1,23 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect } from "react";
 
 import { Button } from "@/components/button";
 
 export default function Home() {
+  useEffect(() => {
+    if (window.location.search.includes("contact=true")) {
+      const contactSection = document.getElementById("contact");
+      if (contactSection) {
+        setTimeout(() => {
+          contactSection.scrollIntoView({ behavior: "smooth" });
+          window.history.replaceState(null, "", "/"); // clean url after scrolling animation
+        }, 100);
+      }
+    }
+  }, []);
+
   const cities = [
     "Hong Kong",
     "Mumbai",
