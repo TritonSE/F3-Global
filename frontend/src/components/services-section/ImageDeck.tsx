@@ -19,7 +19,6 @@ const POSITION_CONFIGS = [
 
 // Position left values for each position
 const POSITION_LEFT = [100, 60, 30, 0];
-const POSITION_LEFT_MOBILE = [80, 50, 25, 0];
 
 export const ImageDeck = ({ activeID }: ImageDeckProps) => {
   const activeIndex = DEFAULT_SERVICES.findIndex((service) => service.id === activeID);
@@ -34,7 +33,7 @@ export const ImageDeck = ({ activeID }: ImageDeckProps) => {
   };
 
   return (
-    <div className="relative w-full max-w-[500px] h-[500px] shrink-0 lg:w-[600px] lg:max-w-none lg:h-[658px]">
+    <div className="relative w-[600px] h-[658px] shrink-0">
       {DEFAULT_SERVICES.map((service, index) => {
         const position = getPosition(index);
         const config = POSITION_CONFIGS[position];
