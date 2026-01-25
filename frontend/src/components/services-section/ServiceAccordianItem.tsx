@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
 
-import styles from "./ServiceAccordianItem.module.css";
-
 import type { ServiceDescription } from "./types";
 
 type ServiceAccordianItemProps = {
@@ -41,18 +39,35 @@ export const ServiceAccordianItem: React.FC<ServiceAccordianItemProps> = ({
   onClick,
 }) => {
   return (
-    <div className={styles.serviceItem}>
-      <button className={styles.serviceClick} onClick={onClick}>
-        <span className={`${styles.serviceTitle} ${isExpanded ? styles.serviceTitleExpanded : ""}`}>
+    <div className="border-b border-[#c7c7c7]">
+      <button
+        className="w-full flex justify-between items-center py-5 bg-transparent border-none cursor-pointer"
+        onClick={onClick}
+      >
+        <span
+          className={`font-dm-sans text-[28px] font-medium tracking-[-0.56px] transition-colors duration-300 ${
+            isExpanded ? "text-[#012060]" : "text-[#5d5d5d]"
+          }`}
+        >
           {service.title}
         </span>
-        <span className={`${styles.toggle} ${isExpanded ? styles.toggleExpanded : ""}`}>
+        <span
+          className={`w-8 h-8 flex items-center justify-center transition-colors duration-300 ${
+            isExpanded ? "text-[#012060]" : "text-[#5d5d5d]"
+          }`}
+        >
           {isExpanded ? <MinusIcon /> : <PlusIcon />}
         </span>
       </button>
 
-      <div className={`${styles.description} ${isExpanded ? styles.descriptionExpanded : ""}`}>
-        <p>{service.description}</p>
+      <div
+        className={`overflow-hidden transition-[max-height] duration-300 ${
+          isExpanded ? "max-h-[300px]" : "max-h-0"
+        }`}
+      >
+        <p className="text-[#5d5d5d] font-dm-sans text-base leading-6 m-0 pb-5">
+          {service.description}
+        </p>
       </div>
     </div>
   );

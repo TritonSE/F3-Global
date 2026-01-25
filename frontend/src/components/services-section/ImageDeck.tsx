@@ -3,7 +3,6 @@
 import Image from "next/image";
 import React from "react";
 
-import styles from "./ImageDeck.module.css";
 import { DEFAULT_SERVICES } from "./types";
 
 type ImageDeckProps = {
@@ -18,6 +17,10 @@ const POSITION_CONFIGS = [
   { width: 327, height: 473, rotation: -5.96, hasOverlay: false, zIndex: 1 }, // Back
 ];
 
+// Position left values for each position
+const POSITION_LEFT = [100, 60, 30, 0];
+const POSITION_LEFT_MOBILE = [80, 50, 25, 0];
+
 export const ImageDeck = ({ activeID }: ImageDeckProps) => {
   const activeIndex = DEFAULT_SERVICES.findIndex((service) => service.id === activeID);
 
@@ -31,7 +34,7 @@ export const ImageDeck = ({ activeID }: ImageDeckProps) => {
   };
 
   return (
-    <div className={styles.deck}>
+    <div className="relative w-full max-w-[500px] h-[500px] shrink-0 lg:w-[600px] lg:max-w-none lg:h-[658px]">
       {DEFAULT_SERVICES.map((service, index) => {
         const position = getPosition(index);
         const config = POSITION_CONFIGS[position];
@@ -39,16 +42,24 @@ export const ImageDeck = ({ activeID }: ImageDeckProps) => {
         return (
           <div
             key={service.id}
-            className={`${styles.card} ${styles[`position${position}`]}`}
+            className="absolute bottom-0 rounded-lg overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-500"
             style={{
               zIndex: config.zIndex,
               width: config.width,
               height: config.height,
               transform: `rotate(${config.rotation}deg)`,
+              left: POSITION_LEFT[position],
             }}
           >
-            <Image src={service.image.src} alt={service.image.alt} fill className={styles.image} />
-            {config.hasOverlay && <div className={styles.overlay} />}
+            <Image
+              src={service.image.src}
+              alt={service.image.alt}
+              fill
+              className="block w-full h-full object-cover"
+            />
+            {config.hasOverlay && (
+              <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+            )}
           </div>
         );
       })}

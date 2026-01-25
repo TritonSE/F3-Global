@@ -21,8 +21,8 @@ export type ServiceDeckProps = {
 
 export const DEFAULT_SERVICES: ServiceDescription[] = [
   {
-    id: "MicroLoans",
-    title: "MicroLoans",
+    id: "Microloans",
+    title: "Microloans",
     description:
       "We provide low or zero-interest microloans to small entrepreneurs who are ready to take the next step in growing their business. These loans are designed to fund strategic initiatives, whether that is purchasing inventory, expanding operations, or launching new services. Our goal is to remove financial barriers and empower business owners to build long-term economic stability.",
     image: {

@@ -2,7 +2,6 @@
 
 import React from "react";
 
-import styles from "./ServiceAccordian.module.css";
 import { ServiceAccordianItem } from "./ServiceAccordianItem";
 import { DEFAULT_SERVICES } from "./types";
 
@@ -13,8 +12,8 @@ type ServiceAccordianProps = {
 
 export const ServiceAccordian = ({ activeID, onServiceChange }: ServiceAccordianProps) => {
   return (
-    <div className={styles.accordian}>
-      <div className={styles.list}>
+    <div className="w-full lg:w-[647px] shrink-0">
+      <div className="flex flex-col">
         {DEFAULT_SERVICES.map((service_offered) => (
           <ServiceAccordianItem
             key={service_offered.id}
