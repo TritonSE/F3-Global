@@ -32,7 +32,7 @@ export default function MeetTheTeam() {
               <Button
                 text="join our team"
                 onClick_link="/members"
-                className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] [&_p]:uppercase [&_p]:font-normal mt-12"
+                className="flex justify-center items-center gap-[10px] px-[24px] py-[14px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] [&_p]:uppercase [&_p]:font-normal mt-12"
               />
               <div>{/*placeholder*/}</div>
             </div>
