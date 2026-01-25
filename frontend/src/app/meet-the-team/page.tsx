@@ -13,11 +13,12 @@ export default function MeetTheTeam() {
     { code: "CHN", name: "China", employeeCount: 2 },
     { code: "IND", name: "India", employeeCount: 2 },
   ];
+
   return (
     <>
       <div className="bg-[#ffffff] overflow-x-hidden">
         <div className="flex w-full items-center justify-between self-stretch px-[100px] h-180">
-          <div className="flex flex-[1_0_0] flex-col">
+          <div className="flex flex-col">
             <p className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
               Meet the Team
             </p>
@@ -34,7 +35,6 @@ export default function MeetTheTeam() {
                 onClick_link="/members"
                 className="flex justify-center items-center gap-[10px] px-[24px] py-[14px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] [&_p]:uppercase [&_p]:font-normal mt-12"
               />
-              <div>{/*placeholder*/}</div>
             </div>
           </div>
           <div
