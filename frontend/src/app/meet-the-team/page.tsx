@@ -18,7 +18,7 @@ export default function MeetTheTeam() {
 
   return (
     <>
-      <div className="bg-[#ffffff] overflow-x-hidden">
+      <div className="bg-white overflow-x-hidden">
         <div className="flex w-full items-center justify-between self-stretch px-[100px] h-180">
           <div className="flex flex-col">
             <h1 className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
@@ -40,20 +40,21 @@ export default function MeetTheTeam() {
             </div>
           </div>
           <div
-            style={{ width: 1500, height: 550, overflow: "hidden", position: "relative" }}
-            className="ml-8 rounded-[10px]"
+            className="ml-8 rounded-[10px] overflow-hidden relative"
+            style={{ width: 1500, height: 550 }}
           >
             <Image
               src="/imgs/space.jpg"
               alt="Space View of Earth"
               fill
-              className="bg-cover bg-no-repeat bg-center"
-              style={{ objectFit: "cover", objectPosition: "center" }}
+              className="object-cover object-center bg-cover bg-no-repeat bg-center"
               priority
             />
           </div>
         </div>
-        <InteractiveWorldMap data={countryData} />
+        <div className="border-t border-[#F4F4F4] shadow-[0_19px_43px_0_rgba(0,0,0,0.10)]">
+          <InteractiveWorldMap data={countryData} />
+        </div>
       </div>
     </>
   );
