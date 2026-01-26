@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import type { CountryData } from "@/components/InteractiveWorldMap";
 
 import { Button } from "@/components/button";
@@ -5,13 +7,13 @@ import { InteractiveWorldMap } from "@/components/InteractiveWorldMap";
 
 export default function MeetTheTeam() {
   const countryData: CountryData[] = [
-    { code: "USA", name: "United States", employeeCount: 6 },
-    { code: "CAN", name: "Canada", employeeCount: 4 },
-    { code: "AUS", name: "Australia", employeeCount: 2 },
-    { code: "ESP", name: "Spain", employeeCount: 2 },
-    { code: "ITA", name: "Italy", employeeCount: 2 },
-    { code: "CHN", name: "China", employeeCount: 2 },
-    { code: "IND", name: "India", employeeCount: 2 },
+    { code: "USA", name: "United States", employeeCount: 5 },
+    { code: "CAN", name: "Canada", employeeCount: 1 },
+    { code: "AUS", name: "Australia", employeeCount: 1 },
+    { code: "ESP", name: "Spain", employeeCount: 1 },
+    { code: "ITA", name: "Italy", employeeCount: 1 },
+    { code: "CHN", name: "China", employeeCount: 1 },
+    { code: "IND", name: "India", employeeCount: 1 },
   ];
 
   return (
@@ -38,9 +40,18 @@ export default function MeetTheTeam() {
             </div>
           </div>
           <div
-            className="w-150 h-135 rounded-[10px] bg-cover bg-no-repeat bg-center ml-8"
-            style={{ backgroundImage: 'url("/imgs/space.jpg")', backgroundColor: "lightGray" }}
-          />
+            style={{ width: 1500, height: 550, overflow: "hidden", position: "relative" }}
+            className="ml-8 rounded-[10px]"
+          >
+            <Image
+              src="/imgs/space.jpg"
+              alt="Space View of Earth"
+              fill
+              className="bg-cover bg-no-repeat bg-center"
+              style={{ objectFit: "cover", objectPosition: "center" }}
+              priority
+            />
+          </div>
         </div>
         <InteractiveWorldMap data={countryData} />
       </div>
