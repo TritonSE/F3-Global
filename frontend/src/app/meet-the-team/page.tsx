@@ -21,12 +21,12 @@ export default function MeetTheTeam() {
       <div className="bg-[#ffffff] overflow-x-hidden">
         <div className="flex w-full items-center justify-between self-stretch px-[100px] h-180">
           <div className="flex flex-col">
-            <p className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
+            <h1 className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
               Meet the Team
-            </p>
-            <p className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
+            </h1>
+            <h1 className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
               Without <span className="italic">Borders</span>
-            </p>
+            </h1>
             <p className="font-dm-sans mt-5 text-[24px] font-normal leading-[32px] text-[#5D5D5D]">
               Our professional team brings expertise from all over the world. Explore the clickable
               map of where our team members are from below.
