@@ -28,7 +28,7 @@ export const DonorsClientsMembersCarouselData = [
   {
     header: (
       <span>
-        Turn Your Passion Into <strong className="text-[#012060]">Purpose</strong>.
+        Turn Your Passion Into <strong className="text-[#012060]">Purpose.</strong>
       </span>
     ),
     description:
