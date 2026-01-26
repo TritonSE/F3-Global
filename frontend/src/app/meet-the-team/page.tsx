@@ -24,8 +24,8 @@ export default function MeetTheTeam() {
             <p className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
               Meet the Team
             </p>
-            <p className="text-[#1E1E1E] text-[64px] font-ethic font-light italic leading-[1.1]">
-              Without Borders
+            <p className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
+              Without <span className="italic">Borders</span>
             </p>
             <p className="font-dm-sans mt-5 text-[24px] font-normal leading-[32px] text-[#5D5D5D]">
               Our professional team brings expertise from all over the world. Explore the clickable
