@@ -5,7 +5,7 @@ import { Anchor } from "@/components/Anchor";
 export default function Donors() {
   return (
     <div className="mx-auto flex flex-col justify-center items-center bg-white w-full">
-      <div className="flex py-[150px] px-[100px] justify-between items-center w-full">
+      <div className="flex py-[150px] px-[100px] min-h-screen justify-between items-center w-full">
         <div className="flex w-[639px] flex-col items-start gap-[50px] shrink-0">
           <h1
             className="text-[#1E0A0A] text-[64px]"
