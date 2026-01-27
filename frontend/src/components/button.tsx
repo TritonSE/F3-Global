@@ -6,19 +6,40 @@ import React from "react";
 type ButtonProps = {
   text: string;
   onClick_link?: string;
-  external?: boolean;
+  trailingIcon?: React.ReactNode;
 } & React.ComponentProps<"button">;
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ text, onClick_link, external, ...props }, ref) => {
+  ({ text, onClick_link, trailingIcon, onClick, ...props }, ref) => {
     const router = useRouter();
 
-    const handleClick = () => {
-      if (external && onClick_link) {
-        window.open(onClick_link, "_blank", "noopener,noreferrer");
-      } else {
-        router.push(onClick_link || "/");
+    const isExternal = (url: string) => /^https?:\/\//i.test(url);
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      if (onClick) {
+        onClick(event);
+        if (event.defaultPrevented) return;
       }
+
+      if (!onClick_link) return;
+
+      if (isExternal(onClick_link)) {
+        window.open(onClick_link, "_blank", "noopener,noreferrer");
+        return;
+      }
+
+      if (onClick_link.startsWith("#")) {
+        const target = document.getElementById(onClick_link.slice(1));
+
+        if (target) {
+          const targetTop = target.getBoundingClientRect().top + window.scrollY;
+          const scrollTop = Math.max(0, targetTop - window.innerHeight + 1);
+          window.scrollTo({ top: scrollTop, behavior: "smooth" });
+          return;
+        }
+      }
+
+      router.push(onClick_link);
     };
 
     return (
@@ -31,6 +52,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         <p className="text-center font-dm-sans text-base font-semibold leading-6 text-white">
           {text}
         </p>
+        {trailingIcon}
       </button>
     );
   },
