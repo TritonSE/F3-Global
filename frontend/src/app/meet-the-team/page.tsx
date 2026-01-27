@@ -35,7 +35,9 @@ export default function MeetTheTeam() {
               <Button
                 text="join our team"
                 onClick_link="https://my-apply.vercel.app/org/f3-global-foundation"
-                className="flex justify-center items-center gap-[10px] px-[24px] py-[14px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] [&_p]:uppercase [&_p]:font-normal mt-12"
+                external
+                className="flex justify-center items-center gap-[10px] px-[24px] py-[14px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] uppercase font-normal mt-12"
+                style={{ display: "inline-block", textDecoration: "none" }}
               />
             </div>
           </div>
