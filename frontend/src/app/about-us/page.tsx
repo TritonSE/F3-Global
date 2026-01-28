@@ -24,7 +24,7 @@ export default function About() {
           />
         </div>
         <div>
-          <Image src="/imgs/image.png" alt="About us image" width={646} height={581} />
+          <Image src="/imgs/about-us.png" alt="About us image" width={646} height={581} />
         </div>
       </div>
 
