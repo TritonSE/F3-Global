@@ -1,8 +1,8 @@
 import Image from "next/image";
 import React from "react";
 
-import { Button } from "@/components/button";
 import { Anchor } from "@/components/Anchor";
+import { Button } from "@/components/button";
 
 export default function About() {
   return (
