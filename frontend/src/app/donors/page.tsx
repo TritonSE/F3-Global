@@ -1,11 +1,13 @@
 import Image from "next/image";
 
+import { FaqSection } from "./FaqAccordion";
+
 import { Anchor } from "@/components/Anchor";
 
 export default function Donors() {
   return (
     <div className="mx-auto flex flex-col justify-center items-center bg-white w-full">
-      <div className="flex py-[150px] px-[100px] min-h-screen justify-between items-center w-full">
+      <div className="flex py-[150px] px-[5vw] min-h-screen justify-between items-center w-full">
         <div className="flex w-[639px] flex-col items-start gap-[50px] shrink-0">
           <h1
             className="text-[#1E0A0A] text-[64px]"
@@ -81,7 +83,7 @@ export default function Donors() {
           *Data from Jan 2026
         </p>
       </div>
-      {/* Questions TODO */}
+      <FaqSection />
       <div className="w-full h-[767px] flex">
         <div className="w-full h-[767px] flex overflow-hidden bg-[#172447] justify-end">
           <div
@@ -89,7 +91,6 @@ export default function Donors() {
             style={{
               aspectRatio: "1307 / 767",
               backgroundImage: `linear-gradient(to right, #172447 0%, rgba(23, 36, 71, 0.9) 12%, rgba(23, 36, 71, 0) 75%), url('/imgs/donateNow.png')`,
-              // backgroundSize: "auto 767px",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "right center",
@@ -108,7 +109,7 @@ export default function Donors() {
           </div>
         </div>
 
-        <div className="absolute flex flex-col px-[100px] pt-[42px] pb-[75px] items-start gap-[40px] mt-[174px]">
+        <div className="absolute flex flex-col px-[5vw] pt-[42px] pb-[75px] items-start gap-[40px] mt-[174px]">
           <p className="text-white text-[64px]" style={{ fontFamily: '"Ethic New", sans-serif' }}>
             Start Creating <br /> Impact <i>Now.</i>
           </p>
@@ -121,7 +122,8 @@ export default function Donors() {
             className="inline-flex items-center justify-center text-[#012060] bg-white px-[20px] py-[10px] gap-[10px] rounded-[99px] font-semibold text-[24px] cursor-pointer"
             href="https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390"
           >
-            DONATE <img src="/imgs/ic_arrowforward.svg" alt="arrow forward" />
+            DONATE{" "}
+            <Image src="/imgs/ic_arrowforward.svg" alt="arrow forward" width={36} height={36} />
           </a>
         </div>
       </div>
