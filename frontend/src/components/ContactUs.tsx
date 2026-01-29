@@ -16,7 +16,6 @@ export const ContactUs: React.FC = () => {
     message: "",
   });
 
-  const [roleError, setRoleError] = useState<string>("");
   const [fullNameError, setFullNameError] = useState<string>("");
   const [emailError, setEmailError] = useState<string>("");
   const [messageError, setMessageError] = useState<string>("");
@@ -32,7 +31,6 @@ export const ContactUs: React.FC = () => {
       ...prev,
       interestedRole: prev.interestedRole === role ? "" : role,
     }));
-    setRoleError("");
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -54,13 +52,6 @@ export const ContactUs: React.FC = () => {
 
   const handleSubmit = () => {
     let valid = true;
-
-    if (!formData.interestedRole) {
-      setRoleError("Please select a role");
-      valid = false;
-    } else {
-      setRoleError("");
-    }
 
     if (!formData.fullName.trim()) {
       setFullNameError("Please enter a valid full name.");
@@ -133,12 +124,7 @@ export const ContactUs: React.FC = () => {
               <div className="flex flex-row gap-[20px]">
                 <div className="flex flex-col content-center items-start gap-[10px] self-stretch">
                   <p className="text-black font-dm-sans text-[14px] font-normal leading-[24px]">
-                    I’m interested in becoming...
-                    <span
-                      className={`ml-2 text-[12px] ${roleError ? "text-[#B93B3B]" : "text-[#888]"}`}
-                    >
-                      (choose one)
-                    </span>
+                    I’m interested in becoming... (choose one)
                   </p>
                   <div className="flex items-center gap-[12px]">
                     <Button
@@ -290,10 +276,10 @@ export const ContactUs: React.FC = () => {
                 width={118}
                 height={118}
               />
-              <h3 className="font-dm-sans text-[48px] text-[#1E1E1E] font-normal font-xl font-bold mb-2 leading-[-1px]">
+              <h3 className="font-dm-sans text-[40px] text-[#1E1E1E] font-normal font-xl font-bold mb-2 leading-[-1px]">
                 Thank You!
               </h3>
-              <p className="font-dm-sans text-[24px] text-[#5D5D5D] font-normal leading-[32px]">
+              <p className="font-dm-sans text-[20px] text-[#5D5D5D] font-normal leading-[32px]">
                 We’ve received your message and will be in touch soon.
               </p>
             </div>
