@@ -101,7 +101,7 @@ export const ContactUs: React.FC = () => {
         setShowConfirm(false);
         setFadeOut(false);
       }, 450);
-    }, 5000);
+    }, 2000);
   };
 
   return (
