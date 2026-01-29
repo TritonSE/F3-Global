@@ -1,0 +1,288 @@
+"use client";
+
+import {
+  ComposableMap,
+  createCoordinates,
+  Geographies,
+  Geography,
+  type ProjectionConfig,
+} from "@vnedyalk0v/react19-simple-maps";
+import React, { useEffect, useMemo, useState } from "react";
+
+import type { Feature, FeatureCollection, Geometry } from "geojson";
+
+export type CountryData = {
+  code: string; // ISO 3 letter country code so : "USA" "JPN" "GBR" etc.
+  name: string; // just for clarity on country name
+  employeeCount: number;
+};
+
+type WorldMapProps = {
+  data?: CountryData[];
+  onCountrySelect?: (code: string) => void;
+};
+
+type GeoJsonProperties = {
+  ISO_A3?: string;
+  adm0_a3?: string;
+  [key: string]: string | number | undefined;
+};
+
+type GeoJsonFeature = Feature<Geometry, GeoJsonProperties> & {
+  rsmKey: string;
+};
+
+// can gen lower res w/ https://geojson-maps.kyd.au/
+const GEO_URL = "/medium-res.geo.json";
+
+const COLORS = {
+  default: "#CCCCCC",
+  primary: "#012060",
+  secondary: "#1169B0",
+  hover: "#A5D0F2",
+  border: "#FFFFFF",
+};
+
+// Ex input data:
+/* 
+const countryData: CountryData[] = [
+  { code: "USA", name: "United States", employeeCount: 10 },
+  { code: "CAN", name: "Canada", employeeCount: 3 },
+  { code: "BRA", name: "Brazil", employeeCount: 6 },
+  { code: "FRA", name: "France", employeeCount: 2 },
+  { code: "DEU", name: "Germany", employeeCount: 8 },
+  { code: "CHN", name: "China", employeeCount: 1 },
+  { code: "AUS", name: "Australia", employeeCount: 5 },
+  { code: "GRC", name: "Greece", employeeCount: 4 },
+  { code: "ZAF", name: "South Africa", employeeCount: 7 },
+  { code: "IND", name: "India", employeeCount: 12 },
+  { code: "JPN", name: "Japan", employeeCount: 3 },
+];
+*/
+
+let cachedGeoData: FeatureCollection | null = null;
+
+const CountryPath = React.memo(
+  ({
+    geo,
+    count,
+    onClick,
+  }: {
+    geo: GeoJsonFeature;
+    count: number;
+    onClick: (id: string) => void;
+  }) => {
+    const uniqueKey = geo.rsmKey || geo.properties?.ISO_A3 || geo.id || "";
+    const props = geo.properties || {};
+    const rawId = typeof geo.id === "number" ? String(geo.id) : geo.id || "";
+    const curCountryCode = props.ISO_A3 || props.adm0_a3 || rawId;
+
+    let fillColor = COLORS.default;
+    let isClickable = false;
+
+    if (count > 0) {
+      isClickable = true;
+      fillColor = count >= 5 ? COLORS.primary : COLORS.secondary;
+    }
+
+    return (
+      <Geography
+        key={uniqueKey}
+        geography={geo}
+        onClick={() => onClick(curCountryCode)}
+        style={{
+          default: {
+            fill: fillColor,
+            stroke: COLORS.border,
+            strokeWidth: 0.5,
+            outline: "none",
+          },
+          hover: {
+            fill: isClickable ? COLORS.hover : fillColor,
+            stroke: COLORS.border,
+            strokeWidth: 0.5,
+            outline: "none",
+            cursor: isClickable ? "pointer" : "default",
+          },
+          pressed: {
+            fill: isClickable ? COLORS.primary : fillColor,
+            stroke: COLORS.border,
+            strokeWidth: 0.5,
+            outline: "None",
+          },
+        }}
+      />
+    );
+  },
+  (prev, next) => {
+    return (
+      prev.count === next.count &&
+      prev.geo.rsmKey === next.geo.rsmKey &&
+      prev.onClick === next.onClick
+    );
+  },
+);
+
+CountryPath.displayName = "CountryPath";
+
+// CONTAINS LEGEND & TITLE
+export const InteractiveWorldMap: React.FC<WorldMapProps> = ({ data = [], onCountrySelect }) => {
+  const [geoData, setGeoData] = useState<FeatureCollection | null>(cachedGeoData);
+
+  useEffect(() => {
+    if (cachedGeoData) {
+      setGeoData(cachedGeoData);
+      return;
+    }
+
+    const controller = new AbortController();
+    fetch(GEO_URL, { signal: controller.signal })
+      .then(async (res) => {
+        if (!res.ok) throw new Error("network response was not ok");
+        return res.json() as Promise<FeatureCollection>;
+      })
+      .then((fetchedData) => {
+        cachedGeoData = fetchedData;
+        setGeoData(fetchedData);
+      })
+      .catch((err: unknown) => {
+        if (err instanceof Error) {
+          if (err.name !== "AbortError") console.error(err);
+        }
+      });
+
+    return () => controller.abort();
+  }, []);
+
+  const countryLookup = useMemo(() => {
+    const lookup: Record<string, number> = {};
+    data.forEach((d) => {
+      lookup[d.code] = d.employeeCount;
+    });
+    return lookup;
+  }, [data]);
+
+  const handleCountryClick = React.useCallback(
+    (geoId: string) => {
+      if (onCountrySelect) {
+        onCountrySelect(geoId);
+        return;
+      }
+
+      const count = countryLookup[geoId];
+      if (!count) return;
+
+      const sectionId = `members-${geoId}`;
+      const element = document.getElementById(sectionId);
+
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    },
+    [countryLookup, onCountrySelect],
+  );
+
+  return (
+    <div className="w-full bg-white flex flex-col justify-center items-center py-12 px-4 relative">
+      <div className="w-full max-w-[1400px] flex flex-col items-start mb-6 px-4">
+        <div className="flex flex-col gap-3 mb-6">
+          <div className="flex items-center gap-3 ml-8">
+            <div className="w-8 h-8 rounded-full" style={{ backgroundColor: COLORS.primary }}></div>
+            <span className="text-[#1E1E1E] text-center font-['DM_Sans'] text-base font-normal leading-6">
+              Countries with 5+ F3 Global Team Members
+            </span>
+          </div>
+          <div className="flex items-center gap-3 ml-8">
+            <div
+              className="w-8 h-8 rounded-full"
+              style={{ backgroundColor: COLORS.secondary }}
+            ></div>
+            <span className="text-[#1E1E1E] text-center font-['DM_Sans'] text-base font-normal leading-6">
+              Countries with F3 Global Team Members
+            </span>
+          </div>
+        </div>
+
+        <div className="w-full text-center">
+          <p className="text-[#5D5D5D] font-['DM_Sans'] text-base italic font-normal leading-6">
+            Click a country to meet our team members connected to that region.
+          </p>
+        </div>
+      </div>
+
+      <div className="w-full h-240 min-h-[400px]">
+        {geoData ? (
+          <ComposableMap
+            projection="geoMercator"
+            width={980}
+            height={450}
+            projectionConfig={{
+              rotate: [-10, 0, 0] as unknown as NonNullable<ProjectionConfig["rotate"]>,
+              scale: 145,
+              center: createCoordinates(0, 45),
+            }}
+            style={{ width: "100%", height: "100%" }}
+          >
+            <Geographies geography={geoData}>
+              {({ geographies }: { geographies: any[] }) =>
+                geographies.map((geoItem) => {
+                  const geo = geoItem as GeoJsonFeature;
+
+                  const uniqueKey = geo.rsmKey || geo.properties?.ISO_A3 || geo.id || Math.random();
+
+                  const props = geo.properties || {};
+                  const rawId = typeof geo.id === "number" ? String(geo.id) : geo.id || "";
+                  const curCountryCode = props.ISO_A3 || props.adm0_a3 || rawId; // normalizes the country code
+
+                  const count = countryLookup[curCountryCode] || 0;
+
+                  let fillColor = COLORS.default;
+                  let isClickable = false;
+
+                  if (count > 0) {
+                    isClickable = true;
+                    fillColor = count >= 5 ? COLORS.primary : COLORS.secondary;
+                  }
+
+                  return (
+                    <Geography
+                      key={uniqueKey}
+                      geography={geo}
+                      onClick={() => handleCountryClick(curCountryCode)}
+                      style={{
+                        default: {
+                          fill: fillColor,
+                          stroke: COLORS.border,
+                          strokeWidth: 0.5,
+                          outline: "none",
+                          transition: "all 250ms",
+                        },
+                        hover: {
+                          fill: isClickable ? COLORS.hover : fillColor,
+                          stroke: COLORS.border,
+                          strokeWidth: 0.5,
+                          outline: "none",
+                          cursor: isClickable ? "pointer" : "default",
+                        },
+                        pressed: {
+                          fill: isClickable ? COLORS.primary : fillColor,
+                          stroke: COLORS.border,
+                          strokeWidth: 0.5,
+                          outline: "none",
+                        },
+                      }}
+                    />
+                  );
+                })
+              }
+            </Geographies>
+          </ComposableMap>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-gray-500">
+            Loading Map...
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};

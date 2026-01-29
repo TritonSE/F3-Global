@@ -22,7 +22,7 @@ export default function About() {
           <Anchor text="JOIN US NOW" link="https://my-apply.vercel.app/org/f3-global-foundation" />
         </div>
         <div>
-          <Image src="/imgs/image.png" alt="About us image" width={646} height={581} />
+          <Image src="/imgs/about-us.png" alt="About us image" width={646} height={581} />
         </div>
       </div>
 

@@ -1,8 +1,25 @@
-import Image from "next/image";
+"use client";
 
+import Image from "next/image";
+import { useEffect } from "react";
+
+import { DonorsClientsMembersCarouselData } from "@/app/carouselData";
 import { Button } from "@/components/button";
+import { DonorsClientsMembersCarousel } from "@/components/DonorsClientsMembersCarousel";
 
 export default function Home() {
+  useEffect(() => {
+    if (window.location.search.includes("contact=true")) {
+      const contactSection = document.getElementById("contact");
+      if (contactSection) {
+        setTimeout(() => {
+          contactSection.scrollIntoView({ behavior: "smooth" });
+          window.history.replaceState(null, "", "/"); // clean url after scrolling animation
+        }, 100);
+      }
+    }
+  }, []);
+
   const cities = [
     "Hong Kong",
     "Mumbai",
@@ -152,6 +169,10 @@ export default function Home() {
             <p className="text-[#5D5D5D] font-dm text-[16px] font-bold leading-[1.5] mt-4 self-start uppercase">
               *Data from Jan 2026
             </p>
+
+            <div className="relative left-1/2 right-1/2 flex w-screen -translate-x-1/2">
+              <DonorsClientsMembersCarousel data={DonorsClientsMembersCarouselData} />
+            </div>
           </div>
         </div>
       </div>
