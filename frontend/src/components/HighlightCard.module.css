@@ -7,6 +7,7 @@
   background: var(--background-grey, #f4f4f4);
   position: relative;
   width: 468px;
+  height: 536px;
   cursor: pointer;
   border: none;
   padding: 0;
@@ -24,57 +25,63 @@
 
 .card.inactive {
   opacity: 0.6;
-  width: 374.4px;
-  border-radius: 12.8px;
+  width: 322px;
+  height: 359px;
+  border-radius: 11px;
 }
 
 .card.inactive .imageContainer {
-  height: 204.8px;
-  border-radius: 12.8px 12.8px 0 0;
+  height: 176px;
+  border-radius: 11px 11px 0 0;
 }
 
-.card.inactive .image {
-  height: 204.8px;
-  border-radius: 12.8px 12.8px 0 0;
+.card.inactive .gradient {
+  border-radius: 11px 11px 0 0;
 }
 
 .card.inactive .content {
-  padding: 25.6px 12.8px;
-  gap: 19.2px;
+  padding: 22px 11px;
+  gap: 16.5px;
 }
 
 .card.inactive .textContent {
-  padding: 0 16px;
-  gap: 6.4px;
+  padding: 0 13.8px;
+  gap: 5.5px;
 }
 
 .card.inactive .quote {
-  font-size: 19.2px;
+  font-size: 16.5px;
+  font-weight: 600;
+  line-height: 1.5;
 }
 
 .card.inactive .previewText {
-  font-size: 12.8px;
-  line-height: 19.2px;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 16.5px;
 }
 
 .card.inactive .learnMoreButton {
-  padding: 9.6px 12px;
-  gap: 8px;
+  padding: 8.3px 10.3px;
+  gap: 6.9px;
+  justify-content: flex-start;
 }
 
 .card.inactive .learnMoreButton span {
-  font-size: 12.8px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
 }
 
 .card.inactive .arrow {
-  width: 19.2px;
-  height: 19.2px;
+  width: 16.5px;
+  height: 16.5px;
 }
 
 .card.inactive .quoteIcon {
-  font-size: 76.8px;
-  right: 16px;
-  bottom: 28px;
+  font-size: 66px;
+  right: 21px;
+  bottom: 43px;
 }
 
 .imageContainer {
@@ -86,10 +93,6 @@
 }
 
 .image {
-  width: 100%;
-  height: 256px;
-  object-fit: cover;
-  display: block;
   border-radius: 16px 16px 0 0;
 }
 
@@ -124,6 +127,8 @@
   padding: 32px 16px;
   width: 100%;
   border-radius: 0 0 16px 16px;
+  flex: 1;
+  overflow-y: auto;
 }
 
 .textContent {
@@ -132,6 +137,9 @@
   gap: 8px;
   padding: 0 20px;
   width: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  max-height: 180px;
 }
 
 .quote {
@@ -153,15 +161,19 @@
 }
 
 .learnMoreButton {
-  display: flex;
+  display: inline-flex;
   gap: 10px;
   align-items: center;
-  justify-content: center;
   padding: 12px 15px;
   background: transparent;
   border: none;
   cursor: pointer;
   text-decoration: none;
+  transition: gap 0.3s ease;
+}
+
+.learnMoreButton:hover {
+  gap: 20px;
 }
 
 .learnMoreButton span {
@@ -170,10 +182,6 @@
   font-weight: 600;
   line-height: 1.5;
   color: var(--text-black, #1e1e1e);
-}
-
-.learnMoreButton:hover span {
-  text-decoration: underline;
 }
 
 .arrow {

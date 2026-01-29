@@ -48,7 +48,13 @@ export function HighlightCard({
       aria-pressed={isActive}
     >
       <div className={styles.imageContainer}>
-        <Image src={highlight.imageUrl} alt={highlight.quote} className={styles.image} fill />
+        <Image
+          src={highlight.imageUrl}
+          alt={highlight.quote}
+          fill
+          className={styles.image}
+          style={{ objectFit: "cover" }}
+        />
         <div className={styles.gradient} />
         <div className={styles.quoteIcon}>"</div>
       </div>
@@ -61,7 +67,7 @@ export function HighlightCard({
           <span>Learn More</span>
           <svg className={styles.arrow} width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path
-              d="M16.175 13H4V11H16.175L10.575 5.4L12 4L20 12L12 20L10.575 18.6L16.175 13Z"
+              d="M14 18L12.6 16.55L16.15 13H4V11H16.15L12.6 7.45L14 6L20 12L14 18Z"
               fill="currentColor"
             />
           </svg>

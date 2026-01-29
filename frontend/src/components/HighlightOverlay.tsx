@@ -10,6 +10,48 @@ export type HighlightOverlayProps = {
 };
 
 export function HighlightOverlay({ highlight, onClose }: HighlightOverlayProps) {
+  const renderParagraph = (
+    paragraph: { text: string; boldSegments?: Array<{ start: number; end: number }> },
+    index: number,
+  ) => {
+    if (!paragraph.boldSegments || paragraph.boldSegments.length === 0) {
+      return (
+        <p key={index} className={styles.paragraph}>
+          {paragraph.text}
+        </p>
+      );
+    }
+
+    const segments: Array<{ text: string; bold: boolean }> = [];
+    let lastIndex = 0;
+
+    paragraph.boldSegments
+      .sort((a, b) => a.start - b.start)
+      .forEach(({ start, end }) => {
+        if (start > lastIndex) {
+          segments.push({ text: paragraph.text.slice(lastIndex, start), bold: false });
+        }
+        segments.push({ text: paragraph.text.slice(start, end), bold: true });
+        lastIndex = end;
+      });
+
+    if (lastIndex < paragraph.text.length) {
+      segments.push({ text: paragraph.text.slice(lastIndex), bold: false });
+    }
+
+    return (
+      <p key={index} className={styles.paragraph}>
+        {segments.map((segment, i) =>
+          segment.bold ? (
+            <strong key={i}>{segment.text}</strong>
+          ) : (
+            <span key={i}>{segment.text}</span>
+          ),
+        )}
+      </p>
+    );
+  };
+
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
@@ -21,20 +63,25 @@ export function HighlightOverlay({ highlight, onClose }: HighlightOverlayProps) 
             />
           </svg>
         </button>
-        <div className={styles.imageContainer}>
-          <Image
-            src={highlight.imageUrl}
-            alt={highlight.quote}
-            className={styles.image}
-            fill
-            priority
-          />
-          <div className={styles.gradient} />
-          <div className={styles.quoteIcon}>"</div>
-        </div>
-        <div className={styles.content}>
-          <h3 className={styles.quote}>"{highlight.quote}"</h3>
-          <p className={styles.fullText}>{highlight.fullText}</p>
+        <div className={styles.contentWrapper}>
+          <div className={styles.imageContainer}>
+            <Image
+              src={highlight.imageUrl}
+              alt={highlight.quote}
+              fill
+              className={styles.image}
+              style={{ objectFit: "cover" }}
+            />
+          </div>
+          <div className={styles.textContent}>
+            {highlight.fullTextParagraphs ? (
+              highlight.fullTextParagraphs.map((paragraph, index) =>
+                renderParagraph(paragraph, index),
+              )
+            ) : (
+              <p className={styles.paragraph}>{highlight.fullText}</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
