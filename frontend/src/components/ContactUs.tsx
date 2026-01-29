@@ -253,7 +253,7 @@ export const ContactUs: React.FC = () => {
                   </div>
                   <Button
                     text="Send"
-                    className="flex px-[14px] py-[4px] content-center items-center rounded-[99px] bg-[#172447] self-end transition-colors duration-450 ease-in-out hover:bg-[#1169B0]"
+                    className="flex px-[14px] py-[4px] content-center items-center rounded-[99px] bg-[#172447] self-end transition-colors duration-450 ease-in-out hover:bg-[#1169B0] hover:border-[#1169B0]"
                     textClassName="text-white text-center font-dm-sans font-normal text-[12px] leading-[24px]"
                     onClick={handleSubmit}
                   />
