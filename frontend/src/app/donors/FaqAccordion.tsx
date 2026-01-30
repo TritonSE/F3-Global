@@ -37,7 +37,7 @@ export const FaqSection = () => {
   ];
 
   return (
-    <div className="mx-auto flex flex-col justify-center items-center w-full">
+    <div className="mx-auto flex flex-col justify-center items-center w-full border-t border-[#F4F4F4]">
       <div className="mx-auto flex flex-col items-start w-full pt-[50px] pb-[100px] px-[5vw] gap-[40px]">
         <h1 className="text-[48px] font-medium self-stretch text-[#172447]">Questions?</h1>
         <div className="flex flex-col p-[20px] gap-[25px] items-start self-stretch bg-[#F4F4F4] rounded-[10px]">
