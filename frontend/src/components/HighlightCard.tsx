@@ -56,6 +56,7 @@ export function HighlightCard({
           style={{ objectFit: "cover" }}
         />
         <div className={styles.gradient} />
+        <div className={styles.quoteIcon}>"</div>
       </div>
       <div className={styles.content}>
         <div className={styles.textContent}>

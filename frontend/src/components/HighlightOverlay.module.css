@@ -25,6 +25,7 @@
   position: relative;
   background: white;
   display: flex;
+  min-height: 450px;
   padding: 50px;
   justify-content: center;
   align-items: flex-start;
