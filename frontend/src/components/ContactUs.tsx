@@ -106,7 +106,7 @@ export const ContactUs: React.FC = () => {
 
   return (
     <>
-      <div className="flex w-full py-[50px] flex-col align-center gap-[10px]">
+      <div className="flex w-full py-[50px] flex-col items-center gap-[10px]">
         <div
           className="relative flex flex-col items-end gap-[20px] w-[1312px] px-[100px] py-[40px] rounded-[10px] bg-white"
           style={{
@@ -114,16 +114,16 @@ export const ContactUs: React.FC = () => {
           }}
         >
           <div className="flex flex-col items-start gap-[30px] self-stretch">
-            <h2 className="self-stretch text-black font-ethic text-[68px] mb-[-24px]">
+            <h2 className="self-stretch text-black font-ethic text-[80px] mb-[-24px]">
               Contact Us
             </h2>
-            <p className="font-dm-sans font-normal text-[22px] leading-[32px]">
+            <p className="font-dm-sans font-normal text-[24px] leading-[32px]">
               Want to learn more? Fill out the form below to contact one of our representatives!
             </p>
             <div className="flex flex-col content-center items-start gap-[30px] content-between">
               <div className="flex flex-row gap-[20px]">
                 <div className="flex flex-col content-center items-start gap-[10px] self-stretch">
-                  <p className="text-black font-dm-sans text-[14px] font-normal leading-[24px]">
+                  <p className="text-black font-dm-sans text-[16px] font-normal leading-[24px]">
                     I’m interested in becoming... (choose one)
                   </p>
                   <div className="flex items-center gap-[12px]">
@@ -190,7 +190,7 @@ export const ContactUs: React.FC = () => {
                     `}
                   >
                     <input
-                      className="font-dm-sans text-[14px] text-normal leading-[24px] text-[#5D5D5D] bg-transparent outline-none w-full"
+                      className="font-dm-sans text-[16px] text-normal leading-[24px] text-[#5D5D5D] bg-transparent outline-none w-full"
                       type="text"
                       name="fullName"
                       placeholder="Full name *"
@@ -201,7 +201,7 @@ export const ContactUs: React.FC = () => {
                   </div>
                   <div className="relative left-0 top-[-6px] w-full pointer-events-none h-[8px]">
                     {fullNameError ? (
-                      <p className="m-0 p-0 text-[11px] font-dm-sans text-[#B93B3B]">
+                      <p className="m-0 p-0 text-[12px] font-dm-sans text-[#B93B3B]">
                         {fullNameError}
                       </p>
                     ) : null}
@@ -212,7 +212,7 @@ export const ContactUs: React.FC = () => {
                     `}
                   >
                     <input
-                      className="font-dm-sans text-[14px] text-normal leading-[24px] text-[#5D5D5D] bg-transparent outline-none w-full"
+                      className="font-dm-sans text-[16px] text-normal leading-[24px] text-[#5D5D5D] bg-transparent outline-none w-full"
                       type="email"
                       name="email"
                       placeholder="Email *"
@@ -223,7 +223,7 @@ export const ContactUs: React.FC = () => {
                   </div>
                   <div>
                     {emailError ? (
-                      <p className="m-0 mt-[-7px] p-0 text-[11px] font-dm-sans text-[#B93B3B]">
+                      <p className="m-0 mt-[-7px] p-0 text-[12px] font-dm-sans text-[#B93B3B]">
                         {emailError}
                       </p>
                     ) : null}
@@ -236,7 +236,7 @@ export const ContactUs: React.FC = () => {
                     `}
                   >
                     <textarea
-                      className="font-dm-sans text-[14px] text-normal leading-[24px] text-[#5D5D5D] bg-transparent outline-none w-full h-full resize-none"
+                      className="font-dm-sans text-[16px] text-normal leading-[24px] text-[#5D5D5D] bg-transparent outline-none w-full h-full resize-none"
                       name="message"
                       placeholder="Message *"
                       value={formData.message}
@@ -246,15 +246,15 @@ export const ContactUs: React.FC = () => {
                   </div>
                   <div>
                     {messageError ? (
-                      <p className="pos-absolute m-0 mt-[-16px] mb-[-10px] p-0 text-[11px] font-dm-sans text-[#B93B3B]">
+                      <p className="pos-absolute m-0 mt-[-16px] mb-[-10px] p-0 text-[12px] font-dm-sans text-[#B93B3B]">
                         {messageError}
                       </p>
                     ) : null}
                   </div>
                   <Button
                     text="Send"
-                    className="flex px-[14px] py-[4px] content-center items-center rounded-[99px] bg-[#172447] self-end transition-colors duration-450 ease-in-out hover:bg-[#1169B0] hover:border-[#1169B0]"
-                    textClassName="text-white text-center font-dm-sans font-normal text-[12px] leading-[24px]"
+                    className="flex px-[14px] py-[10px] mt-[-12px] content-center items-center rounded-[99px] bg-[#172447] self-end transition-colors duration-450 ease-in-out hover:bg-[#1169B0] hover:border-[#1169B0]"
+                    textClassName="text-white text-center font-dm-sans font-light text-[16px] leading-[24px]"
                     onClick={handleSubmit}
                   />
                 </div>
@@ -276,10 +276,10 @@ export const ContactUs: React.FC = () => {
                 width={118}
                 height={118}
               />
-              <h3 className="font-dm-sans text-[40px] text-[#1E1E1E] font-normal font-xl font-bold mb-2 leading-[-1px]">
+              <h3 className="font-dm-sans text-[48px] text-[#1E1E1E] font-normal font-xl font-bold mb-2 leading-[-1px]">
                 Thank You!
               </h3>
-              <p className="font-dm-sans text-[20px] text-[#5D5D5D] font-normal leading-[32px]">
+              <p className="font-dm-sans text-[24px] text-[#5D5D5D] font-normal leading-[32px]">
                 We’ve received your message and will be in touch soon.
               </p>
             </div>
