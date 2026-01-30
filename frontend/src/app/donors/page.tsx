@@ -32,7 +32,7 @@ export default function Donors() {
           alt="donor hero img"
           width={646}
           height={581}
-          className="rounded-[10px]"
+          className="rounded-[10px] h-[581px] w-[646px] object-center object-cover"
         />
       </div>
       {/* How You Can Help section */}
