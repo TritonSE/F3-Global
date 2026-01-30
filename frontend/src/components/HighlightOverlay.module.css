@@ -1,5 +1,5 @@
 .overlay {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background: transparent;
   display: flex;
@@ -10,6 +10,7 @@
 }
 
 .modal {
+  /*
   position: relative;
   background: white;
   border: 1px solid var(--secondary-grey, #c7c7c7);
@@ -20,21 +21,28 @@
   overflow: hidden;
   box-shadow: 0px 17px 36px 0px rgba(0, 0, 0, 0.1);
   padding: 50px;
+  */
+  position: relative;
+  background: white;
+  display: flex;
+  padding: 50px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 50px;
+  border-radius: 10px;
+  border: 1px solid var(--secondary-grey, #c7c7c7);
+  box-shadow: 0px 17px 36px 0px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .closeButton {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  position: relative;
   width: 24px;
   height: 24px;
-  background: transparent;
-  border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
   transition: opacity 0.2s ease;
   color: var(--text-black, #1e1e1e);
 }
@@ -43,16 +51,11 @@
   opacity: 0.7;
 }
 
-.contentWrapper {
-  display: flex;
-  gap: 50px;
-  height: 100%;
-}
-
 .imageContainer {
   position: relative;
   flex-shrink: 0;
   width: 557px;
+  height: auto;
   border-radius: 10px;
   overflow: hidden;
   align-self: stretch;
@@ -66,12 +69,12 @@
 }
 
 .textContent {
-  flex: 1;
+  width: 488px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
   overflow-y: auto;
-  max-height: 100%;
 }
 
 .paragraph {
@@ -82,6 +85,7 @@
   color: var(--text-black, #1e1e1e);
   margin: 0;
   white-space: pre-wrap;
+  align-self: stretch;
 }
 
 .paragraph strong {

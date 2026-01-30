@@ -55,6 +55,25 @@ export function HighlightOverlay({ highlight, onClose }: HighlightOverlayProps) 
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        
+        <div className={styles.imageContainer}>
+          <Image
+            src={highlight.imageUrl}
+            alt={highlight.quote}
+            fill
+            className={styles.image}
+            style={{ objectFit: "cover" }}
+          />
+        </div>
+        <div className={styles.textContent}>
+          {highlight.fullTextParagraphs ? (
+            highlight.fullTextParagraphs.map((paragraph, index) =>
+              renderParagraph(paragraph, index),
+            )
+          ) : (
+            <p className={styles.paragraph}>{highlight.fullText}</p>
+          )}
+        </div>
         <button className={styles.closeButton} onClick={onClose} aria-label="Close">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path
@@ -63,26 +82,6 @@ export function HighlightOverlay({ highlight, onClose }: HighlightOverlayProps) 
             />
           </svg>
         </button>
-        <div className={styles.contentWrapper}>
-          <div className={styles.imageContainer}>
-            <Image
-              src={highlight.imageUrl}
-              alt={highlight.quote}
-              fill
-              className={styles.image}
-              style={{ objectFit: "cover" }}
-            />
-          </div>
-          <div className={styles.textContent}>
-            {highlight.fullTextParagraphs ? (
-              highlight.fullTextParagraphs.map((paragraph, index) =>
-                renderParagraph(paragraph, index),
-              )
-            ) : (
-              <p className={styles.paragraph}>{highlight.fullText}</p>
-            )}
-          </div>
-        </div>
       </div>
     </div>
   );

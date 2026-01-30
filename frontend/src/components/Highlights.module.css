@@ -1,10 +1,14 @@
 .container {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 50px;
-  padding: 50px 100px;
-  padding-bottom: 150px;
   width: 100%;
+  padding: 50px 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  border-top: 1px solid var(--Background-Grey, #f4f4f4);
+  background: var(--White, #fff);
+  /* box-shadow: 0 19px 43px 0 rgba(0, 0, 0, 0.1); */
   box-sizing: border-box;
 }
 
@@ -12,7 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 100%;
+  width: 1309px;
 }
 
 .title {
@@ -78,21 +82,17 @@
 
 .pagination {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  bottom: -80px;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 100%;
 }
 
 .paginationBar {
   width: 125px;
-  height: 4px;
+  height: 5px;
   border-radius: 2px;
-  background: var(--secondary-text-grey, #5d5d5d);
-  opacity: 0.3;
+  background: var(--secondary-grey, #c7c7c7);
   border: none;
   cursor: pointer;
   padding: 0;
