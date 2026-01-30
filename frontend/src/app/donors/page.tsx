@@ -11,7 +11,7 @@ export default function Donors() {
       <div className="flex py-[150px] px-[5vw] min-h-screen justify-between items-center w-full">
         <div className="flex w-[639px] flex-col items-start gap-[50px] shrink-0">
           <h1
-            className="text-[#1E0A0A] text-[64px]"
+            className="text-[#172447] text-[64px] leading-[110%]"
             style={{ fontFamily: '"Ethic New", sans-serif' }}
           >
             Turn $100 into a <br /> <i>Thriving</i> Business
@@ -65,8 +65,8 @@ export default function Donors() {
           </div>
         </div>
 
-        <div className="absolute flex flex-col px-[5vw] py-[75px] mt-[60px] items-start gap-[40px]">
-          <p className="text-white text-[64px]" style={{ fontFamily: '"Ethic New", sans-serif' }}>
+        <div className="absolute flex flex-col px-[5vw] py-[75px] mt-[12vh] items-start gap-[40px]">
+          <p className="text-white text-[64px] leading-[110%]" style={{ fontFamily: '"Ethic New", sans-serif' }}>
             Start Creating <br /> Impact <i>Now.</i>
           </p>
           <p className="w-[530px] text-white text-[24px]">
