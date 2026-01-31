@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 
 function NavLinks({
   isActive,
