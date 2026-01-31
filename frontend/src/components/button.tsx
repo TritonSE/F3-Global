@@ -7,10 +7,11 @@ type ButtonProps = {
   text: string;
   onClick_link?: string;
   trailingIcon?: React.ReactNode;
+  textClassName?: string;
 } & React.ComponentProps<"button">;
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ text, onClick_link, trailingIcon, onClick, ...props }, ref) => {
+  ({ text, onClick_link, trailingIcon, textClassName, onClick, ...props }, ref) => {
     const router = useRouter();
 
     const isExternal = (url: string) => /^https?:\/\//i.test(url);
@@ -49,7 +50,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className="flex items-center justify-center gap-2.5 rounded-full bg-[#172447] px-5 py-[15px] hover:opacity-90 transition-opacity"
         {...props}
       >
-        <p className="text-center font-dm-sans text-base font-semibold leading-6 text-white">
+        <p
+          className={`
+            ${textClassName} ?? "text-center font-dm-sans text-base font-semibold leading-6 text-white"
+          `}
+        >
           {text}
         </p>
         {trailingIcon}
