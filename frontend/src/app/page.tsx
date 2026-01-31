@@ -125,6 +125,7 @@ export default function Home() {
           <div className="relative left-1/2 right-1/2 flex w-screen -translate-x-1/2">
             <DonorsClientsMembersCarousel data={DonorsClientsMembersCarouselData} />
           </div>
+          <ContactUs />
         </div>
       </div>
     </>
