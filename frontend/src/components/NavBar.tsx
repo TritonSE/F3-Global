@@ -121,7 +121,7 @@ function DropdownContent() {
       <div className="flex justify-center gap-[50px]">
         <Link
           href="/donors"
-          className="group flex w-[400px] h-[411px] flex-col items-start pt-[32px] pb-[20px] gap-[30px] rounded-[10px] border-2 border-[#C7C7C7] bg-white hover:bg-[#172447] transition-all duration-300 ease-in-out"
+          className="group flex w-[400px] h-[411px] flex-col items-start pt-[32px] pb-[20px] gap-[30px] rounded-[10px] border-2 border-[#C7C7C7] bg-white hover:bg-[#172447] hover:border-[#172447] transition-all duration-300 ease-in-out"
         >
           <div className="flex flex-col items-start gap-[12px] self-stretch">
             <h3 className="px-[29px] text-[24px] font-dm font-[500] leading-[36px] tracking-[-0.48px] text-[#1E1E1E] group-hover:text-white transition-all duration-300 ease-in-out">
@@ -165,7 +165,7 @@ function DropdownContent() {
 
         <Link
           href="/members"
-          className="group flex w-[400px] h-[411px] flex-col items-start pt-[32px] pb-[20px] gap-[30px] rounded-[10px] border-2 border-[#C7C7C7] bg-white hover:bg-[#172447] transition-all duration-300 ease-in-out"
+          className="group flex w-[400px] h-[411px] flex-col items-start pt-[32px] pb-[20px] gap-[30px] rounded-[10px] border-2 border-[#C7C7C7] bg-white hover:bg-[#172447] hover:border-[#172447] transition-all duration-300 ease-in-out"
         >
           <div className="flex flex-col items-start gap-[12px] self-stretch">
             <h3 className="px-[29px] text-[24px] font-dm font-[500] leading-[36px] tracking-[-0.48px] text-[#1E1E1E] group-hover:text-white transition-all duration-300 ease-in-out">
@@ -209,7 +209,7 @@ function DropdownContent() {
 
         <Link
           href="/clients"
-          className="group flex w-[400px] h-[411px] flex-col items-start pt-[32px] pb-[20px] gap-[30px] rounded-[10px] border-2 border-[#C7C7C7] bg-white hover:bg-[#172447] transition-all duration-300 ease-in-out"
+          className="group flex w-[400px] h-[411px] flex-col items-start pt-[32px] pb-[20px] gap-[30px] rounded-[10px] border-2 border-[#C7C7C7] bg-white hover:bg-[#172447] hover:border-[#172447] transition-all duration-300 ease-in-out"
         >
           <div className="flex flex-col items-start gap-[12px] self-stretch">
             <h3 className="px-[29px] text-[24px] font-dm font-[500] leading-[36px] tracking-[-0.48px] text-[#1E1E1E] group-hover:text-white transition-all duration-300 ease-in-out">
