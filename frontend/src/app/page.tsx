@@ -5,6 +5,7 @@ import { useEffect } from "react";
 
 import { DonorsClientsMembersCarouselData } from "@/app/carouselData";
 import { Button } from "@/components/button";
+import { ContactUs } from "@/components/ContactUs";
 import { DonorsClientsMembersCarousel } from "@/components/DonorsClientsMembersCarousel";
 import { ImpactSection } from "@/components/ImpactSection";
 
@@ -76,6 +77,7 @@ export default function Home() {
                 text="become a client"
                 onClick_link="/clients"
                 className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] [&_p]:uppercase [&_p]:font-normal"
+                textClassName="text-white"
               />
               <Button
                 text="join as a member"
