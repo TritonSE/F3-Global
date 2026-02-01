@@ -93,7 +93,7 @@ export const WaysToGiveCarouselData = [
     description:
       "Double or even triple your impact through your employer's matching gift program. Companies match charitable donations dollar-for-dollar, meaning your $100 contribution becomes $200 or more for entrepreneurs in need. It's one of the easiest ways to amplify your generosity at no extra cost to you—simply make your donation, then submit a matching request through your company's HR portal or giving platform.\n\nCheck if your employer participates in matching programs, and let us know so we can help facilitate the process. Some companies even match volunteer hours with monetary donations, turning your time into additional funding for our mission. Make every dollar count twice by leveraging your company's commitment to corporate social responsibility.",
     leftButtonText: "GET STARTED",
-    leftButtonLink: "https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390",
+    leftButtonLink: "#contact",
     imageSrc: "/imgs/carousel_corporate.svg",
   },
 ];
