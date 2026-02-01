@@ -28,7 +28,7 @@ export default function Members() {
             </div>
           </div>
           <div
-            className="ml-8 rounded-[10px] overflow-hidden relative"
+            className="rounded-[10px] overflow-hidden relative"
             style={{ width: 950, height: 550 }}
           >
             <Image
