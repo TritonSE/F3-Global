@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
+import { Anchor } from "@/components/Anchor";
 import { Button } from "@/components/button";
 
 export default function About() {
@@ -18,10 +19,7 @@ export default function About() {
             Our programs offer tailored microloans and business support, ensuring that our clients
             have the knowledge and resources necessary for long-term success.
           </p>
-          <Button
-            text="JOIN US NOW"
-            onClick_link="https://my-apply.vercel.app/org/f3-global-foundation"
-          />
+          <Anchor text="JOIN US NOW" link="https://my-apply.vercel.app/org/f3-global-foundation" />
         </div>
         <div>
           <Image src="/imgs/about-us.png" alt="About us image" width={646} height={581} />

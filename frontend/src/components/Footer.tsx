@@ -23,8 +23,8 @@ export const Footer = function Footer() {
     }
   };
   return (
-    <div id="contact" className="flex flex-col items-center self-stretch py-[100px] bg-[#f4f4f4]">
-      <div className="flex w-[1313px] justify-between items-start">
+    <div className="mx-auto flex flex-col justify-center px-[5vw] py-[100px] bg-[#f4f4f4] w-full">
+      <div className="flex w-full justify-between items-center">
         <div className="flex flex-col items-start gap-[15px] ">
           <div className="flex flex-col w-[392px] h-[60px] justify-center">
             <p
