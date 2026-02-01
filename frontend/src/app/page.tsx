@@ -5,8 +5,8 @@ import { useEffect } from "react";
 
 import { DonorsClientsMembersCarouselData } from "@/app/carouselData";
 import { Button } from "@/components/button";
+import { Carousel } from "@/components/Carousel";
 import { ContactUs } from "@/components/ContactUs";
-import { DonorsClientsMembersCarousel } from "@/components/DonorsClientsMembersCarousel";
 
 export default function Home() {
   useEffect(() => {
@@ -172,8 +172,8 @@ export default function Home() {
               *Data from Jan 2026
             </p>
 
-            <div className="relative left-1/2 right-1/2 flex w-screen -translate-x-1/2">
-              <DonorsClientsMembersCarousel data={DonorsClientsMembersCarouselData} />
+            <div className="flex relative left-1/2 right-1/2 flex w-screen -translate-x-1/2">
+              <Carousel data={DonorsClientsMembersCarouselData} />
             </div>
 
             <ContactUs />
