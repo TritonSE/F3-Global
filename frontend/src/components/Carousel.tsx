@@ -61,14 +61,11 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
         </div>
       </div>
       <div className="flex w-full flex-none flex-col items-center justify-center gap-[32px] lg:min-h-[330px] lg:flex-row lg:gap-[50px]">
-        <div className="cursor-pointer">
-          <Image
-            src="/imgs/arrow_back.svg"
-            alt="Left Arrow"
-            width={45}
-            height={45}
-            onClick={prev}
-          />
+        <div
+          className="flex h-[45px] w-[45px] cursor-pointer items-center justify-center rounded-full bg-white transition-colors duration-200 hover:bg-[#F4F4F4]"
+          onClick={prev}
+        >
+          <Image src="/imgs/arrow_back.svg" alt="Left Arrow" width={13.12} height={22.5} />
         </div>
         <div>
           {currentCard && (
@@ -82,14 +79,11 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
             />
           )}
         </div>
-        <div className="cursor-pointer">
-          <Image
-            src="/imgs/arrow_forward.svg"
-            alt="Right Arrow"
-            width={45}
-            height={45}
-            onClick={next}
-          />
+        <div
+          className="flex h-[45px] w-[45px] cursor-pointer items-center justify-center rounded-full bg-white transition-colors duration-200 hover:bg-[#F4F4F4]"
+          onClick={next}
+        >
+          <Image src="/imgs/arrow_forward.svg" alt="Right Arrow" width={13.12} height={22.5} />
         </div>
       </div>
       <div className="mt-5 flex w-full flex-shrink-0 items-center justify-center gap-4">
