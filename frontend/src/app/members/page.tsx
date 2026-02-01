@@ -6,12 +6,12 @@ export default function Members() {
   return (
     <>
       <div className="bg-white overflow-x-hidden">
-        <div className="flex w-full items-center justify-between self-stretch px-[100px] h-180">
+        <div className="flex w-full items-center justify-between self-stretch px-[100px] h-[774px]">
           <div className="flex flex-col">
-            <h1 className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
+            <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
               Become <span className="italic">Part</span> of Our
             </h1>
-            <h1 className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
+            <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
               Team Today!
             </h1>
             <p className="font-dm-sans mt-5 text-[24px] font-normal leading-[32px] text-[#5D5D5D] w-[70%]">
@@ -28,8 +28,8 @@ export default function Members() {
             </div>
           </div>
           <div
-            className="rounded-[10px] overflow-hidden relative"
-            style={{ width: 950, height: 550 }}
+            className="rounded-[10px] overflow-hidden relative flex-shrink-0 flex-grow-0"
+            style={{ width: 646, height: 581 }}
           >
             <Image
               src="/imgs/members_hero.png"
@@ -48,8 +48,8 @@ export default function Members() {
         >
           <div className="flex flex-col flex-4">
             <div
-              className="ml-8 rounded-[16px] overflow-hidden absolute left-[80px] top-[40px] z-1"
-              style={{ width: 330, height: 200 }}
+              className="ml-8 rounded-[16px] overflow-hidden absolute left-[80px] top-[40px] z-1 flex-shrink-0 flex-grow-0"
+              style={{ width: 291, height: 193 }}
             >
               <Image
                 src="/imgs/members_mission_1.jpg"
@@ -60,8 +60,8 @@ export default function Members() {
               />
             </div>
             <div
-              className="rounded-[16px] overflow-hidden absolute left-[-8px] top-[145px] z-0"
-              style={{ width: 623, height: 500, background: "#172447" }}
+              className="rounded-[16px] overflow-hidden absolute left-[-8px] top-[145px] z-0 flex-shrink-0 flex-grow-0"
+              style={{ width: 643, height: 491, background: "#172447" }}
             >
               <Image
                 src="/imgs/members_mission_4.jpg"
@@ -73,8 +73,8 @@ export default function Members() {
               <div className="absolute inset-0 rounded-[16px] bg-[#172447] opacity-100 mix-blend-color pointer-events-none" />
             </div>
             <div
-              className="rounded-[16px] overflow-hidden absolute left-[500px] top-[200px] z-2 p-0 m-0"
-              style={{ width: 304, height: 372 }}
+              className="rounded-[16px] overflow-hidden absolute left-[500px] top-[200px] z-2 p-0 m-0 flex-shrink-0 flex-grow-0"
+              style={{ width: 285, height: 358 }}
             >
               <Image
                 src="/imgs/members_mission_2.jpg"
@@ -86,7 +86,7 @@ export default function Members() {
             </div>
             <div
               className="rounded-[16px] overflow-hidden absolute left-[360px] top-[530px] z-1 p-0 m-0"
-              style={{ width: 185, height: 165 }}
+              style={{ width: 192, height: 173 }}
             >
               <Image
                 src="/imgs/members_mission_3.jpg"
