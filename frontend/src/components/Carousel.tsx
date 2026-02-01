@@ -7,7 +7,7 @@ import { Button } from "./button";
 import { CarouselCard } from "./CarouselCard";
 
 type CarouselData = {
-  part: string;
+  title: string;
   header: React.ReactNode;
   description: string;
   leftButtonText: string;
@@ -44,8 +44,8 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
         <div className="flex h-[77px] w-auto items-center justify-center rounded-[50px] bg-white px-3 shadow-[0px_17px_36px_0px_rgba(0,0,0,0.1)]">
           {data.map((card, index) => (
             <Button
-              key={card.part}
-              text={card.part}
+              key={card.title}
+              text={card.title}
               onClick_link="#"
               onClick={(e) => {
                 e.preventDefault();

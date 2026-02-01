@@ -1,6 +1,6 @@
 export const DonorsClientsMembersCarouselData = [
   {
-    part: "DONORS",
+    title: "DONORS",
     header: (
       <span>
         Turn Donations Into <strong className="text-[#012060]">Opportunity.</strong>
@@ -14,7 +14,7 @@ export const DonorsClientsMembersCarouselData = [
     imageSrc: "/imgs/carousel_donors.svg",
   },
   {
-    part: "CLIENTS",
+    title: "CLIENTS",
     header: (
       <span>
         Your Businesss <strong className="text-[#012060]">Dream</strong>, Our Support.
@@ -28,7 +28,7 @@ export const DonorsClientsMembersCarouselData = [
     imageSrc: "/imgs/carousel_clients.svg",
   },
   {
-    part: "MEMBERS",
+    title: "MEMBERS",
     header: (
       <span>
         Turn Your Passion Into <strong className="text-[#012060]">Purpose.</strong>
@@ -45,7 +45,7 @@ export const DonorsClientsMembersCarouselData = [
 
 export const WaysToGiveCarouselData = [
   {
-    part: "ONE TIME",
+    title: "ONE TIME",
     header: (
       <span>
         Fund real <strong className="text-[#012060]">entrepreneurs</strong> with one gift.
@@ -58,7 +58,7 @@ export const WaysToGiveCarouselData = [
     imageSrc: "/imgs/carousel_one_time.svg",
   },
   {
-    part: "MONTHLY",
+    title: "MONTHLY",
     header: (
       <span>
         Sustain <strong className="text-[#012060]">growth</strong> with monthly support.
@@ -71,7 +71,7 @@ export const WaysToGiveCarouselData = [
     imageSrc: "/imgs/carousel_monthly.svg",
   },
   {
-    part: "PLANNED/LEGACY",
+    title: "PLANNED/LEGACY",
     header: (
       <span>
         Leave a <strong className="text-[#012060]">legacy</strong> of opportunity.
@@ -84,7 +84,7 @@ export const WaysToGiveCarouselData = [
     imageSrc: "/imgs/carousel_planned_legacy.svg",
   },
   {
-    part: "CORPORATE",
+    title: "CORPORATE",
     header: (
       <span>
         <strong className="text-[#012060]">Multiply</strong> impact through employer matching.
