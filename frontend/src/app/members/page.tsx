@@ -97,7 +97,7 @@ export default function Members() {
               />
             </div>
           </div>
-          <div className="flex flex-col items-start gap-[20px] flex-3">
+          <div className="flex flex-col items-start gap-[20px] flex-3 mr-10">
             <h2 className="text-[#172447] font-dm-sans text-[48px] font-normal leading-[150%] spacing-[-0.96px]">
               Our Mission
             </h2>
