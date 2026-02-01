@@ -27,7 +27,7 @@ export default function MeetTheTeam() {
             <h1 className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
               Without <span className="italic">Borders</span>
             </h1>
-            <p className="font-dm-sans mt-5 text-[24px] font-normal leading-[32px] text-[#5D5D5D]">
+            <p className="font-dm-sans mt-5 text-[24px] font-normal leading-[32px] text-[#5D5D5D] w-[80%]">
               Our professional team brings expertise from all over the world. Explore the clickable
               map of where our team members are from below.
             </p>
@@ -36,12 +36,13 @@ export default function MeetTheTeam() {
                 text="join our team"
                 onClick_link="https://my-apply.vercel.app/org/f3-global-foundation"
                 className="flex justify-center items-center gap-[10px] px-[24px] py-[14px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] uppercase font-normal mt-12"
+                textClassName="text-white text-normal"
               />
             </div>
           </div>
           <div
             className="ml-8 rounded-[10px] overflow-hidden relative"
-            style={{ width: 1500, height: 550 }}
+            style={{ width: 1200, height: 550 }}
           >
             <Image
               src="/imgs/space.jpg"
