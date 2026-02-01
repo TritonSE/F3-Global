@@ -52,9 +52,7 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
                 setCurrentIndex(index);
               }}
               className={`flex h-[57px] cursor-pointer items-center justify-center rounded-[99px] border-none px-6 font-dm-sans text-[18px] font-medium leading-[150%] tracking-[-0.02em] [&_p]:font-dm-sans [&_p]:text-[18px] [&_p]:font-medium [&_p]:leading-[150%] [&_p]:tracking-[-0.02em] [&_p]:text-[#1e1e1e] ${
-                currentIndex === index
-                  ? "bg-[#EDEDED] text-[#1e1e1e] opacity-100"
-                  : "bg-transparent text-[#1e1e1e] opacity-60"
+                currentIndex === index ? "bg-[#EDEDED]" : "bg-transparent"
               }`}
             />
           ))}
