@@ -21,6 +21,7 @@ export default function About() {
           <Button
             text="JOIN US NOW"
             onClick_link="https://my-apply.vercel.app/org/f3-global-foundation"
+            textClassName="text-white text-normal"
           />
         </div>
         <div>
@@ -46,7 +47,11 @@ export default function About() {
             success.
           </p>
         </div>
-        <Button text="MORE ABOUT OUR TEAM" onClick_link="/members" />
+        <Button
+          text="MORE ABOUT OUR TEAM"
+          onClick_link="/members"
+          textClassName="text-white text-normal"
+        />
       </div>
     </div>
   );
