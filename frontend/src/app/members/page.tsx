@@ -102,9 +102,9 @@ export default function Members() {
               Our Mission
             </h2>
             <p className="text-[#1E1E1E] font-dm-sans text-[24px] font-normal leading-[32px] mr-2">
-              F3 Global supports{" "}
+              F3 Global{" "}
               <span className="text-[#012060] font-bold">
-                underserved individuals and small businesses
+                supports underserved individuals and small businesses
               </span>{" "}
               by providing microfinance solutions to help launch or expand their ventures. By
               combining accessible financing with business advisory services, F3 Global aims to
