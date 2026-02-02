@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { FaqSection } from "./FaqAccordion";
+import { FaqSection } from "../../components/FaqAccordion";
 
 import { Anchor } from "@/components/Anchor";
 import { ImpactSection } from "@/components/ImpactSection";
@@ -39,7 +39,7 @@ export default function Donors() {
       {/* Client Highlights Carousel */}
       {/* Ways to Give section */}
       <ImpactSection />
-      <FaqSection />
+      <FaqSection page="donors" />
       <div className="w-full h-[767px] flex">
         <div className="w-full h-[767px] flex overflow-hidden bg-[#172447] justify-end">
           <div
