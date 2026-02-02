@@ -46,7 +46,11 @@ export default function Parallax() {
   return (
     <Background style={{ minHeight: totalHeight }}>
       {parallaxSections.map((section) => (
-        <div key={section.number} className="h-screen flex items-center">
+        <div
+          key={section.number}
+          id={`step-${section.number}`}
+          className="h-screen flex items-center"
+        >
           <div className="box-border pr-[17.85%] pl-[43.32%] w-full">
             <h1 className="text-white font-['Ethic_New'] text-[64px] font-light leading-[110%] pb-[10px]">
               {section.number}. {section.title1} <i>{section.title2}</i>
