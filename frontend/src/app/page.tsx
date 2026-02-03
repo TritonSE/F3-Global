@@ -7,6 +7,7 @@ import { DonorsClientsMembersCarouselData } from "@/app/carouselData";
 import { Button } from "@/components/button";
 import { ContactUs } from "@/components/ContactUs";
 import { DonorsClientsMembersCarousel } from "@/components/DonorsClientsMembersCarousel";
+import { Highlights } from "@/components/Highlights";
 import { ImpactSection } from "@/components/ImpactSection";
 
 export default function Home() {
@@ -125,6 +126,7 @@ export default function Home() {
           <div className="relative left-1/2 right-1/2 flex w-screen -translate-x-1/2">
             <DonorsClientsMembersCarousel data={DonorsClientsMembersCarouselData} />
           </div>
+          <Highlights />
           <ContactUs />
         </div>
       </div>
