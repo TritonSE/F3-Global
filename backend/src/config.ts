@@ -15,5 +15,8 @@ const FRONTEND_ORIGIN = throwIfUndefined(
   process.env.FRONTEND_ORIGIN,
   InternalError.NO_FRONTEND_ORIGIN,
 );
-
-export { FRONTEND_ORIGIN, MONGO_URI, PORT };
+const SERVICE_ACCOUNT_KEY = throwIfUndefined(
+  process.env.SERVICE_ACCOUNT_KEY,
+  InternalError.NO_SERVICE_ACCOUNT_KEY,
+);
+export { FRONTEND_ORIGIN, MONGO_URI, PORT, SERVICE_ACCOUNT_KEY };
