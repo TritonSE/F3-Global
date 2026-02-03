@@ -22,7 +22,7 @@ export type Highlight = {
 const highlights: Highlight[] = [
   {
     id: "1",
-    imageUrl: "/highlights/highlight-1.png",
+    imageUrl: "/imgs/highlights/highlight-1.png",
     quote: "...there is a desert snack for everyone...",
     previewText: "Rule Breaker Snacks is challenging what normal desserts are considered...",
     fullText:
@@ -43,7 +43,7 @@ const highlights: Highlight[] = [
   },
   {
     id: "2",
-    imageUrl: "/highlights/highlight-2.png",
+    imageUrl: "/imgs/highlights/highlight-2.png",
     quote: "...lorem ipsum dolor sit amet, consectetur.",
     previewText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod...",
     fullText:
@@ -51,7 +51,7 @@ const highlights: Highlight[] = [
   },
   {
     id: "3",
-    imageUrl: "/highlights/highlight-3.png",
+    imageUrl: "/imgs/highlights/highlight-3.png",
     quote: "...lorem ipsum dolor sit amet, consectetur.",
     previewText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod...",
     fullText:
@@ -98,7 +98,7 @@ export function Highlights() {
           onClick={handlePrevious}
           aria-label="Previous highlight"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <svg width="45" height="45" viewBox="0 0 24 24" fill="none">
             <path
               d="M15.41 7.41L14 6L8 12L14 18L15.41 16.59L10.83 12L15.41 7.41Z"
               fill="currentColor"
@@ -128,7 +128,7 @@ export function Highlights() {
         )}
 
         <button className={styles.navButton} onClick={handleNext} aria-label="Next highlight">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <svg width="45" height="45" viewBox="0 0 24 24" fill="none">
             <path
               d="M8.59 16.59L10 18L16 12L10 6L8.59 7.41L13.17 12L8.59 16.59Z"
               fill="currentColor"
