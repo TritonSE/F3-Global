@@ -2,8 +2,6 @@
 
 import React, { useState } from "react";
 
-import styles from "./Highlights.module.css";
-
 import { HighlightCard } from "@/components/HighlightCard";
 import { HighlightOverlay } from "@/components/HighlightOverlay";
 
@@ -34,7 +32,7 @@ const highlights: Highlight[] = [
       },
       {
         text: "Behind the scenes, Rule Breaker is operated passionately on the foundation that there is a desert snack for everyone, while the brand keeps strong creative control over recipes and quality. You'll find them online and in thousands of grocery doors nationwide, giving proof that better-for-you can also be great in taste.",
-        boldSegments: [{ start: 88, end: 127 }], // "there is a desert snack for everyone"
+        boldSegments: [{ start: 80, end: 116 }], // "there is a desert snack for everyone"
       },
       {
         text: "We're proud to feature Rule Breaker Snacks for their simple ingredient decks, inclusive approach to snacking, and a product experience that strives for great taste, because the best rule to break is the one that says you have to choose between better and delicious.",
@@ -87,14 +85,16 @@ export function Highlights() {
   };
 
   return (
-    <section className={styles.container}>
-      <div className={styles.header}>
-        <h2 className={styles.title}>Client Highlights</h2>
+    <section className="relative flex w-full flex-col items-center gap-[50px] border-t border-[#f4f4f4] bg-white py-[50px] box-border">
+      <div className="flex w-[1309px] items-center justify-start">
+        <h2 className="font-dm-sans text-[48px] font-medium leading-[150%] tracking-[-0.96px] text-[#172447]">
+          Client Highlights
+        </h2>
       </div>
 
-      <div className={styles.content}>
+      <div className="relative flex w-full items-center justify-center gap-[38px]">
         <button
-          className={styles.navButton}
+          className="flex h-[45px] w-[45px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[99px] bg-white p-0 text-[#1e1e1e] transition-all duration-200 ease-in-out hover:bg-[#f4f4f4] active:scale-95"
           onClick={handlePrevious}
           aria-label="Previous highlight"
         >
@@ -106,7 +106,7 @@ export function Highlights() {
           </svg>
         </button>
 
-        <div className={styles.cardsContainer}>
+        <div className="flex items-center justify-center gap-[30px]">
           {getVisibleHighlights().map((highlightIndex, position) => {
             const highlight = highlights[highlightIndex];
             const isActive = highlightIndex === currentIndex;
@@ -127,7 +127,11 @@ export function Highlights() {
           <HighlightOverlay highlight={selectedHighlight} onClose={handleCloseOverlay} />
         )}
 
-        <button className={styles.navButton} onClick={handleNext} aria-label="Next highlight">
+        <button
+          className="flex h-[45px] w-[45px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[99px] bg-white p-0 text-[#1e1e1e] transition-all duration-200 ease-in-out hover:bg-[#f4f4f4] active:scale-95"
+          onClick={handleNext}
+          aria-label="Next highlight"
+        >
           <svg width="45" height="45" viewBox="0 0 24 24" fill="none">
             <path
               d="M8.59 16.59L10 18L16 12L10 6L8.59 7.41L13.17 12L8.59 16.59Z"
@@ -137,11 +141,13 @@ export function Highlights() {
         </button>
       </div>
 
-      <div className={styles.pagination}>
+      <div className="flex w-full items-center justify-center gap-[10px]">
         {highlights.map((_, index) => (
           <button
             key={index}
-            className={`${styles.paginationBar} ${index === currentIndex ? styles.active : ""}`}
+            className={`h-[5px] w-[125px] rounded-[2px] border-0 p-0 transition-all duration-200 ease-in-out ${
+              index === currentIndex ? "bg-[#172447] opacity-100" : "bg-[#c7c7c7] hover:opacity-50"
+            }`}
             onClick={() => setCurrentIndex(index)}
             aria-label={`Go to highlight ${index + 1}`}
           />
