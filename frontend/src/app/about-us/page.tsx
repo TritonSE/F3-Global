@@ -44,7 +44,11 @@ export default function About() {
             success.
           </p>
         </div>
-        <Button text="MORE ABOUT OUR TEAM" onClick_link="/members" />
+        <Button
+          text="MORE ABOUT OUR TEAM"
+          onClick_link="/members"
+          textClassName="text-white text-normal"
+        />
       </div>
     </div>
   );
