@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -8,8 +7,8 @@ import { DonorsClientsMembersCarouselData } from "@/app/carouselData";
 import { Button } from "@/components/button";
 import { ContactUs } from "@/components/ContactUs";
 import { DonorsClientsMembersCarousel } from "@/components/DonorsClientsMembersCarousel";
-import { ImpactSection } from "@/components/ImpactSection";
 import { Highlights } from "@/components/Highlights";
+import { ImpactSection } from "@/components/ImpactSection";
 
 export default function Home() {
   useEffect(() => {

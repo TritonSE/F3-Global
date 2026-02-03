@@ -81,9 +81,9 @@
 .card.inactive .quoteIcon {
   width: 41.24px;
   height: 41.24px;
-  font-size: 41.24px;
+  font-size: 66px;
   right: 11px;
-  bottom: 11px;
+  top: 176px;
 }
 
 .imageContainer {
@@ -113,7 +113,7 @@
 .quoteIcon {
   position: absolute;
   right: 16px;
-  bottom: 16px;
+  top: 256px;
   width: 60px;
   height: 60px;
   display: flex;
@@ -121,12 +121,15 @@
   background: var(--f3-blue, #172447);
   border-radius: 50%;
   font-family: "Ethic New", "Times New Roman", Times, serif;
-  font-size: 60px;
+  font-size: 96px;
   font-weight: 300;
   color: white;
+  line-height: 1.2;
+  transform: translateY(-50%);
 }
 
 .content {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 24px;
