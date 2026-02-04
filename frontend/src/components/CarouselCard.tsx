@@ -21,12 +21,12 @@ export const CarouselCard: React.FC<CarouselCardProps> = ({
   imageSrc,
 }) => {
   return (
-    <div className="flex w-full flex-col items-center gap-[32px] lg:flex-row lg:items-stretch lg:gap-[55px]">
-      <div className="flex h-auto w-full max-w-[564px] flex-[1_0_0] flex-col items-start gap-[30px] lg:min-h-[330px]">
-        <div className="flex-wrap font-dm-sans text-[48px] font-medium leading-[150%] tracking-[-0.96px] text-[#1e1e1e]">
+    <div className="flex w-full flex-col gap-[20px] lg:flex-row lg:items-stretch">
+      <div className="flex h-auto w-full max-w-[1512px] flex-[1_0_0] flex-col items-start gap-[30px] lg:min-h-[330px]">
+        <div className="flex-wrap font-dm-sans text-[48px] font-normal font-bold leading-[150%] tracking-[-0.96px] text-[#1e1e1e]">
           {header}
         </div>
-        <div className="h-max font-dm-sans text-base font-normal leading-6 text-[#5d5d5d] whitespace-pre-line">
+        <div className="h-max font-dm-sans text-[16px] font-normal leading-[150%] text-[#5d5d5d] whitespace-pre-line tracking-[-0.1px]">
           {description}
         </div>
         <div className="flex items-start gap-[25px] mt-auto">
@@ -60,7 +60,7 @@ export const CarouselCard: React.FC<CarouselCardProps> = ({
           width={0}
           height={0}
           sizes="100vw"
-          className="h-auto w-full"
+          className="h-max w-full stretch-object"
         />
       </div>
     </div>
