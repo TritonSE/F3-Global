@@ -7,6 +7,8 @@ import { DonorsClientsMembersCarouselData } from "@/app/carouselData";
 import { Button } from "@/components/button";
 import { Carousel } from "@/components/Carousel";
 import { ContactUs } from "@/components/ContactUs";
+import { Highlights } from "@/components/Highlights";
+import { ImpactSection } from "@/components/ImpactSection";
 
 export default function Home() {
   useEffect(() => {
@@ -106,7 +108,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="relative z-20 w-full mt-20 px-[5vw] flex flex-col items-center">
+          <div className="relative z-20 w-full mt-20 px-[5vw] flex flex-col items-center mb-20">
             <h2 className="text-[#172447] text-[96px] leading-[1.5] font-ethic font-light italic mb-12">
               Mission
             </h2>
@@ -177,7 +179,10 @@ export default function Home() {
             </div>
 
             <ContactUs />
+            <ImpactSection />
           </div>
+          <Highlights />
+          <ContactUs />
         </div>
       </div>
     </>
