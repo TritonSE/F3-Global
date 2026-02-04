@@ -64,7 +64,7 @@ export function HighlightOverlay({ highlight, onClose }: HighlightOverlayProps) 
       onClick={onClose}
     >
       <div
-        className="relative flex min-h-[450px] items-start justify-center gap-[50px] overflow-hidden rounded-[10px] border border-[#c7c7c7] bg-white p-[50px] shadow-[0px_17px_36px_0px_rgba(0,0,0,0.1)]"
+        className="relative flex min-h-[612px] items-start justify-center gap-[50px] overflow-hidden rounded-[10px] border border-[#c7c7c7] bg-white p-[50px] shadow-[0px_17px_36px_0px_rgba(0,0,0,0.1)]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative w-[557px] flex-shrink-0 self-stretch overflow-hidden rounded-[10px]">
