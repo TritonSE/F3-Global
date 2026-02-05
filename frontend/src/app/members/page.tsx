@@ -116,6 +116,62 @@ export default function Members() {
           </div>
         </div>
       </div>
+      <div className="flex flex-col w-full py-[50px] px-[100px] gap-[10px] border-t border-[#F4F4F4]">
+        <h1 className="text-[48px] font-medium self-stretch text-[#172447]">
+          Who We're Looking For
+        </h1>
+        <div className="inline-flex flex-row gap-[50px] justify-center">
+          <div className="flex flex-col w-[333px] h-max items-center">
+            <div className="flex w-[120px] h-[120px] items-center justify-center rounded-[60px] bg-[#012060] relative z-10 -mb-[50px]">
+              <Image src="/imgs/ic_goal.svg" alt="Goal Icon" width={60} height={60} />
+            </div>
+            <div className="flex flex-col w-[333px] h-[278px] pt-[60px] pb-[20px] px-[50px] items-center justify-center gap-[20px] rounded-[10px] bg-[#F4F4F4]">
+              <h2 className=" self-center text-center self-stretch text-[#s1E1E1E] font-dm-sans text-[32px] font-bold leading-[150%] tracking-[-0.46px]">
+                Commitment to the Mission
+              </h2>
+              <p className="text-center">
+                Demonstrated interest in and alignment with F3's values and goals.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col w-[333px] h-max items-center">
+            <div className="flex w-[120px] h-[120px] items-center justify-center rounded-[60px] bg-[#012060] relative z-10 -mb-[50px]">
+              <Image src="/imgs/ic_goal.svg" alt="Goal Icon" width={60} height={60} />
+            </div>
+            <div className="flex flex-col w-[333px] h-[278px] pt-[60px] pb-[20px] px-[50px] items-center justify-center gap-[20px] rounded-[10px] bg-[#F4F4F4]">
+              <h2 className=" self-center text-center self-stretch text-[#s1E1E1E] font-dm-sans text-[32px] font-bold leading-[150%] tracking-[-0.46px]">
+                Availability & Reliability
+              </h2>
+              <p className="text-center">
+                Ability to commit the required time and participate consistently.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col w-[333px] h-max items-center">
+            <div className="flex w-[120px] h-[120px] items-center justify-center rounded-[60px] bg-[#012060] relative z-10 -mb-[50px]">
+              <Image src="/imgs/ic_goal.svg" alt="Goal Icon" width={60} height={60} />
+            </div>
+            <div className="flex flex-col w-[333px] h-[278px] pt-[60px] pb-[20px] px-[50px] items-center justify-center gap-[20px] rounded-[10px] bg-[#F4F4F4]">
+              <h2 className=" self-center text-center self-stretch text-[#s1E1E1E] font-dm-sans text-[32px] font-bold leading-[150%] tracking-[-0.46px]">
+                Respectful Collaboration
+              </h2>
+              <p className="text-center">
+                Willingness to work respectfully with diverse communities and members.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col w-full py-[50px] px-[100px] gap-[10px] border-t border-[#F4F4F4]">
+        <h1 className="text-[48px] font-medium self-stretch text-[#172447]">
+          How You Get Involved
+        </h1>
+        <div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
       <FaqSection page="members" />
     </>
   );
