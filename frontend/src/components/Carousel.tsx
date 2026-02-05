@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Button } from "./button";
 import { CarouselCard } from "./CarouselCard";
@@ -22,6 +22,18 @@ type CarouselProps = {
 
 export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (data.length < 2) return;
+
+    const nextIndex = (currentIndex + 1) % data.length;
+    const prevIndex = (currentIndex - 1 + data.length) % data.length;
+
+    [nextIndex, prevIndex].forEach((index) => {
+      const image = new window.Image();
+      image.src = data[index].imageSrc;
+    });
+  }, [currentIndex, data]);
 
   const next = () => {
     if (data.length === 0) return;

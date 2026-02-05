@@ -21,19 +21,19 @@ export const CarouselCard: React.FC<CarouselCardProps> = ({
   imageSrc,
 }) => {
   return (
-    <div className="flex w-full flex-col gap-[20px] lg:flex-row lg:items-stretch">
-      <div className="flex h-auto w-full max-w-[1512px] flex-[1_0_0] flex-col items-start gap-[30px] lg:min-h-[330px]">
+    <div className="flex w-full flex-col gap-[20px] lg:flex-row lg:items-stretch lg:gap-[40px]">
+      <div className="flex w-full flex-col gap-[20px] lg:min-h-[330px] lg:w-1/2">
         <div className="flex-wrap font-dm-sans text-[48px] font-normal font-bold leading-[150%] tracking-[-0.96px] text-[#1e1e1e]">
           {header}
         </div>
-        <div className="h-max font-dm-sans text-[16px] font-normal leading-[150%] text-[#5d5d5d] whitespace-pre-line tracking-[-0.1px]">
+        <div className="font-dm-sans text-[16px] font-normal leading-[150%] text-[#5d5d5d] whitespace-pre-line tracking-[-0.1px] my-auto">
           {description}
         </div>
-        <div className="flex items-start gap-[25px] mt-auto">
+        <div className="flex items-center gap-[25px]">
           <Button
             text={leftButtonText}
             onClick_link={leftButtonLink}
-            className="flex h-[54px] w-auto cursor-pointer items-center justify-center gap-2.5 rounded-[99px] border-none bg-[#172447] px-5 py-[15px] font-dm-sans text-base font-semibold leading-[150%] text-white transition-colors duration-450 ease-in-out hover:bg-[#1169B0] whitespace-nowrap"
+            className="flex h-[54px] w-auto cursor-pointer items-center justify-center gap-2.5 rounded-[99px] border-none bg-[#172447] px-5 py-[15px] font-dm-sans text-base font-normal leading-[150%] text-white transition-colors duration-450 ease-in-out hover:bg-[#1169B0] whitespace-nowrap"
           />
           {rightButtonLink && (
             <Button
@@ -53,14 +53,14 @@ export const CarouselCard: React.FC<CarouselCardProps> = ({
           )}
         </div>
       </div>
-      <div className="flex-1 w-full">
+      <div className="relative w-full lg:w-1/2">
         <Image
           src={imageSrc}
           alt="Carousel Image"
           width={0}
           height={0}
           sizes="100vw"
-          className="h-max w-full stretch-object"
+          className="h-full w-full object-cover rounded-[10px]"
         />
       </div>
     </div>
