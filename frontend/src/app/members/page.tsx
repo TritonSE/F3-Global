@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { Button } from "@/components/button";
+import { FaqSection } from "@/components/FaqAccordion";
 
 export default function Members() {
   return (
@@ -115,6 +116,7 @@ export default function Members() {
           </div>
         </div>
       </div>
+      <FaqSection page="members" />
     </>
   );
 }
