@@ -1,15 +1,74 @@
-import React from "react";
+"use client";
+import { useEffect, useRef, useState } from "react";
 
-const Background = ({ children }: { children: React.ReactNode }) => (
-  <div className="relative top-0 left-0 w-screen h-screen overflow-y-scroll bg-[url('/imgs/donors.png')] bg-cover bg-repeat">
-    {/* Text background layer (fixed to viewport) */}
-    <div className="pointer-events-none select-none fixed inset-0 z-0 flex h-screen pt-[200px] pl-[100px] text-white text-center font-['DM_Sans'] text-[48px] font-medium leading-[150%] tracking-[-0.96px]">
-      <span>How You Can Help</span>
+type BackgroundProps = {
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+};
+
+const Background = ({ children, style }: BackgroundProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const [isLocked, setIsLocked] = useState(false);
+  const [lockedTop, setLockedTop] = useState(0);
+
+  useEffect(() => {
+    const step5Element = document.getElementById("step-5");
+    if (!step5Element || !containerRef.current) return;
+
+    const handleScroll = () => {
+      const step5Rect = step5Element.getBoundingClientRect();
+      const titleOffset = 200;
+
+      if (step5Rect.top <= titleOffset && !isLocked) {
+        const containerRect = containerRef.current!.getBoundingClientRect();
+        const titleElement = titleRef.current;
+
+        if (titleElement) {
+          const titleRect = titleElement.getBoundingClientRect();
+          const relativeTop = titleRect.top - containerRect.top;
+          setLockedTop(relativeTop);
+          setIsLocked(true);
+        }
+      } else if (step5Rect.top > window.innerHeight && isLocked) {
+        setIsLocked(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isLocked]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative w-full bg-[url('/imgs/donors.png')] bg-cover bg-no-repeat bg-center"
+      style={{
+        backgroundAttachment: "fixed",
+        ...style,
+      }}
+    >
+      <div
+        style={{
+          position: isLocked ? "absolute" : "sticky",
+          top: isLocked ? lockedTop : 0,
+          height: isLocked ? "auto" : "0",
+          zIndex: 10,
+        }}
+      >
+        <div
+          ref={titleRef}
+          className="pointer-events-none select-none flex text-white text-center font-['DM_Sans'] text-[48px] font-medium leading-[150%] tracking-[-0.96px] pt-[200px] pl-[100px]"
+        >
+          <span>How You Can Help</span>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="relative z-20">{children}</div>
     </div>
-
-    {/* Content */}
-    <div className="relative z-10">{children}</div>
-  </div>
-);
+  );
+};
 
 export default Background;

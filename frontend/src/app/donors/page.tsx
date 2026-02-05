@@ -1,8 +1,8 @@
 import Image from "next/image";
-
-import { FaqSection } from "../../components/FaqAccordion";
+import Parallax from "./parallax";
 
 import { Anchor } from "@/components/Anchor";
+import { FaqSection } from "@/components/FaqAccordion";
 import { ImpactSection } from "@/components/ImpactSection";
 
 export default function Donors() {
@@ -35,6 +35,7 @@ export default function Donors() {
           className="rounded-[10px] h-[581px] w-[646px] object-center object-cover"
         />
       </div>
+      <Parallax />
       {/* How You Can Help section */}
       {/* Client Highlights Carousel */}
       {/* Ways to Give section */}
