@@ -1,20 +1,76 @@
+"use client";
+
+import countriesInfo from "i18n-iso-countries";
+import enLocale from "i18n-iso-countries/langs/en.json";
 import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
 
 import type { CountryData } from "@/components/InteractiveWorldMap";
 
 import { Button } from "@/components/button";
+import { CountrySection } from "@/components/CountrySection";
 import { InteractiveWorldMap } from "@/components/InteractiveWorldMap";
 
+countriesInfo.registerLocale(enLocale);
+
+export type Member = {
+  _id: string;
+  name: string;
+  location: string;
+  role: string;
+  linkedin: string;
+  email: string;
+  headshot: string;
+};
+
 export default function MeetTheTeam() {
-  const countryData: CountryData[] = [
-    { code: "USA", name: "United States", employeeCount: 5 },
-    { code: "CAN", name: "Canada", employeeCount: 1 },
-    { code: "AUS", name: "Australia", employeeCount: 1 },
-    { code: "ESP", name: "Spain", employeeCount: 1 },
-    { code: "ITA", name: "Italy", employeeCount: 1 },
-    { code: "CHN", name: "China", employeeCount: 1 },
-    { code: "IND", name: "India", employeeCount: 1 },
-  ];
+  const [members, setMembers] = useState<Member[]>([]);
+
+  useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8080";
+        const res = await fetch(`${backendUrl}/api/team-members`);
+
+        if (!res.ok) throw new Error("Failed to fetch team members");
+
+        const data = (await res.json()) as Member[];
+        setMembers(data);
+      } catch (error) {
+        console.error("Error loading members:", error);
+      }
+    };
+
+    void fetchMembers();
+  }, []);
+
+  const membersByCountry = useMemo(() => {
+    return members.reduce(
+      (acc, member) => {
+        const country = member.location.trim();
+        if (!acc[country]) {
+          acc[country] = [];
+        }
+        acc[country].push(member);
+        return acc;
+      },
+      {} as Record<string, Member[]>,
+    );
+  }, [members]);
+
+  const countryData: CountryData[] = useMemo(() => {
+    return Object.keys(membersByCountry).map((countryName) => {
+      const code = countriesInfo.getAlpha3Code(countryName, "en");
+
+      return {
+        code: code || "UNKNOWN",
+        name: countryName,
+        employeeCount: membersByCountry[countryName].length,
+      };
+    });
+  }, [membersByCountry]);
+
+  const countries = Object.keys(membersByCountry).sort((a, b) => a.localeCompare(b));
 
   return (
     <>
@@ -53,8 +109,29 @@ export default function MeetTheTeam() {
             />
           </div>
         </div>
-        <div className="border-t border-[#F4F4F4] shadow-[0_19px_43px_0_rgba(0,0,0,0.10)]">
+        <div
+          id="world-map-section"
+          className="border-t border-[#F4F4F4] shadow-[0_19px_43px_0_rgba(0,0,0,0.10)]"
+        >
           <InteractiveWorldMap data={countryData} />
+        </div>
+        <div className="flex flex-col px-[100px] pt-[50px] pb-[20px] items-start gap-[50px] self-stretch">
+          <h2 className="font-dm-sans text-[48px] font-normal text-[#172447] leading-[150%] tracking-[-0.96px]">
+            Our Team Around the World
+          </h2>
+        </div>
+        <div className="pb-32 flex flex-col gap-10">
+          {countries.map((countryName) => {
+            const code = countriesInfo.getAlpha3Code(countryName, "en") || "UNKNOWN";
+            return (
+              <CountrySection
+                key={countryName}
+                id={`members-${code}`}
+                countryName={countryName}
+                members={membersByCountry[countryName]}
+              />
+            );
+          })}
         </div>
       </div>
     </>
