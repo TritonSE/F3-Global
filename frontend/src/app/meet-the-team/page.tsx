@@ -120,7 +120,7 @@ export default function MeetTheTeam() {
             Our Team Around the World
           </h2>
         </div>
-        <div className="pb-32 flex flex-col gap-10">
+        <div className="pb-[50px] flex flex-col">
           {countries.map((countryName) => {
             const code = countriesInfo.getAlpha3Code(countryName, "en") || "UNKNOWN";
             return (

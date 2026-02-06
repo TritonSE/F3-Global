@@ -83,6 +83,14 @@ const sampleMembers = [
     headshot: "/imgs/donorHero.png",
   },
   {
+    name: "Jeff Antony",
+    location: "Spain",
+    role: "UX Designer",
+    linkedin: "https://linkedin.com/in/johndoe",
+    email: "john@example.com",
+    headshot: "/imgs/donorHero.png",
+  },
+  {
     name: "Alice Guo",
     location: "Australia",
     role: "UX Designer",

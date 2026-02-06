@@ -36,7 +36,7 @@ export const CountrySection: React.FC<CountrySectionProps> = ({ id, countryName,
     <>
       <div
         id={id}
-        className="flex flex-col py-[10px] px-[100px] items-start gap-[20px] self-stretch scroll-mt-18 bg-white"
+        className="flex flex-col py-[10px] px-[100px] items-start gap-[20px] self-stretch scroll-mt-34 bg-white"
       >
         <div className="flex flex-col py-[50px] px-0 items-start gap-[50px] self-stretch rounded-[10px] bg-[#F4F4F4]">
           <div className="flex py-0 px-[50px] justify-between items-start self-stretch">
