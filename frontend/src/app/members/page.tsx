@@ -136,7 +136,7 @@ export default function Members() {
           </div>
           <div className="flex flex-col w-[333px] h-max items-center">
             <div className="flex w-[120px] h-[120px] items-center justify-center rounded-[60px] bg-[#012060] relative z-10 -mb-[50px]">
-              <Image src="/imgs/ic_goal.svg" alt="Goal Icon" width={60} height={60} />
+              <Image src="/imgs/ic_time.svg" alt="Goal Icon" width={60} height={60} />
             </div>
             <div className="flex flex-col w-[333px] h-[278px] pt-[60px] pb-[20px] px-[50px] items-center justify-center gap-[20px] rounded-[10px] bg-[#F4F4F4]">
               <h2 className=" self-center text-center self-stretch text-[#s1E1E1E] font-dm-sans text-[32px] font-bold leading-[150%] tracking-[-0.46px]">
@@ -149,7 +149,7 @@ export default function Members() {
           </div>
           <div className="flex flex-col w-[333px] h-max items-center">
             <div className="flex w-[120px] h-[120px] items-center justify-center rounded-[60px] bg-[#012060] relative z-10 -mb-[50px]">
-              <Image src="/imgs/ic_goal.svg" alt="Goal Icon" width={60} height={60} />
+              <Image src="/imgs/ic_collab.svg" alt="Goal Icon" width={60} height={60} />
             </div>
             <div className="flex flex-col w-[333px] h-[278px] pt-[60px] pb-[20px] px-[50px] items-center justify-center gap-[20px] rounded-[10px] bg-[#F4F4F4]">
               <h2 className=" self-center text-center self-stretch text-[#s1E1E1E] font-dm-sans text-[32px] font-bold leading-[150%] tracking-[-0.46px]">
@@ -162,14 +162,173 @@ export default function Members() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col w-full py-[50px] px-[100px] gap-[10px] border-t border-[#F4F4F4]">
-        <h1 className="text-[48px] font-medium self-stretch text-[#172447]">
+      <div className="flex flex-col w-full py-[50px] gap-[10px] border-t border-[#F4F4F4]">
+        <h1 className="px-[100px] text-[48px] font-medium self-stretch text-[#172447] mb-[60px]">
           How You Get Involved
         </h1>
-        <div>
-          <div></div>
-          <div></div>
-          <div></div>
+        <div className="flex flex-col relative">
+          <div className="relative h-[108px] mb-[-40px] max-w-[1097px] mx-auto w-full">
+            <div className="absolute left-[86.5px] top-0 w-[264px] h-[108px] text-[#A5D0F2]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="264"
+                height="110"
+                viewBox="0 0 264 110"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 109.978V12C2 6.4687 6.49041 1.98803 12.0217 2.00005L222.022 2.45651C227.536 2.46849 232 6.94212 232 12.4565V43.4783"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <g transform="translate(200.5 2.5)">
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M16.5188 24.3938C17.544 23.3687 19.206 23.3687 20.2312 24.3938L31.5 35.6627L42.7688 24.3938C43.794 23.3687 45.456 23.3687 46.4812 24.3938C47.5063 25.419 47.5063 27.081 46.4812 28.1062L33.3562 41.2312C32.331 42.2563 30.669 42.2563 29.6438 41.2312L16.5188 28.1062C15.4937 27.081 15.4937 25.419 16.5188 24.3938Z"
+                    fill="currentColor"
+                  />
+                </g>
+                <g transform="translate(200.5 14.5)">
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M16.5188 24.3938C17.544 23.3687 19.206 23.3687 20.2312 24.3938L31.5 35.6627L42.7688 24.3938C43.794 23.3687 45.456 23.3687 46.4812 24.3938C47.5063 25.419 47.5063 27.081 46.4812 28.1062L33.3562 41.2312C32.331 42.2563 30.669 42.2563 29.6438 41.2312L16.5188 28.1062C15.4937 27.081 15.4937 25.419 16.5188 24.3938Z"
+                    fill="currentColor"
+                  />
+                </g>
+              </svg>
+            </div>
+            <div className="absolute left-[546.5px] top-0 w-[264px] h-[108px] text-[#A5D0F2]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="264"
+                height="110"
+                viewBox="0 0 264 110"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 109.978V12C2 6.4687 6.49041 1.98803 12.0217 2.00005L222.022 2.45651C227.536 2.46849 232 6.94212 232 12.4565V43.4783"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <g transform="translate(200.5 2.5)">
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M16.5188 24.3938C17.544 23.3687 19.206 23.3687 20.2312 24.3938L31.5 35.6627L42.7688 24.3938C43.794 23.3687 45.456 23.3687 46.4812 24.3938C47.5063 25.419 47.5063 27.081 46.4812 28.1062L33.3562 41.2312C32.331 42.2563 30.669 42.2563 29.6438 41.2312L16.5188 28.1062C15.4937 27.081 15.4937 25.419 16.5188 24.3938Z"
+                    fill="currentColor"
+                  />
+                </g>
+                <g transform="translate(200.5 14.5)">
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M16.5188 24.3938C17.544 23.3687 19.206 23.3687 20.2312 24.3938L31.5 35.6627L42.7688 24.3938C43.794 23.3687 45.456 23.3687 46.4812 24.3938C47.5063 25.419 47.5063 27.081 46.4812 28.1062L33.3562 41.2312C32.331 42.2563 30.669 42.2563 29.6438 41.2312L16.5188 28.1062C15.4937 27.081 15.4937 25.419 16.5188 24.3938Z"
+                    fill="currentColor"
+                  />
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div className="flex flex-row items-center justify-between max-w-[1097px] mx-auto w-full relative z-10">
+            <div
+              className="absolute top-1/2 right-full -translate-y-1/2 h-[4px] w-[max(0px,calc((100vw-1097px)/2))] bg-[#A5D0F2]"
+              aria-hidden="true"
+            />
+            <div
+              className="absolute top-1/2 left-full -translate-y-1/2 h-[4px] w-[max(0px,calc((100vw-1097px)/2))] bg-[#A5D0F2]"
+              aria-hidden="true"
+            />
+            <div className="flex w-[177px] h-[76px] bg-[#172447] text-dm-sans text-[24px] font-semibold leading-[150%] text-white items-center justify-center rounded-[10px]">
+              Apply
+            </div>
+            <div className="flex w-[177px] h-[76px] bg-[#FFFFFF] text-dm-sans text-[24px] font-semibold leading-[150%] text-[#172447] border-[#172447] border-4 items-center justify-center rounded-[10px]">
+              Review
+            </div>
+            <div className="flex w-[177px] h-[76px] bg-[#172447] text-dm-sans text-[24px] font-semibold leading-[150%] text-white items-center justify-center rounded-[10px]">
+              Interview
+            </div>
+            <div className="flex w-[177px] h-[76px] bg-[#FFFFFF] text-dm-sans text-[24px] font-semibold leading-[150%] text-[#172447] border-[#172447] border-4 items-center justify-center rounded-[10px]">
+              Decision
+            </div>
+            <div className="flex w-[177px] h-[76px] bg-[#172447] text-dm-sans text-[24px] font-semibold leading-[150%] text-white items-center justify-center rounded-[10px]">
+              Onboarding
+            </div>
+          </div>
+          <div className="relative h-[108px] max-w-[1097px] mx-auto w-full mt-[-40px]">
+            <div className="absolute left-[316.5px] top-0 w-[264px] h-[108px] text-[#A5D0F2]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="264"
+                height="110"
+                viewBox="0 0 264 110"
+                fill="none"
+                aria-hidden="true"
+              >
+                <g transform="translate(0, 110) scale(1, -1)">
+                  <path
+                    d="M2 109.978V12C2 6.4687 6.49041 1.98803 12.0217 2.00005L222.022 2.45651C227.536 2.46849 232 6.94212 232 12.4565V43.4783"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <g transform="translate(200.5 2.5)">
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M16.5188 24.3938C17.544 23.3687 19.206 23.3687 20.2312 24.3938L31.5 35.6627L42.7688 24.3938C43.794 23.3687 45.456 23.3687 46.4812 24.3938C47.5063 25.419 47.5063 27.081 46.4812 28.1062L33.3562 41.2312C32.331 42.2563 30.669 42.2563 29.6438 41.2312L16.5188 28.1062C15.4937 27.081 15.4937 25.419 16.5188 24.3938Z"
+                      fill="currentColor"
+                    />
+                  </g>
+                  <g transform="translate(200.5 14.5)">
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M16.5188 24.3938C17.544 23.3687 19.206 23.3687 20.2312 24.3938L31.5 35.6627L42.7688 24.3938C43.794 23.3687 45.456 23.3687 46.4812 24.3938C47.5063 25.419 47.5063 27.081 46.4812 28.1062L33.3562 41.2312C32.331 42.2563 30.669 42.2563 29.6438 41.2312L16.5188 28.1062C15.4937 27.081 15.4937 25.419 16.5188 24.3938Z"
+                      fill="currentColor"
+                    />
+                  </g>
+                </g>
+              </svg>
+            </div>
+
+            <div className="absolute left-[776.5px] top-0 w-[264px] h-[108px] text-[#A5D0F2]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="264"
+                height="110"
+                viewBox="0 0 264 110"
+                fill="none"
+                aria-hidden="true"
+              >
+                <g transform="translate(0, 110) scale(1, -1)">
+                  <path
+                    d="M2 109.978V12C2 6.4687 6.49041 1.98803 12.0217 2.00005L222.022 2.45651C227.536 2.46849 232 6.94212 232 12.4565V43.4783"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <g transform="translate(200.5 2.5)">
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M16.5188 24.3938C17.544 23.3687 19.206 23.3687 20.2312 24.3938L31.5 35.6627L42.7688 24.3938C43.794 23.3687 45.456 23.3687 46.4812 24.3938C47.5063 25.419 47.5063 27.081 46.4812 28.1062L33.3562 41.2312C32.331 42.2563 30.669 42.2563 29.6438 41.2312L16.5188 28.1062C15.4937 27.081 15.4937 25.419 16.5188 24.3938Z"
+                      fill="currentColor"
+                    />
+                  </g>
+                  <g transform="translate(200.5 14.5)">
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M16.5188 24.3938C17.544 23.3687 19.206 23.3687 20.2312 24.3938L31.5 35.6627L42.7688 24.3938C43.794 23.3687 45.456 23.3687 46.4812 24.3938C47.5063 25.419 47.5063 27.081 46.4812 28.1062L33.3562 41.2312C32.331 42.2563 30.669 42.2563 29.6438 41.2312L16.5188 28.1062C15.4937 27.081 15.4937 25.419 16.5188 24.3938Z"
+                      fill="currentColor"
+                    />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
       <FaqSection page="members" />
