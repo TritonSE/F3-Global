@@ -1,8 +1,8 @@
 import Image from "next/image";
-import React from "react";
 
 import { Anchor } from "@/components/Anchor";
 import { Button } from "@/components/button";
+import { ClientsCarousel } from "@/components/ClientsCarousel";
 
 export default function About() {
   return (
@@ -50,6 +50,7 @@ export default function About() {
           textClassName="text-white text-normal"
         />
       </div>
+      <ClientsCarousel />
     </div>
   );
 }
