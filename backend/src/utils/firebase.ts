@@ -7,6 +7,7 @@ import type { ServiceAccount } from "firebase-admin/app";
 
 firebaseAdmin.initializeApp({
   credential: firebaseAdmin.cert(JSON.parse(SERVICE_ACCOUNT_KEY) as ServiceAccount),
+  storageBucket: "f3-global.firebasestorage.app",
 });
 
 const firebaseAdminAuth = getAdminAuth();

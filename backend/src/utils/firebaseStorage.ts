@@ -1,3 +1,4 @@
+import "./firebase";
 import { getStorage } from "firebase-admin/storage";
 
 /**

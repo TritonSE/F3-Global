@@ -20,7 +20,7 @@ app.use(express.json());
 
 app.use(log);
 
-app.use("/clients", clientsRouter);
+app.use("/api/clients", clientsRouter);
 
 app.use(errorHandler);
 mongoose
