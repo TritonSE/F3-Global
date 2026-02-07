@@ -1,7 +1,12 @@
 import Image from "next/image";
+
+import { WaysToGiveCarouselData } from "../carouselData";
+
+import { FaqSection } from "./FaqAccordion";
 import Parallax from "./parallax";
 
 import { Anchor } from "@/components/Anchor";
+import { Carousel } from "@/components/Carousel";
 import { FaqSection } from "@/components/FaqAccordion";
 import { ImpactSection } from "@/components/ImpactSection";
 
@@ -36,6 +41,10 @@ export default function Donors() {
         />
       </div>
       <Parallax />
+
+      <div className="relative left-1/2 right-1/2 flex w-screen -translate-x-1/2">
+        <Carousel data={WaysToGiveCarouselData} />
+      </div>
       {/* How You Can Help section */}
       {/* Client Highlights Carousel */}
       {/* Ways to Give section */}
