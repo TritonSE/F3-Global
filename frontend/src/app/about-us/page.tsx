@@ -1,5 +1,4 @@
 import Image from "next/image";
-import React from "react";
 
 import { Anchor } from "@/components/Anchor";
 import { Button } from "@/components/button";
