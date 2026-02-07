@@ -20,7 +20,7 @@ app.use(express.json());
 
 app.use(log);
 
-app.use("/api/team-members", membersRouter);
+app.use("/api/members", membersRouter);
 
 app.use(errorHandler);
 mongoose

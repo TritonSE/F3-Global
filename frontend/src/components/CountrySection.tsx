@@ -20,7 +20,8 @@ export const CountrySection: React.FC<CountrySectionProps> = ({ id, countryName,
 
   const flagUrl = useMemo(() => {
     const code = countriesInfo.getAlpha2Code(countryName, "en");
-    if (!code) return ""; //TODO ADD PLACEHOLDER IMG
+    if (!code)
+      return "https://firebasestorage.googleapis.com/v0/b/f3-global.firebasestorage.app/o/qmarkplaceholder.png?alt=media&token=975956ce-e292-48ab-823f-377e5b0a7928";
 
     return `https://flagcdn.com/w320/${code.toLowerCase()}.png`;
   }, [countryName]);

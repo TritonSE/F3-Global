@@ -16,11 +16,11 @@ countriesInfo.registerLocale(enLocale);
 export type Member = {
   _id: string;
   name: string;
-  location: string;
-  role: string;
-  linkedin: string;
+  country: string;
+  memberPosition: string;
+  linkedinUrl: string;
   email: string;
-  headshot: string;
+  headshotUrl: string;
 };
 
 export default function MeetTheTeam() {
@@ -29,8 +29,8 @@ export default function MeetTheTeam() {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8080";
-        const res = await fetch(`${backendUrl}/api/team-members`);
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const res = await fetch(`${backendUrl}/api/members`);
 
         if (!res.ok) throw new Error("Failed to fetch team members");
 
@@ -47,11 +47,14 @@ export default function MeetTheTeam() {
   const membersByCountry = useMemo(() => {
     return members.reduce(
       (acc, member) => {
-        const country = member.location.trim();
-        if (!acc[country]) {
-          acc[country] = [];
+        const countryCode = member.country.trim();
+
+        const countryName = countriesInfo.getName(countryCode, "en") || countryCode;
+
+        if (!acc[countryName]) {
+          acc[countryName] = [];
         }
-        acc[country].push(member);
+        acc[countryName].push(member);
         return acc;
       },
       {} as Record<string, Member[]>,

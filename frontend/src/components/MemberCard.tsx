@@ -5,11 +5,11 @@ import React from "react";
 export type Member = {
   _id: string;
   name: string;
-  location: string;
-  role: string;
-  linkedin: string;
+  country: string;
+  memberPosition: string;
+  linkedinUrl: string;
   email: string;
-  headshot: string;
+  headshotUrl: string;
 };
 
 type MemberCardProps = {
@@ -27,14 +27,14 @@ const getLinkedInUsername = (url: string) => {
 };
 
 export const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
-  const linkedInUsername = getLinkedInUsername(member.linkedin);
+  const linkedInUsername = getLinkedInUsername(member.linkedinUrl);
   return (
     <>
       <div className="flex flex-col flex-start gap-[30px]">
         <div className="relative" style={{ width: 250, height: 250 }}>
           <Image
-            src={member.headshot}
-            alt="Member headshot image"
+            src={member.headshotUrl}
+            alt={`${member.name} headshot image`}
             fill
             className="object-cover object-center bg-cover bg-no-repeat bg-center rounded-[250px] "
           />
@@ -44,11 +44,11 @@ export const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
             {member.name}
           </h1>
           <p className="font-dm-sans text-[16px] font-normal leading-[24px] self-stretch text-[#172447]">
-            {member.role}
+            {member.memberPosition}
           </p>
           <div className="flex flex-col items-start">
             <Link
-              href={member.linkedin}
+              href={member.linkedinUrl}
               target="_blank"
               className="flex items-center gap-[11px] group transition-all duration-300"
             >
