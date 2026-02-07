@@ -2,7 +2,6 @@ import Image from "next/image";
 
 import { WaysToGiveCarouselData } from "../carouselData";
 
-import { FaqSection } from "./FaqAccordion";
 import Parallax from "./parallax";
 
 import { Anchor } from "@/components/Anchor";
