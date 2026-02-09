@@ -7,7 +7,7 @@ const router = Router();
 
 router.get("/all", MemberController.getAllMembers);
 
-router.post("/create", Validators.createMember, MemberController.createMember);
+router.post("/", Validators.createMember, MemberController.createMember);
 
 router.put("/:id", Validators.updateMember, MemberController.updateMember);
 
