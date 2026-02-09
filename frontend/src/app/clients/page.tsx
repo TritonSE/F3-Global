@@ -28,7 +28,9 @@ export default function About() {
               <>
                 {"Behind the scenes, Rule Breaker is operated passionately on the foundation that "}
                 <strong>there is a desert snack for everyone</strong>
-                {", while the brand keeps strong creative control over recipes and quality. You’ll find them online and in thousands of grocery doors nationwide, giving proof that better-for-you can also be great in taste. "}
+                {
+                  ", while the brand keeps strong creative control over recipes and quality. You’ll find them online and in thousands of grocery doors nationwide, giving proof that better-for-you can also be great in taste. "
+                }
               </>
             ),
           },
