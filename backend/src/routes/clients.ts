@@ -7,7 +7,7 @@ const router = Router();
 
 router.get("/all", ClientController.getAllClients);
 
-router.post("/create", ClientValidator.createClientValidation, ClientController.createClient);
+router.post("/", ClientValidator.createClientValidation, ClientController.createClient);
 
 router.delete("/:id", ClientController.removeClient);
 
