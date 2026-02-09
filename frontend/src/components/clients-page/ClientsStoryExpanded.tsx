@@ -5,7 +5,7 @@ import React from "react";
 
 type ParagraphData = {
   paragraph: number;
-  text: string;
+  text: React.ReactNode;
 };
 
 type ClientStoryProps = {

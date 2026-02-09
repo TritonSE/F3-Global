@@ -5,7 +5,7 @@ import React from "react";
 type ClientStoryProps = {
   image: string;
   title: string;
-  description: string;
+  description: React.ReactNode;
   onShowMore?: () => void;
 };
 

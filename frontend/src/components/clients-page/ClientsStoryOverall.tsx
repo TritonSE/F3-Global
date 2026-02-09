@@ -7,13 +7,13 @@ import ClientsStoryExpanded from "./ClientsStoryExpanded";
 
 type ParagraphData = {
   paragraph: number;
-  text: string;
+  text: React.ReactNode;
 };
 
 type ClientStoryProps = {
   image: string;
   title: string;
-  description: string;
+  description: React.ReactNode;
   expandedDescription?: ParagraphData[];
   onShowMore?: () => void;
 };
@@ -46,26 +46,28 @@ const ClientsStoryOverall: React.FC<ClientStoryProps> = ({
   };
 
   return (
-    <div className="mt-50px mb-50px ml-100 mr-100">
+    <div className="flex justify-center">
+      <div className="mt-50px mb-50px" style={{ width: "1347px" }}>
       <h1 className="text-[48px] font-[500] leading-[150%] tracking-[-0.96px] font-['DM Sans'] text-[var(--F3-Blue,#172447)] mb-40px">
         Real Impact, Real Stories
       </h1>
       <div className={`transition-opacity duration-1000 ${isFading ? "opacity-0" : "opacity-100"}`}>
         {isExpanded ? (
-          <ClientsStoryExpanded
-            image={image}
-            title={title}
-            paragraphs={expandedDescription || []}
-            onShowLess={handleShowLess}
-          />
+        <ClientsStoryExpanded
+          image={image}
+          title={title}
+          paragraphs={expandedDescription || []}
+          onShowLess={handleShowLess}
+        />
         ) : (
-          <ClientsStory
-            image={image}
-            title={title}
-            description={description}
-            onShowMore={handleShowMore}
-          />
+        <ClientsStory
+          image={image}
+          title={title}
+          description={description}
+          onShowMore={handleShowMore}
+        />
         )}
+      </div>
       </div>
     </div>
   );
