@@ -1,13 +1,13 @@
 import { Router } from "express";
 
-import * as MemberController from "../controllers/members";
-import * as Validators from "../validators/members";
+import * as MemberController from "../controllers/member";
+import * as Validators from "../validators/member";
 
 const router = Router();
 
-router.get("/", MemberController.getAllMembers);
+router.get("/all", MemberController.getAllMembers);
 
-router.post("/", Validators.createMember, MemberController.createMember);
+router.post("/create", Validators.createMember, MemberController.createMember);
 
 router.put("/:id", Validators.updateMember, MemberController.updateMember);
 
