@@ -1,7 +1,6 @@
 import { Router } from "express";
 
 import * as MemberController from "../controllers/members";
-//import { verifyAuthToken } from "../validators/auth";
 import * as Validators from "../validators/members";
 
 const router = Router();

@@ -66,7 +66,7 @@ export const CountrySection: React.FC<CountrySectionProps> = ({ id, countryName,
                   className="object-cover object-center bg-cover bg-no-repeat bg-center"
                 />
               </div>
-              <p className="font-dm-sans text-[24px] font-normal leading-[150%] text-[172447]">{`${memberCount} ${memberCount > 1 ? "members" : "member"}`}</p>
+              <p className="font-dm-sans text-[24px] font-bold leading-[150%] text-[#172447]">{`${memberCount} ${memberCount > 1 ? "members" : "member"}`}</p>
             </div>
           </div>
           <div className="flex flex-col items-start gap-[25px] self-stretch">

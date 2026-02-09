@@ -119,7 +119,7 @@ export default function MeetTheTeam() {
           <InteractiveWorldMap data={countryData} />
         </div>
         <div className="flex flex-col px-[100px] pt-[50px] pb-[20px] items-start gap-[50px] self-stretch">
-          <h2 className="font-dm-sans text-[48px] font-normal text-[#172447] leading-[150%] tracking-[-0.96px]">
+          <h2 className="font-dm-sans text-[48px] font-[500] text-[#172447] leading-[150%] tracking-[-0.96px]">
             Our Team Around the World
           </h2>
         </div>
