@@ -37,8 +37,8 @@ export const handleContactRequest = async (req: Request, res: Response) => {
         },
       });
       const mailOptions = {
-        from: process.env.USER_EMAIL,
-        to: process.env.USER_EMAIL,
+        from: process.env.GLOBAL_EMAIL,
+        to: process.env.GLOBAL_EMAIL,
         subject: email_subject,
         text: email_body,
       };
