@@ -1,8 +1,6 @@
 import { validationResult } from "express-validator";
 import nodemailer from "nodemailer";
 
-import validationErrorParser from "../utils/validationErrorParser";
-
 import type { Request, Response } from "express";
 
 export type ContactRequest = {
