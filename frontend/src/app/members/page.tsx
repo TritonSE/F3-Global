@@ -116,8 +116,8 @@ export default function Members() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col w-full py-[50px] px-[100px] gap-[10px] border-t border-[#F4F4F4]">
-        <h1 className="text-[48px] font-medium self-stretch text-[#172447]">
+      <div className="flex flex-col w-full py-[50px] gap-[10px] border-t border-[#F4F4F4]">
+        <h1 className="text-[48px] px-[5vw] font-medium self-stretch text-[#172447]">
           Who We're Looking For
         </h1>
         <div className="inline-flex flex-row gap-[50px] justify-center">
@@ -163,7 +163,7 @@ export default function Members() {
         </div>
       </div>
       <div className="flex flex-col w-full py-[50px] gap-[10px] border-t border-[#F4F4F4]">
-        <h1 className="px-[100px] text-[48px] font-medium self-stretch text-[#172447] mb-[60px]">
+        <h1 className="px-[5vw] text-[48px] font-medium self-stretch text-[#172447] mb-[60px]">
           How You Get Involved
         </h1>
         <div className="flex flex-col relative">
