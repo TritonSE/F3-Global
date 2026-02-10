@@ -58,21 +58,15 @@ export default function About() {
       <div className=" pt-[50px] flex flex-col gap-[20px] w-full">
         <div className="flex flex-col gap-[30px] w-full">
           <div className="px-[100px] py-[10px] flex flex-col gap-[20px]">
-            <h2
-              className="font-dm font-medium text-[48px] text-[#172447] tracking-[-0.96px] leading-[1.5]"
-            >
+            <h2 className="font-dm font-medium text-[48px] text-[#172447] tracking-[-0.96px] leading-[1.5]">
               {TIMELINE_HEADER.title}
             </h2>
-            <p
-              className="font-dm font-normal text-[24px] text-black leading-[32px] max-w-[1073px]"
-            >
+            <p className="font-dm font-normal text-[24px] text-black leading-[32px] max-w-[1073px]">
               {TIMELINE_HEADER.description}
             </p>
           </div>
           <div className="flex items-center justify-center w-full">
-            <p
-              className="font-dm italic text-[16px] text-[#5d5d5d] leading-[24px] text-center"
-            >
+            <p className="font-dm italic text-[16px] text-[#5d5d5d] leading-[24px] text-center">
               {TIMELINE_INSTRUCTION}
             </p>
           </div>

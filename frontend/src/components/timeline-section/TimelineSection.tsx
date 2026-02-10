@@ -71,9 +71,7 @@ export const TimelineSection = () => {
                 }`}
               >
                 <p className="font-ethic font-light text-[64px] leading-[1.1]">{item.year}</p>
-                <p className="font-dm text-[16px] leading-[24px]">
-                  {item.description}
-                </p>
+                <p className="font-dm text-[16px] leading-[24px]">{item.description}</p>
               </div>
             </button>
           ))}
