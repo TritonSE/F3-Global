@@ -2,6 +2,11 @@ import Image from "next/image";
 import React from "react";
 
 import { Button } from "@/components/button";
+import {
+  TIMELINE_HEADER,
+  TIMELINE_INSTRUCTION,
+  TimelineSection,
+} from "@/components/timeline-section";
 
 export default function About() {
   return (
@@ -47,6 +52,32 @@ export default function About() {
           </p>
         </div>
         <Button text="MORE ABOUT OUR TEAM" onClick_link="/members" />
+      </div>
+
+      {/* Path to Impact + Timeline */}
+      <div className=" pt-[50px] flex flex-col gap-[20px] w-full">
+        <div className="flex flex-col gap-[30px] w-full">
+          <div className="px-[100px] py-[10px] flex flex-col gap-[20px]">
+            <h2
+              className="font-dm font-medium text-[48px] text-[#172447] tracking-[-0.96px] leading-[1.5]"
+            >
+              {TIMELINE_HEADER.title}
+            </h2>
+            <p
+              className="font-dm font-normal text-[24px] text-black leading-[32px] max-w-[1073px]"
+            >
+              {TIMELINE_HEADER.description}
+            </p>
+          </div>
+          <div className="flex items-center justify-center w-full">
+            <p
+              className="font-dm italic text-[16px] text-[#5d5d5d] leading-[24px] text-center"
+            >
+              {TIMELINE_INSTRUCTION}
+            </p>
+          </div>
+        </div>
+        <TimelineSection />
       </div>
     </div>
   );

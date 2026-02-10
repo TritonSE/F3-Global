@@ -1,4 +1,3 @@
-export { ImageCollage } from "./ImageCollage";
+export { PhotoStack } from "./PhotoStack";
 export { TimelineSection } from "./TimelineSection";
 export * from "./types";
-export { YearCard } from "./YearCard";

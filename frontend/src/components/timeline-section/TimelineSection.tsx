@@ -1,77 +1,86 @@
 "use client";
 
-import React, { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import { ImageCollage } from "./ImageCollage";
-import { TIMELINE_HEADER, TIMELINE_ITEMS } from "./types";
-import { YearCard } from "./YearCard";
-
-// Year card positions
-const YEAR_POSITIONS = [
-  { left: 57, top: 232 }, // 2015
-  { left: 580, top: 232 }, // 2022
-  { left: 1103, top: 232 }, // 2026
-];
+import { PhotoStack } from "./PhotoStack";
+import { TIMELINE_ITEMS } from "./types";
 
 export const TimelineSection = () => {
-  const [openYears, setOpenYears] = useState<number[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const firstDotRef = useRef<HTMLDivElement>(null);
+  const lastDotRef = useRef<HTMLDivElement>(null);
+  const [lineStyle, setLineStyle] = useState<{ top: number; height: number }>({
+    top: 0,
+    height: 0,
+  });
 
-  const toggleYear = (year: number) => {
-    setOpenYears((prev) =>
-      prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year],
-    );
-  };
+  const updateLineStyle = useCallback(() => {
+    if (!containerRef.current || !firstDotRef.current || !lastDotRef.current) return;
+
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const firstDotRect = firstDotRef.current.getBoundingClientRect();
+    const lastDotRect = lastDotRef.current.getBoundingClientRect();
+
+    const firstDotCenter = firstDotRect.top + firstDotRect.height / 2 - containerRect.top;
+    const lastDotCenter = lastDotRect.top + lastDotRect.height / 2 - containerRect.top;
+
+    setLineStyle({
+      top: firstDotCenter,
+      height: lastDotCenter - firstDotCenter,
+    });
+  }, []);
+
+  useEffect(() => {
+    updateLineStyle();
+    window.addEventListener("resize", updateLineStyle);
+    return () => window.removeEventListener("resize", updateLineStyle);
+  }, [updateLineStyle]);
+
+  const lastIndex = TIMELINE_ITEMS.length - 1;
 
   return (
-    <section className="w-[1512px] mx-auto py-[50px] bg-white relative overflow-x-hidden">
-      {/* Header */}
-      <div className="px-[100px] py-[10px] flex flex-col gap-[10px]">
-        <h2 className="font-dm-sans text-[48px] font-medium text-[#172447] tracking-[-0.96px] leading-[1.5] m-0">
-          {TIMELINE_HEADER.title}
-        </h2>
-        <p className="font-dm-sans text-[24px] font-normal text-black leading-[32px] m-0 max-w-[1073px]">
-          {TIMELINE_HEADER.description}
-        </p>
-      </div>
-
-      {/*relative for absolute positioning */}
-      <div className="relative h-[1030px] overflow-hidden">
-        {/* Image Collage (background images) */}
-        <ImageCollage />
-
-        {/* Timeline Line */}
+    <section className="flex items-center justify-between bg-white py-[50px] max-w-[1440px] mx-auto w-full">
+      {/* Timeline (left side) */}
+      <div ref={containerRef} className="relative w-[607px] pl-[100px]">
+        {/* Vertical timeline line, dynamically positioned between first and last dot centers */}
         <div
-          className="absolute h-[4px] bg-[#172447]"
-          style={{
-            left: 194,
-            top: 300,
-            width: 1062,
-          }}
+          className="absolute left-[34px] w-[4px] bg-[#172447]"
+          style={{ top: lineStyle.top, height: lineStyle.height }}
         />
 
-        {/* absolutely positioned */}
-        {TIMELINE_ITEMS.map((item, index) => {
-          const pos = YEAR_POSITIONS[index];
-          if (!pos) return null;
-
-          return (
-            <div
+        {/* Year entries with dots */}
+        <div className="flex flex-col gap-[50px]">
+          {TIMELINE_ITEMS.map((item, index) => (
+            <button
               key={item.year}
-              className="absolute"
-              style={{
-                left: pos.left,
-                top: pos.top,
-              }}
+              onClick={() => setActiveIndex(index)}
+              className="relative flex flex-col cursor-pointer text-left"
             >
-              <YearCard
-                item={item}
-                isOpen={openYears.includes(item.year)}
-                onClick={() => toggleYear(item.year)}
+              {/* absolutely positioned in padding area */}
+              <div
+                ref={index === 0 ? firstDotRef : index === lastIndex ? lastDotRef : undefined}
+                className={`absolute left-[-80px] top-[19px] w-[32px] h-[32px] rounded-full border-[3px] border-[#172447] z-10 transition-colors duration-300 ${
+                  index === activeIndex ? "bg-[#172447]" : "bg-white"
+                }`}
               />
-            </div>
-          );
-        })}
+              {/* Year + description */}
+              <div
+                className={`flex flex-col transition-colors duration-300 ${
+                  index === activeIndex ? "text-[#172447]" : "text-[#c7c7c7]"
+                }`}
+              >
+                <p className="font-ethic font-light text-[64px] leading-[1.1]">{item.year}</p>
+                <p className="font-dm text-[16px] leading-[24px]">
+                  {item.description}
+                </p>
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
+
+      <PhotoStack activeIndex={activeIndex} />
     </section>
   );
 };
