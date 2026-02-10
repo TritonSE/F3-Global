@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 
 import type { Request, Response } from "express";
+// import { validationResult } from "express-validator/lib/validation-result";
 
 export type ContactRequest = {
   fullName: string;
@@ -11,13 +12,14 @@ export type ContactRequest = {
 
 export const handleContactRequest = async (req: Request, res: Response) => {
   try {
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   console.warn("Validation errors in contact request:", errors.array());
+    //   return res.status(400).json({ errors: errors.array() });
+    // }
+    
     const { fullName, email, interestedInBecoming, message } = (await req.body) as ContactRequest;
     console.info("Received contact request:", { fullName, email, interestedInBecoming, message });
-
-    // Validate input
-    if (!fullName || !email) {
-      return res.status(400).json({ error: "Full name and email are required." });
-    }
 
     const email_subject = `New Contact Request from ${fullName} ${interestedInBecoming ? `(${interestedInBecoming} interest)` : ""}`;
     const email_body = `Name: ${fullName}\nEmail: ${email}\nInterested in becoming: ${interestedInBecoming || "N/A"}\nMessage: ${message || "N/A"}`;

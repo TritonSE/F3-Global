@@ -19,7 +19,7 @@ app.use(
 app.use(express.json());
 
 app.use(log);
-app.use("/api", contactRoute)
+app.use("/api/contact", contactRoute)
 
 app.use(errorHandler);
 mongoose
