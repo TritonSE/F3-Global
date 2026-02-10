@@ -190,7 +190,7 @@ export const ContactUs: React.FC = () => {
                     `}
                   >
                     <input
-                      className="font-dm-sans text-[16px] text-normal leading-[24px] text-[#5D5D5D] bg-transparent outline-none w-full"
+                      className="font-dm-sans text-[16px] text-normal leading-[24px] text-[#1E1E1E] bg-transparent outline-none w-full"
                       type="text"
                       name="fullName"
                       placeholder="Full name *"

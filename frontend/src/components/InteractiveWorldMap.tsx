@@ -265,7 +265,7 @@ export const InteractiveWorldMap: React.FC<WorldMapProps> = ({ data = [], onCoun
                           cursor: isClickable ? "pointer" : "default",
                         },
                         pressed: {
-                          fill: isClickable ? COLORS.primary : fillColor,
+                          fill: isClickable ? COLORS.hover : fillColor,
                           stroke: COLORS.border,
                           strokeWidth: 0.5,
                           outline: "none",

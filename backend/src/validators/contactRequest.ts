@@ -21,11 +21,11 @@ const makeEmailValidator = (isOptional = false): ValidationChain => {
   const chain = isOptional ? base.optional() : base;
 
   return chain
-    .exists({ checkNull: true, checkFalsy: true })
-    .withMessage("Email is required")
-    .bail()
     .isEmail()
-    .withMessage("Email must be a valid email address");
+    .withMessage("Email must be a valid email address")
+    .bail()
+    .notEmpty()
+    .withMessage("Email cannot be empty");
 };
 
 const makeInterestedInBecomingValidator = (isOptional = true): ValidationChain => {

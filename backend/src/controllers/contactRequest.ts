@@ -1,23 +1,24 @@
+import { validationResult } from "express-validator";
 import nodemailer from "nodemailer";
 
+import validationErrorParser from "../utils/validationErrorParser";
+
 import type { Request, Response } from "express";
-// import { validationResult } from "express-validator/lib/validation-result";
 
 export type ContactRequest = {
   fullName: string;
   email: string;
   interestedInBecoming?: string;
-  message?: string;
+  message: string;
 };
 
 export const handleContactRequest = async (req: Request, res: Response) => {
   try {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //   console.warn("Validation errors in contact request:", errors.array());
-    //   return res.status(400).json({ errors: errors.array() });
-    // }
-    
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const { fullName, email, interestedInBecoming, message } = (await req.body) as ContactRequest;
     console.info("Received contact request:", { fullName, email, interestedInBecoming, message });
 
