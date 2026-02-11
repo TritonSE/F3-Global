@@ -11,7 +11,7 @@ type PhotoStackProps = {
 const POSITION_CONFIGS = [
   { width: 501, height: 658, rotation: 0, hasOverlay: false, zIndex: 3 },
   { width: 375, height: 537, rotation: -3.86, hasOverlay: true, zIndex: 2 },
-  { width: 327, height: 473, rotation: -5.96, hasOverlay: false, zIndex: 1 },
+  { width: 327, height: 473, rotation: -5.96, hasOverlay: true, zIndex: 1 },
 ];
 
 const POSITION_LEFT = [100, 50, 0];
