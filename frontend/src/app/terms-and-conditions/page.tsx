@@ -6,7 +6,7 @@ export default function TermsAndConditions() {
           <h1 className="self-stretch font-ethic text-[#1E1E1E] text-[64px] font-normal font-[300] leading-[150%]">
             Terms & Conditions
           </h1>
-          <h3 className="self-stretch font-dm-sans text-[#1E1E1E] text-[24px] font-normal font-[500] leading-[150%]">
+          <h3 className="self-stretch font-dm-sans text-[#1E1E1E] text-[24px] font-[500] leading-[150%]">
             A Legal Disclaimer
           </h3>
           <p className="self-stretch font-rubik text-[#5D5D5D] text-[16px] font-normal font-[400] leading-[24px]">
@@ -16,7 +16,7 @@ export default function TermsAndConditions() {
             agree, please refrain from participating. These Terms are subject to change, and it is
             your responsibility to review them periodically.
           </p>
-          <h3 className="self-stretch font-dm-sans text-[#1E1E1E] text-[24px] font-normal font-[500] leading-[150%] mt-[24px]">
+          <h3 className="self-stretch font-dm-sans text-[#1E1E1E] text-[24px] font-[500] leading-[150%] mt-[24px]">
             Terms & Conditions
           </h3>
           <p className="self-stretch font-rubik text-[#5D5D5D] text-[16px] font-normal font-[400] leading-[24px]">
