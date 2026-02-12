@@ -136,7 +136,7 @@ export default function Home() {
                 </p>
                 <p className="text-[#5D5D5D] font-dm text-[16px] font-normal leading-[1.5]">
                   Deployed as microloans to entrepreneurs lacking traditional banking access,
-                  providing capital to launch businesses and lift families out of poverty.
+                  providing capital to launch businesses and lift families out of poverty
                 </p>
               </div>
 
