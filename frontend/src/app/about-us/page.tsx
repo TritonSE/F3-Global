@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { Anchor } from "@/components/Anchor";
 import { Button } from "@/components/button";
+import { ClientCarousel } from "@/components/ClientCarousel";
 
 export default function About() {
   return (
@@ -49,6 +50,7 @@ export default function About() {
           textClassName="text-white text-normal"
         />
       </div>
+      <ClientCarousel />
     </div>
   );
 }
