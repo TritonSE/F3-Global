@@ -6,6 +6,7 @@ export default {
         "ethic-new": ["Ethic New", "system-ui", "sans-serif"],
         "ethic-serif": ["Ethic Serif", "serif"],
         "dm-sans": ["DM Sans", "sans-serif"],
+        rubik: ["Rubik", "sans-serif"],
       },
     },
   },

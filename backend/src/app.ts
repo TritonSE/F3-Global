@@ -6,6 +6,8 @@ import { FRONTEND_ORIGIN, MONGO_URI, PORT } from "./config";
 import errorHandler from "./middleware/errorHandler";
 import log from "./middleware/logger";
 import clientsRouter from "./routes/clients";
+import contactRoute from "./routes/contactRequest";
+import membersRouter from "./routes/members";
 
 const app = express();
 
@@ -19,7 +21,9 @@ app.use(
 app.use(express.json());
 
 app.use(log);
+app.use("/api/contact", contactRoute);
 
+app.use("/api/members", membersRouter);
 app.use("/api/clients", clientsRouter);
 
 app.use(errorHandler);
