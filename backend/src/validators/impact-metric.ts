@@ -8,6 +8,7 @@ export const updateImpactMetric = [
   body("metrics.*.order")
     .exists()
     .withMessage("order is required for every metric item")
+    .bail()
     .isInt({ min: 0, max: 2 })
     .withMessage("order must be 0, 1, or 2"),
 
@@ -20,8 +21,10 @@ export const updateImpactMetric = [
     .optional()
     .isString()
     .withMessage("statistic must be a string")
+    .bail()
     .notEmpty()
     .withMessage("statistic cannot be empty")
+    .bail()
     .isLength({ max: 8 })
     .withMessage("statistic max length is 6"),
 
@@ -29,8 +32,10 @@ export const updateImpactMetric = [
     .optional()
     .isString()
     .withMessage("subtitle must be a string")
+    .bail()
     .notEmpty()
     .withMessage("subtitle cannot be empty")
+    .bail()
     .isLength({ max: 28 })
     .withMessage("subtitle max length is 17"),
 
@@ -38,8 +43,10 @@ export const updateImpactMetric = [
     .optional()
     .isString()
     .withMessage("description must be a string")
+    .bail()
     .notEmpty()
     .withMessage("description cannot be empty")
+    .bail()
     .isLength({ max: 150 })
     .withMessage("description max length is 107"),
 ];
