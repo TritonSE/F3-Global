@@ -55,7 +55,6 @@ export default function About() {
           textClassName="text-white text-normal"
         />
       </div>
-      <ClientCarousel />
 
       {/* Path to Impact + Timeline */}
       <div className=" pt-[50px] flex flex-col gap-[20px] w-full">
@@ -76,6 +75,7 @@ export default function About() {
         </div>
         <TimelineSection />
       </div>
+      <ClientCarousel />
     </div>
   );
 }
