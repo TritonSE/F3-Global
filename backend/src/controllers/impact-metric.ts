@@ -5,6 +5,7 @@ import validationErrorParser from "../utils/validationErrorParser";
 
 import type { MetricItem } from "../models/impact-metric";
 import type { RequestHandler } from "express";
+import type { Types } from "mongoose";
 
 export const getImpactMetric: RequestHandler = async (req, res, next) => {
   try {
@@ -15,8 +16,10 @@ export const getImpactMetric: RequestHandler = async (req, res, next) => {
   }
 };
 
+type MetricItemWithId = MetricItem & { _id: Types.ObjectId };
+
 type UpdateRequest = {
-  metrics: Partial<MetricItem>[];
+  metrics: (Partial<MetricItem> & { _id?: string })[];
 };
 
 export const updateImpactMetric: RequestHandler<
@@ -31,29 +34,42 @@ export const updateImpactMetric: RequestHandler<
     const { metrics: updates } = req.body;
 
     const doc = (await ImpactMetric.findOne()) || new ImpactMetric({ metrics: [] });
+    const dbMetrics = doc.metrics as MetricItemWithId[];
 
-    updates.forEach((update) => {
-      const { order, statistic, subtitle, description } = update;
+    const updateIds = new Set(updates.filter((u) => u._id).map((u) => u._id));
 
-      if (order === undefined) return;
+    const keptMetrics = dbMetrics.filter((m) => updateIds.has(m._id.toString()));
 
-      const index = doc.metrics.findIndex((m) => m.order === order);
+    const newMetricsList: MetricItemWithId[] = [];
+    const keptMetricsMap = new Map(keptMetrics.map((m) => [m._id.toString(), m]));
 
-      if (index !== -1) {
-        const metric = doc.metrics[index]!;
+    for (const update of updates) {
+      const { _id, order, statistic, subtitle, description } = update;
 
-        if (statistic !== undefined) metric.statistic = statistic;
-        if (subtitle !== undefined) metric.subtitle = subtitle;
-        if (description !== undefined) metric.description = description;
+      if (order === undefined) continue;
+
+      if (_id && keptMetricsMap.has(_id)) {
+        const metricToUpdate = keptMetricsMap.get(_id)!;
+
+        if (statistic !== undefined) metricToUpdate.statistic = statistic;
+        if (subtitle !== undefined) metricToUpdate.subtitle = subtitle;
+        if (description !== undefined) metricToUpdate.description = description;
+
+        metricToUpdate.order = order;
+        newMetricsList.push(metricToUpdate);
       } else {
-        doc.metrics.push({
+        const newMetric = {
           order,
           statistic: statistic || "",
           subtitle: subtitle || "",
           description: description || "",
-        });
+        } as MetricItemWithId;
+
+        newMetricsList.push(newMetric);
       }
-    });
+    }
+
+    doc.metrics = newMetricsList;
 
     await doc.save();
     res.status(200).json(doc);

@@ -17,7 +17,7 @@ export const updateImpactMetric = [
     .withMessage("statistic must be a string")
     .notEmpty()
     .withMessage("statistic cannot be empty")
-    .isLength({ max: 6 })
+    .isLength({ max: 6 }) // any more overflows on standard 16:10 resolution, same w/ rest of length constraints
     .withMessage("statistic max length is 6"),
 
   body("metrics.*.subtitle")
@@ -26,7 +26,7 @@ export const updateImpactMetric = [
     .withMessage("subtitle must be a string")
     .notEmpty()
     .withMessage("subtitle cannot be empty")
-    .isLength({ max: 17 })
+    .isLength({ max: 28 })
     .withMessage("subtitle max length is 17"),
 
   body("metrics.*.description")
@@ -35,6 +35,6 @@ export const updateImpactMetric = [
     .withMessage("description must be a string")
     .notEmpty()
     .withMessage("description cannot be empty")
-    .isLength({ max: 107 })
+    .isLength({ max: 150 })
     .withMessage("description max length is 107"),
 ];
