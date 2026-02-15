@@ -2,8 +2,8 @@ import { body } from "express-validator";
 
 export const updateImpactMetric = [
   body("metrics")
-    .isArray({ min: 1 })
-    .withMessage("metrics must be an array with at least one item"),
+    .isArray({ min: 3, max: 3 })
+    .withMessage("metrics must be an array with exactly three items"),
 
   body("metrics.*.order")
     .exists()
