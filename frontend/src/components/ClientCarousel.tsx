@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 
-import type { Client } from "@/app/api/client";
+import type { Client } from "@/api/client";
 
-import { getAllClients } from "@/app/api/client";
+import { getAllClients } from "@/api/client";
 
 export const ClientCarousel = () => {
   const [clients, setClients] = useState<Client[]>([]);
