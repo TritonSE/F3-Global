@@ -58,11 +58,10 @@ export type ClientInput = {
 };
 
 type UpdateClientsReqBody = ClientInput[];
-type UpdateClientsResBody = unknown;
 
 export const updateClients: RequestHandler<
   Record<string, never>,
-  UpdateClientsResBody,
+  unknown,
   UpdateClientsReqBody
 > = async (req, res, next) => {
   const errors = validationResult(req);
@@ -112,10 +111,7 @@ export const updateClients: RequestHandler<
       await ClientModel.deleteMany({ _id: { $in: docsToDelete.map((d) => d._id) } });
     }
 
-    const imgsToDelete = {
-      ...docsToDelete.map((d) => d.imageUrl),
-      ...outdatedImageUrls,
-    };
+    const imgsToDelete = [...docsToDelete.map((d) => d.imageUrl), ...outdatedImageUrls];
 
     await Promise.allSettled(imgsToDelete.map(async (url) => deleteImageFromFirebaseStorage(url)));
 
