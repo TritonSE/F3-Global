@@ -60,9 +60,9 @@ export const updateImpactMetric: RequestHandler<
       } else {
         const newMetric = {
           order,
-          statistic: statistic || "",
-          subtitle: subtitle || "",
-          description: description || "",
+          statistic,
+          subtitle,
+          description,
         } as MetricItemWithId;
 
         newMetricsList.push(newMetric);
