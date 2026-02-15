@@ -11,6 +11,6 @@ router.post("/", ClientValidator.createClientValidation, ClientController.create
 
 router.delete("/:id", ClientController.removeClient);
 
-router.put("/", ClientController.updateClients, ClientValidator.updateClientValidation);
+router.put("/", ClientValidator.updateClientValidation, ClientController.updateClients);
 
 export default router;

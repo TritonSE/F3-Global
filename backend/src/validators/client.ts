@@ -1,6 +1,8 @@
 import { body } from "express-validator";
 
-export const createClientValidation = [
+import type { ValidationChain } from "express-validator";
+
+export const createClientValidation: ValidationChain[] = [
   body("name")
     .exists()
     .withMessage("name is required")
@@ -22,7 +24,7 @@ export const createClientValidation = [
     .withMessage("imageUrl cannot be empty"),
 ];
 
-export const updateClientValidation = [
+export const updateClientValidation: ValidationChain[] = [
   body().isArray().withMessage("Request body must be an array of clients"),
 
   body("*.name")
