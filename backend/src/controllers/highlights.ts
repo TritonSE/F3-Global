@@ -32,15 +32,15 @@ export const UpdateHighlights: RequestHandler = async (req, res, next) => {
       await highlightdocument.save();
       return res.status(201).json(highlightdocument);
     }
-
+    //used hashmaps for o(n) time complexity (why not!)
     const hashmap = new Map();
-    highlightdocument.highlights.forEach((highlight) => {
+    highlightdocument.highlights.forEach((highlight: any) => {
       if (highlight._id) {
         hashmap.set(highlight._id.toString(), highlight);
       }
     });
 
-    const updatedHighlights = highlights.map((highlight) => {
+    const updatedHighlights = highlights.map((highlight: any) => {
       if (highlight._id && hashmap.has(highlight._id)) {
         return {
           _id: highlight._id, // Preserve existing _id
@@ -65,6 +65,6 @@ export const UpdateHighlights: RequestHandler = async (req, res, next) => {
     await highlightdocument.save();
     res.status(200).json(highlightdocument);
   } catch (error) {
-    next(error); // Pass errors to error handler
+    next(error);
   }
 };

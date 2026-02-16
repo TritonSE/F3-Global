@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 
-function UpdateStringValidation(index, fieldname) {
+function UpdateStringValidation(index: number, fieldname: string) {
   return body(`highlights.${index}.${fieldname}`)
     .exists()
     .withMessage(`at ${index} ${fieldname} Does not exist`)
@@ -12,7 +12,7 @@ function UpdateStringValidation(index, fieldname) {
     .withMessage(`at ${index} ${fieldname} Is empty`);
 }
 
-function makeHighlightValidator(index) {
+function makeHighlightValidator(index: number) {
   return [
     UpdateStringValidation(index, "quoteText"),
     UpdateStringValidation(index, "previewText"),
