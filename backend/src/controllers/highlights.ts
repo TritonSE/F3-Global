@@ -5,6 +5,21 @@ import { deleteImageFromFirebaseStorage } from "../utils/firebaseStorage";
 import validationErrorParser from "../utils/validationErrorParser";
 
 import type { RequestHandler } from "express";
+import type { Types } from "mongoose";
+
+// Type definitions for request body
+type HighlightRequestItem = {
+  _id?: string | Types.ObjectId;
+  quoteText: string;
+  previewText: string;
+  imageUrl: string;
+  fullText: string;
+  index: number;
+};
+
+type UpdateHighlightsRequestBody = {
+  highlights: HighlightRequestItem[];
+};
 
 export const GetHighlights: RequestHandler = async (req, res, next) => {
   try {
@@ -19,7 +34,11 @@ export const GetHighlights: RequestHandler = async (req, res, next) => {
   }
 };
 
-export const UpdateHighlights: RequestHandler = async (req, res, next) => {
+export const UpdateHighlights: RequestHandler<
+  Record<string, never>,
+  unknown,
+  UpdateHighlightsRequestBody
+> = async (req, res, next) => {
   try {
     const errors = validationResult(req);
     validationErrorParser(errors);
@@ -33,18 +52,19 @@ export const UpdateHighlights: RequestHandler = async (req, res, next) => {
       await highlightdocument.save();
       return res.status(201).json(highlightdocument);
     }
-    //used hashmaps for o(n) time complexity (why not!)
-    const hashmap = new Map();
-    highlightdocument.highlights.forEach((highlight: any) => {
+    // Updated to set and not hashmaps
+    const existingIds = new Set<string>();
+    highlightdocument.highlights.forEach((highlight) => {
       if (highlight._id) {
-        hashmap.set(highlight._id.toString(), highlight);
+        existingIds.add(String(highlight._id));
       }
     });
 
-    const updatedHighlights = highlights.map((highlight: any) => {
-      if (highlight._id && hashmap.has(highlight._id)) {
+    const updatedHighlights = highlights.map((highlight) => {
+      if (highlight._id && existingIds.has(String(highlight._id))) {
+        // Updating existing highlight
         return {
-          _id: highlight._id, // Preserve existing _id
+          _id: highlight._id,
           quoteText: highlight.quoteText,
           previewText: highlight.previewText,
           imageUrl: highlight.imageUrl,
@@ -52,6 +72,7 @@ export const UpdateHighlights: RequestHandler = async (req, res, next) => {
           index: highlight.index,
         };
       } else {
+        // Creating new highlight
         return {
           quoteText: highlight.quoteText,
           previewText: highlight.previewText,
@@ -63,19 +84,20 @@ export const UpdateHighlights: RequestHandler = async (req, res, next) => {
     });
 
     // Delete old images from Firebase Storage
-    const oldImageUrls = highlightdocument.highlights.map((h: any) => h.imageUrl);
-    const newImageUrls = updatedHighlights.map((h: any) => h.imageUrl);
+    const oldImageUrls = highlightdocument.highlights.map((h) => h.imageUrl);
+    const newImageUrls = updatedHighlights.map((h) => h.imageUrl);
     const imagesToDelete = oldImageUrls.filter((url: string) => !newImageUrls.includes(url));
 
-    // Delete removed images from Firebase Storage
-    for (const imageUrl of imagesToDelete) {
-      try {
-        await deleteImageFromFirebaseStorage(imageUrl);
-      } catch (error) {
-        console.error(`Failed to delete image from storage:`, error);
-        // Continue even if deletion fails to not block update
-      }
-    }
+    //removed images from Firebase Storage in parallel
+    await Promise.all(
+      imagesToDelete.map(async (imageUrl) => {
+        try {
+          await deleteImageFromFirebaseStorage(imageUrl);
+        } catch (error) {
+          console.error(`Failed to delete image from storage:`, error);
+        }
+      }),
+    );
 
     highlightdocument.highlights = updatedHighlights;
     await highlightdocument.save();

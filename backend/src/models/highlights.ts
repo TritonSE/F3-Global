@@ -1,8 +1,9 @@
 import { model, Schema } from "mongoose";
 
-import type { Document } from "mongoose";
+import type { Document, Types } from "mongoose";
 
 type HighlightItem = {
+  _id?: string | Types.ObjectId;
   quoteText: string;
   previewText: string;
   imageUrl: string;
