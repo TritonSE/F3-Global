@@ -1,6 +1,7 @@
 import { validationResult } from "express-validator";
 
 import HighlightModel from "../models/highlights";
+import { deleteImageFromFirebaseStorage } from "../utils/firebaseStorage";
 import validationErrorParser from "../utils/validationErrorParser";
 
 import type { RequestHandler } from "express";
@@ -60,6 +61,21 @@ export const UpdateHighlights: RequestHandler = async (req, res, next) => {
         };
       }
     });
+
+    // Delete old images from Firebase Storage
+    const oldImageUrls = highlightdocument.highlights.map((h: any) => h.imageUrl);
+    const newImageUrls = updatedHighlights.map((h: any) => h.imageUrl);
+    const imagesToDelete = oldImageUrls.filter((url: string) => !newImageUrls.includes(url));
+
+    // Delete removed images from Firebase Storage
+    for (const imageUrl of imagesToDelete) {
+      try {
+        await deleteImageFromFirebaseStorage(imageUrl);
+      } catch (error) {
+        console.error(`Failed to delete image from storage:`, error);
+        // Continue even if deletion fails to not block update
+      }
+    }
 
     highlightdocument.highlights = updatedHighlights;
     await highlightdocument.save();
