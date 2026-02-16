@@ -1,35 +1,35 @@
 import { body } from "express-validator";
 
-function UpdateStringValidation(index: number, fieldname: string) {
-  return body(`highlights.${index}.${fieldname}`)
+function UpdateStringValidation(order: number, fieldname: string) {
+  return body(`highlights.${order}.${fieldname}`)
     .exists()
-    .withMessage(`at ${index} ${fieldname} Does not exist`)
+    .withMessage(`at ${order} ${fieldname} Does not exist`)
     .bail()
     .isString()
-    .withMessage(`at ${index} ${fieldname} Not a string`)
+    .withMessage(`at ${order} ${fieldname} Not a string`)
     .bail()
     .notEmpty()
-    .withMessage(`at ${index} ${fieldname} Is empty`);
+    .withMessage(`at ${order} ${fieldname} Is empty`);
 }
 
-function makeHighlightValidator(index: number) {
+function makeHighlightValidator(order: number) {
   return [
-    UpdateStringValidation(index, "quoteText"),
-    UpdateStringValidation(index, "previewText"),
-    UpdateStringValidation(index, "imageUrl")
+    UpdateStringValidation(order, "quoteText"),
+    UpdateStringValidation(order, "previewText"),
+    UpdateStringValidation(order, "imageUrl")
       .isURL()
-      .withMessage(`highlights[${index}] does not have a valid URL`),
-    UpdateStringValidation(index, "fullText"),
-    body(`highlights.${index}.index`)
+      .withMessage(`highlights[${order}] does not have a valid URL`),
+    UpdateStringValidation(order, "fullText"),
+    body(`highlights.${order}.order`)
       .exists()
       .withMessage("Does not exist")
       .bail()
       .isInt({ min: 0, max: 2 })
-      .withMessage(`highlights[${index}].index must be 0, 1, or 2`),
-    body(`highlights.${index}._id`)
+      .withMessage(`highlights[${order}].order must be 0, 1, or 2`),
+    body(`highlights.${order}._id`)
       .optional()
       .isMongoId()
-      .withMessage(`highlights[${index}]._id must be a valid MongoDB ID`),
+      .withMessage(`highlights[${order}]._id must be a valid MongoDB ID`),
   ];
 }
 

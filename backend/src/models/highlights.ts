@@ -8,7 +8,7 @@ type HighlightItem = {
   previewText: string;
   imageUrl: string;
   fullText: string;
-  index: number;
+  order: number;
 };
 
 export type HighlightItemModel = {
@@ -21,7 +21,7 @@ const HighlightItemSchema = new Schema<HighlightItem>(
     previewText: { type: String, required: true },
     imageUrl: { type: String, required: true },
     fullText: { type: String, required: true },
-    index: { type: Number, required: true, enum: [0, 1, 2] },
+    order: { type: Number, required: true, enum: [0, 1, 2] },
   },
   { _id: true }, //true since we need to select one of them for the other webpage
 );
@@ -35,10 +35,10 @@ export const HighlightsSchema = new Schema<HighlightItemModel>(
         validator: (v: HighlightItem[]) => {
           if (v.length !== 3) return false;
 
-          const orders = v.map((x) => x.index);
+          const orders = v.map((x) => x.order);
           return [0, 1, 2].every((o) => orders.includes(o));
         },
-        message: "Can only have 3 highlights or has a Duplicated index",
+        message: "Can only have 3 highlights or has a Duplicated order",
       },
     },
   },

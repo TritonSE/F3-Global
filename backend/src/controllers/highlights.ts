@@ -14,7 +14,7 @@ type HighlightRequestItem = {
   previewText: string;
   imageUrl: string;
   fullText: string;
-  index: number;
+  order: number;
 };
 
 type UpdateHighlightsRequestBody = {
@@ -69,7 +69,7 @@ export const UpdateHighlights: RequestHandler<
           previewText: highlight.previewText,
           imageUrl: highlight.imageUrl,
           fullText: highlight.fullText,
-          index: highlight.index,
+          order: highlight.order,
         };
       } else {
         // Creating new highlight
@@ -78,7 +78,7 @@ export const UpdateHighlights: RequestHandler<
           previewText: highlight.previewText,
           imageUrl: highlight.imageUrl,
           fullText: highlight.fullText,
-          index: highlight.index,
+          order: highlight.order,
         };
       }
     });
