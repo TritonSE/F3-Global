@@ -29,7 +29,7 @@ export const updateClientValidation: ValidationChain[] = [
 
   body("*.name")
     .exists()
-    .withMessage("name is requrired")
+    .withMessage("name is required")
     .bail()
     .isString()
     .withMessage("name must be a string")
