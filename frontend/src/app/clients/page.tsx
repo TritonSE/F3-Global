@@ -1,7 +1,5 @@
 import React from "react";
 
-import ClientsStory from "@/components/clients-page/ClientsStory";
-import ClientsStoryExpanded from "@/components/clients-page/ClientsStoryExpanded";
 import ClientStoryOverall from "@/components/clients-page/ClientsStoryOverall";
 
 export default function About() {
