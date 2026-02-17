@@ -97,7 +97,7 @@ export const Footer = function Footer() {
             <FooterMiniBtn text="News" />
             <FooterMiniBtn text="Events" />
             <FooterMiniBtn text="Meet The Team" link="/meet-the-team" />
-            <FooterMiniBtn text="Privacy Policy" />
+            <FooterMiniBtn text="Privacy Policy" link="/privacy-policy" />
             <FooterMiniBtn
               text="Terms & Conditions"
               onClick={() => {
