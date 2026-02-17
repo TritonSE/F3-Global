@@ -7,6 +7,7 @@ import errorHandler from "./middleware/errorHandler";
 import log from "./middleware/logger";
 import clientsRouter from "./routes/clients";
 import contactRoute from "./routes/contactRequest";
+import impactMetricRouter from "./routes/impact-metrics";
 import membersRouter from "./routes/members";
 
 const app = express();
@@ -22,9 +23,9 @@ app.use(express.json());
 
 app.use(log);
 app.use("/api/contact", contactRoute);
-
 app.use("/api/members", membersRouter);
 app.use("/api/clients", clientsRouter);
+app.use("/api/impact-metrics", impactMetricRouter);
 
 app.use(errorHandler);
 mongoose
