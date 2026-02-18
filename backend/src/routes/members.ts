@@ -9,7 +9,7 @@ router.get("/all", MemberController.getAllMembers);
 
 router.post("/", Validators.createMember, MemberController.createMember);
 
-router.put("/:id", Validators.updateMember, MemberController.updateMember);
+router.put("/", Validators.updateMembers, MemberController.updateMembers);
 
 router.delete("/:id", Validators.deleteMember, MemberController.deleteMember);
 
