@@ -14,10 +14,10 @@ export default function About() {
       <div className="bg-white overflow-x-hidden">
         <div className="flex w-full items-center justify-between self-stretch px-[100px] h-180">
           <div className="flex flex-col">
-            <h1 className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
+            <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
               Services That Create
             </h1>
-            <h1 className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
+            <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
               <span className="italic">Lasting</span> Impact
             </h1>
             <p className="font-dm-sans mt-5 text-[24px] font-normal leading-[32px] text-[#5D5D5D] w-[80%]">

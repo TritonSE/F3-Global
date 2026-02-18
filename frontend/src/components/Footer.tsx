@@ -98,7 +98,17 @@ export const Footer = function Footer() {
             <FooterMiniBtn text="Events" />
             <FooterMiniBtn text="Meet The Team" link="/meet-the-team" />
             <FooterMiniBtn text="Privacy Policy" />
-            <FooterMiniBtn text="Terms & Conditions" />
+            <FooterMiniBtn
+              text="Terms & Conditions"
+              onClick={() => {
+                /* regular link prop wasn't scrolling all the way to the top
+                 * and was cutting off the terms and conditions header, just
+                 * looked kinda funky
+                 */
+                router.push("/terms-and-conditions", { scroll: false });
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            />
           </div>
         </div>
       </div>
