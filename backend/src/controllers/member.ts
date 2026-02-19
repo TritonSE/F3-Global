@@ -65,9 +65,9 @@ export const updateMembers: RequestHandler<
     }
 
     for (const incoming of incomingMembers) {
-      if (incoming._id && currentMemberMap.has(incoming._id)) {
-        const current = currentMemberMap.get(incoming._id)!;
+      const current = incoming._id ? currentMemberMap.get(incoming._id) : undefined;
 
+      if (current) {
         if (current.headshotUrl !== incoming.headshotUrl) {
           imageDeletionPromises.push(
             deleteImageFromFirebaseStorage(current.headshotUrl).catch((e) =>
@@ -79,8 +79,7 @@ export const updateMembers: RequestHandler<
         dbOperations.push(Member.findByIdAndUpdate(incoming._id, incoming, { new: true }));
       } else {
         const { _id, ...memberData } = incoming;
-        const newMember = new Member(memberData);
-        dbOperations.push(newMember.save());
+        dbOperations.push(Member.create(memberData));
       }
     }
 
