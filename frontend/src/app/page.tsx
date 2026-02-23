@@ -40,7 +40,7 @@ export default function Home() {
   return (
     <>
       <div>
-        <div className="relative w-full min-h-screen bg-[#f6f6f6] overflow-x-hidden">
+        <div className="relative w-full min-h-screen bg-[#f6f6f6] overflow-x-hidden bg-white">
           <div className="absolute top-0 left-0 w-full h-screen pointer-events-none select-none overflow-hidden">
             <div className="absolute -top-[35%] -right-[55%] w-[120%] h-[120%] opacity-25">
               <Image
@@ -59,7 +59,7 @@ export default function Home() {
               className="absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(197.05deg, rgba(246, 246, 246, 0) 12.21%, rgb(246, 246, 246) 68.32%)",
+                  "linear-gradient(197.05deg, rgba(246, 246, 246, 0) 12.21%, #FFFFFF 68.32%)",
               }}
             />
           </div>
@@ -123,12 +123,9 @@ export default function Home() {
               <span className="text-[#012060] font-bold">underserved communities</span> worldwide.
             </p>
           </div>
-          <ImpactSection />
+          <ImpactSection title="Building Futures Together" />
           <div className="relative z-20 w-full mt-32 px-[5vw] flex gap-6 flex-col items-start pb-20">
             <ServicesSection />
-            <h3 className="text-[#172447] font-dm text-[48px] font-medium leading-[1.5] tracking-[-0.96px]">
-              Building Futures Together
-            </h3>
 
             <div className="flex relative left-1/2 right-1/2 flex w-screen -translate-x-1/2">
               <Carousel data={DonorsClientsMembersCarouselData} />
