@@ -308,7 +308,7 @@ export default function NavBar() {
       <div className="w-full" />
 
       <div className="fixed top-0 left-0 right-0 z-50 w-full font-dm bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px] shadow-[0_301px_84px_0_rgba(0,0,0,0.00),0_12px_26px_0_rgba(0,0,0,0.10)]">
-        <nav className="px-[30px] py-[20px] flex justify-between items-center">
+        <nav className="flex justify-between items-center">
           <NavLinks
             isActive={isActive}
             isDropdownOpen={isDropdownOpen}

@@ -50,7 +50,7 @@ export default function Home() {
                 className="object-cover"
                 priority
                 style={{
-                  objectPosition: "100% 0%",
+                  objectPosition: "100% 25%",
                 }}
               />
             </div>
@@ -64,7 +64,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="relative z-10 w-full pl-[5vw] pt-[8vw] m-left">
+          <div className="relative z-10 w-full pl-[5vw] pt-[8vw] m-left mt-[-20px]">
             <h1 className="text-[#172447] text-[8vw] leading-[0.92] font-ethic font-light [font-feature-settings:'dlig'_on]">
               <span className="block italic">Empowering</span>
               <span className="block">Small</span>
@@ -124,13 +124,8 @@ export default function Home() {
             </p>
           </div>
           <ImpactSection title="Building Futures Together" />
-          <div className="relative z-20 w-full mt-32 px-[5vw] flex gap-6 flex-col items-start pb-20">
-            <ServicesSection />
-
-            <div className="flex relative left-1/2 right-1/2 flex w-screen -translate-x-1/2">
-              <Carousel data={DonorsClientsMembersCarouselData} />
-            </div>
-          </div>
+          <ServicesSection />
+          <Carousel data={DonorsClientsMembersCarouselData} />
           <Highlights />
           <ContactUs />
         </div>
