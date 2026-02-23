@@ -78,13 +78,13 @@ export default function Home() {
               <Button
                 text="become a client"
                 onClick_link="/clients"
-                className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] [&_p]:uppercase [&_p]:font-normal"
+                className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] [&_p]:uppercase [&_p]:font-semibold"
                 textClassName="text-white"
               />
               <Button
                 text="join as a member"
                 onClick_link="/members"
-                className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-white border-[1.5px] border-[#C7C7C7] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#C7C7C7] hover:border-black [&_p]:text-[#172447] [&_p]:uppercase [&_p]:font-normal"
+                className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-white border-[1.5px] border-[#C7C7C7] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#C7C7C7] hover:border-black [&_p]:text-[#172447] [&_p]:uppercase [&_p]:font-semibold"
               />
             </div>
           </div>

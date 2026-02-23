@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { Anchor } from "@/components/Anchor";
 import { Button } from "@/components/button";
+import { ClientCarousel } from "@/components/ClientCarousel";
 import {
   TIMELINE_HEADER,
   TIMELINE_INSTRUCTION,
@@ -74,6 +75,7 @@ export default function About() {
         </div>
         <TimelineSection />
       </div>
+      <ClientCarousel />
     </div>
   );
 }
