@@ -48,7 +48,7 @@ export const CarouselCard: React.FC<CarouselCardProps> = ({
                   className="transition-transform duration-300 ease-in-out group-hover:translate-x-3"
                 />
               }
-              className="group flex h-[48px] w-[151px] items-center justify-center gap-2.5 rounded-[99px] border-none bg-white px-[15px] py-3 font-dm-sans text-base font-semibold leading-[150%] text-[#172447] [&_p]:text-[#172447]"
+              className="group flex h-[48px] w-[151px] items-center justify-center gap-2.5 rounded-[99px] border-none bg-white px-[15px] py-3 font-dm-sans text-base font-semibold leading-[150%] text-[#172447] [&_p]:text-[#172447] cursor-pointer"
             />
           )}
         </div>

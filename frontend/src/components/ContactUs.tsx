@@ -123,7 +123,7 @@ export const ContactUs: React.FC = () => {
             <div className="flex flex-col content-center items-start gap-[30px] content-between">
               <div className="flex flex-row gap-[20px]">
                 <div className="flex flex-col content-center items-start gap-[10px] self-stretch">
-                  <p className="text-black font-dm-sans text-[16px] font-normal leading-[24px] font-[400]">
+                  <p className="text-black font-dm-sans text-[16px] font-normal leading-[24px] !font-[400]">
                     I’m interested in becoming... (choose one)
                   </p>
                   <div className="flex items-center gap-[12px]">
@@ -132,12 +132,12 @@ export const ContactUs: React.FC = () => {
                       className={
                         formData.interestedRole === "donor"
                           ? "w-[88px] p-[4px] bg-[#172447] content-center items-center gap-[10px] rounded-[99px]"
-                          : "w-[88px] p-[4px] content-center items-center gap-[10px] rounded-[99px] border transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2]"
+                          : "w-[88px] p-[4px] content-center items-center gap-[10px] rounded-[99px] border transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2] cursor-pointer"
                       }
                       textClassName={
                         formData.interestedRole === "donor"
-                          ? "font-dm-sans text-[14px] text-white"
-                          : "font-dm-sans text-[14px] text-black"
+                          ? "font-dm-sans text-[14px] text-white !font-[400]"
+                          : "font-dm-sans text-[14px] text-black !font-[400]"
                       }
                       onClick={() => handleRoleSelect("donor")}
                     />
@@ -146,12 +146,12 @@ export const ContactUs: React.FC = () => {
                       className={
                         formData.interestedRole === "member"
                           ? "w-[88px] p-[4px] bg-[#172447] content-center items-center gap-[10px] rounded-[99px]"
-                          : "w-[88px] p-[4px] content-center items-center gap-[10px] rounded-[99px] border transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2]"
+                          : "w-[88px] p-[4px] content-center items-center gap-[10px] rounded-[99px] border transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2] cursor-pointer"
                       }
                       textClassName={
                         formData.interestedRole === "member"
-                          ? "font-dm-sans text-[14px] text-white"
-                          : "font-dm-sans text-[14px] text-black"
+                          ? "font-dm-sans text-[14px] text-white !font-[400]"
+                          : "font-dm-sans text-[14px] text-black !font-[400]"
                       }
                       onClick={() => handleRoleSelect("member")}
                     />
@@ -160,12 +160,12 @@ export const ContactUs: React.FC = () => {
                       className={
                         formData.interestedRole === "client"
                           ? "w-[88px] p-[4px] bg-[#172447] content-center items-center gap-[10px] rounded-[99px]"
-                          : "w-[88px] p-[4px] content-center items-center gap-[10px] rounded-[99px] border transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2]"
+                          : "w-[88px] p-[4px] content-center items-center gap-[10px] rounded-[99px] border transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2] cursor-pointer"
                       }
                       textClassName={
                         formData.interestedRole === "client"
-                          ? "font-dm-sans text-[14px] text-white"
-                          : "font-dm-sans text-[14px] text-black"
+                          ? "font-dm-sans text-[14px] text-white !font-[400]"
+                          : "font-dm-sans text-[14px] text-black !font-[400]"
                       }
                       onClick={() => handleRoleSelect("client")}
                     />
@@ -174,12 +174,12 @@ export const ContactUs: React.FC = () => {
                       className={
                         formData.interestedRole === "other"
                           ? "w-[88px] p-[4px] bg-[#172447] content-center items-center gap-[10px] rounded-[99px]"
-                          : "w-[88px] p-[4px] content-center items-center gap-[10px] rounded-[99px] border transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2]"
+                          : "w-[88px] p-[4px] content-center items-center gap-[10px] rounded-[99px] border transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2] cursor-pointer"
                       }
                       textClassName={
                         formData.interestedRole === "other"
-                          ? "font-dm-sans text-[14px] text-white"
-                          : "font-dm-sans text-[14px] text-black"
+                          ? "font-dm-sans text-[14px] text-white !font-[400]"
+                          : "font-dm-sans text-[14px] text-black !font-[400]"
                       }
                       onClick={() => handleRoleSelect("other")}
                     />
@@ -253,7 +253,7 @@ export const ContactUs: React.FC = () => {
                   </div>
                   <Button
                     text="Send"
-                    className="flex px-[14px] py-[10px] mt-[-12px] content-center items-center rounded-[99px] bg-[#172447] self-end transition-colors duration-450 ease-in-out hover:bg-[#1169B0] hover:border-[#1169B0]"
+                    className="flex px-[14px] py-[10px] mt-[-12px] content-center items-center rounded-[99px] bg-[#172447] self-end transition-colors duration-450 ease-in-out hover:bg-[#1169B0] hover:border-[#1169B0] cursor-pointer"
                     textClassName="text-white text-center font-dm-sans font-light text-[16px] leading-[24px]"
                     onClick={handleSubmit}
                   />
