@@ -123,13 +123,12 @@ export default function Home() {
               <span className="text-[#012060] font-bold">underserved communities</span> worldwide.
             </p>
           </div>
+          <ImpactSection />
           <div className="relative z-20 w-full mt-32 px-[5vw] flex gap-6 flex-col items-start pb-20">
             <ServicesSection />
             <h3 className="text-[#172447] font-dm text-[48px] font-medium leading-[1.5] tracking-[-0.96px]">
               Building Futures Together
             </h3>
-
-            <ImpactSection />
 
             <div className="flex relative left-1/2 right-1/2 flex w-screen -translate-x-1/2">
               <Carousel data={DonorsClientsMembersCarouselData} />
