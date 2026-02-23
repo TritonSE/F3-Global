@@ -123,7 +123,7 @@ export const ContactUs: React.FC = () => {
             <div className="flex flex-col content-center items-start gap-[30px] content-between">
               <div className="flex flex-row gap-[20px]">
                 <div className="flex flex-col content-center items-start gap-[10px] self-stretch">
-                  <p className="text-black font-dm-sans text-[16px] font-normal leading-[24px]">
+                  <p className="text-black font-dm-sans text-[16px] font-normal leading-[24px] font-[400]">
                     I’m interested in becoming... (choose one)
                   </p>
                   <div className="flex items-center gap-[12px]">
@@ -212,7 +212,7 @@ export const ContactUs: React.FC = () => {
                     `}
                   >
                     <input
-                      className="font-dm-sans text-[16px] text-normal leading-[24px] text-[#5D5D5D] bg-transparent outline-none w-full"
+                      className="font-dm-sans text-[16px] text-normal leading-[24px] text-[#1E1E1E] bg-transparent outline-none w-full"
                       type="email"
                       name="email"
                       placeholder="Email *"
@@ -236,7 +236,7 @@ export const ContactUs: React.FC = () => {
                     `}
                   >
                     <textarea
-                      className="font-dm-sans text-[16px] text-normal leading-[24px] text-[#5D5D5D] bg-transparent outline-none w-full h-full resize-none"
+                      className="font-dm-sans text-[16px] text-normal leading-[24px] text-[#1E1E1E] bg-transparent outline-none w-full h-full resize-none"
                       name="message"
                       placeholder="Message *"
                       value={formData.message}
