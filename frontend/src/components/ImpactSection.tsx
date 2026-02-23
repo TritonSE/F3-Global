@@ -39,7 +39,7 @@ export const ImpactSection = ({ title = "Our Impact" }: ImpactSectionProps) => {
               <h4 className="text-[#012060] font-ethic text-[64px] font-light leading-[1.1]">
                 {metric.statistic}
               </h4>
-              <p className="text-[#1E1E1E] font-dm text-[24px] font-semibold leading-[1.5]">
+              <p className="text-[#1E1E1E] font-dm text-[20px] font-semibold leading-[1.5]">
                 {metric.subtitle}
               </p>
               <p className="text-[#5D5D5D] font-dm text-[16px] font-normal leading-[1.5]">
@@ -48,7 +48,7 @@ export const ImpactSection = ({ title = "Our Impact" }: ImpactSectionProps) => {
             </div>
 
             {idx < orderedMetrics.length - 1 && (
-              <div className="w-[2px] h-48 bg-[#C7C7C7] mx-[35px] self-center"></div>
+              <div className="w-[2px] h-[196px] bg-[#C7C7C7] mx-[35px] self-center"></div>
             )}
           </div>
         ))}
