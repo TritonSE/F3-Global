@@ -39,9 +39,10 @@ export default function Home() {
 
   return (
     <>
-      <div className="relative w-full min-h-screen bg-[#f6f6f6] overflow-x-hidden bg-white">
-        <div className="relative flex w-full flex-col justify-center">
-          {/* hero image bg gradient */}
+      <div className="relative w-full bg-white flex flex-col">
+        {/* hero */}
+        <div className="relative flex flex-col items-center min-h-screen">
+          {/* map gradient */}
           <div className="absolute top-0 left-0 w-full h-screen pointer-events-none select-none overflow-hidden">
             <div className="absolute -top-[35%] -right-[55%] w-[120%] h-[120%] opacity-25">
               <Image
@@ -51,7 +52,7 @@ export default function Home() {
                 className="object-cover"
                 priority
                 style={{
-                  objectPosition: "100% 25%",
+                  objectPosition: "100% 30%",
                 }}
               />
             </div>
@@ -64,32 +65,36 @@ export default function Home() {
               }}
             />
           </div>
-          {/* actual hero headers n text n buttons n city carousel*/}
-          <div className="relative self-strech mt-[100px]">
-            <h1 className="text-[#172447] text-[120px] leading-[0.92] font-ethic font-light [font-feature-settings:'dlig'_on] px-[100px]">
+          {/* hero text */}
+          <div className="relative flex flex-col self-stretch px-[100px] pt-[80px] justify-center items-start gap-[32px]">
+            <p className="font-ethic text-[120px] text-[#172447] font-light [font-feature-settings:'dlig'_on] font-[300] leading-[110px]">
               <span className="block italic">Empowering</span>
               <span className="block">Small</span>
               <span className="block">Businesses</span>
-            </h1>
-            <p className="font-dm text-[#5D5D5D] text-[20px] leading-[32px] font-normal w-[754px] mt-[32px] pl-[100px]">
-              Join us in our mission to foster economic growth and financial inclusion for
-              underserved communities worldwide.
             </p>
-            <div className="absolute left-0 right-0 flex justify-center items-center gap-[30px] mt-10">
-              <Button
-                text="become a client"
-                onClick_link="/clients"
-                className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] [&_p]:uppercase [&_p]:font-semibold cursor-pointer"
-                textClassName="text-white"
-              />
-              <Button
-                text="join as a member"
-                onClick_link="/members"
-                className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-white border-[1.5px] border-[#C7C7C7] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#C7C7C7] hover:border-black [&_p]:text-[#172447] [&_p]:uppercase [&_p]:font-semibold cursor-pointer"
-              />
+            <div className="flex w-[754px] h-[74px] flex-col justify-center">
+              <p className="font-dm-sans text-[#5D5D5D] text-[20px] font-normal font-[400] leading-[32px]">
+                Join us in our mission to foster economic growth and financial inclusion for
+                underserved communities worldwide.
+              </p>
             </div>
           </div>
-          <div className="w-full mt-38 overflow-hidden flex">
+          {/* buttons */}
+          <div className="relative flex flex-inline items-center gap-[30px] mt-[60px]">
+            <Button
+              text="become a client"
+              onClick_link="/clients"
+              className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] [&_p]:uppercase [&_p]:font-semibold cursor-pointer"
+              textClassName="text-white"
+            />
+            <Button
+              text="join as a member"
+              onClick_link="/members"
+              className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-white border-[1.5px] border-[#C7C7C7] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#C7C7C7] hover:border-black [&_p]:text-[#172447] [&_p]:uppercase [&_p]:font-semibold cursor-pointer"
+            />
+          </div>
+          {/* city scrolling */}
+          <div className="w-full mt-[67px] overflow-hidden flex">
             <div className="flex animate-marquee whitespace-nowrap">
               {cities.map((city, index) => (
                 <div key={`city-1-${index}`} className="flex items-center">
@@ -111,12 +116,12 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="flex w-full pt-[76px] px-[321px] pb-[100px] flex-col items-center gap-[50px]">
+        {/* mission */}
+        <div className="flex flex-col w-full pt-[76px] px-[200px] pb-[100px] items-center gap-[50px]">
           <h2 className="text-[#172447] text-[96px] leading-[1.5] font-ethic font-light italic">
             Mission
           </h2>
-
-          <p className="text-[#1E1E1E] text-center font-dm text-[24px] font-normal leading-[32px] max-w-4xl self-stretch">
+          <p className="text-[#1E1E1E] text-center font-dm text-[24px] font-normal leading-[32px] self-stretch">
             Microfinancing is transforming lives across continents, empowering{" "}
             <span className="text-[#012060] font-bold">millions</span> with access to essential
             financial services. Join us in our mission to foster{" "}
