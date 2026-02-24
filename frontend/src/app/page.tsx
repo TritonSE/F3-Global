@@ -41,7 +41,7 @@ export default function Home() {
     <>
       <div className="relative w-full bg-white flex flex-col">
         {/* hero */}
-        <div className="relative flex flex-col items-center min-h-screen">
+        <div className="relative flex flex-col items-center h-screen">
           {/* map gradient */}
           <div className="absolute top-0 left-0 w-full h-screen pointer-events-none select-none overflow-hidden">
             <div className="absolute -top-[35%] -right-[55%] w-[120%] h-[120%] opacity-25">
@@ -66,7 +66,7 @@ export default function Home() {
             />
           </div>
           {/* hero text */}
-          <div className="relative flex flex-col self-stretch px-[100px] pt-[80px] justify-center items-start gap-[32px]">
+          <div className="relative flex flex-col self-stretch px-[100px] pt-[80px] justify-center items-start gap-[32px] flex-grow">
             <p className="font-ethic text-[120px] text-[#172447] font-light [font-feature-settings:'dlig'_on] font-[300] leading-[110px]">
               <span className="block italic">Empowering</span>
               <span className="block">Small</span>
@@ -117,7 +117,7 @@ export default function Home() {
           </div>
         </div>
         {/* mission */}
-        <div className="flex flex-col w-full pt-[76px] px-[200px] pb-[100px] items-center gap-[50px]">
+        <div className="flex flex-col w-full pt-[100px] px-[200px] pb-[100px] items-center gap-[50px]">
           <h2 className="text-[#172447] text-[96px] leading-[1.5] font-ethic font-light italic">
             Mission
           </h2>
