@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 
 import { WaysToGiveCarouselData } from "../carouselData";
@@ -6,12 +7,15 @@ import Parallax from "./parallax";
 
 import { Anchor } from "@/components/Anchor";
 import { Carousel } from "@/components/Carousel";
+import { ContactUs } from "@/components/ContactUs";
 import { FaqAccordion } from "@/components/FaqAccordion";
+import { Highlights } from "@/components/Highlights";
 import { ImpactSection } from "@/components/ImpactSection";
 
 export default function Donors() {
   return (
     <div className="mx-auto flex flex-col justify-center items-center bg-white w-full">
+      {/* Donors Hero */}
       <div className="flex py-[150px] px-[5vw] min-h-screen justify-between items-center w-full">
         <div className="flex w-[639px] flex-col items-start gap-[50px] shrink-0">
           <h1
@@ -20,11 +24,10 @@ export default function Donors() {
           >
             Turn $100 into a <br /> <i>Thriving</i> Business
           </h1>
-          <p>
-            Every thriving business starts with a single opportunity. Your donation gives
-            entrepreneurs the capital they need but can't access through traditional banking. Watch
-            as your gift launches businesses, creates jobs, and strengthens families across the
-            globe—with complete transparency every step of the way.
+          <p className="text-[#5D5D5D] text-[20px] leading-[160%]">
+            Your donation gives entrepreneurs the capital they need but can't access through
+            traditional banking. Watch as your gift launches businesses, creates jobs, and
+            strengthens families across the globe.
           </p>
           <Anchor
             text="DONATE NOW"
@@ -40,13 +43,10 @@ export default function Donors() {
         />
       </div>
       <Parallax />
-
+      <Highlights />
       <div className="relative left-1/2 right-1/2 flex w-screen -translate-x-1/2">
         <Carousel data={WaysToGiveCarouselData} />
       </div>
-      {/* How You Can Help section */}
-      {/* Client Highlights Carousel */}
-      {/* Ways to Give section */}
       <ImpactSection />
       <FaqAccordion
         items={[
@@ -65,8 +65,19 @@ export default function Donors() {
             answer:
               "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
           },
+          {
+            question: "Lorem ipsum dolor sit amet, consectetur?",
+            answer:
+              "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
+          },
+          {
+            question: "Lorem ipsum dolor sit amet, consectetur?",
+            answer:
+              "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
+          },
         ]}
       />
+      {/* "Start Creating Impact Now" Section */}
       <div className="w-full h-[767px] flex">
         <div className="w-full h-[767px] flex overflow-hidden bg-[#172447] justify-end">
           <div
@@ -119,7 +130,7 @@ export default function Donors() {
           </a>
         </div>
       </div>
-      {/* Contact Us section */}
+      <ContactUs />
     </div>
   );
 }
