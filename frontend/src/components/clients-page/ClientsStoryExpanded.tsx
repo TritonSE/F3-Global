@@ -9,11 +9,7 @@ type ClientStoryProps = {
   onShowLess?: () => void;
 };
 
-const ClientsStoryExpanded: React.FC<ClientStoryProps> = ({
-  image,
-  fullText,
-  onShowLess,
-}) => {
+const ClientsStoryExpanded: React.FC<ClientStoryProps> = ({ image, fullText, onShowLess }) => {
   return (
     <div
       onClick={onShowLess}
@@ -32,9 +28,7 @@ const ClientsStoryExpanded: React.FC<ClientStoryProps> = ({
 
       {/* Content Section */}
       <div className="w-full">
-        <p className="text-gray-700 leading-relaxed mb-6">
-          {fullText}
-        </p>
+        <p className="text-gray-700 leading-relaxed mb-6">{fullText}</p>
         <button className="text-lg font-semibold text-gray-900 bg-transparent border-none p-0 cursor-pointer hover:text-gray-600 transition-colors duration-200">
           Show Less
         </button>

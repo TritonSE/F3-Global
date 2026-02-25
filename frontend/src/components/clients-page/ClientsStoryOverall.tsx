@@ -11,11 +11,7 @@ type ClientStoryProps = {
   fullText: string;
 };
 
-const ClientsStoryOverall: React.FC<ClientStoryProps> = ({
-  image,
-  description,
-  fullText,
-}) => {
+const ClientsStoryOverall: React.FC<ClientStoryProps> = ({ image, description, fullText }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isFading, setIsFading] = useState(false);
 
@@ -45,17 +41,9 @@ const ClientsStoryOverall: React.FC<ClientStoryProps> = ({
           className={`transition-opacity duration-1000 ${isFading ? "opacity-0" : "opacity-100"}`}
         >
           {isExpanded ? (
-            <ClientsStoryExpanded
-              image={image}
-              fullText={fullText}
-              onShowLess={handleShowLess}
-            />
+            <ClientsStoryExpanded image={image} fullText={fullText} onShowLess={handleShowLess} />
           ) : (
-            <ClientsStory
-              image={image}
-              description={description}
-              onShowMore={handleShowMore}
-            />
+            <ClientsStory image={image} description={description} onShowMore={handleShowMore} />
           )}
         </div>
       </div>
