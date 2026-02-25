@@ -47,7 +47,7 @@ export default function Donors() {
       <div className="relative left-1/2 right-1/2 flex w-screen -translate-x-1/2">
         <Carousel data={WaysToGiveCarouselData} />
       </div>
-      <ImpactSection />
+      <ImpactSection title="Our Impact" />
       <FaqAccordion
         items={[
           {

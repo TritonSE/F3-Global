@@ -1,8 +1,12 @@
-export const ImpactSection = () => {
+type ImpactSectionProps = {
+  title?: string;
+};
+
+export const ImpactSection = ({ title = "Our Global Impact" }: ImpactSectionProps) => {
   return (
     <div className="relative z-20 w-full py-[75px] px-[5vw] flex gap-6 flex-col items-start border-t border-[#F4F4F4] bg-white shadow-[inset_0_-12px_10px_rgba(0,0,0,0.02)]">
       <h3 className="text-[#172447] font-dm text-[48px] font-medium leading-[1.5] tracking-[-0.96px]">
-        Our Impact
+        {title}
       </h3>
       <div className="self-stretch flex justify-between items-start p-[25px] rounded-[10px] bg-[#F4F4F4]">
         <div className="w-[375px] flex flex-col items-start self-stretch">

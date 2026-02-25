@@ -20,103 +20,111 @@ function NavLinks({
 }) {
   return (
     <>
-      <div className="flex items-center gap-[12px] w-[274.5px] flex-shrink-0">
-        <Link href="/">
-          <Image
-            src="/imgs/f3logo_nobg 2.png"
-            alt="F3 Global Logo"
-            width={55}
-            height={55}
-            className="flex-shrink-0"
-          />
-        </Link>
-        <span className="text-[#172447] text-[12px] font-[900] leading-[110%] tracking-[2.64px] font-dm">
-          <span className="block">FUTURE</span>
-          <span className="block">FORWARD</span>
-          <span className="block">FOUNDATION</span>
-        </span>
-      </div>
+      <div className="flex w-full max-w-[1512px] mx-auto justify-between items-center px-[30px] pt-[30px] pb-[20px] leading-none">
+        <div className="flex items-center gap-[12px] w-[274.5px] h-[55px] flex-shrink-0">
+          <Link
+            href="/"
+            className="flex h-[55px] w-[55px] flex-shrink-0 items-center justify-center"
+          >
+            <Image
+              src="/imgs/f3logo_nobg 2.png"
+              alt="F3 Global Logo"
+              width={55}
+              height={55}
+              className="block w-[55px] h-[55px] object-contain"
+            />
+          </Link>
+          <div className="flex flex-col justify-center h-full">
+            <span className="text-[#172447] text-[12px] font-[900] leading-[110%] tracking-[2.64px] font-dm">
+              <span className="block">FUTURE</span>
+              <span className="block">FORWARD</span>
+              <span className="block">FOUNDATION</span>
+            </span>
+          </div>
+        </div>
 
-      <div className="flex items-center gap-8">
-        <Link
-          href="/"
-          className={`flex px-[20px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[24px] font-[500] leading-[36px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
-            isActive("/") ? "bg-[#E6E6E6] text-[#172447]" : ""
-          }`}
-        >
-          Home
-        </Link>
-        <Link
-          href="/about-us"
-          className={`flex px-[20px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[24px] font-[500] leading-[36px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
-            isActive("/about-us") ? "bg-[#E6E6E6] text-[#172447]" : ""
-          }`}
-        >
-          About Us
-        </Link>
-        <Link
-          href="/meet-the-team"
-          className={`flex px-[20px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[24px] font-[500] leading-[36px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
-            isActive("/meet-the-team") ? "bg-[#E6E6E6] text-[#172447]" : ""
-          }`}
-        >
-          Meet the Team
-        </Link>
+        <div className="flex items-center gap-[5px] px-[10px] py-[15px]">
+          <Link
+            href="/"
+            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
+              isActive("/") ? "bg-[#E6E6E6] text-[#172447]" : ""
+            }`}
+          >
+            Home
+          </Link>
+          <Link
+            href="/about-us"
+            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
+              isActive("/about-us") ? "bg-[#E6E6E6] text-[#172447]" : ""
+            }`}
+          >
+            About Us
+          </Link>
+          <Link
+            href="/meet-the-team"
+            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[500] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
+              isActive("/meet-the-team") ? "bg-[#E6E6E6] text-[#172447]" : ""
+            }`}
+          >
+            Meet the Team
+          </Link>
 
-        <button
-          ref={buttonRef}
-          onClick={onToggleDropdown}
-          className={`get-involved-btn flex items-center gap-[10px] px-[20px] py-[10px] text-[24px] font-[500] leading-[36px] tracking-[-0.48px] font-dm rounded-full hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
-            isActive("/donors") || isActive("/members") || isActive("/clients")
-              ? "bg-[#E6E6E6] text-[#172447]"
-              : ""
-          }`}
-          style={{
-            color:
-              isBlinking && !(isActive("/donors") || isActive("/members") || isActive("/clients"))
-                ? "rgba(244, 244, 244, 0.70)"
+          <button
+            ref={buttonRef}
+            onClick={onToggleDropdown}
+            className={`get-involved-btn flex items-center gap-[10px] px-[15px] py-[10px] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm rounded-full hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
+              isActive("/donors") || isActive("/members") || isActive("/clients")
+                ? "bg-[#E6E6E6] text-[#172447]"
+                : ""
+            }`}
+            style={{
+              color: isBlinking && !(isActive("/donors") || isActive("/members") || isActive("/clients"))
+                ? "rgba(244, 244, 244, 0.70)" 
                 : "#5D5D5D",
-          }}
-        >
-          Get Involved
-          {isDropdownOpen ? (
-            <Image src="/imgs/ic_arrowup.svg" alt="Upward Arrow" width={24} height={24} />
-          ) : (
-            <Image src="/imgs/ic_arrowdown.svg" alt="Downward Arrow" width={24} height={24} />
-          )}
-        </button>
+            }}
+          >
+            Get Involved
+            {isDropdownOpen ? (
+              <Image src="/imgs/ic_arrowup.svg" alt="Upward Arrow" width={24} height={24} />
+            ) : (
+              <Image src="/imgs/ic_arrowdown.svg" alt="Downward Arrow" width={24} height={24} />
+            )}
+          </button>
 
-        <Link
-          href=""
-          className={`flex px-[20px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[24px] font-[500] leading-[36px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
-            isActive("") ? "bg-[#E6E6E6] text-[#172447]" : ""
-          }`}
-        >
-          Newsletter
-        </Link>
+          <Link
+            href=""
+            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
+              isActive("") ? "bg-[#E6E6E6] text-[#172447]" : ""
+            }`}
+          >
+            Newsletter
+          </Link>
 
-        <Link
-          href="https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex px-[20px] py-[10px] justify-center items-center gap-[10px] rounded-full border border-[#C7C7C7] bg-[#FFF] text-[#172447] text-[24px] font-[600] leading-[36px] font-dm hover:bg-[#172447] hover:border-[#172447] hover:text-[#FFF] transition-all duration-300 ease-in-out group"
-        >
-          DONATE
-          <Image
-            src="/imgs/ic_arrowforward_blue.svg"
-            alt="Redirect Arrow"
-            width={36}
-            height={36}
-            className="group-hover:hidden"
-          />
-          <Image
-            src="/imgs/ic_arrowforward_white.svg"
-            alt="Redirect Arrow"
-            width={36}
-            height={36}
-            className="hidden group-hover:block"
-          />
-        </Link>
+          <Link
+            href="https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex px-[20px] py-[10px] justify-center items-center gap-[10px] rounded-full border border-[#C7C7C7] bg-[#FFF] text-[#172447] text-[24px] font-[600] leading-[36px] font-dm hover:bg-[#172447] hover:border-[#172447] hover:text-[#FFF] transition-all duration-300 ease-in-out group"
+          >
+            DONATE
+            <div className="w-[36px] h-[36px] flex items-center justify-center">
+              <Image
+                src="/imgs/ic_arrowforward_blue.svg"
+                alt="Redirect Arrow"
+                width={36}
+                height={36}
+                className="group-hover:hidden"
+              />
+              <Image
+                src="/imgs/ic_arrowforward_white.svg"
+                alt="Redirect Arrow"
+                width={36}
+                height={36}
+                className="hidden group-hover:block"
+              />
+            </div>
+          </Link>
+        </div>
       </div>
     </>
   );
@@ -124,7 +132,7 @@ function NavLinks({
 
 function DropdownContent() {
   return (
-    <div className="px-[30px] py-[30px]">
+    <div className="px-[30px] py-[30px] max-w-[1512px] mx-auto">
       <div className="flex justify-center gap-[50px]">
         <Link
           href="/donors"
@@ -289,7 +297,7 @@ export default function NavBar() {
 
   if (!isDropdownOpen) {
     return (
-      <nav className="sticky top-0 z-50 w-full px-[30px] py-[20px] font-dm flex justify-between items-center bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px]">
+      <nav className="sticky top-0 z-50 flex justify-between items-center bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px]">
         <NavLinks
           isActive={isActive}
           isDropdownOpen={isDropdownOpen}
@@ -303,10 +311,10 @@ export default function NavBar() {
 
   return (
     <>
-      <div className="h-[95px] w-full" />
+      <div className="w-full" />
 
       <div className="fixed top-0 left-0 right-0 z-50 w-full font-dm bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px] shadow-[0_301px_84px_0_rgba(0,0,0,0.00),0_12px_26px_0_rgba(0,0,0,0.10)]">
-        <nav className="px-[30px] py-[20px] flex justify-between items-center">
+        <nav className="flex justify-between items-center">
           <NavLinks
             isActive={isActive}
             isDropdownOpen={isDropdownOpen}
