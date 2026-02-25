@@ -24,6 +24,7 @@ app.use(log);
 
 app.use("/api/members", membersRouter);
 app.use("/api/clients", clientsRouter);
+app.use("/api/colleges", collegeRoutes);
 
 app.use(errorHandler);
 mongoose
@@ -35,5 +36,3 @@ mongoose
     });
   })
   .catch(console.error);
-
-app.use("/api/colleges", collegeRoutes);
