@@ -174,16 +174,14 @@ export default function MeetTheTeam() {
               united by a shared commitment to innovation, equity, and lasting social impact.
             </p>
           </div>
-          <div
-            className="overflow-x-auto"
-            style={{ width: 1312, height: 151 }}>
+          <div className="overflow-x-auto" style={{ width: 1312, height: 151 }}>
             <div className="flex gap-[50px] items-center h-full">
               {colleges.map((college) => (
                 <CollegeCard key={college._id} college={college} />
               ))}
             </div>
           </div>
-          </div>
+        </div>
 
         <div className="flex flex-col px-[100px] pt-[50px] pb-[20px] items-start gap-[50px] self-stretch">
           <h2 className="font-dm-sans text-[48px] font-[500] text-[#172447] leading-[150%] tracking-[-0.96px]">
