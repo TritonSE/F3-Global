@@ -118,29 +118,11 @@ export default function MeetTheTeam() {
         >
           <InteractiveWorldMap data={countryData} />
         </div>
-
-        {/* colleges section */}
-
-        <div className="flex flex-col px-[100px] py-[50px] items-start gap-[50px] self-stretch border-t border-[#F4F4F4] bg-white shadow-[0_19px_43px_0_rgba(0,0,0,0.10)]">
-          <div className="flex flex-col gap-[20px]">
-            <h2 className="font-dm-sans text-[48px] font-[500] text-[#172447] leading-[150%] tracking-[-0.96px]">
-              Where We’ve Studied
-            </h2>
-            <p className="self-stretch text-black font-dm-sans text-[20px] font-normal leading-[32px]">
-              Our team brings together experienced professionals alongside driven students and
-              graduates from leading universities. Across disciplines and stages of career, we are
-              united by a shared commitment to innovation, equity, and lasting social impact.
-            </p>
-          </div>
-          {/* carousel will be here*/}
-        </div>
-
         <div className="flex flex-col px-[100px] pt-[50px] pb-[20px] items-start gap-[50px] self-stretch">
           <h2 className="font-dm-sans text-[48px] font-[500] text-[#172447] leading-[150%] tracking-[-0.96px]">
             Our Team Around the World
           </h2>
         </div>
-
         <div className="pb-[50px] flex flex-col">
           {countries.map((countryName) => {
             const code = countriesInfo.getAlpha3Code(countryName, "en") || "UNKNOWN";
