@@ -47,7 +47,7 @@ export default function Donors() {
       {/* How You Can Help section */}
       {/* Client Highlights Carousel */}
       {/* Ways to Give section */}
-      <ImpactSection />
+      <ImpactSection title="Our Impact" />
       <FaqAccordion
         items={[
           {

@@ -98,10 +98,18 @@ export function Highlights() {
           onClick={handlePrevious}
           aria-label="Previous highlight"
         >
-          <svg width="45" height="45" viewBox="0 0 24 24" fill="none">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="23"
+            viewBox="0 0 14 23"
+            fill="none"
+          >
             <path
-              d="M15.41 7.41L14 6L8 12L14 18L15.41 16.59L10.83 12L15.41 7.41Z"
-              fill="currentColor"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M12.5758 0.549175C13.3081 1.28141 13.3081 2.46859 12.5758 3.20083L4.52665 11.25L12.5758 19.2992C13.3081 20.0314 13.3081 21.2186 12.5758 21.9508C11.8436 22.6831 10.6564 22.6831 9.92417 21.9508L0.549175 12.5758C-0.183058 11.8436 -0.183058 10.6564 0.549175 9.92417L9.92417 0.549175C10.6564 -0.183058 11.8436 -0.183058 12.5758 0.549175Z"
+              fill="#1E1E1E"
             />
           </svg>
         </button>
@@ -132,10 +140,19 @@ export function Highlights() {
           onClick={handleNext}
           aria-label="Next highlight"
         >
-          <svg width="45" height="45" viewBox="0 0 24 24" fill="none">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="45"
+            height="45"
+            viewBox="0 0 45 45"
+            fill="none"
+          >
+            <rect width="45" height="45" rx="22.5" transform="matrix(-1 0 0 1 45 0)" fill="white" />
             <path
-              d="M8.59 16.59L10 18L16 12L10 6L8.59 7.41L13.17 12L8.59 16.59Z"
-              fill="currentColor"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M17.4242 11.7992C16.6919 12.5314 16.6919 13.7186 17.4242 14.4508L25.4734 22.5L17.4242 30.5492C16.6919 31.2814 16.6919 32.4686 17.4242 33.2008C18.1564 33.9331 19.3436 33.9331 20.0758 33.2008L29.4508 23.8258C30.1831 23.0936 30.1831 21.9064 29.4508 21.1742L20.0758 11.7992C19.3436 11.0669 18.1564 11.0669 17.4242 11.7992Z"
+              fill="#1E1E1E"
             />
           </svg>
         </button>
@@ -146,7 +163,7 @@ export function Highlights() {
           <button
             key={index}
             className={`h-[5px] w-[125px] rounded-[2px] border-0 p-0 transition-all duration-200 ease-in-out ${
-              index === currentIndex ? "bg-[#172447] opacity-100" : "bg-[#c7c7c7] hover:opacity-50"
+              index === currentIndex ? "bg-[#012060] opacity-100" : "bg-[#c7c7c7] hover:opacity-50"
             }`}
             onClick={() => setCurrentIndex(index)}
             aria-label={`Go to highlight ${index + 1}`}
