@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 
 type ClientStoryProps = {
@@ -15,12 +16,8 @@ const ClientsStory: React.FC<ClientStoryProps> = ({ image, description, onShowMo
       className="flex items-stretch gap-[50px] p-[50px] rounded-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.25)] w-[1147px] mb-[50px] mt-5 mx-auto cursor-pointer"
     >
       {/* Image Section */}
-      <div className="flex-shrink-0 w-[546px]">
-        <img
-          src={image}
-          alt="Client highlight"
-          className="w-full h-full rounded-[10px] object-cover"
-        />
+      <div className="relative flex-shrink-0 w-[546px]">
+        <Image src={image} alt="Client highlight" fill className="rounded-[10px] object-cover" />
       </div>
 
       {/* Content Section */}
