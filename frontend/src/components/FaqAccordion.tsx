@@ -1,125 +1,111 @@
-import React from "react";
+"use client";
 
-import AccordionItem from "./AccordionItem";
+import Image from "next/image";
+import React, { useEffect, useRef, useState } from "react";
 
-export const FaqSection = ({ page }: { page: string }) => {
-  const donorsFaqList = [
-    {
-      id: 0,
-      question: "Lorem ipsum dolor sit amet, consectetur?",
-      answer:
-        "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
-    },
-    {
-      id: 1,
-      question: "Lorem ipsum dolor sit amet, consectetur?",
-      answer:
-        "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
-    },
-    {
-      id: 2,
-      question: "Lorem ipsum dolor sit amet, consectetur?",
-      answer:
-        "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
-    },
-    {
-      id: 3,
-      question: "Lorem ipsum dolor sit amet, consectetur?",
-      answer:
-        "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
-    },
-    {
-      id: 4,
-      question: "Lorem ipsum dolor sit amet, consectetur?",
-      answer:
-        "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
-    },
-  ];
-  const membersFaqList = [
-    {
-      id: 0,
-      question: "Lorem ipsum dolor sit amet, consectetur?",
-      answer:
-        "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
-    },
-    {
-      id: 1,
-      question: "Lorem ipsum dolor sit amet, consectetur?",
-      answer:
-        "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
-    },
-    {
-      id: 2,
-      question: "Lorem ipsum dolor sit amet, consectetur?",
-      answer:
-        "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
-    },
-    {
-      id: 3,
-      question: "Lorem ipsum dolor sit amet, consectetur?",
-      answer:
-        "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
-    },
-    {
-      id: 4,
-      question: "Lorem ipsum dolor sit amet, consectetur?",
-      answer:
-        "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
-    },
-  ];
-  const clientsFaqList = [
-    {
-      id: 0,
-      question: "Lorem ipsum dolor sit amet, consectetur?",
-      answer:
-        "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
-    },
-    {
-      id: 1,
-      question: "Lorem ipsum dolor sit amet, consectetur?",
-      answer:
-        "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
-    },
-    {
-      id: 2,
-      question: "Lorem ipsum dolor sit amet, consectetur?",
-      answer:
-        "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
-    },
-    {
-      id: 3,
-      question: "Lorem ipsum dolor sit amet, consectetur?",
-      answer:
-        "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
-    },
-    {
-      id: 4,
-      question: "Lorem ipsum dolor sit amet, consectetur?",
-      answer:
-        "We take this responsibility seriously because we know you've worked hard for your money and deserve to see real impact. Your donation follows a transparent path: it enters our microloan fund, gets matched with vetted entrepreneurs through our local partner organizations, and is disbursed via secure banking or mobile payment systems that create clear documentation. We provide regular updates showing the specific entrepreneurs your contribution helped, complete with photos, business details, and progress reports. Our **% repayment rate is strong evidence that real people received real capital and built sustainable businesses—you can't repay a loan you never received. Additionally, our financial statements undergo annual independent audits, **% of every dollar goes directly to loans (as verified by third-party review), and we welcome questions anytime you want more details about your donation's impact. We're not perfect, but we're committed to earning and keeping your trust through transparency at every step.",
-    },
-  ];
+export type FaqItem = {
+  question: string;
+  answer: string;
+};
 
-  let faqList;
+type FaqAccordionProps = {
+  items: FaqItem[];
+  className?: string;
+  borderColor?: string;
+};
 
-  if (page === "donors") {
-    faqList = donorsFaqList;
-  } else if (page === "members") {
-    faqList = membersFaqList;
-  } else {
-    faqList = clientsFaqList;
-  }
+export const FaqAccordion: React.FC<FaqAccordionProps> = ({
+  items,
+  className = "",
+  borderColor = "#C7C7C7",
+}) => {
+  const [open, setOpen] = useState<boolean[]>(Array.from({ length: items.length }, () => false));
+  const [heights, setHeights] = useState<{ [key: number]: number }>({});
+  const contentRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
+
+  const toggleItem = (index: number) => {
+    const newOpen = [...open];
+    newOpen[index] = !newOpen[index];
+    setOpen(newOpen);
+  };
+
+  useEffect(() => {
+    const newHeights: { [key: number]: number } = {};
+    items.forEach((_, index) => {
+      if (contentRefs.current[index]) {
+        newHeights[index] = contentRefs.current[index]?.scrollHeight || 0;
+      }
+    });
+    setHeights(newHeights);
+  }, [items]);
 
   return (
-    <div className="mx-auto flex flex-col justify-center items-center w-full border-t border-[#F4F4F4]">
-      <div className="mx-auto flex flex-col items-start w-full pt-[50px] pb-[100px] px-[5vw] gap-[40px]">
-        <h1 className="text-[48px] font-medium self-stretch text-[#172447]">Questions?</h1>
-        <div className="flex flex-col p-[20px] gap-[25px] items-start self-stretch bg-[#F4F4F4] rounded-[10px]">
-          {faqList.map((faq, i) => (
-            <div key={faq.id} className="flex flex-col gap-[25px] w-full">
-              <AccordionItem question={faq.question} answer={faq.answer} />
+    <div className={`w-full bg-white overflow-x-hidden border-t border-[#f4f4f4] ${className}`}>
+      <div
+        className="flex w-full flex-col gap-[40px] items-start py-[50px] px-[100px] relative"
+        style={{
+          boxShadow: "10px 6px 60px 0 rgba(1, 32, 96, 0.20)",
+        }}
+      >
+        <div className="flex items-center relative w-full">
+          <h2 className="text-[#172447] font-dm text-[48px] font-medium leading-[1.5] tracking-[-0.96px]">
+            Questions?
+          </h2>
+        </div>
 
-              {i !== faqList.length - 1 && <span className="h-[2px] w-full bg-[#C7C7C7]" />}
+        <div className="bg-[#f4f4f4] flex flex-col items-start px-[20px] rounded-[10px] w-full">
+          {items.map((item, index) => (
+            <div
+              key={index}
+              className="w-full"
+              style={{
+                borderBottom: index < items.length - 1 ? `2px solid ${borderColor}` : "none",
+              }}
+            >
+              <button
+                onClick={() => toggleItem(index)}
+                className="flex items-center justify-between py-[20px] w-full hover:opacity-80 transition-opacity cursor-pointer"
+              >
+                <p
+                  className={`font-dm text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-left flex-1 transition-colors ${
+                    open[index] ? "text-[#012060]" : "text-[#1e1e1e]"
+                  }`}
+                >
+                  {item.question}
+                </p>
+                <div className="relative shrink-0 h-[42px] w-[42px] ml-4 flex items-center justify-center">
+                  <Image
+                    src="/imgs/remove.svg"
+                    alt="Collapse"
+                    fill
+                    className={`transition-opacity duration-300 ${
+                      open[index] ? "opacity-100" : "opacity-0"
+                    }`}
+                  />
+                  <Image
+                    src="/imgs/ic_add.svg"
+                    alt="Expand"
+                    fill
+                    className={`transition-opacity duration-300 ${
+                      open[index] ? "opacity-0" : "opacity-100"
+                    }`}
+                  />
+                </div>
+              </button>
+
+              <div
+                ref={(el) => {
+                  if (el) contentRefs.current[index] = el;
+                }}
+                style={{
+                  maxHeight: open[index] ? heights[index] : 0,
+                  transition: "max-height 0.3s ease-in-out",
+                  overflow: "hidden",
+                }}
+                className="text-[#5D5D5D] font-dm text-[16px] leading-[1.5]"
+              >
+                <div className="pb-[20px]">{item.answer}</div>
+              </div>
             </div>
           ))}
         </div>
