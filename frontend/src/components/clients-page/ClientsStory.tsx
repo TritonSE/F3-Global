@@ -4,12 +4,11 @@ import React from "react";
 
 type ClientStoryProps = {
   image: string;
-  title: string;
-  description: React.ReactNode;
+  description: string;
   onShowMore?: () => void;
 };
 
-const ClientsStory: React.FC<ClientStoryProps> = ({ image, title, description, onShowMore }) => {
+const ClientsStory: React.FC<ClientStoryProps> = ({ image, description, onShowMore }) => {
   return (
     <div
       onClick={onShowMore}
@@ -17,13 +16,12 @@ const ClientsStory: React.FC<ClientStoryProps> = ({ image, title, description, o
     >
       {/* Image Section */}
       <div className="flex-shrink-0 w-[546px]">
-        <img src={image} alt={title} className="w-full h-auto rounded-[10px] object-cover" />
+        <img src={image} alt="Client highlight" className="w-full h-auto rounded-[10px] object-cover" />
       </div>
 
       {/* Content Section */}
       <div className="flex-1">
         <p className="text-gray-700 leading-relaxed mb-6">
-          <strong>{title}</strong>
           {description}
         </p>
 
