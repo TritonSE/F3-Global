@@ -78,9 +78,10 @@ function NavLinks({
                 : ""
             }`}
             style={{
-              color: isBlinking && !(isActive("/donors") || isActive("/members") || isActive("/clients"))
-                ? "rgba(244, 244, 244, 0.70)" 
-                : "#5D5D5D",
+              color:
+                isBlinking && !(isActive("/donors") || isActive("/members") || isActive("/clients"))
+                  ? "rgba(244, 244, 244, 0.70)"
+                  : "#5D5D5D",
             }}
           >
             Get Involved
