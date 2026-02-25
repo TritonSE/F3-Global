@@ -10,6 +10,7 @@ import contactRoute from "./routes/contactRequest";
 import highlightsRouter from "./routes/highlights";
 import impactMetricRouter from "./routes/impact-metrics";
 import membersRouter from "./routes/members";
+import collegeRoutes from "./routes/colleges";
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use("/api/members", membersRouter);
 app.use("/api/clients", clientsRouter);
 app.use("/api/client-highlights", highlightsRouter);
 app.use("/api/impact-metrics", impactMetricRouter);
+app.use("/api/colleges", collegeRoutes);
 
 app.use(errorHandler);
 mongoose
