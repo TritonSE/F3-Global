@@ -7,6 +7,7 @@ import errorHandler from "./middleware/errorHandler";
 import log from "./middleware/logger";
 import clientsRouter from "./routes/clients";
 import contactRoute from "./routes/contactRequest";
+import highlightsRouter from "./routes/highlights";
 import impactMetricRouter from "./routes/impact-metrics";
 import membersRouter from "./routes/members";
 
@@ -25,6 +26,7 @@ app.use(log);
 app.use("/api/contact", contactRoute);
 app.use("/api/members", membersRouter);
 app.use("/api/clients", clientsRouter);
+app.use("/api/client-highlights", highlightsRouter);
 app.use("/api/impact-metrics", impactMetricRouter);
 
 app.use(errorHandler);

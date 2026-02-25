@@ -10,12 +10,14 @@ const makeIdValidator = (): ValidationChain =>
     .isMongoId()
     .withMessage("_id must be a MongoDB object ID");
 
-const makeNameValidator = (isOptional = false): ValidationChain => {
-  const validator = body("name");
+const makeNameValidator = (isOptional = false, fieldName = "name"): ValidationChain => {
+  const validator = body(fieldName);
   if (isOptional) {
     validator.optional();
   } else {
-    validator.exists().withMessage("name is required").bail();
+    if (!fieldName.includes("*")) {
+      validator.exists().withMessage(`${fieldName} is required`).bail();
+    }
   }
   return validator
     .isString()
@@ -25,8 +27,11 @@ const makeNameValidator = (isOptional = false): ValidationChain => {
     .withMessage("name cannot be empty");
 };
 
-const makeMemberPositionValidator = (isOptional = false): ValidationChain => {
-  const validator = body("memberPosition");
+const makeMemberPositionValidator = (
+  isOptional = false,
+  fieldName = "memberPosition",
+): ValidationChain => {
+  const validator = body(fieldName);
   if (isOptional) validator.optional();
 
   return validator
@@ -37,8 +42,11 @@ const makeMemberPositionValidator = (isOptional = false): ValidationChain => {
     .withMessage("member position cannot be empty");
 };
 
-const makeLinkedinUrlValidator = (isOptional = false): ValidationChain => {
-  const validator = body("linkedinUrl");
+const makeLinkedinUrlValidator = (
+  isOptional = false,
+  fieldName = "linkedinUrl",
+): ValidationChain => {
+  const validator = body(fieldName);
   if (isOptional) validator.optional();
 
   return validator
@@ -52,8 +60,8 @@ const makeLinkedinUrlValidator = (isOptional = false): ValidationChain => {
     .withMessage("linkedin URL be a valid URL");
 };
 
-const makeEmailValidator = (isOptional = false): ValidationChain => {
-  const validator = body("email");
+const makeEmailValidator = (isOptional = false, fieldName = "email"): ValidationChain => {
+  const validator = body(fieldName);
   if (isOptional) validator.optional();
 
   return validator
@@ -66,8 +74,11 @@ const makeEmailValidator = (isOptional = false): ValidationChain => {
     .withMessage("email cannot be empty");
 };
 
-const makeHeadshotUrlValidator = (isOptional = false): ValidationChain => {
-  const validator = body("headshotUrl");
+const makeHeadshotUrlValidator = (
+  isOptional = false,
+  fieldName = "headshotUrl",
+): ValidationChain => {
+  const validator = body(fieldName);
   if (isOptional) validator.optional();
 
   return validator
@@ -84,8 +95,8 @@ const makeHeadshotUrlValidator = (isOptional = false): ValidationChain => {
     .withMessage("headshot URL be a valid URL");
 };
 
-const makeCountryValidator = (isOptional = false): ValidationChain => {
-  const validator = body("country");
+const makeCountryValidator = (isOptional = false, fieldName = "country"): ValidationChain => {
+  const validator = body(fieldName);
   if (isOptional) validator.optional();
 
   return validator
@@ -116,6 +127,18 @@ export const updateMember = [
   makeHeadshotUrlValidator(true),
   makeEmailValidator(true),
   makeCountryValidator(true),
+];
+
+export const updateMembers = [
+  body().isArray().withMessage("request body must be an array of member objects"),
+
+  makeNameValidator(false, "*.name"),
+  makeMemberPositionValidator(false, "*.memberPosition"),
+  makeLinkedinUrlValidator(false, "*.linkedinUrl"),
+  makeHeadshotUrlValidator(false, "*.headshotUrl"),
+  makeEmailValidator(false, "*.email"),
+  makeCountryValidator(false, "*.country"),
+  body("*._id").optional().isMongoId().withMessage("_id must be a MongoDB object ID"),
 ];
 
 export const deleteMember = [makeIdValidator()];

@@ -33,7 +33,7 @@ export const createMember: RequestHandler<Record<string, any>, unknown, MemberMo
   }
 };
 
-export const updateMember: RequestHandler<
+export const updateMembers: RequestHandler<
   Record<string, any>,
   unknown,
   Partial<MemberModel>
@@ -42,19 +42,52 @@ export const updateMember: RequestHandler<
     const errors = validationResult(req);
     validationErrorParser(errors);
 
-    const { id } = req.params;
-    const updateData = req.body;
+    const incomingMembers = req.body as (MemberModel & { _id?: string })[];
+    const currentMembers = await Member.find({});
+    const currentMemberMap = new Map(currentMembers.map((m) => [m._id.toString(), m]));
 
-    const updatedMember = await Member.findByIdAndUpdate(id, updateData, {
-      new: true,
-    });
+    const incomingIds = new Set(incomingMembers.filter((m) => m._id).map((m) => m._id.toString()));
 
-    if (!updatedMember) {
-      res.status(404).json({ error: "member not found" });
-      return;
+    const membersToDelete = currentMembers.filter((m) => !incomingIds.has(m._id.toString()));
+
+    const imageDeletionPromises: Promise<void>[] = [];
+    const dbOperations: Promise<any>[] = [];
+
+    for (const member of membersToDelete) {
+      if (member.headshotUrl) {
+        imageDeletionPromises.push(
+          deleteImageFromFirebaseStorage(member.headshotUrl).catch((e) =>
+            console.error(`failed to delete image for member ${member._id.toString()}:`, e),
+          ),
+        );
+      }
+      dbOperations.push(Member.deleteOne({ _id: member._id }));
     }
 
-    res.status(200).json(updatedMember);
+    for (const incoming of incomingMembers) {
+      const current = incoming._id ? currentMemberMap.get(incoming._id) : undefined;
+
+      if (current) {
+        if (current.headshotUrl !== incoming.headshotUrl) {
+          imageDeletionPromises.push(
+            deleteImageFromFirebaseStorage(current.headshotUrl).catch((e) =>
+              console.error(`failed to delete old image for member ${current._id.toString()}:`, e),
+            ),
+          );
+        }
+
+        dbOperations.push(Member.findByIdAndUpdate(incoming._id, incoming, { new: true }));
+      } else {
+        const { _id, ...memberData } = incoming;
+        dbOperations.push(Member.create(memberData));
+      }
+    }
+
+    await Promise.all(imageDeletionPromises);
+    await Promise.all(dbOperations);
+
+    const updatedMembersList = await Member.find({});
+    res.status(200).json(updatedMembersList);
   } catch (error) {
     next(error);
   }
