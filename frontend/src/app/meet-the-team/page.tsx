@@ -37,9 +37,8 @@ function CollegeCard({ college }: { college: College }) {
         width: 100,
         height: 100,
         flexShrink: 0,
-        background: `url(${college.imageUrl}) lightgray 50% / cover no-repeat`,
-        borderRadius: 8,
-        boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+        background: `url(${college.imageUrl}) 50% / cover no-repeat`,
+        backgroundSize: "contain",
       }}
       title={college.name}
     />
@@ -104,7 +103,7 @@ export default function MeetTheTeam() {
     const fetchColleges = async () => {
       try {
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        const res = await fetch(`${backendUrl}/api/colleges`);
+        const res = await fetch(`${backendUrl}/api/colleges/all`);
         if (!res.ok) throw new Error("Failed to fetch colleges");
         const data = (await res.json()) as College[];
         console.log("Fetched colleges:", data); // <-- Move log here
@@ -174,12 +173,40 @@ export default function MeetTheTeam() {
               united by a shared commitment to innovation, equity, and lasting social impact.
             </p>
           </div>
-          <div className="overflow-x-auto" style={{ width: 1312, height: 151 }}>
-            <div className="flex gap-[50px] items-center h-full">
-              {colleges.map((college) => (
-                <CollegeCard key={college._id} college={college} />
-              ))}
+          <div style={{ position: "relative", width: 1312, height: 151 }}>
+            {/* Carousel */}
+            <div className="overflow-x-auto" style={{ width: 1312, height: 151 }}>
+              <div
+                className="flex gap-[50px] items-center h-full animate-carousel"
+                style={{ width: "max-content" }}
+              >
+                {colleges.concat(colleges).map((college, idx) => (
+                  <CollegeCard key={college._id + idx} college={college} />
+                ))}
+              </div>
             </div>
+            <div
+              style={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                width: 200,
+                height: 150,
+                pointerEvents: "none",
+                background: "linear-gradient(90deg, #FFF 0%, rgba(255,255,255,0) 100%)",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                right: 0,
+                top: 0,
+                width: 200,
+                height: 150,
+                pointerEvents: "none",
+                background: "linear-gradient(270deg, #FFF 0%, rgba(255,255,255,0) 100%)",
+              }}
+            />
           </div>
         </div>
 
