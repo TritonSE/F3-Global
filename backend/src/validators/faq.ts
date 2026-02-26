@@ -1,126 +1,82 @@
-import { body, query, param } from "express-validator";
+import { body, param, query } from "express-validator";
 
 import { FAQ_PAGES } from "../models/faq";
 
-const pageErrorMessage = `page must be one of ${FAQ_PAGES.join(", ")}`;
+import type { ValidationChain } from "express-validator";
 
-export const createFaqValidators = [
-  body("page")
+const pageQueryValidator: ValidationChain = query("page")
+  .exists()
+  .withMessage("page is required")
+  .bail()
+  .isString()
+  .withMessage("page must be a string")
+  .bail()
+  .notEmpty()
+  .withMessage("page cannot be empty")
+  .bail()
+  .isIn(FAQ_PAGES)
+  .withMessage(`page must be one of: ${FAQ_PAGES.join(", ")}`);
+
+const pageBodyValidator = (field = "page"): ValidationChain =>
+  body(field)
     .exists()
-    .withMessage("page is required")
+    .withMessage(`${field} is required`)
     .bail()
     .isString()
-    .withMessage("page must be a string")
+    .withMessage(`${field} must be a string`)
+    .bail()
+    .notEmpty()
+    .withMessage(`${field} cannot be empty`)
     .bail()
     .isIn(FAQ_PAGES)
-    .withMessage(pageErrorMessage),
-  body("question")
+    .withMessage(`${field} must be one of: ${FAQ_PAGES.join(", ")}`);
+
+const requiredStringBodyValidator = (field: string): ValidationChain =>
+  body(field)
     .exists()
-    .withMessage("question is required")
+    .withMessage(`${field} is required`)
     .bail()
     .isString()
-    .withMessage("question must be a string")
+    .withMessage(`${field} must be a string`)
     .bail()
-    .trim()
     .notEmpty()
-    .withMessage("question is required"),
-  body("answer")
+    .withMessage(`${field} cannot be empty`);
+
+const requiredStringArrayBodyValidator = (field: string): ValidationChain =>
+  body(`*.${field}`)
     .exists()
-    .withMessage("answer is required")
+    .withMessage(`${field} is required`)
     .bail()
     .isString()
-    .withMessage("answer must be a string")
+    .withMessage(`${field} must be a string`)
     .bail()
-    .trim()
     .notEmpty()
-    .withMessage("answer is required"),
-  body("order")
-    .exists()
-    .withMessage("order is required")
-    .bail()
-    .isInt({ min: 0 })
-    .withMessage("order must be a non-negative integer")
-    .toInt(),
+    .withMessage(`${field} cannot be empty`);
+
+export const createFaqValidators: ValidationChain[] = [
+  pageBodyValidator("page"),
+  requiredStringBodyValidator("question"),
+  requiredStringBodyValidator("answer"),
+  requiredStringBodyValidator("order"),
 ];
 
-export const pageQueryValidator = [
-  query("page")
-    .exists()
-    .withMessage("page query parameter is required")
-    .bail()
-    .isString()
-    .withMessage("page query parameter must be a string")
-    .bail()
-    .isIn(FAQ_PAGES)
-    .withMessage(`page query parameter ${pageErrorMessage}`),
+export const getFaqValidator: ValidationChain[] = [pageQueryValidator];
+
+export const putFaqValidators: ValidationChain[] = [
+  pageQueryValidator,
+  body().isArray().withMessage("request body must be an array of faq objects"),
+  pageBodyValidator("*.page"),
+  requiredStringArrayBodyValidator("question"),
+  requiredStringArrayBodyValidator("answer"),
+  requiredStringArrayBodyValidator("order"),
+  body("*._id").optional().isMongoId().withMessage("_id must be a valid MongoDB ObjectID"),
 ];
 
-export const idParamValidator = [
+export const deleteFaqValidators: ValidationChain[] = [
   param("id")
     .exists()
     .withMessage("id is required")
     .bail()
     .isMongoId()
-    .withMessage("id must be a valid MongoDB ObjectId"),
-];
-
-export const updateFaqsValidation = [
-  body().isArray().withMessage("Request body must be an array of FAQ objects"),
-
-  body("*._id").optional().isMongoId().withMessage("_id must be a valid MongoDB ObjectId"),
-
-  body("*.page")
-    .exists()
-    .withMessage("page is required")
-    .bail()
-    .isString()
-    .withMessage("page must be a string")
-    .bail()
-    .isIn(FAQ_PAGES)
-    .withMessage(pageErrorMessage),
-
-  body("*.question")
-    .exists()
-    .withMessage("question is required")
-    .bail()
-    .isString()
-    .withMessage("question must be a string")
-    .bail()
-    .trim()
-    .notEmpty()
-    .withMessage("question cannot be empty"),
-
-  body("*.answer")
-    .exists()
-    .withMessage("answer is required")
-    .bail()
-    .isString()
-    .withMessage("answer must be a string")
-    .bail()
-    .trim()
-    .notEmpty()
-    .withMessage("answer cannot be empty"),
-
-  body("*.order")
-    .exists()
-    .withMessage("order is required")
-    .bail()
-    .isInt({ min: 0 })
-    .withMessage("order must be a non-negative integer")
-    .toInt(),
-
-  body().custom((value, { req }) => {
-    if (!Array.isArray(value)) return true;
-
-    const page = req.query.page;
-    if (typeof page !== "string") return true;
-
-    for (const faq of value as Array<{ page?: string }>) {
-      if (faq.page !== page) {
-        throw new Error("Each FAQ object's page must match the page query parameter");
-      }
-    }
-
-    return true;
-  }),
+    .withMessage("id must be a valid MongoDB ObjectID"),
 ];
