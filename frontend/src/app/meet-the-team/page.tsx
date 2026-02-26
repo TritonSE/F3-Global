@@ -106,7 +106,6 @@ export default function MeetTheTeam() {
         const res = await fetch(`${backendUrl}/api/colleges/all`);
         if (!res.ok) throw new Error("Failed to fetch colleges");
         const data = (await res.json()) as College[];
-        console.log("Fetched colleges:", data); // <-- Move log here
         setColleges(data);
       } catch (error) {
         console.error("Error loading colleges:", error);
