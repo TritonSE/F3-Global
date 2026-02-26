@@ -32,7 +32,7 @@ export type College = {
 function CollegeCard({ college }: { college: College }) {
   return (
     <div
-      className="flex items-center justify-center"
+      className="flex items-center justify-center mx-[25px]"
       style={{
         width: 100,
         height: 100,
@@ -173,10 +173,9 @@ export default function MeetTheTeam() {
             </p>
           </div>
           <div style={{ position: "relative", width: 1312, height: 151 }}>
-            {/* Carousel */}
-            <div className="overflow-x-auto" style={{ width: 1312, height: 151 }}>
+            <div className="overflow-hidden" style={{ width: 1312, height: 151 }}>
               <div
-                className="flex gap-[50px] items-center h-full animate-carousel"
+                className="flex items-center h-full animate-carousel whitespace-nowrap"
                 style={{ width: "max-content" }}
               >
                 {colleges.concat(colleges).map((college, idx) => (
