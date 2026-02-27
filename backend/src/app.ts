@@ -6,11 +6,11 @@ import { FRONTEND_ORIGIN, MONGO_URI, PORT } from "./config";
 import errorHandler from "./middleware/errorHandler";
 import log from "./middleware/logger";
 import clientsRouter from "./routes/clients";
+import collegeRoutes from "./routes/colleges";
 import contactRoute from "./routes/contactRequest";
 import highlightsRouter from "./routes/highlights";
 import impactMetricRouter from "./routes/impact-metrics";
 import membersRouter from "./routes/members";
-import collegeRoutes from "./routes/colleges";
 
 const app = express();
 

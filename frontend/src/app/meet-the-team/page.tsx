@@ -27,6 +27,7 @@ export type College = {
   _id: string;
   name: string;
   imageUrl: string;
+  order: number;
 };
 
 function CollegeCard({ college }: { college: College }) {
@@ -178,9 +179,12 @@ export default function MeetTheTeam() {
                 className="flex items-center h-full animate-carousel whitespace-nowrap"
                 style={{ width: "max-content" }}
               >
-                {colleges.concat(colleges).map((college, idx) => (
-                  <CollegeCard key={college._id + idx} college={college} />
-                ))}
+                {[...colleges]
+                  .sort((a, b) => a.order - b.order)
+                  .concat(colleges)
+                  .map((college, idx) => (
+                    <CollegeCard key={college._id + idx} college={college} />
+                  ))}
               </div>
             </div>
             <div

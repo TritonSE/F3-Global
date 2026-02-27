@@ -3,6 +3,7 @@ import mongoose, { Schema } from "mongoose";
 type ICollege = {
   name: string;
   imageUrl: string;
+  order: number;
 };
 
 const collegeSchema = new Schema<ICollege>({
@@ -13,6 +14,11 @@ const collegeSchema = new Schema<ICollege>({
   imageUrl: {
     type: String,
     required: true,
+  },
+  order: {
+    type: Number,
+    required: true,
+    default: 0,
   },
 });
 

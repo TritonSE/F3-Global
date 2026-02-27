@@ -13,6 +13,7 @@ export const createCollegeValidator = [
     .withMessage("Image URL is required")
     .isString()
     .withMessage("Image URL must be a string"),
+  body("*.order").optional().isInt().withMessage("Order must be an integer"),
 ];
 
 //PUT
@@ -24,6 +25,8 @@ export const updateCollegesValidator = [
   body("*.imageUrl").isString().notEmpty().isURL().withMessage("Valid image URL is required"),
 
   body("*._id").optional().isMongoId().withMessage("Invalid_id"),
+
+  body("*.order").optional().isInt().withMessage("Order must be an integer"),
 ];
 
 //DELETE
