@@ -23,6 +23,29 @@ export type Member = {
   headshotUrl: string;
 };
 
+export type College = {
+  _id: string;
+  name: string;
+  imageUrl: string;
+  order: number;
+};
+
+function CollegeCard({ college }: { college: College }) {
+  return (
+    <div
+      className="flex items-center justify-center mx-[25px]"
+      style={{
+        width: 100,
+        height: 100,
+        flexShrink: 0,
+        background: `url(${college.imageUrl}) 50% / cover no-repeat`,
+        backgroundSize: "contain",
+      }}
+      title={college.name}
+    />
+  );
+}
+
 export default function MeetTheTeam() {
   const [members, setMembers] = useState<Member[]>([]);
 
@@ -75,6 +98,24 @@ export default function MeetTheTeam() {
 
   const countries = Object.keys(membersByCountry).sort((a, b) => a.localeCompare(b));
 
+  const [colleges, setColleges] = useState<College[]>([]);
+
+  useEffect(() => {
+    const fetchColleges = async () => {
+      try {
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const res = await fetch(`${backendUrl}/api/colleges/all`);
+        if (!res.ok) throw new Error("Failed to fetch colleges");
+        const data = (await res.json()) as College[];
+        setColleges(data);
+      } catch (error) {
+        console.error("Error loading colleges:", error);
+      }
+    };
+
+    void fetchColleges();
+  }, []);
+
   return (
     <>
       <div className="bg-white overflow-x-hidden">
@@ -118,6 +159,59 @@ export default function MeetTheTeam() {
         >
           <InteractiveWorldMap data={countryData} />
         </div>
+
+        {/* colleges section */}
+
+        <div className="flex flex-col px-[100px] py-[50px] items-start gap-[50px] self-stretch border-t border-[#F4F4F4] bg-white shadow-[0_19px_43px_0_rgba(0,0,0,0.10)]">
+          <div className="flex flex-col gap-[20px]">
+            <h2 className="font-dm-sans text-[48px] font-[500] text-[#172447] leading-[150%] tracking-[-0.96px]">
+              Where We’ve Studied
+            </h2>
+            <p className="self-stretch text-black font-dm-sans text-[20px] font-normal leading-[32px]">
+              Our team brings together experienced professionals alongside driven students and
+              graduates from leading universities. Across disciplines and stages of career, we are
+              united by a shared commitment to innovation, equity, and lasting social impact.
+            </p>
+          </div>
+          <div style={{ position: "relative", width: 1312, height: 151 }}>
+            <div className="overflow-hidden" style={{ width: 1312, height: 151 }}>
+              <div
+                className="flex items-center h-full animate-marquee whitespace-nowrap"
+                style={{ width: "max-content" }}
+              >
+                {[...colleges]
+                  .sort((a, b) => a.order - b.order)
+                  .concat(colleges)
+                  .map((college, idx) => (
+                    <CollegeCard key={college._id + idx} college={college} />
+                  ))}
+              </div>
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                width: 200,
+                height: 150,
+                pointerEvents: "none",
+                background: "linear-gradient(90deg, #FFF 0%, rgba(255,255,255,0) 100%)",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                right: 0,
+                top: 0,
+                width: 200,
+                height: 150,
+                pointerEvents: "none",
+                background: "linear-gradient(270deg, #FFF 0%, rgba(255,255,255,0) 100%)",
+              }}
+            />
+          </div>
+        </div>
+
         <div className="flex flex-col px-[100px] pt-[50px] pb-[20px] items-start gap-[50px] self-stretch">
           <h2 className="font-dm-sans text-[48px] font-[500] text-[#172447] leading-[150%] tracking-[-0.96px]">
             Our Team Around the World
