@@ -11,6 +11,7 @@ export type MetricItem = {
 
 export type ImpactMetricModel = {
   metrics: MetricItem[];
+  lastUpdated: string; // stored as "YYYY-MM"
 } & Document;
 
 const MetricItemSchema = new Schema<MetricItem>({
@@ -22,6 +23,7 @@ const MetricItemSchema = new Schema<MetricItem>({
 
 const ImpactMetricSchema = new Schema<ImpactMetricModel>({
   metrics: { type: [MetricItemSchema], default: [] },
+  lastUpdated: { type: String, required: true },
 });
 
 export default model<ImpactMetricModel>("ImpactMetric", ImpactMetricSchema);
