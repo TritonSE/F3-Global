@@ -7,14 +7,25 @@ type ImpactSectionProps = {
   title?: string;
 };
 
+function formatDate(dateStr: string) {
+  if (!dateStr) return "Unknown Date";
+  const [yearStr, monthStr] = dateStr.split("-");
+  const year = Number(yearStr);
+  const month = Number(monthStr) - 1;
+
+  return new Date(year, month).toLocaleString("en-US", { month: "short", year: "numeric" });
+}
+
 export const ImpactSection = ({ title = "Our Impact" }: ImpactSectionProps) => {
   const [impactMetrics, setImpactMetrics] = useState<ImpactMetric[]>([]);
+  const [lastUpdated, setLastUpdated] = useState<string>("");
 
   useEffect(() => {
     const fetchImpactMetrics = async () => {
       try {
         const data = await getImpactMetric();
-        setImpactMetrics(data);
+        setImpactMetrics(data.metrics);
+        setLastUpdated(data.lastUpdated);
       } catch (error) {
         console.error(error);
       }
@@ -26,6 +37,8 @@ export const ImpactSection = ({ title = "Our Impact" }: ImpactSectionProps) => {
   const orderedMetrics = useMemo(() => {
     return [...impactMetrics].sort((a, b) => a.order - b.order);
   }, [impactMetrics]);
+
+  const lastUpdatedLabel = formatDate(lastUpdated);
 
   return (
     <div className="relative z-20 w-full py-[75px] px-[5vw] flex gap-6 flex-col items-start border-t border-[#F4F4F4] bg-white shadow-[inset_0_-12px_10px_rgba(0,0,0,0.02)]">
@@ -54,7 +67,7 @@ export const ImpactSection = ({ title = "Our Impact" }: ImpactSectionProps) => {
         ))}
       </div>
       <p className="text-[#5D5D5D] font-dm text-[16px] font-bold leading-[1.5] mt-4 self-start uppercase">
-        *Data from Jan 2026
+        *Data from {lastUpdatedLabel}
       </p>
     </div>
   );
