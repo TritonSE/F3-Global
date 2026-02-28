@@ -34,19 +34,6 @@
   }
 }
 
-@keyframes carousel-scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-carousel {
-  animation: carousel-scroll 10s linear infinite;
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: white;

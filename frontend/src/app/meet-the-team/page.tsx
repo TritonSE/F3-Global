@@ -176,7 +176,7 @@ export default function MeetTheTeam() {
           <div style={{ position: "relative", width: 1312, height: 151 }}>
             <div className="overflow-hidden" style={{ width: 1312, height: 151 }}>
               <div
-                className="flex items-center h-full animate-carousel whitespace-nowrap"
+                className="flex items-center h-full animate-marquee whitespace-nowrap"
                 style={{ width: "max-content" }}
               >
                 {[...colleges]
