@@ -9,9 +9,10 @@ export type ImpactMetric = {
 type ImpactMetricResponse = {
   _id: string;
   metrics: ImpactMetric[];
+  lastUpdated: string;
 };
 
-export async function getImpactMetric(): Promise<ImpactMetric[]> {
+export async function getImpactMetric(): Promise<ImpactMetricResponse> {
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const res = await fetch(`${backendUrl}/api/impact-metrics`);
 
@@ -21,5 +22,5 @@ export async function getImpactMetric(): Promise<ImpactMetric[]> {
 
   const data = (await res.json()) as ImpactMetricResponse;
 
-  return data.metrics;
+  return data;
 }
