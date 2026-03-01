@@ -5,6 +5,7 @@ import { Types } from "mongoose";
 import Faq from "../models/faq";
 import validationErrorParser from "../utils/validationErrorParser";
 
+import type { FAQModel } from "../models/faq";
 import type { RequestHandler } from "express";
 
 type FaqPayloadItem = {
@@ -23,8 +24,20 @@ type CreateFaqRequest = {
 
 type BulkSyncRequest = FaqPayloadItem[];
 
+type BulkSyncResponse = {
+  inserted: number;
+  updated: number;
+  deleted: number;
+  faqs: FAQModel[];
+};
+
+type DeleteFaqResponse = {
+  message: string;
+  deleted: FAQModel;
+};
+
 // ── POST /api/faq/create ──────────────────────────────────────────────────────
-export const createFaq: RequestHandler<Record<string, never>, unknown, CreateFaqRequest> = async (
+export const createFaq: RequestHandler<Record<string, never>, FAQModel, CreateFaqRequest> = async (
   req,
   res,
   next,
@@ -42,7 +55,11 @@ export const createFaq: RequestHandler<Record<string, never>, unknown, CreateFaq
 };
 
 // ── GET /api/faq/?page={pageKey} ──────────────────────────────────────────────
-export const getFaqsByPage: RequestHandler = async (req, res, next) => {
+export const getFaqsByPage: RequestHandler<
+  Record<string, never>,
+  FAQModel[],
+  { page: string }
+> = async (req, res, next) => {
   try {
     const errors = validationResult(req);
     validationErrorParser(errors);
@@ -56,11 +73,11 @@ export const getFaqsByPage: RequestHandler = async (req, res, next) => {
 };
 
 // ── PUT /api/faq/?page={pageKey} ──────────────────────────────────────────────
-export const bulkSyncFaqs: RequestHandler<Record<string, never>, unknown, BulkSyncRequest> = async (
-  req,
-  res,
-  next,
-) => {
+export const bulkSyncFaqs: RequestHandler<
+  Record<string, never>,
+  BulkSyncResponse,
+  BulkSyncRequest
+> = async (req, res, next) => {
   try {
     const errors = validationResult(req);
     validationErrorParser(errors);
@@ -118,7 +135,11 @@ export const bulkSyncFaqs: RequestHandler<Record<string, never>, unknown, BulkSy
 };
 
 // ── DELETE /api/faq/:id ───────────────────────────────────────────────────────
-export const deleteFaq: RequestHandler = async (req, res, next) => {
+export const deleteFaq: RequestHandler<{ id: string }, DeleteFaqResponse> = async (
+  req,
+  res,
+  next,
+) => {
   try {
     const errors = validationResult(req);
     validationErrorParser(errors);
