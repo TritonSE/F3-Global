@@ -1,82 +1,75 @@
 import { body, param, query } from "express-validator";
 
-import { FAQ_PAGES } from "../models/faq";
-
 import type { ValidationChain } from "express-validator";
 
-const pageQueryValidator: ValidationChain = query("page")
-  .exists()
-  .withMessage("page is required")
-  .bail()
-  .isString()
-  .withMessage("page must be a string")
-  .bail()
-  .notEmpty()
-  .withMessage("page cannot be empty")
-  .bail()
-  .isIn(FAQ_PAGES)
-  .withMessage(`page must be one of: ${FAQ_PAGES.join(", ")}`);
+const VALID_PAGES = ["members", "clients", "donors"] as const;
 
-const pageBodyValidator = (field = "page"): ValidationChain =>
-  body(field)
-    .exists()
-    .withMessage(`${field} is required`)
-    .bail()
+// ── POST /api/faq/create ──────────────────────────────────────────────────────
+export const postFaqValidator: ValidationChain[] = [
+  body("page")
     .isString()
-    .withMessage(`${field} must be a string`)
-    .bail()
+    .withMessage("page must be a string")
+    .trim()
     .notEmpty()
-    .withMessage(`${field} cannot be empty`)
-    .bail()
-    .isIn(FAQ_PAGES)
-    .withMessage(`${field} must be one of: ${FAQ_PAGES.join(", ")}`);
-
-const requiredStringBodyValidator = (field: string): ValidationChain =>
-  body(field)
-    .exists()
-    .withMessage(`${field} is required`)
-    .bail()
+    .withMessage("page is required")
+    .isIn(VALID_PAGES)
+    .withMessage(`page must be one of: ${VALID_PAGES.join(", ")}`),
+  body("question")
     .isString()
-    .withMessage(`${field} must be a string`)
-    .bail()
+    .withMessage("question must be a string")
+    .trim()
     .notEmpty()
-    .withMessage(`${field} cannot be empty`);
-
-const requiredStringArrayBodyValidator = (field: string): ValidationChain =>
-  body(`*.${field}`)
-    .exists()
-    .withMessage(`${field} is required`)
-    .bail()
+    .withMessage("question is required"),
+  body("answer")
     .isString()
-    .withMessage(`${field} must be a string`)
-    .bail()
+    .withMessage("answer must be a string")
+    .trim()
     .notEmpty()
-    .withMessage(`${field} cannot be empty`);
-
-export const createFaqValidators: ValidationChain[] = [
-  pageBodyValidator("page"),
-  requiredStringBodyValidator("question"),
-  requiredStringBodyValidator("answer"),
-  requiredStringBodyValidator("order"),
+    .withMessage("answer is required"),
+  body("order").isInt({ min: 1 }).withMessage("order must be an integer greater than 0"),
 ];
 
-export const getFaqValidator: ValidationChain[] = [pageQueryValidator];
-
-export const putFaqValidators: ValidationChain[] = [
-  pageQueryValidator,
-  body().isArray().withMessage("request body must be an array of faq objects"),
-  pageBodyValidator("*.page"),
-  requiredStringArrayBodyValidator("question"),
-  requiredStringArrayBodyValidator("answer"),
-  requiredStringArrayBodyValidator("order"),
-  body("*._id").optional().isMongoId().withMessage("_id must be a valid MongoDB ObjectID"),
+// ── GET /api/faq/?page={pageKey} ──────────────────────────────────────────────
+export const getFaqValidator: ValidationChain[] = [
+  query("page")
+    .isString()
+    .withMessage("page query param must be a string")
+    .trim()
+    .notEmpty()
+    .withMessage("page query param is required")
+    .isIn(VALID_PAGES)
+    .withMessage(`page must be one of: ${VALID_PAGES.join(", ")}`),
 ];
 
-export const deleteFaqValidators: ValidationChain[] = [
-  param("id")
-    .exists()
-    .withMessage("id is required")
-    .bail()
-    .isMongoId()
-    .withMessage("id must be a valid MongoDB ObjectID"),
+// ── PUT /api/faq/?page={pageKey} ──────────────────────────────────────────────
+export const putFaqValidator: ValidationChain[] = [
+  query("page")
+    .isString()
+    .withMessage("page query param must be a string")
+    .trim()
+    .notEmpty()
+    .withMessage("page query param is required")
+    .isIn(VALID_PAGES)
+    .withMessage(`page must be one of: ${VALID_PAGES.join(", ")}`),
+  body().isArray({ min: 0 }).withMessage("Request body must be an array of FAQ objects"),
+  body("*.question")
+    .isString()
+    .withMessage("question must be a string")
+    .trim()
+    .notEmpty()
+    .withMessage("question is required on every FAQ object"),
+  body("*.answer")
+    .isString()
+    .withMessage("answer must be a string")
+    .trim()
+    .notEmpty()
+    .withMessage("answer is required on every FAQ object"),
+  body("*.order")
+    .isInt({ min: 1 })
+    .withMessage("order must be an integer greater than 0 on every FAQ object"),
+];
+
+// ── DELETE /api/faq/:id ───────────────────────────────────────────────────────
+export const deleteFaqValidator: ValidationChain[] = [
+  param("id").isMongoId().withMessage("id must be a valid MongoDB ObjectId"),
 ];

@@ -1,157 +1,135 @@
 import { validationResult } from "express-validator";
 import createHttpError from "http-errors";
+import { Types } from "mongoose";
 
-import { FAQModel } from "../models/faq";
+import Faq from "../models/faq";
 import validationErrorParser from "../utils/validationErrorParser";
 
-import type { FAQPage } from "../models/faq";
 import type { RequestHandler } from "express";
 
-type FAQInput = {
+type FaqPayloadItem = {
   _id?: string;
-  page: FAQPage;
   question: string;
   answer: string;
-  order: string;
+  order: number;
 };
 
-type FAQQuery = {
-  page: FAQPage;
+type CreateFaqRequest = {
+  page: "members" | "clients" | "donors";
+  question: string;
+  answer: string;
+  order: number;
 };
 
-type FAQIdParams = {
-  id: string;
-};
+type BulkSyncRequest = FaqPayloadItem[];
 
-export const createFAQ: RequestHandler<Record<string, never>, unknown, FAQInput> = async (
+// ── POST /api/faq/create ──────────────────────────────────────────────────────
+export const createFaq: RequestHandler<Record<string, never>, unknown, CreateFaqRequest> = async (
   req,
   res,
   next,
 ) => {
   try {
-    validationErrorParser(validationResult(req));
-    const created = await FAQModel.create(req.body);
-    res.status(201).json(created);
+    const errors = validationResult(req);
+    validationErrorParser(errors);
+
+    const { page, question, answer, order } = req.body;
+    const faq = await Faq.create({ page, question, answer, order });
+    res.status(201).json(faq);
   } catch (error) {
     next(error);
   }
 };
 
-export const getFaqs: RequestHandler<Record<string, never>, unknown, unknown, FAQQuery> = async (
-  req,
-  res,
-  next,
-) => {
+// ── GET /api/faq/?page={pageKey} ──────────────────────────────────────────────
+export const getFaqsByPage: RequestHandler = async (req, res, next) => {
   try {
-    validationErrorParser(validationResult(req));
-    const { page } = req.query;
+    const errors = validationResult(req);
+    validationErrorParser(errors);
 
-    const faqs = await FAQModel.find({ page })
-      .sort({ order: 1 })
-      .collation({ locale: "en", numericOrdering: true });
-
+    const { page } = req.query as { page: string };
+    const faqs = await Faq.find({ page }).sort({ order: 1 });
     res.status(200).json(faqs);
   } catch (error) {
     next(error);
   }
 };
 
-export const updateFaq: RequestHandler<
-  Record<string, never>,
-  unknown,
-  FAQInput[],
-  FAQQuery
-> = async (req, res, next) => {
+// ── PUT /api/faq/?page={pageKey} ──────────────────────────────────────────────
+export const bulkSyncFaqs: RequestHandler<Record<string, never>, unknown, BulkSyncRequest> = async (
+  req,
+  res,
+  next,
+) => {
   try {
-    validationErrorParser(validationResult(req));
+    const errors = validationResult(req);
+    validationErrorParser(errors);
 
-    const { page } = req.query;
-    const incoming = req.body;
+    const { page } = req.query as { page: string };
+    const incomingFaqs = req.body;
 
-    // Safety check: all objects in body must match query page
-    for (const faq of incoming) {
-      if (faq.page !== page) {
-        throw createHttpError(400, `All FAQ objects must have page="${page}"`);
-      }
-    }
+    // Split incoming items into those that exist in the DB and those that are new
+    const existingItems = incomingFaqs.filter((f) => f._id && Types.ObjectId.isValid(f._id));
+    const newItems = incomingFaqs.filter((f) => !f._id || !Types.ObjectId.isValid(f._id));
 
-    const existing = await FAQModel.find({ page });
-    const existingById = new Map(existing.map((doc) => [doc._id.toString(), doc]));
+    const keptIds = existingItems.map((f) => new Types.ObjectId(f._id!));
 
-    const incomingWithId = incoming.filter(
-      (faq): faq is FAQInput & { _id: string } => typeof faq._id === "string" && faq._id.length > 0,
+    // 1. Delete documents for this page that are no longer in the list
+    const deleteResult = await Faq.deleteMany({
+      page,
+      _id: { $nin: keptIds },
+    });
+
+    // 2. Update documents that were kept (may have been edited)
+    const updatePromises = existingItems.map((f) =>
+      Faq.findByIdAndUpdate(
+        f._id,
+        { $set: { question: f.question, answer: f.answer, order: f.order } },
+        { new: true, runValidators: true },
+      ),
     );
-    const incomingIds = new Set(incomingWithId.map((faq) => faq._id));
+    await Promise.all(updatePromises);
 
-    // Reject unknown _id in body
-    for (const faq of incomingWithId) {
-      if (!existingById.has(faq._id)) {
-        throw createHttpError(404, `FAQ not found for _id: ${faq._id}`);
-      }
-    }
+    // 3. Insert brand-new documents
+    const insertedFaqs =
+      newItems.length > 0
+        ? await Faq.insertMany(
+            newItems.map((f) => ({
+              page,
+              question: f.question,
+              answer: f.answer,
+              order: f.order,
+            })),
+          )
+        : [];
 
-    // Update existing docs
-    if (incomingWithId.length > 0) {
-      await FAQModel.bulkWrite(
-        incomingWithId.map((faq) => ({
-          updateOne: {
-            filter: { _id: faq._id },
-            update: {
-              $set: {
-                page: faq.page,
-                question: faq.question,
-                answer: faq.answer,
-                order: faq.order,
-              },
-            },
-          },
-        })),
-      );
-    }
+    // 4. Return the final state for this page
+    const finalFaqs = await Faq.find({ page }).sort({ order: 1 });
 
-    // Delete docs removed by frontend
-    const idsToDelete = existing
-      .filter((doc) => !incomingIds.has(doc._id.toString()))
-      .map((doc) => doc._id);
-
-    if (idsToDelete.length > 0) {
-      await FAQModel.deleteMany({ _id: { $in: idsToDelete } });
-    }
-
-    // Insert new docs
-    const newFaqs = incoming
-      .filter((faq) => !faq._id)
-      .map(({ page: faqPage, question, answer, order }) => ({
-        page: faqPage,
-        question,
-        answer,
-        order,
-      }));
-
-    if (newFaqs.length > 0) {
-      await FAQModel.insertMany(newFaqs);
-    }
-
-    const updatedFaqs = await FAQModel.find({ page })
-      .sort({ order: 1 })
-      .collation({ locale: "en", numericOrdering: true });
-
-    res.status(200).json(updatedFaqs);
+    res.status(200).json({
+      inserted: insertedFaqs.length,
+      updated: existingItems.length,
+      deleted: deleteResult.deletedCount,
+      faqs: finalFaqs,
+    });
   } catch (error) {
     next(error);
   }
 };
 
-export const deleteFaq: RequestHandler<FAQIdParams> = async (req, res, next) => {
+// ── DELETE /api/faq/:id ───────────────────────────────────────────────────────
+export const deleteFaq: RequestHandler = async (req, res, next) => {
   try {
-    validationErrorParser(validationResult(req));
+    const errors = validationResult(req);
+    validationErrorParser(errors);
 
-    const deleted = await FAQModel.findByIdAndDelete(req.params.id);
+    const deleted = await Faq.findByIdAndDelete(req.params.id);
+
     if (!deleted) {
       throw createHttpError(404, "FAQ not found");
     }
 
-    res.status(200).json(deleted);
+    res.status(200).json({ message: "FAQ deleted successfully", deleted });
   } catch (error) {
     next(error);
   }

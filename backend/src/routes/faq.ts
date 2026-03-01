@@ -1,13 +1,18 @@
 import { Router } from "express";
 
-import * as FAQController from "../controllers/faq";
-import * as Validators from "../validators/faq";
+import { bulkSyncFaqs, createFaq, deleteFaq, getFaqsByPage } from "../controllers/faq";
+import {
+  deleteFaqValidator,
+  getFaqValidator,
+  postFaqValidator,
+  putFaqValidator,
+} from "../validators/faq";
 
 const router = Router();
 
-router.post("/create", Validators.createFaqValidators, FAQController.createFAQ);
-router.get("/", Validators.getFaqValidator, FAQController.getFaqs);
-router.put("/", Validators.putFaqValidators, FAQController.updateFaq);
-router.delete("/:id", Validators.deleteFaqValidators, FAQController.deleteFaq);
+router.post("/create", postFaqValidator, createFaq);
+router.get("/", getFaqValidator, getFaqsByPage);
+router.put("/", putFaqValidator, bulkSyncFaqs);
+router.delete("/:id", deleteFaqValidator, deleteFaq);
 
 export default router;
