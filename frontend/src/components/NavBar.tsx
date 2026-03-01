@@ -72,9 +72,16 @@ function NavLinks({
           <button
             ref={buttonRef}
             onClick={onToggleDropdown}
-            className="get-involved-btn flex items-center gap-[10px] px-[15px] py-[10px] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm rounded-full hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out"
+            className={`get-involved-btn flex items-center gap-[10px] px-[15px] py-[10px] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm rounded-full hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
+              isActive("/donors") || isActive("/members") || isActive("/clients")
+                ? "bg-[#E6E6E6] text-[#172447]"
+                : ""
+            }`}
             style={{
-              color: isBlinking ? "rgba(244, 244, 244, 0.70)" : "#5D5D5D",
+              color:
+                isBlinking && !(isActive("/donors") || isActive("/members") || isActive("/clients"))
+                  ? "rgba(244, 244, 244, 0.70)"
+                  : "#5D5D5D",
             }}
           >
             Get Involved
