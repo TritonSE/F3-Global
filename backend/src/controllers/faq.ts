@@ -1,6 +1,5 @@
 import { validationResult } from "express-validator";
 import createHttpError from "http-errors";
-import { Types } from "mongoose";
 
 import Faq from "../models/faq";
 import validationErrorParser from "../utils/validationErrorParser";
@@ -9,7 +8,6 @@ import type { FAQModel } from "../models/faq";
 import type { RequestHandler } from "express";
 
 type FaqPayloadItem = {
-  _id?: string;
   question: string;
   answer: string;
   order: number;
@@ -75,37 +73,15 @@ export const bulkWriteFaqs: RequestHandler<
     const errors = validationResult(req);
     validationErrorParser(errors);
 
-    const { page } = req.query as { page: string };
+    const { page } = req.query as { page: "members" | "clients" | "donors" };
     const incomingFaqs = req.body;
 
-    // Split incoming items into those that exist in the DB and those that are new
-    const existingItems = incomingFaqs.filter((f) => f._id && Types.ObjectId.isValid(f._id));
-    const newItems = incomingFaqs.filter((f) => !f._id || !Types.ObjectId.isValid(f._id));
+    // Delete all existing FAQs for this page, then insert the incoming ones
+    await Faq.deleteMany({ page });
+    const faqs = await Faq.insertMany(
+      incomingFaqs.map((f) => ({ page, question: f.question, answer: f.answer, order: f.order })),
+    );
 
-    const keptIds = existingItems.map((f) => new Types.ObjectId(f._id!));
-
-    // Single round-trip: delete stale docs, update existing, insert new
-    await Faq.bulkWrite([
-      {
-        deleteMany: {
-          filter: { page, _id: { $nin: keptIds } },
-        },
-      },
-      ...existingItems.map((f) => ({
-        updateOne: {
-          filter: { _id: new Types.ObjectId(f._id!) },
-          update: { $set: { question: f.question, answer: f.answer, order: f.order } },
-        },
-      })),
-      ...newItems.map((f) => ({
-        insertOne: {
-          document: { page, question: f.question, answer: f.answer, order: f.order },
-        },
-      })),
-    ]);
-
-    // Return the final state for this page
-    const faqs = await Faq.find({ page }).sort({ order: 1 });
     res.status(200).json(faqs);
   } catch (error) {
     next(error);
