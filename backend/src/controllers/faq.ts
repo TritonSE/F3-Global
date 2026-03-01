@@ -22,14 +22,7 @@ type CreateFaqRequest = {
   order: number;
 };
 
-type BulkSyncRequest = FaqPayloadItem[];
-
-type BulkSyncResponse = {
-  inserted: number;
-  updated: number;
-  deleted: number;
-  faqs: FAQModel[];
-};
+type BulkWriteRequest = FaqPayloadItem[];
 
 type DeleteFaqResponse = {
   message: string;
@@ -73,10 +66,10 @@ export const getFaqsByPage: RequestHandler<
 };
 
 // ── PUT /api/faq/?page={pageKey} ──────────────────────────────────────────────
-export const bulkSyncFaqs: RequestHandler<
+export const bulkWriteFaqs: RequestHandler<
   Record<string, never>,
-  BulkSyncResponse,
-  BulkSyncRequest
+  FAQModel[],
+  BulkWriteRequest
 > = async (req, res, next) => {
   try {
     const errors = validationResult(req);
@@ -91,44 +84,29 @@ export const bulkSyncFaqs: RequestHandler<
 
     const keptIds = existingItems.map((f) => new Types.ObjectId(f._id!));
 
-    // 1. Delete documents for this page that are no longer in the list
-    const deleteResult = await Faq.deleteMany({
-      page,
-      _id: { $nin: keptIds },
-    });
+    // Single round-trip: delete stale docs, update existing, insert new
+    await Faq.bulkWrite([
+      {
+        deleteMany: {
+          filter: { page, _id: { $nin: keptIds } },
+        },
+      },
+      ...existingItems.map((f) => ({
+        updateOne: {
+          filter: { _id: new Types.ObjectId(f._id!) },
+          update: { $set: { question: f.question, answer: f.answer, order: f.order } },
+        },
+      })),
+      ...newItems.map((f) => ({
+        insertOne: {
+          document: { page, question: f.question, answer: f.answer, order: f.order },
+        },
+      })),
+    ]);
 
-    // 2. Update documents that were kept (may have been edited)
-    const updatePromises = existingItems.map((f) =>
-      Faq.findByIdAndUpdate(
-        f._id,
-        { $set: { question: f.question, answer: f.answer, order: f.order } },
-        { new: true, runValidators: true },
-      ),
-    );
-    await Promise.all(updatePromises);
-
-    // 3. Insert brand-new documents
-    const insertedFaqs =
-      newItems.length > 0
-        ? await Faq.insertMany(
-            newItems.map((f) => ({
-              page,
-              question: f.question,
-              answer: f.answer,
-              order: f.order,
-            })),
-          )
-        : [];
-
-    // 4. Return the final state for this page
-    const finalFaqs = await Faq.find({ page }).sort({ order: 1 });
-
-    res.status(200).json({
-      inserted: insertedFaqs.length,
-      updated: existingItems.length,
-      deleted: deleteResult.deletedCount,
-      faqs: finalFaqs,
-    });
+    // Return the final state for this page
+    const faqs = await Faq.find({ page }).sort({ order: 1 });
+    res.status(200).json(faqs);
   } catch (error) {
     next(error);
   }
