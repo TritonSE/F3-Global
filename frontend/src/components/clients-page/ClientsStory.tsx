@@ -17,7 +17,7 @@ const ClientsStory: React.FC<ClientStoryProps> = ({ image, description, onShowMo
     >
       {/* Image Section */}
       <div className="relative flex-shrink-0 w-[546px]">
-        <Image src={image} alt="Client highlight" fill className="rounded-[10px] object-cover" />
+        <Image src={image} alt="Client highlight" fill className="rounded-[10px] object-contain" />
       </div>
 
       {/* Content Section */}
