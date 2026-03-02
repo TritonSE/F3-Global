@@ -1,63 +1,13 @@
 import Image from "next/image";
 
-import type { Highlight } from "@/components/Highlights";
+import type { HighlightItem } from "@/api/clientHighlights";
 
 export type HighlightOverlayProps = {
-  highlight: Highlight;
+  highlight: HighlightItem;
   onClose: () => void;
 };
 
 export function HighlightOverlay({ highlight, onClose }: HighlightOverlayProps) {
-  const renderParagraph = (
-    paragraph: { text: string; boldSegments?: Array<{ start: number; end: number }> },
-    index: number,
-  ) => {
-    if (!paragraph.boldSegments || paragraph.boldSegments.length === 0) {
-      return (
-        <p
-          key={index}
-          className="font-dm-sans text-[16px] font-normal leading-6 text-[#1e1e1e] whitespace-pre-wrap"
-        >
-          {paragraph.text}
-        </p>
-      );
-    }
-
-    const segments: Array<{ text: string; bold: boolean }> = [];
-    let lastIndex = 0;
-
-    paragraph.boldSegments
-      .sort((a, b) => a.start - b.start)
-      .forEach(({ start, end }) => {
-        if (start > lastIndex) {
-          segments.push({ text: paragraph.text.slice(lastIndex, start), bold: false });
-        }
-        segments.push({ text: paragraph.text.slice(start, end), bold: true });
-        lastIndex = end;
-      });
-
-    if (lastIndex < paragraph.text.length) {
-      segments.push({ text: paragraph.text.slice(lastIndex), bold: false });
-    }
-
-    return (
-      <p
-        key={index}
-        className="font-dm-sans text-[16px] font-normal leading-6 text-[#1e1e1e] whitespace-pre-wrap"
-      >
-        {segments.map((segment, i) =>
-          segment.bold ? (
-            <strong key={i} className="font-semibold">
-              {segment.text}
-            </strong>
-          ) : (
-            <span key={i}>{segment.text}</span>
-          ),
-        )}
-      </p>
-    );
-  };
-
   return (
     <div
       className="absolute inset-0 z-[1000] flex items-center justify-center bg-transparent p-[20px]"
@@ -70,21 +20,15 @@ export function HighlightOverlay({ highlight, onClose }: HighlightOverlayProps) 
         <div className="relative w-[557px] flex-shrink-0 self-stretch overflow-hidden rounded-[10px]">
           <Image
             src={highlight.imageUrl}
-            alt={highlight.quote}
+            alt={highlight.quoteText}
             fill
             className="block h-full w-full object-cover"
           />
         </div>
         <div className="flex w-[488px] flex-shrink-0 flex-col gap-[16px] overflow-y-auto">
-          {highlight.fullTextParagraphs ? (
-            highlight.fullTextParagraphs.map((paragraph, index) =>
-              renderParagraph(paragraph, index),
-            )
-          ) : (
-            <p className="font-dm-sans text-[16px] font-normal leading-6 text-[#1e1e1e] whitespace-pre-wrap">
-              {highlight.fullText}
-            </p>
-          )}
+          <p className="font-dm-sans text-[16px] font-normal leading-6 text-[#1e1e1e] whitespace-pre-wrap">
+            {highlight.fullText}
+          </p>
         </div>
         <button
           className="relative flex h-[24px] w-[24px] cursor-pointer items-center justify-center text-[#1e1e1e] transition-opacity duration-200 hover:opacity-70"

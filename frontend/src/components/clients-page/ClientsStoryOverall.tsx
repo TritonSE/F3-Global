@@ -5,26 +5,13 @@ import React, { useState } from "react";
 import ClientsStory from "./ClientsStory";
 import ClientsStoryExpanded from "./ClientsStoryExpanded";
 
-type ParagraphData = {
-  paragraph: number;
-  text: React.ReactNode;
-};
-
 type ClientStoryProps = {
   image: string;
-  title: string;
-  description: React.ReactNode;
-  expandedDescription?: ParagraphData[];
-  onShowMore?: () => void;
+  description: string;
+  fullText: string;
 };
 
-const ClientsStoryOverall: React.FC<ClientStoryProps> = ({
-  image,
-  title,
-  description,
-  expandedDescription,
-  onShowMore,
-}) => {
+const ClientsStoryOverall: React.FC<ClientStoryProps> = ({ image, description, fullText }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isFading, setIsFading] = useState(false);
 
@@ -34,7 +21,6 @@ const ClientsStoryOverall: React.FC<ClientStoryProps> = ({
       setIsExpanded(true);
       setIsFading(false);
     }, 300);
-    onShowMore?.();
   };
 
   const handleShowLess = () => {
@@ -55,19 +41,9 @@ const ClientsStoryOverall: React.FC<ClientStoryProps> = ({
           className={`transition-opacity duration-1000 ${isFading ? "opacity-0" : "opacity-100"}`}
         >
           {isExpanded ? (
-            <ClientsStoryExpanded
-              image={image}
-              title={title}
-              paragraphs={expandedDescription || []}
-              onShowLess={handleShowLess}
-            />
+            <ClientsStoryExpanded image={image} fullText={fullText} onShowLess={handleShowLess} />
           ) : (
-            <ClientsStory
-              image={image}
-              title={title}
-              description={description}
-              onShowMore={handleShowMore}
-            />
+            <ClientsStory image={image} description={description} onShowMore={handleShowMore} />
           )}
         </div>
       </div>
