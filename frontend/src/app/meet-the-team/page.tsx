@@ -19,7 +19,6 @@ export type Member = {
   country: string;
   memberPosition: string;
   linkedinUrl: string;
-  email: string;
   headshotUrl: string;
 };
 
@@ -53,7 +52,7 @@ export default function MeetTheTeam() {
     const fetchMembers = async () => {
       try {
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        const res = await fetch(`${backendUrl}/api/members`);
+        const res = await fetch(`${backendUrl}/api/members/all`);
 
         if (!res.ok) throw new Error("Failed to fetch team members");
 

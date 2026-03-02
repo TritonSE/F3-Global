@@ -60,20 +60,6 @@ const makeLinkedinUrlValidator = (
     .withMessage("linkedin URL be a valid URL");
 };
 
-const makeEmailValidator = (isOptional = false, fieldName = "email"): ValidationChain => {
-  const validator = body(fieldName);
-  if (isOptional) validator.optional();
-
-  return validator
-    .isEmail()
-    .withMessage("email must be a valid email")
-    .isString()
-    .withMessage("email must be a string")
-    .bail()
-    .notEmpty()
-    .withMessage("email cannot be empty");
-};
-
 const makeHeadshotUrlValidator = (
   isOptional = false,
   fieldName = "headshotUrl",
@@ -115,7 +101,6 @@ export const createMember = [
   makeMemberPositionValidator(),
   makeLinkedinUrlValidator(),
   makeHeadshotUrlValidator(),
-  makeEmailValidator(),
   makeCountryValidator(),
 ];
 
@@ -125,7 +110,6 @@ export const updateMember = [
   makeMemberPositionValidator(true),
   makeLinkedinUrlValidator(true),
   makeHeadshotUrlValidator(true),
-  makeEmailValidator(true),
   makeCountryValidator(true),
 ];
 
@@ -136,7 +120,6 @@ export const updateMembers = [
   makeMemberPositionValidator(false, "*.memberPosition"),
   makeLinkedinUrlValidator(false, "*.linkedinUrl"),
   makeHeadshotUrlValidator(false, "*.headshotUrl"),
-  makeEmailValidator(false, "*.email"),
   makeCountryValidator(false, "*.country"),
   body("*._id").optional().isMongoId().withMessage("_id must be a MongoDB object ID"),
 ];
