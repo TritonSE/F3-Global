@@ -3,24 +3,13 @@
 import Image from "next/image";
 import React from "react";
 
-type ParagraphData = {
-  paragraph: number;
-  text: React.ReactNode;
-};
-
 type ClientStoryProps = {
   image: string;
-  title: string;
-  paragraphs: ParagraphData[];
+  fullText: string;
   onShowLess?: () => void;
 };
 
-const ClientsStoryExpanded: React.FC<ClientStoryProps> = ({
-  image,
-  title,
-  paragraphs,
-  onShowLess,
-}) => {
+const ClientsStoryExpanded: React.FC<ClientStoryProps> = ({ image, fullText, onShowLess }) => {
   return (
     <div
       onClick={onShowLess}
@@ -30,7 +19,7 @@ const ClientsStoryExpanded: React.FC<ClientStoryProps> = ({
       <div className="rounded-[10px] bg-gray-300 w-full">
         <Image
           src={image}
-          alt={title}
+          alt="Client highlight"
           width={1046}
           height={437}
           className="w-[1046px] h-[437px] rounded-[10px] object-cover"
@@ -39,31 +28,7 @@ const ClientsStoryExpanded: React.FC<ClientStoryProps> = ({
 
       {/* Content Section */}
       <div className="w-full">
-        <div>
-          {paragraphs.map((paragraph, index) => {
-            // Combine paragraph 0 (bold) with paragraph 1
-            if (paragraph.paragraph === 0) {
-              const nextParagraph = paragraphs.find((p) => p.paragraph === 1);
-              return (
-                <p key={0} className="text-gray-700 leading-relaxed mb-6">
-                  <strong>{paragraph.text}</strong>
-                  {nextParagraph && nextParagraph.text}
-                </p>
-              );
-            }
-            // Skip paragraph 1 since it's already combined with 0
-            if (paragraph.paragraph === 1) return null;
-
-            return (
-              <p
-                key={paragraph.paragraph}
-                className={`text-gray-700 leading-relaxed mb-6 ${paragraph.paragraph > 1 ? "mt-5" : ""}`}
-              >
-                {paragraph.text}
-              </p>
-            );
-          })}
-        </div>
+        <p className="text-gray-700 leading-relaxed mb-6">{fullText}</p>
         <button className="text-lg font-semibold text-gray-900 bg-transparent border-none p-0 cursor-pointer hover:text-gray-600 transition-colors duration-200">
           Show Less
         </button>

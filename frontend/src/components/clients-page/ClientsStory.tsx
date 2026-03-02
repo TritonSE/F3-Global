@@ -1,31 +1,28 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 
 type ClientStoryProps = {
   image: string;
-  title: string;
-  description: React.ReactNode;
+  description: string;
   onShowMore?: () => void;
 };
 
-const ClientsStory: React.FC<ClientStoryProps> = ({ image, title, description, onShowMore }) => {
+const ClientsStory: React.FC<ClientStoryProps> = ({ image, description, onShowMore }) => {
   return (
     <div
       onClick={onShowMore}
-      className="flex justify-center items-center gap-[50px] p-[50px] rounded-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.25)] w-[1147px] mb-[50px] mt-5 mx-auto cursor-pointer"
+      className="flex items-stretch gap-[50px] p-[50px] rounded-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.25)] w-[1147px] mb-[50px] mt-5 mx-auto cursor-pointer"
     >
       {/* Image Section */}
-      <div className="flex-shrink-0 w-[546px]">
-        <img src={image} alt={title} className="w-full h-auto rounded-[10px] object-cover" />
+      <div className="relative flex-shrink-0 w-[546px]">
+        <Image src={image} alt="Client highlight" fill className="rounded-[10px] object-contain" />
       </div>
 
       {/* Content Section */}
       <div className="flex-1">
-        <p className="text-gray-700 leading-relaxed mb-6">
-          <strong>{title}</strong>
-          {description}
-        </p>
+        <p className="text-gray-700 leading-relaxed mb-6">{description}</p>
 
         <button className="text-lg font-semibold text-gray-900 bg-transparent border-none p-0 cursor-pointer hover:text-gray-600 transition-colors duration-200">
           Show More
