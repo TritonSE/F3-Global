@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 import { getClientHighlights, type HighlightItem } from "@/api/clientHighlights";
-import { getFaq, type FaqItem } from "@/api/faq";
+import { type FaqItem, getFaq } from "@/api/faq";
 import { Button } from "@/components/button";
 import ClientStoryOverall from "@/components/clients-page/ClientsStoryOverall";
 import { ContactUs } from "@/components/ContactUs";
