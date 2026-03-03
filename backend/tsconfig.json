@@ -29,6 +29,7 @@
     "declaration": true,
     "declarationMap": true,
 
+    "outDir": "./dist",
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
