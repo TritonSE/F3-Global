@@ -1,13 +1,16 @@
 import { validationResult } from "express-validator";
 import createHttpError from "http-errors";
+import { Types } from "mongoose";
 
 import Faq from "../models/faq";
 import validationErrorParser from "../utils/validationErrorParser";
 
 import type { FAQModel } from "../models/faq";
 import type { RequestHandler } from "express";
+import type { AnyBulkWriteOperation } from "mongoose";
 
 type FaqPayloadItem = {
+  _id?: string;
   question: string;
   answer: string;
   order: number;
@@ -76,11 +79,42 @@ export const bulkWriteFaqs: RequestHandler<
     const { page } = req.query as { page: "members" | "clients" | "donors" };
     const incomingFaqs = req.body;
 
-    // Delete all existing FAQs for this page, then insert the incoming ones
-    await Faq.deleteMany({ page });
-    const faqs = await Faq.insertMany(
-      incomingFaqs.map((f) => ({ page, question: f.question, answer: f.answer, order: f.order })),
-    );
+    // Remove any FAQs for this page that were not included in the incoming payload
+    // This must come first so it runs before insertOnes (bulkWrite is ordered),
+    // otherwise newly inserted docs would be immediately deleted.
+    const existingIds = incomingFaqs.filter((f) => f._id).map((f) => new Types.ObjectId(f._id!));
+    const ops: AnyBulkWriteOperation<FAQModel>[] = [
+      {
+        deleteMany: {
+          filter: { page, _id: { $nin: existingIds } },
+        },
+      },
+    ];
+
+    for (const f of incomingFaqs) {
+      if (f._id) {
+        ops.push({
+          updateOne: {
+            filter: { _id: new Types.ObjectId(f._id), page },
+            update: { $set: { question: f.question, answer: f.answer, order: f.order } },
+          },
+        });
+      } else {
+        ops.push({
+          insertOne: {
+            document: {
+              page,
+              question: f.question,
+              answer: f.answer,
+              order: f.order,
+            } as unknown as FAQModel,
+          },
+        });
+      }
+    }
+
+    await Faq.bulkWrite(ops);
+    const faqs = await Faq.find({ page }).sort({ order: 1 });
 
     res.status(200).json(faqs);
   } catch (error) {

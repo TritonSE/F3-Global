@@ -72,6 +72,10 @@ export const putFaqValidator: ValidationChain[] = [
     }
     return true;
   }),
+  body("*._id")
+    .optional()
+    .isMongoId()
+    .withMessage("_id must be a valid MongoDB ObjectId if provided"),
   body("*.question")
     .isString()
     .withMessage("question must be a string")
