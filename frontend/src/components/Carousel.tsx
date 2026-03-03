@@ -105,7 +105,7 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
           <div
             key={index}
             className={`h-[5px] w-[125px] rounded-[2px] transition-colors duration-300 ease-in-out ${
-              currentIndex === index ? "bg-[#1e1e1e]" : "bg-[#D9D9D9]"
+              currentIndex === index ? "bg-[#012060]" : "bg-[#D9D9D9]"
             }`}
           />
         ))}

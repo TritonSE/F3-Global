@@ -17,7 +17,10 @@ const Background = ({ children, style }: BackgroundProps) => {
     if (!step5Element || !containerRef.current) return;
 
     const handleScroll = () => {
-      const step5Rect = step5Element.getBoundingClientRect();
+      const step5Title = step5Element.querySelector("h1");
+      if (!step5Title) return;
+
+      const step5Rect = step5Title.getBoundingClientRect();
       const titleOffset = 200;
 
       if (step5Rect.top <= titleOffset && !isLocked) {
@@ -30,7 +33,7 @@ const Background = ({ children, style }: BackgroundProps) => {
           setLockedTop(relativeTop);
           setIsLocked(true);
         }
-      } else if (step5Rect.top > window.innerHeight && isLocked) {
+      } else if (step5Rect.top > titleOffset && isLocked) {
         setIsLocked(false);
       }
     };

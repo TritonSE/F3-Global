@@ -7,7 +7,6 @@ export type MemberModel = {
   country: string;
   memberPosition: string;
   linkedinUrl: string;
-  email: string;
   headshotUrl: string;
 } & Document;
 
@@ -16,7 +15,6 @@ const MemberSchema = new Schema<MemberModel>({
   country: { type: String, required: true },
   memberPosition: { type: String, required: true },
   linkedinUrl: { type: String, required: true },
-  email: { type: String, required: true },
   headshotUrl: { type: String, required: true },
 });
 

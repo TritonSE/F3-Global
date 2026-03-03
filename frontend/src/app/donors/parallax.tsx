@@ -55,7 +55,7 @@ export default function Parallax() {
             <h1 className="text-white font-['Ethic_New'] text-[64px] font-light leading-[110%] pb-[10px]">
               {section.number}. {section.title1} <i>{section.title2}</i>
             </h1>
-            <p className="text-white font-['DM_Sans'] text-base font-normal leading-[24px]">
+            <p className="text-white font-['DM_Sans'] text-[24px] font-medium leading-[150%] tracking-[-0.48px]">
               {section.content}
             </p>
           </div>

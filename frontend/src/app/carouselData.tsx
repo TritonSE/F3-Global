@@ -52,7 +52,7 @@ export const WaysToGiveCarouselData = [
       </span>
     ),
     description:
-      "Start your giving journey with a one-time donation, there's no commitment required, just the satisfaction of knowing your gift is funding real entrepreneurs right now. Your contribution creates immediate opportunity: $100 can fund a market vendor's inventory, $250 can help a farmer expand their land, $500 can launch a home-based business.\n\nEvery gift directly empowers an entrepreneur to build a better future for themselves and their family. See the impact firsthand and decide if you'd like to give again. No matter the amount, your one-time donation makes a tangible difference in someone's life today",
+      "Start your giving journey with a one-time donation, there's no commitment required, just the satisfaction of knowing your gift is funding real entrepreneurs right now. Your contribution creates immediate opportunity: $100 can fund a market vendor's inventory, $250 can help a farmer expand their land, $500 can launch a home-based business.\n\nEvery gift directly empowers an entrepreneur to build a better future for themselves and their family. See the impact firsthand and decide if you'd like to give again. No matter the amount, your one-time donation makes a tangible difference in someone's life today.",
     leftButtonText: "DONATE",
     leftButtonLink: "https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390",
     imageSrc: "/imgs/carousel_one_time.svg",

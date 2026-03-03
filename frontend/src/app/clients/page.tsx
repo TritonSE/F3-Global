@@ -1,14 +1,33 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
+import { getClientHighlights, type HighlightItem } from "@/api/clientHighlights";
 import { Button } from "@/components/button";
 import ClientStoryOverall from "@/components/clients-page/ClientsStoryOverall";
 import { ContactUs } from "@/components/ContactUs";
 import { FaqAccordion } from "@/components/FaqAccordion";
 
 export default function About() {
+  const [primaryHighlight, setPrimaryHighlight] = useState<HighlightItem | null>(null);
+
+  useEffect(() => {
+    const fetchPrimary = async () => {
+      try {
+        const data = await getClientHighlights();
+        const primary = data.find((h) => h.order === 1);
+        if (primary) {
+          setPrimaryHighlight(primary);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    void fetchPrimary();
+  }, []);
+
   return (
     <>
       <div className="bg-white overflow-x-hidden">
@@ -51,41 +70,13 @@ export default function About() {
             />
           </div>
         </div>
-        <ClientStoryOverall
-          image="/imgs/clients/rule_breaker.png"
-          title="Rule Breaker Snacks"
-          description={
-            " is challenging what normal desserts are considered with soft-baked treats that include chickpeas first and taste like the brownies and blondies many grew up enjoying, minus the ingredients many people avoid. Every bite is certified gluten-free, vegan, and made without nuts, dairy, eggs, or soy, making them a school-safe option for families and anyone with dietary needs. Their product catalog contains full-size Brownies and Blondies, snackable Bites, and kid-friendly junior bites, plus seasonal flavors that keep the brand fresh and dynamic...."
-          }
-          expandedDescription={[
-            {
-              paragraph: 0,
-              text: "Rule Breaker Snacks",
-            },
-            {
-              paragraph: 1,
-              text: " is challenging what normal desserts are considered with soft-baked treats that include chickpeas first and taste like the brownies and blondies many grew up enjoying, minus the ingredients many people avoid. Every bite is certified gluten-free, vegan, and made without nuts, dairy, eggs, or soy, making them a school-safe option for families and anyone with dietary needs. Their product catalog contains full-size Brownies and Blondies, snackable Bites, and kid-friendly junior bites, plus seasonal flavors that keep the brand fresh and dynamic....",
-            },
-            {
-              paragraph: 2,
-              text: (
-                <>
-                  {
-                    "Behind the scenes, Rule Breaker is operated passionately on the foundation that "
-                  }
-                  <strong>there is a desert snack for everyone</strong>
-                  {
-                    ", while the brand keeps strong creative control over recipes and quality. You’ll find them online and in thousands of grocery doors nationwide, giving proof that better-for-you can also be great in taste. "
-                  }
-                </>
-              ),
-            },
-            {
-              paragraph: 3,
-              text: "We’re proud to feature Rule Breaker Snacks for their simple ingredient decks, inclusive approach to snacking, and a product experience that strives for great taste, because the best rule to break is the one that says you have to choose between better and delicious.",
-            },
-          ]}
-        />
+        {primaryHighlight && (
+          <ClientStoryOverall
+            image={primaryHighlight.imageUrl}
+            description={primaryHighlight.previewText}
+            fullText={primaryHighlight.fullText}
+          />
+        )}
         <FaqAccordion
           items={[
             {

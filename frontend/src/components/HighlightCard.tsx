@@ -1,11 +1,11 @@
 import Image from "next/image";
 import React from "react";
 
-import type { Highlight } from "@/components/Highlights";
+import type { HighlightItem } from "@/api/clientHighlights";
 
 export type HighlightCardProps = {
-  highlight: Highlight;
-  onLearnMore: (highlight: Highlight) => void;
+  highlight: HighlightItem;
+  onLearnMore: (highlight: HighlightItem) => void;
   isActive?: boolean;
   onActivate?: () => void;
 };
@@ -56,7 +56,7 @@ export function HighlightCard({
       >
         <Image
           src={highlight.imageUrl}
-          alt={highlight.quote}
+          alt={highlight.quoteText}
           fill
           className={isActive ? "rounded-t-[16px]" : "rounded-t-[11px]"}
           style={{ objectFit: "cover" }}
@@ -97,7 +97,7 @@ export function HighlightCard({
               isActive ? "text-[24px]" : "text-[16.5px]"
             }`}
           >
-            "{highlight.quote}"
+            "{highlight.quoteText}"
           </p>
           <p
             className={`font-dm-sans font-normal text-[#5d5d5d] ${
