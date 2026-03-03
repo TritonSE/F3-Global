@@ -33,5 +33,6 @@
     "scss",
     "pcss",
     "postcss"
-  ]
+  ],
+  "postman.settings.dotenv-detection-notification-visibility": false
 }
