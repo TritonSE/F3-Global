@@ -43,7 +43,7 @@ export default function About() {
   return (
     <>
       <div className="bg-white overflow-x-hidden">
-        <div className="flex w-full items-center justify-between self-stretch px-[100px] h-180">
+        <div className="flex w-full items-center justify-between self-stretch px-[100px] min-h-screen">
           <div className="flex flex-col">
             <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
               Services That Create
