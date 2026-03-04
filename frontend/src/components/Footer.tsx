@@ -49,7 +49,7 @@ export const Footer = function Footer() {
           >
             8 The Green STE <br /> A Dover, DE 19901
           </a>
-          <div className="flex items-start gap-[30px]">
+          <div className="flex items-start gap-[20px]">
             <a href="https://www.linkedin.com/company/f3global/" target="_blank">
               <Image
                 src="/imgs/linkedin.png"
