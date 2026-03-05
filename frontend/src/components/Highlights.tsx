@@ -86,7 +86,6 @@ export function Highlights() {
             const highlight = highlights[highlightIndex];
             const isActive = highlightIndex === currentIndex;
 
-
             return (
               <HighlightCard
                 key={`${highlight._id}-${position}`}
