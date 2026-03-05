@@ -8,7 +8,7 @@ import { HighlightOverlay } from "@/components/HighlightOverlay";
 
 export function Highlights() {
   const [highlights, setHighlights] = useState<HighlightItem[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedHighlight, setSelectedHighlight] = useState<HighlightItem | null>(null);
 
   useEffect(() => {
@@ -85,6 +85,7 @@ export function Highlights() {
           {getVisibleHighlights().map((highlightIndex, position) => {
             const highlight = highlights[highlightIndex];
             const isActive = highlightIndex === currentIndex;
+
 
             return (
               <HighlightCard
