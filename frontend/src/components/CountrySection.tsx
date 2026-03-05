@@ -42,7 +42,7 @@ export const CountrySection: React.FC<CountrySectionProps> = ({ id, countryName,
         <div className="flex flex-col py-[50px] px-0 items-start gap-[50px] self-stretch rounded-[10px] bg-[#F4F4F4]">
           <div className="flex py-0 px-[50px] justify-between items-start self-stretch">
             <div className="flex items-center gap-[20px]">
-              <h3 className="font-dm-sans text-[32px] text-[#1E1E1E] font-bold leading-[150%] tracking-[-0.64px]">
+              <h3 className="font-dm-sans text-[32px] text-[#1E1E1E] font-[700] leading-[150%] tracking-[-0.64px]">
                 {countryName}
               </h3>
               <div
@@ -66,7 +66,7 @@ export const CountrySection: React.FC<CountrySectionProps> = ({ id, countryName,
                   className="object-cover object-center bg-cover bg-no-repeat bg-center"
                 />
               </div>
-              <p className="font-dm-sans text-[24px] font-bold leading-[150%] text-[#172447]">{`${memberCount} ${memberCount > 1 ? "members" : "member"}`}</p>
+              <p className="font-dm-sans text-[20px] font-bold leading-[150%] text-[#172447]">{`${memberCount} ${memberCount > 1 ? "members" : "member"}`}</p>
             </div>
           </div>
           <div className="flex flex-col items-start gap-[25px] self-stretch">

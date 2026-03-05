@@ -52,9 +52,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         <p
-          className={`
-            ${textClassName} ?? "text-center font-dm-sans text-base font-semibold leading-6 text-white"
-          `}
+          className={
+            textClassName ?? "text-center font-dm-sans text-base font-semibold leading-6 text-white"
+          }
         >
           {text}
         </p>
