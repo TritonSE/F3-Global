@@ -4,9 +4,9 @@
     "target": "esnext",
     "jsx": "react-jsx",
     "moduleDetection": "force",
+
     // File Layout
-    // "rootDir": "./src",
-    // "outDir": "./dist",
+    "rootDir": "./src",
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
@@ -28,6 +28,7 @@
     "noUncheckedIndexedAccess": true,
     "declaration": true,
     "declarationMap": true,
+    "outDir": "./dist",
 
     // For nodejs:
     // "lib": ["esnext"],

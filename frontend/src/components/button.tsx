@@ -33,8 +33,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         const target = document.getElementById(onClick_link.slice(1));
 
         if (target) {
-          const targetTop = target.getBoundingClientRect().top + window.scrollY;
-          const scrollTop = Math.max(0, targetTop - window.innerHeight + 1);
+          const rect = target.getBoundingClientRect();
+          const targetTop = rect.top + window.scrollY;
+          const scrollTop = targetTop - 150;
           window.scrollTo({ top: scrollTop, behavior: "smooth" });
           return;
         }
