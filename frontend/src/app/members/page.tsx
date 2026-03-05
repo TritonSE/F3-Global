@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { getFaq } from "@/api/faq";
 import { Button } from "@/components/button";
+import { ContactUs } from "@/components/ContactUs";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import EligibileCard from "@/components/members-page/EligibileCard";
 
@@ -329,6 +330,7 @@ export default async function Members() {
         </div>
       </div>
       <FaqAccordion items={faqItems} />
+      <ContactUs />
     </>
   );
 }
