@@ -9,6 +9,7 @@ import { Button } from "@/components/button";
 import ClientStoryOverall from "@/components/clients-page/ClientsStoryOverall";
 import { ContactUs } from "@/components/ContactUs";
 import { FaqAccordion } from "@/components/FaqAccordion";
+import { ServicesSection } from "@/components/services-section";
 
 export default function About() {
   const [primaryHighlight, setPrimaryHighlight] = useState<HighlightItem | null>(null);
@@ -43,7 +44,7 @@ export default function About() {
   return (
     <>
       <div className="bg-white overflow-x-hidden">
-        <div className="flex w-full items-center justify-between self-stretch px-[100px] h-180">
+        <div className="flex w-full items-center justify-between self-stretch px-[100px] min-h-screen">
           <div className="flex flex-col">
             <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
               Services That Create
@@ -82,6 +83,7 @@ export default function About() {
             />
           </div>
         </div>
+        <ServicesSection />
         {primaryHighlight && (
           <ClientStoryOverall
             image={primaryHighlight.imageUrl}

@@ -13,7 +13,7 @@ const ClientsStoryExpanded: React.FC<ClientStoryProps> = ({ image, fullText, onS
   return (
     <div
       onClick={onShowLess}
-      className="flex flex-col justify-center items-center gap-5 rounded-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.25)] w-[1147px] mx-auto p-[50px] cursor-pointer"
+      className="flex flex-col justify-center items-center gap-5 rounded-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.25)] w-[1147px] mb-[50px] mt-5 mx-auto p-[50px] cursor-pointer"
     >
       {/* Image Section */}
       <div className="rounded-[10px] bg-gray-300 w-full">

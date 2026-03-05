@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/app.ts",
-    "build": "npm ci && tsc && tsc-alias",
+    "build": "tsc && tsc-alias -p tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1",
     "check-git-hooks": "cd .. && node .secret-scan/secret-scan.js -- --check-git-hooks",
     "format": "npm run check-git-hooks && prettier --write .",
