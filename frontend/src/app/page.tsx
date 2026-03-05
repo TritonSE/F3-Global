@@ -134,7 +134,9 @@ export default function Home() {
         <ServicesSection />
         <Carousel data={DonorsClientsMembersCarouselData} />
         <Highlights />
-        <ContactUs />
+        <div id="contact">
+          <ContactUs />
+        </div>
       </div>
     </>
   );
