@@ -9,6 +9,7 @@ import { Button } from "@/components/button";
 import ClientStoryOverall from "@/components/clients-page/ClientsStoryOverall";
 import { ContactUs } from "@/components/ContactUs";
 import { FaqAccordion } from "@/components/FaqAccordion";
+import { ServicesSection } from "@/components/services-section";
 
 export default function About() {
   const [primaryHighlight, setPrimaryHighlight] = useState<HighlightItem | null>(null);
@@ -82,6 +83,7 @@ export default function About() {
             />
           </div>
         </div>
+        <ServicesSection />
         {primaryHighlight && (
           <ClientStoryOverall
             image={primaryHighlight.imageUrl}
