@@ -3,7 +3,7 @@
 import countriesInfo from "i18n-iso-countries";
 import enLocale from "i18n-iso-countries/langs/en.json";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import type { CountryData } from "@/components/InteractiveWorldMap";
 
@@ -98,6 +98,8 @@ export default function MeetTheTeam() {
   const countries = Object.keys(membersByCountry).sort((a, b) => a.localeCompare(b));
 
   const [colleges, setColleges] = useState<College[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(1200);
 
   useEffect(() => {
     const fetchColleges = async () => {
@@ -114,6 +116,26 @@ export default function MeetTheTeam() {
 
     void fetchColleges();
   }, []);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new ResizeObserver(([entry]) => {
+      setContainerWidth(entry.contentRect.width);
+    });
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const repeated = useMemo(() => {
+    if (colleges.length === 0) return [];
+    const sorted = [...colleges].sort((a, b) => a.order - b.order);
+    const singleSetWidth = sorted.length * 150;
+    const rawCopies = Math.ceil((containerWidth * 2) / singleSetWidth);
+    const copies = Math.max(4, rawCopies % 2 === 0 ? rawCopies : rawCopies + 1);
+    return Array.from({ length: copies }, (_, copyIndex) =>
+      sorted.map((college) => ({ ...college, uniqueKey: `${college._id}-copy${copyIndex}` })),
+    ).flat();
+  }, [colleges, containerWidth]);
 
   return (
     <>
@@ -172,42 +194,23 @@ export default function MeetTheTeam() {
               united by a shared commitment to innovation, equity, and lasting social impact.
             </p>
           </div>
-          <div style={{ position: "relative", width: 1312, height: 151 }}>
-            <div className="overflow-hidden" style={{ width: 1312, height: 151 }}>
+          <div
+            ref={containerRef}
+            className="relative w-full overflow-hidden"
+            style={{ height: 151 }}
+          >
+            <div className="pointer-events-none absolute left-0 top-0 h-full w-[200px] bg-gradient-to-r from-white to-transparent z-10" />
+            <div className="pointer-events-none absolute right-0 top-0 h-full w-[200px] bg-gradient-to-l from-white to-transparent z-10" />
+            <div className="overflow-hidden" style={{ height: 151 }}>
               <div
                 className="flex items-center h-full animate-marquee whitespace-nowrap"
                 style={{ width: "max-content" }}
               >
-                {[...colleges]
-                  .sort((a, b) => a.order - b.order)
-                  .concat(colleges)
-                  .map((college, idx) => (
-                    <CollegeCard key={college._id + idx} college={college} />
-                  ))}
+                {repeated.map((college) => (
+                  <CollegeCard key={college.uniqueKey} college={college} />
+                ))}
               </div>
             </div>
-            <div
-              style={{
-                position: "absolute",
-                left: 0,
-                top: 0,
-                width: 200,
-                height: 150,
-                pointerEvents: "none",
-                background: "linear-gradient(90deg, #FFF 0%, rgba(255,255,255,0) 100%)",
-              }}
-            />
-            <div
-              style={{
-                position: "absolute",
-                right: 0,
-                top: 0,
-                width: 200,
-                height: 150,
-                pointerEvents: "none",
-                background: "linear-gradient(270deg, #FFF 0%, rgba(255,255,255,0) 100%)",
-              }}
-            />
           </div>
         </div>
 

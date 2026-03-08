@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { DonorsClientsMembersCarouselData } from "@/app/carouselData";
 import { Button } from "@/components/button";
@@ -12,18 +12,8 @@ import { ImpactSection } from "@/components/ImpactSection";
 import { ServicesSection } from "@/components/services-section";
 
 export default function Home() {
-  useEffect(() => {
-    if (window.location.search.includes("contact=true")) {
-      const contactSection = document.getElementById("contact");
-      if (contactSection) {
-        setTimeout(() => {
-          contactSection.scrollIntoView({ behavior: "smooth" });
-          window.history.replaceState(null, "", "/"); // clean url after scrolling animation
-        }, 100);
-      }
-    }
-  }, []);
-
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(1200);
   const cities = [
     "Hong Kong",
     "Mumbai",
@@ -37,13 +27,46 @@ export default function Home() {
     "Cairo",
   ];
 
+  useEffect(() => {
+    if (window.location.search.includes("contact=true")) {
+      const contactSection = document.getElementById("contact");
+      if (contactSection) {
+        setTimeout(() => {
+          contactSection.scrollIntoView({ behavior: "smooth" });
+          window.history.replaceState(null, "", "/"); // clean url after scrolling animation
+        }, 100);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new ResizeObserver(([entry]) => {
+      setContainerWidth(entry.contentRect.width);
+    });
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const repeated = useMemo(() => {
+    const singleSetWidth = cities.length * 180;
+    const rawCopies = Math.ceil((containerWidth * 2) / singleSetWidth);
+    const copies = Math.max(4, rawCopies % 2 === 0 ? rawCopies : rawCopies + 1);
+    return Array.from({ length: copies }, (_, copyIndex) =>
+      cities.map((city) => ({
+        city,
+        uniqueKey: `${city}-copy${copyIndex}`,
+      })),
+    ).flat();
+  }, [containerWidth]);
+
   return (
     <>
       <div className="relative w-full bg-white flex flex-col">
         {/* hero */}
-        <div className="relative flex flex-col items-center min-h-screen">
+        <div className="relative flex flex-col items-center h-screen">
           {/* map gradient */}
-          <div className="absolute top-0 left-0 w-full min-h-screen pointer-events-none select-none overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-screen pointer-events-none select-none overflow-hidden">
             <div className="absolute -top-[35%] -right-[55%] w-[120%] h-[120%] opacity-25">
               <Image
                 src="/imgs/worldmap.png"
@@ -94,21 +117,12 @@ export default function Home() {
             />
           </div>
           {/* city scrolling */}
-          <div className="w-full mt-[67px] overflow-hidden flex">
+          <div ref={containerRef} className="w-full mt-[67px] overflow-hidden flex">
             <div className="flex animate-marquee whitespace-nowrap">
-              {cities.map((city, index) => (
-                <div key={`city-1-${index}`} className="flex items-center">
+              {repeated.map((city) => (
+                <div key={city.uniqueKey} className="flex items-center">
                   <span className="text-[#5D5D5D] text-[32px] leading-[32px] font-ethic font-light italic [font-feature-settings:'dlig'_on]">
-                    {city}
-                  </span>
-                  <span className="text-[#5D5D5D] text-[32px] leading-[32px] mx-6">•</span>
-                </div>
-              ))}
-
-              {cities.map((city, index) => (
-                <div key={`city-2-${index}`} className="flex items-center">
-                  <span className="text-[#5D5D5D] text-[32px] leading-[32px] font-ethic font-light italic [font-feature-settings:'dlig'_on]">
-                    {city}
+                    {city.city}
                   </span>
                   <span className="text-[#5D5D5D] text-[32px] leading-[32px] mx-6">•</span>
                 </div>
