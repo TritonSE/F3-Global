@@ -1,6 +1,5 @@
 "use client";
 
-import { Source_Serif_4 } from "next/font/google";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 
