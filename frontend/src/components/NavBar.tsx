@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function NavLinks({
   isActive,
@@ -279,6 +279,11 @@ export default function NavBar() {
   const [isClosing, setIsClosing] = useState(false);
   const [isBlinking, setIsBlinking] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    setIsDropdownOpen(false);
+    setIsClosing(false);
+  }, [pathname]);
 
   const handleToggleDropdown = () => {
     if (isDropdownOpen) {
