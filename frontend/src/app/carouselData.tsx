@@ -81,7 +81,7 @@ export const WaysToGiveCarouselData = [
       "Create a lasting legacy that empowers entrepreneurs for generations to come. By including F3Global in your estate plans, you ensure that your values of opportunity and financial inclusion live on long after you're gone. Planned gifts, whether through bequests, retirement accounts, life insurance, or appreciated assets, offer significant tax benefits while making a transformative impact on underserved communities worldwide.\n\nYour legacy gift can establish an enduring fund in your name, support specific regions close to your heart, or simply continue the work that matters most to you. We're here to work with you and your financial advisor to create a giving plan that honors your wishes and maximizes your impact. Leave behind more than memories. Leave behind opportunity.",
     leftButtonText: "CONTACT US",
     leftButtonLink: "#contact",
-    imageSrc: "/imgs/carousel_legacy.webp",
+    imageSrc: "/imgs/carousel_planned_legacy.webp",
   },
   {
     title: "CORPORATE",
