@@ -20,7 +20,7 @@ function NavLinks({
 }) {
   return (
     <>
-      <div className="flex w-full max-w-[1512px] mx-auto justify-between items-center px-[30px] pt-[30px] pb-[20px] leading-none">
+      <div className="flex w-full max-w-[1512px] mx-auto justify-between items-center px-[30px] pt-[10px] leading-none">
         <div className="flex items-center gap-[12px] w-[274.5px] h-[55px] flex-shrink-0">
           <Link href="/" className="flex items-center gap-[12px] h-[55px]">
             <div className="flex h-[55px] w-[55px] flex-shrink-0 items-center justify-center">
@@ -76,12 +76,12 @@ function NavLinks({
                 ? "bg-[#E6E6E6] text-[#172447]"
                 : ""
             }`}
-            style={{
-              color:
-                isBlinking && !(isActive("/donors") || isActive("/members") || isActive("/clients"))
-                  ? "rgba(244, 244, 244, 0.70)"
-                  : "#5D5D5D",
-            }}
+            // style={{
+            //   color:
+            //     isBlinking && !(isActive("/donors") || isActive("/members") || isActive("/clients"))
+            //       ? "rgba(244, 244, 244, 0.70)"
+            //       : "#5D5D5D",
+            // }}
           >
             Get Involved
             {isDropdownOpen ? (
