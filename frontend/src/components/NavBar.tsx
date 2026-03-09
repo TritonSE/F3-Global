@@ -8,15 +8,17 @@ import { useEffect, useRef, useState } from "react";
 function NavLinks({
   isActive,
   isDropdownOpen,
+  isClosing,
   onToggleDropdown,
   buttonRef,
-  isBlinking,
+  //isBlinking,
 }: {
   isActive: (href: string) => boolean;
   isDropdownOpen: boolean;
+  isClosing: boolean;
   onToggleDropdown: () => void;
   buttonRef: React.RefObject<HTMLButtonElement | null>;
-  isBlinking: boolean;
+  //isBlinking: boolean;
 }) {
   return (
     <>
@@ -61,7 +63,7 @@ function NavLinks({
           </Link>
           <Link
             href="/meet-the-team"
-            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[500] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer ${
+            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer ${
               isActive("/meet-the-team") ? "bg-[#E6E6E6] text-[#172447]" : ""
             }`}
           >
@@ -84,11 +86,15 @@ function NavLinks({
             // }}
           >
             Get Involved
-            {isDropdownOpen ? (
-              <Image src="/imgs/ic_arrowup.svg" alt="Upward Arrow" width={24} height={24} />
-            ) : (
-              <Image src="/imgs/ic_arrowdown.svg" alt="Downward Arrow" width={24} height={24} />
-            )}
+            <Image
+              src="/imgs/ic_arrowdown.svg"
+              alt="Dropdown Arrow"
+              width={24}
+              height={24}
+              className={`transition-transform duration-300 ease-in-out ${
+                isClosing ? "spin-180-right" : isDropdownOpen ? "spin-180-left" : "spin-180-right"
+              }`}
+            />
           </button>
 
           <Link
@@ -276,7 +282,7 @@ export default function NavBar() {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [isBlinking, setIsBlinking] = useState(false);
+  //const [isBlinking, setIsBlinking] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -292,9 +298,9 @@ export default function NavBar() {
         setIsClosing(false);
       }, 250);
     } else {
-      setIsBlinking(true);
+      //setIsBlinking(true);
       setTimeout(() => {
-        setIsBlinking(false);
+        //setIsBlinking(false);
       }, 80);
       setIsDropdownOpen(true);
     }
@@ -306,9 +312,10 @@ export default function NavBar() {
         <NavLinks
           isActive={isActive}
           isDropdownOpen={isDropdownOpen}
+          isClosing={isClosing}
           onToggleDropdown={handleToggleDropdown}
           buttonRef={buttonRef}
-          isBlinking={isBlinking}
+          //isBlinking={isBlinking}
         />
       </nav>
     );
@@ -323,9 +330,10 @@ export default function NavBar() {
           <NavLinks
             isActive={isActive}
             isDropdownOpen={isDropdownOpen}
+            isClosing={isClosing}
             onToggleDropdown={handleToggleDropdown}
             buttonRef={buttonRef}
-            isBlinking={isBlinking}
+            //isBlinking={isBlinking}
           />
         </nav>
 
@@ -341,6 +349,32 @@ export default function NavBar() {
         </div>
 
         <style jsx global>{`
+          .spin-180-left {
+            animation: spinToUp 0.25s ease-in-out forwards;
+          }
+
+          @keyframes spinToUp {
+            0% {
+              transform: rotate(0deg);
+            }
+            100% {
+              transform: rotate(180deg);
+            }
+          }
+
+          .spin-180-right {
+            animation: spinToDown 0.35s ease-in-out forwards;
+          }
+
+          @keyframes spinToDown {
+            0% {
+              transform: rotate(180deg);
+            }
+            100% {
+              transform: rotate(0deg);
+            }
+          }
+
           @keyframes slideDown {
             0% {
               opacity: 0;
