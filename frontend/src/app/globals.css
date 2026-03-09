@@ -22,7 +22,7 @@
   --font-dm: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
   --font-ethic: "Ethic New", sans-serif;
 
-  --animate-marquee: marquee 30s linear infinite;
+  --animate-marquee: marquee 50s linear infinite;
 }
 
 @keyframes marquee {
