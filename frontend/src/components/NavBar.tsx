@@ -22,25 +22,24 @@ function NavLinks({
     <>
       <div className="flex w-full max-w-[1512px] mx-auto justify-between items-center px-[30px] pt-[30px] pb-[20px] leading-none">
         <div className="flex items-center gap-[12px] w-[274.5px] h-[55px] flex-shrink-0">
-          <Link
-            href="/"
-            className="flex h-[55px] w-[55px] flex-shrink-0 items-center justify-center"
-          >
-            <Image
-              src="/imgs/f3logo_nobg 2.png"
-              alt="F3 Global Logo"
-              width={55}
-              height={55}
-              className="block w-[55px] h-[55px] object-contain"
-            />
+          <Link href="/" className="flex items-center gap-[12px] h-[55px]">
+            <div className="flex h-[55px] w-[55px] flex-shrink-0 items-center justify-center">
+              <Image
+                src="/imgs/f3logo_nobg 2.png"
+                alt="F3 Global Logo"
+                width={55}
+                height={55}
+                className="block w-[55px] h-[55px] object-contain"
+              />
+            </div>
+            <div className="flex flex-col justify-center h-full">
+              <span className="text-[#172447] text-[12px] font-[900] leading-[110%] tracking-[2.64px] font-dm">
+                <span className="block">FUTURE</span>
+                <span className="block">FORWARD</span>
+                <span className="block">FOUNDATION</span>
+              </span>
+            </div>
           </Link>
-          <div className="flex flex-col justify-center h-full">
-            <span className="text-[#172447] text-[12px] font-[900] leading-[110%] tracking-[2.64px] font-dm">
-              <span className="block">FUTURE</span>
-              <span className="block">FORWARD</span>
-              <span className="block">FOUNDATION</span>
-            </span>
-          </div>
         </div>
 
         <div className="flex items-center gap-[5px] px-[10px] py-[15px]">
