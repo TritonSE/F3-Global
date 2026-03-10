@@ -20,7 +20,7 @@ export default async function Members() {
             <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
               Team Today!
             </h1>
-            <p className="font-dm-sans mt-5 text-[24px] font-normal leading-[32px] text-[#5D5D5D] w-[70%]">
+            <p className="font-dm-sans mt-5 text-[20px] font-normal leading-[32px] text-[#5D5D5D] w-[100%]">
               Join F3 Global as a volunteer and make a meaningful impact in underserved communities
               worldwide.
             </p>
@@ -108,7 +108,7 @@ export default async function Members() {
             <h2 className="text-[#172447] font-dm-sans text-[48px] font-normal leading-[150%] spacing-[-0.96px]">
               Our Mission
             </h2>
-            <p className="text-[#1E1E1E] font-dm-sans text-[24px] font-normal leading-[32px] mr-2">
+            <p className="text-[#1E1E1E] font-dm-sans text-[20px] font-normal leading-[32px] mr-2">
               F3 Global{" "}
               <span className="text-[#012060] font-bold">
                 supports underserved individuals and small businesses
