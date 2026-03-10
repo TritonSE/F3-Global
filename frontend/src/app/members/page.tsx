@@ -10,7 +10,7 @@ export default async function Members() {
   const faqItems = await getFaq("members");
   return (
     <>
-      <div className="bg-white overflow-x-hidden">
+      <div className="flex flex-col bg-white overflow-x-hidden">
         {/* Hero Section */}
         <div className="flex w-full items-center justify-between self-stretch px-[100px] h-[774px]">
           <div className="flex flex-col">
@@ -20,7 +20,7 @@ export default async function Members() {
             <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
               Team Today!
             </h1>
-            <p className="font-dm-sans mt-5 text-[20px] font-normal leading-[32px] text-[#5D5D5D] w-[100%]">
+            <p className="font-dm-sans mt-5 text-[20px] font-normal leading-[32px] text-[#5D5D5D] w-[90%]">
               Join F3 Global as a volunteer and make a meaningful impact in underserved communities
               worldwide.
             </p>
@@ -41,19 +41,14 @@ export default async function Members() {
               src="/imgs/members_hero.png"
               alt="Volunteers Working with Children"
               fill
-              className="object-cover object-center bg-cover bg-no-repeat bg-center"
+              className="object-cover object-center"
               priority
             />
           </div>
         </div>
         {/* Mission Epic */}
-        <div
-          className="flex flex-row w-full px-[50px] py-[200px] content-end items-center gap-[50px] border-t border-[#F4F4F4] relative overflow-hidden"
-          //style={{
-          //  boxShadow: "0 19px 43px 0 rgba(0, 0, 0, 0.10)",
-          //}}
-        >
-          <div className="flex flex-col flex-4">
+        <div className="flex flex-row w-full px-[100px] py-[50px] content-end items-center gap-[50px] border-t border-[#F4F4F4] relative overflow-hidden">
+          <div className="flex flex-col flex-4 min-h-[700]">
             <div
               className="ml-8 rounded-[16px] overflow-hidden absolute left-[80px] top-[40px] z-1 flex-shrink-0 flex-grow-0"
               style={{ width: 291, height: 193 }}
@@ -62,7 +57,7 @@ export default async function Members() {
                 src="/imgs/members_mission_1.jpg"
                 alt="People Walking at Sunset"
                 fill
-                className="object-cover object-center bg-cover bg-no-repeat bg-center"
+                className="object-cover object-center"
                 priority
               />
             </div>
@@ -74,7 +69,7 @@ export default async function Members() {
                 src="/imgs/members_mission_4.jpg"
                 alt="People Walking at Sunset"
                 fill
-                className="object-cover object-center bg-cover bg-no-repeat bg-center"
+                className="object-cover object-center"
                 priority
               />
               <div className="absolute inset-0 rounded-[16px] bg-[#172447] opacity-100 mix-blend-color pointer-events-none" />
@@ -87,7 +82,7 @@ export default async function Members() {
                 src="/imgs/members_mission_2.jpg"
                 alt="People Walking at Sunset"
                 fill
-                className="object-cover object-center bg-cover bg-no-repeat bg-center"
+                className="object-cover object-center"
                 priority
               />
             </div>
@@ -99,16 +94,16 @@ export default async function Members() {
                 src="/imgs/members_mission_3.jpg"
                 alt="People Walking at Sunset"
                 fill
-                className="object-cover object-center bg-cover bg-no-repeat bg-center"
+                className="object-cover object-center"
                 priority
               />
             </div>
           </div>
-          <div className="flex flex-col items-start gap-[20px] flex-3 mr-10">
-            <h2 className="text-[#172447] font-dm-sans text-[48px] font-normal leading-[150%] spacing-[-0.96px]">
+          <div className="flex flex-col items-start gap-[20px] flex-3">
+            <h2 className="text-[#172447] font-dm-sans text-[48px] font-normal leading-[150%] tracking-[-0.96px]">
               Our Mission
             </h2>
-            <p className="text-[#1E1E1E] font-dm-sans text-[20px] font-normal leading-[32px] mr-2">
+            <p className="text-[#1E1E1E] font-dm-sans text-[20px] font-normal leading-[1.6]">
               F3 Global{" "}
               <span className="text-[#012060] font-bold">
                 supports underserved individuals and small businesses
@@ -125,9 +120,9 @@ export default async function Members() {
         <div className="flex flex-col w-full py-[50px] gap-[100px] border-t border-[#F4F4F4]  overflow-hidden">
           {/* Section title*/}
           <div className="flex flex-col gap-[20px] items-start px-[5vw]">
-            <h1 className="text-[48px] font-medium self-stretch text-[#172447] tracking-[-0.96px]">
+            <h2 className="text-[48px] font-medium self-stretch text-[#172447] tracking-[-0.96px]">
               Who We're Looking For
-            </h1>
+            </h2>
             <p className="font-dm-sans font-normal leading-[24px] text-[16px] text-[#1e1e1e] w-full">
               F3 membership is open to individuals who are passionate about entrepreneurship,
               innovation, and community impact, including:
@@ -162,31 +157,31 @@ export default async function Members() {
           </div>
         </div>
         {/* How You Get Involved Section*/}
-        <div className="flex w-full overflow-hidden self-stretch flex-col gap-[100px] border-t border-[#F4F4F4] px-[100px] py-[50px] ">
-          <h1 className="text-[48px] font-medium self-stretch text-[#172447] leading-[1.5] tracking-[-0.96px]">
+        <div className="flex w-full overflow-hidden self-stretch flex-col gap-[100px] border-t border-[#F4F4F4] px-[100px] py-[50px]">
+          <h2 className="text-[48px] font-medium self-stretch text-[#172447] leading-[1.5] tracking-[-0.96px]">
             How You Get Involved
-          </h1>
+          </h2>
           <div className="flex flex-col relative px-[80px] justify-center items-center gap-[80px]">
             {/* Application flowchart */}
-            <div className="flex flex-row items-center gap-[273px] max-w-[1181px] mx-auto w-full ">
+            <div className="flex flex-row items-center gap-[273px] max-w-[1181px] mx-auto w-full">
               {/* Number icons */}
               <div className="w-[60px] z-10">
-                <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 text-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full">
+                <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 font-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full">
                   1
                 </div>
               </div>
               <div className="w-[60px] z-10">
-                <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 text-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full">
+                <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 font-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full">
                   2
                 </div>
               </div>
               <div className="w-[60px] z-10">
-                <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 text-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full">
+                <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 font-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full">
                   3
                 </div>
               </div>
               <div className="w-[60px] z-10">
-                <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 text-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full">
+                <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 font-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full">
                   4
                 </div>
               </div>
