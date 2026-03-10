@@ -11,6 +11,7 @@ export default async function Members() {
   return (
     <>
       <div className="bg-white overflow-x-hidden">
+        {/* Hero Section */}
         <div className="flex w-full items-center justify-between self-stretch px-[100px] h-[774px]">
           <div className="flex flex-col">
             <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
@@ -45,11 +46,12 @@ export default async function Members() {
             />
           </div>
         </div>
+        {/* Mission Epic */}
         <div
-          className="flex flex-row w-full px-[50px] py-[200px] content-end items-center gap-[50px] border-t border-[#F4F4F4] relative"
-          style={{
-            boxShadow: "0 19px 43px 0 rgba(0, 0, 0, 0.10)",
-          }}
+          className="flex flex-row w-full px-[50px] py-[200px] content-end items-center gap-[50px] border-t border-[#F4F4F4] relative overflow-hidden"
+          //style={{
+          //  boxShadow: "0 19px 43px 0 rgba(0, 0, 0, 0.10)",
+          //}}
         >
           <div className="flex flex-col flex-4">
             <div
@@ -119,181 +121,181 @@ export default async function Members() {
             </p>
           </div>
         </div>
-      </div>
-      {/* Who We're Looking For Section*/}
-      <div className="flex flex-col w-full py-[50px] gap-[100px] border-t border-[#F4F4F4] overflow-hidden">
-        {/* Section title*/}
-        <div className="flex flex-col gap-[20px] items-start px-[5vw]">
-          <h1 className="text-[48px] font-medium self-stretch text-[#172447] tracking-[-0.96px]">
-            Who We're Looking For
+        {/* Who We're Looking For Section*/}
+        <div className="flex flex-col w-full py-[50px] gap-[100px] border-t border-[#F4F4F4]  overflow-hidden">
+          {/* Section title*/}
+          <div className="flex flex-col gap-[20px] items-start px-[5vw]">
+            <h1 className="text-[48px] font-medium self-stretch text-[#172447] tracking-[-0.96px]">
+              Who We're Looking For
+            </h1>
+            <p className="font-dm-sans font-normal leading-[24px] text-[16px] text-[#1e1e1e] w-full">
+              F3 membership is open to individuals who are passionate about entrepreneurship,
+              innovation, and community impact, including:
+            </p>
+          </div>
+          {/* Eligibility Criteria */}
+          <div className="inline-flex flex-row gap-[24px] justify-center">
+            <EligibileCard
+              iconSrc="/imgs/ic_book.svg"
+              iconAlt="Book Icon"
+              title="Undergraduate students"
+              description="from all academic backgrounds"
+            />
+            <EligibileCard
+              iconSrc="/imgs/ic_graduate_cap.svg"
+              iconAlt="Graduate Cap Icon"
+              title="Graduate students"
+              description="seeking hands-on, real-world experience"
+            />
+            <EligibileCard
+              iconSrc="/imgs/ic_mentoring.svg"
+              iconAlt="Mentoring Icon"
+              title="Interns"
+              description="looking to build skills and contribute to meaningful projects"
+            />
+            <EligibileCard
+              iconSrc="/imgs/ic_briefcase.svg"
+              iconAlt="Briefcase Icon"
+              title="Young and working professionals"
+              description="interested in mentorship, collaboration, and giving back"
+            />
+          </div>
+        </div>
+        {/* How You Get Involved Section*/}
+        <div className="flex w-full overflow-hidden self-stretch flex-col gap-[100px] border-t border-[#F4F4F4] px-[100px] py-[50px] ">
+          <h1 className="text-[48px] font-medium self-stretch text-[#172447] leading-[1.5] tracking-[-0.96px]">
+            How You Get Involved
           </h1>
-          <p className="font-dm-sans font-normal leading-[24px] text-[16px] text-[#1e1e1e] w-full">
-            F3 membership is open to individuals who are passionate about entrepreneurship,
-            innovation, and community impact, including:
-          </p>
-        </div>
-        {/* Eligibility Criteria */}
-        <div className="inline-flex flex-row gap-[24px] justify-center">
-          <EligibileCard
-            iconSrc="/imgs/ic_book.svg"
-            iconAlt="Book Icon"
-            title="Undergraduate students"
-            description="from all academic backgrounds"
-          />
-          <EligibileCard
-            iconSrc="/imgs/ic_graduate_cap.svg"
-            iconAlt="Graduate Cap Icon"
-            title="Graduate students"
-            description="seeking hands-on, real-world experience"
-          />
-          <EligibileCard
-            iconSrc="/imgs/ic_mentoring.svg"
-            iconAlt="Mentoring Icon"
-            title="Interns"
-            description="looking to build skills and contribute to meaningful projects"
-          />
-          <EligibileCard
-            iconSrc="/imgs/ic_briefcase.svg"
-            iconAlt="Briefcase Icon"
-            title="Young and working professionals"
-            description="interested in mentorship, collaboration, and giving back"
-          />
-        </div>
-      </div>
-      {/* How You Get Involved Section*/}
-      <div className="flex w-full overflow-hidden self-stretch flex-col gap-[100px] border-t border-[#F4F4F4] px-[100px] py-[50px] shadow-[0_19px_43px_0_rgba(0,0,0,0.10)]">
-        <h1 className="text-[48px] font-medium self-stretch text-[#172447] leading-[1.5] tracking-[-0.96px]">
-          How You Get Involved
-        </h1>
-        <div className="flex flex-col relative px-[80px] justify-center items-center gap-[80px]">
-          {/* Application flowchart */}
-          <div className="flex flex-row items-center gap-[273px] max-w-[1181px] mx-auto w-full relative">
-            {/* Number icons */}
-            <div className="w-[60px]">
-              <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 text-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full [font-variant-numeric:tabular-nums]">
-                1
+          <div className="flex flex-col relative px-[80px] justify-center items-center gap-[80px]">
+            {/* Application flowchart */}
+            <div className="flex flex-row items-center gap-[273px] max-w-[1181px] mx-auto w-full ">
+              {/* Number icons */}
+              <div className="w-[60px] z-10">
+                <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 text-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full">
+                  1
+                </div>
               </div>
-            </div>
-            <div className="w-[60px]">
-              <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 text-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full [font-variant-numeric:tabular-nums]">
-                2
+              <div className="w-[60px] z-10">
+                <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 text-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full">
+                  2
+                </div>
               </div>
-            </div>
-            <div className="w-[60px]">
-              <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 text-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full [font-variant-numeric:tabular-nums]">
-                3
+              <div className="w-[60px] z-10">
+                <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 text-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full">
+                  3
+                </div>
               </div>
-            </div>
-            <div className="w-[60px]">
-              <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 text-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full [font-variant-numeric:tabular-nums]">
-                4
+              <div className="w-[60px] z-10">
+                <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 text-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full">
+                  4
+                </div>
               </div>
-            </div>
-            {/* Process arrows */}
-            <div className="absolute h-[68px] translate-y-[63px] -z-10 -translate-x-[928px]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="1212"
-                height="105"
-                viewBox="0 0 1212 105"
-                preserveAspectRatio="xMaxYMid meet"
-                fill="none"
-              >
-                <path
-                  d="M0 42H950C955.523 42 960 37.5228 960 32V-50"
-                  stroke="#A5D0F2"
-                  strokeWidth="4"
+              {/* Process arrows */}
+              <div className="absolute h-[68px] translate-y-[63px] z-0 -translate-x-[928px]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1212"
+                  height="105"
+                  viewBox="0 0 1212 105"
+                  preserveAspectRatio="xMaxYMid meet"
+                  fill="none"
+                >
+                  <path
+                    d="M0 42H950C955.523 42 960 37.5228 960 32V-50"
+                    stroke="#A5D0F2"
+                    strokeWidth="4"
+                  />
+                </svg>
+              </div>
+              <div className="absolute h-[68px] translate-y-[-50px] translate-x-[30px] z-0">
+                <Image
+                  src="/imgs/involved_arrow_down.svg"
+                  alt="Downward Arrow"
+                  width={365}
+                  height={68}
                 />
-              </svg>
-            </div>
-            <div className="absolute h-[68px] translate-y-[-50px] translate-x-[30px] -z-10">
-              <Image
-                src="/imgs/involved_arrow_down.svg"
-                alt="Downward Arrow"
-                width={365}
-                height={68}
-              />
-            </div>
-            <div className="absolute h-[68px] translate-y-[50px] translate-x-[363px] -z-10 scale-y-[-1]">
-              <Image
-                src="/imgs/involved_arrow_down.svg"
-                alt="Downward Arrow"
-                width={364}
-                height={68}
-              />
-            </div>
-            <div className="absolute h-[68px] translate-y-[-50px] translate-x-[696px] -z-10">
-              <Image
-                src="/imgs/involved_arrow_down.svg"
-                alt="Downward Arrow"
-                width={364}
-                height={68}
-              />
-            </div>
-            <div className="absolute h-[68px] translate-y-[63px] -z-10 scale-x-[-1] translate-x-[777px]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="1212"
-                height="105"
-                viewBox="0 0 1212 105"
-                preserveAspectRatio="xMaxYMid meet"
-                fill="none"
-              >
-                <path
-                  d="M0 42H950C955.523 42 960 37.5228 960 32V-50"
-                  stroke="#A5D0F2"
-                  strokeWidth="4"
+              </div>
+              <div className="absolute h-[68px] translate-y-[50px] translate-x-[363px] z-0 scale-y-[-1]">
+                <Image
+                  src="/imgs/involved_arrow_down.svg"
+                  alt="Downward Arrow"
+                  width={364}
+                  height={68}
                 />
-              </svg>
-            </div>
-          </div>
-
-          {/* Application text */}
-          <div className="flex max-w-[1181px] mx-auto items-start gap-[90px]">
-            <div className="flex w-[243px] flex-col items-start gap-[20px]">
-              <h3 className="text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060]">
-                Complete the Application Form
-              </h3>
-              <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
-                Submit a short online application sharing your background, interests, and how you'd
-                like to be involved with F3.
-              </p>
-            </div>
-
-            <div className="flex w-[243px] flex-col items-start gap-[20px]">
-              <h3 className="text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060] w-[224px]">
-                Application Review
-              </h3>
-              <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
-                Our team reviews applications on a rolling basis to ensure alignment with F3&apos;s
-                mission and values.
-              </p>
-            </div>
-
-            <div className="flex w-[243px] flex-col items-start gap-[20px]">
-              <h3 className="text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060]">
-                Confirmation &amp; Onboarding
-              </h3>
-              <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
-                Accepted members receive a confirmation email with next steps, onboarding resources,
-                and access to the F3 community.
-              </p>
+              </div>
+              <div className="absolute h-[68px] translate-y-[-50px] translate-x-[696px] z-0">
+                <Image
+                  src="/imgs/involved_arrow_down.svg"
+                  alt="Downward Arrow"
+                  width={364}
+                  height={68}
+                />
+              </div>
+              <div className="absolute h-[68px] translate-y-[63px] z-0 scale-x-[-1] translate-x-[777px]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1212"
+                  height="105"
+                  viewBox="0 0 1212 105"
+                  preserveAspectRatio="xMaxYMid meet"
+                  fill="none"
+                >
+                  <path
+                    d="M0 42H950C955.523 42 960 37.5228 960 32V-50"
+                    stroke="#A5D0F2"
+                    strokeWidth="4"
+                  />
+                </svg>
+              </div>
             </div>
 
-            <div className="flex w-[182px] flex-col items-start gap-[20px]">
-              <h3 className="text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060]">
-                Get Involved
-              </h3>
-              <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
-                Once onboarded, members can participate in projects, initiatives, and collaborative
-                opportunities within F3.
-              </p>
+            {/* Application text */}
+            <div className="flex max-w-[1181px] mx-auto items-start gap-[90px]">
+              <div className="flex w-[243px] flex-col items-start gap-[20px]">
+                <h3 className="text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060]">
+                  Complete the Application Form
+                </h3>
+                <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
+                  Submit a short online application sharing your background, interests, and how
+                  you'd like to be involved with F3.
+                </p>
+              </div>
+
+              <div className="flex w-[243px] flex-col items-start gap-[20px]">
+                <h3 className="text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060] w-[224px]">
+                  Application Review
+                </h3>
+                <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
+                  Our team reviews applications on a rolling basis to ensure alignment with
+                  F3&apos;s mission and values.
+                </p>
+              </div>
+
+              <div className="flex w-[243px] flex-col items-start gap-[20px]">
+                <h3 className="text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060]">
+                  Confirmation &amp; Onboarding
+                </h3>
+                <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
+                  Accepted members receive a confirmation email with next steps, onboarding
+                  resources, and access to the F3 community.
+                </p>
+              </div>
+
+              <div className="flex w-[182px] flex-col items-start gap-[20px]">
+                <h3 className="text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060]">
+                  Get Involved
+                </h3>
+                <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
+                  Once onboarded, members can participate in projects, initiatives, and
+                  collaborative opportunities within F3.
+                </p>
+              </div>
             </div>
           </div>
         </div>
+        <FaqAccordion items={faqItems} />
+        <ContactUs />
       </div>
-      <FaqAccordion items={faqItems} />
-      <ContactUs />
     </>
   );
 }
