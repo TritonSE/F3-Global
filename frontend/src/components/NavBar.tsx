@@ -284,16 +284,39 @@ export default function NavBar() {
   const [isClosing, setIsClosing] = useState(false);
   //const [isBlinking, setIsBlinking] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    setIsDropdownOpen(false);
-    setIsClosing(false);
+    if (!isDropdownOpen) {
+      return;
+    }
+
+    setIsClosing(true);
+
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsDropdownOpen(false);
+      setIsClosing(false);
+    }, 250);
+
+    return () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
+    };
   }, [pathname]);
 
   const handleToggleDropdown = () => {
     if (isDropdownOpen) {
       setIsClosing(true);
-      setTimeout(() => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
+
+      closeTimeoutRef.current = setTimeout(() => {
         setIsDropdownOpen(false);
         setIsClosing(false);
       }, 250);
