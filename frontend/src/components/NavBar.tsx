@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 function NavLinks({
@@ -10,6 +10,7 @@ function NavLinks({
   isDropdownOpen,
   isClosing,
   onToggleDropdown,
+  onLogoClick,
   buttonRef,
   //isBlinking,
 }: {
@@ -17,6 +18,7 @@ function NavLinks({
   isDropdownOpen: boolean;
   isClosing: boolean;
   onToggleDropdown: () => void;
+  onLogoClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
   buttonRef: React.RefObject<HTMLButtonElement | null>;
   //isBlinking: boolean;
 }) {
@@ -24,7 +26,11 @@ function NavLinks({
     <>
       <div className="flex w-full max-w-[1512px] mx-auto justify-between items-center px-[30px] pt-[10px] leading-none">
         <div className="flex items-center gap-[12px] w-[274.5px] h-[55px] flex-shrink-0">
-          <Link href="/" className="flex items-center gap-[12px] h-[55px] cursor-pointer">
+          <Link
+            href="/"
+            onClick={onLogoClick}
+            className="flex items-center gap-[12px] h-[55px] cursor-pointer"
+          >
             <div className="flex h-[55px] w-[55px] flex-shrink-0 items-center justify-center">
               <Image
                 src="/imgs/f3logo_nobg 2.png"
@@ -278,6 +284,7 @@ function DropdownContent() {
 
 export default function NavBar() {
   const pathname = usePathname();
+  const router = useRouter();
   const isActive = (href: string) => pathname === href;
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -309,6 +316,15 @@ export default function NavBar() {
     };
   }, [pathname]);
 
+  useEffect(() => {
+    const shouldPad = isDropdownOpen || isClosing;
+    document.body.classList.toggle("navbar-dropdown-open", shouldPad);
+
+    return () => {
+      document.body.classList.remove("navbar-dropdown-open");
+    };
+  }, [isDropdownOpen, isClosing]);
+
   const handleToggleDropdown = () => {
     if (isDropdownOpen) {
       setIsClosing(true);
@@ -329,6 +345,25 @@ export default function NavBar() {
     }
   };
 
+  const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!isDropdownOpen) {
+      return;
+    }
+
+    event.preventDefault();
+    setIsClosing(true);
+
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsDropdownOpen(false);
+      setIsClosing(false);
+      router.push("/");
+    }, 250);
+  };
+
   if (!isDropdownOpen) {
     return (
       <nav className="sticky top-0 z-50 flex justify-between items-center bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px]">
@@ -337,6 +372,7 @@ export default function NavBar() {
           isDropdownOpen={isDropdownOpen}
           isClosing={isClosing}
           onToggleDropdown={handleToggleDropdown}
+          onLogoClick={handleLogoClick}
           buttonRef={buttonRef}
           //isBlinking={isBlinking}
         />
@@ -346,8 +382,6 @@ export default function NavBar() {
 
   return (
     <>
-      <div className="w-full" />
-
       <div className="fixed top-0 left-0 right-0 z-50 w-full font-dm bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px] shadow-[0_301px_84px_0_rgba(0,0,0,0.00),0_12px_26px_0_rgba(0,0,0,0.10)]">
         <nav className="flex justify-between items-center">
           <NavLinks
@@ -355,6 +389,7 @@ export default function NavBar() {
             isDropdownOpen={isDropdownOpen}
             isClosing={isClosing}
             onToggleDropdown={handleToggleDropdown}
+            onLogoClick={handleLogoClick}
             buttonRef={buttonRef}
             //isBlinking={isBlinking}
           />
@@ -372,6 +407,10 @@ export default function NavBar() {
         </div>
 
         <style jsx global>{`
+          body.navbar-dropdown-open {
+            padding-top: 97px;
+          }
+
           .spin-180-left {
             animation: spinToUp 0.25s ease-in-out forwards;
           }
