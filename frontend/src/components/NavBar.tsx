@@ -80,7 +80,11 @@ function NavLinks({
             ref={buttonRef}
             onClick={onToggleDropdown}
             className={`get-involved-btn flex items-center gap-[10px] px-[15px] py-[10px] text-[20px] font-[400] text-[#5D5D5D] leading-[32px] tracking-[-0.48px] font-dm rounded-full hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer ${
-              isActive("/donors") || isActive("/members") || isActive("/clients")
+              isDropdownOpen ||
+              isClosing ||
+              isActive("/donors") ||
+              isActive("/members") ||
+              isActive("/clients")
                 ? "bg-[#E6E6E6] text-[#172447]"
                 : ""
             }`}
@@ -364,9 +368,14 @@ export default function NavBar() {
     }, 250);
   };
 
-  if (!isDropdownOpen) {
-    return (
-      <nav className="sticky top-0 z-50 flex justify-between items-center bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px]">
+  const wrapperClass =
+    isDropdownOpen || isClosing
+      ? "fixed top-0 left-0 right-0 z-50 w-full font-dm bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px] shadow-[0_301px_84px_0_rgba(0,0,0,0.00),0_12px_26px_0_rgba(0,0,0,0.10)]"
+      : "sticky top-0 z-50 w-full font-dm bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px]";
+
+  return (
+    <div className={wrapperClass}>
+      <nav className="flex justify-between items-center">
         <NavLinks
           isActive={isActive}
           isDropdownOpen={isDropdownOpen}
@@ -377,24 +386,8 @@ export default function NavBar() {
           //isBlinking={isBlinking}
         />
       </nav>
-    );
-  }
 
-  return (
-    <>
-      <div className="fixed top-0 left-0 right-0 z-50 w-full font-dm bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px] shadow-[0_301px_84px_0_rgba(0,0,0,0.00),0_12px_26px_0_rgba(0,0,0,0.10)]">
-        <nav className="flex justify-between items-center">
-          <NavLinks
-            isActive={isActive}
-            isDropdownOpen={isDropdownOpen}
-            isClosing={isClosing}
-            onToggleDropdown={handleToggleDropdown}
-            onLogoClick={handleLogoClick}
-            buttonRef={buttonRef}
-            //isBlinking={isBlinking}
-          />
-        </nav>
-
+      {isDropdownOpen && (
         <div
           className="origin-top"
           style={{
@@ -405,67 +398,67 @@ export default function NavBar() {
         >
           <DropdownContent />
         </div>
+      )}
 
-        <style jsx global>{`
-          body.navbar-dropdown-open {
-            padding-top: 97px;
-          }
+      <style jsx global>{`
+        body.navbar-dropdown-open {
+          padding-top: 97px;
+        }
 
-          .spin-180-left {
-            animation: spinToUp 0.25s ease-in-out forwards;
-          }
+        .spin-180-left {
+          animation: spinToUp 0.25s ease-in-out forwards;
+        }
 
-          @keyframes spinToUp {
-            0% {
-              transform: rotate(0deg);
-            }
-            100% {
-              transform: rotate(180deg);
-            }
+        @keyframes spinToUp {
+          0% {
+            transform: rotate(0deg);
           }
+          100% {
+            transform: rotate(180deg);
+          }
+        }
 
-          .spin-180-right {
-            animation: spinToDown 0.35s ease-in-out forwards;
-          }
+        .spin-180-right {
+          animation: spinToDown 0.35s ease-in-out forwards;
+        }
 
-          @keyframes spinToDown {
-            0% {
-              transform: rotate(180deg);
-            }
-            100% {
-              transform: rotate(0deg);
-            }
+        @keyframes spinToDown {
+          0% {
+            transform: rotate(180deg);
           }
+          100% {
+            transform: rotate(0deg);
+          }
+        }
 
-          @keyframes slideDown {
-            0% {
-              opacity: 0;
-              transform: translateY(-15px);
-            }
-            60% {
-              opacity: 1;
-            }
-            100% {
-              opacity: 1;
-              transform: translateY(0);
-            }
+        @keyframes slideDown {
+          0% {
+            opacity: 0;
+            transform: translateY(-15px);
           }
+          60% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
 
-          @keyframes slideUp {
-            0% {
-              opacity: 1;
-              transform: translateY(0);
-            }
-            40% {
-              opacity: 0.5;
-            }
-            100% {
-              opacity: 0;
-              transform: translateY(-15px);
-            }
+        @keyframes slideUp {
+          0% {
+            opacity: 1;
+            transform: translateY(0);
           }
-        `}</style>
-      </div>
-    </>
+          40% {
+            opacity: 0.5;
+          }
+          100% {
+            opacity: 0;
+            transform: translateY(-15px);
+          }
+        }
+      `}</style>
+    </div>
   );
 }
