@@ -21,7 +21,7 @@ export default function About() {
           >
             From Vision to Global <i>Impact</i>
           </h1>
-          <p className="text-[#5D5D5D] font-dm-sans text-[24px] font-normal leading-[32px] pr-[60px]">
+          <p className="text-[#5D5D5D] font-dm-sans text-[20px] font-normal leading-[32px] pr-[60px]">
             Our programs offer tailored microloans and business support, ensuring that our clients
             have the knowledge and resources necessary for long-term success.
           </p>
@@ -36,7 +36,7 @@ export default function About() {
         <h1 className="text-[#172447] font-dm-sans text-[48px] font-medium leading-[72px] tracking-[-0.96px]">
           Our Story
         </h1>
-        <div className="flex flex-col gap-[20px] w-full text-black font-dm-sans text-[24px] font-normal leading-[32px]">
+        <div className="flex flex-col gap-[20px] w-full text-black font-dm-sans text-[20px] font-normal leading-[32px]">
           <p>
             At F3 Global, we are a 501(c)(3) non-profit organization dedicated to empowering
             underserved communities around the globe through innovative microfinance solutions. Our
@@ -64,7 +64,7 @@ export default function About() {
             <h2 className="font-dm font-medium text-[48px] text-[#172447] tracking-[-0.96px] leading-[1.5]">
               {TIMELINE_HEADER.title}
             </h2>
-            <p className="font-dm font-normal text-[24px] text-black leading-[32px] max-w-[1073px]">
+            <p className="font-dm font-normal text-[20px] text-black leading-[32px] max-w-[1073px]">
               {TIMELINE_HEADER.description}
             </p>
           </div>
