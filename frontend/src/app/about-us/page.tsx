@@ -16,8 +16,8 @@ export default function About() {
       <div className="flex h-[774px] px-[100px] justify-between items-center w-full">
         <div className="flex flex-col items-start gap-[50px] w-[639px]">
           <h1
-            className="text-[#1E1E1E] font-ethic-new text-[64px] leading-[96px] font-light pr-[90px]"
-            style={{ fontFamily: '"Ethic New"', fontWeight: 300 }}
+            className="text-[#1E1E1E] font-ethic-new text-[64px] leading-[70px] font-light pr-[90px]"
+            style={{ fontFamily: '"Ethic New"', fontWeight: 300, lineHeight: "1.1" }}
           >
             From Vision to Global <i>Impact</i>
           </h1>
@@ -52,7 +52,7 @@ export default function About() {
         </div>
         <Button
           text="MORE ABOUT OUR TEAM"
-          onClick_link="/members"
+          onClick_link="/meet-the-team"
           textClassName="text-white text-normal"
         />
       </div>
