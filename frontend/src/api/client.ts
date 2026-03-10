@@ -13,7 +13,6 @@ export async function getAllClients(): Promise<Client[]> {
   }
 
   const data = (await res.json()) as Client[];
-  console.info("Fetched clients:", data);
 
   return data;
 }
