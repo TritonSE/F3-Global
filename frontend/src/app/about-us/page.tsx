@@ -12,8 +12,8 @@ import {
 
 export default function About() {
   return (
-    <div className="mx-auto flex flex-col justify-center bg-white w-[1513px]">
-      <div className="flex h-[774px] px-[100px] justify-between items-center w-full">
+    <div className="mx-auto flex flex-col justify-center bg-white w-full">
+      <div className="flex min-h-screen px-[100px] justify-between items-center w-full">
         <div className="flex flex-col items-start gap-[50px] w-[639px]">
           <h1
             className="text-[#1E1E1E] font-ethic-new text-[64px] leading-[70px] font-light pr-[90px]"

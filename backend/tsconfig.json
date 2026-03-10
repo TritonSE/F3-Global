@@ -27,6 +27,7 @@
     "noUncheckedIndexedAccess": true,
     "declaration": true,
     "declarationMap": true,
+    "outDir": "./dist",
 
     // File Layout
     "outDir": "./dist",

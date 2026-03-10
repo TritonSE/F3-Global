@@ -3,7 +3,7 @@
 import countriesInfo from "i18n-iso-countries";
 import enLocale from "i18n-iso-countries/langs/en.json";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import type { CountryData } from "@/components/InteractiveWorldMap";
 
@@ -98,6 +98,8 @@ export default function MeetTheTeam() {
   const countries = Object.keys(membersByCountry).sort((a, b) => a.localeCompare(b));
 
   const [colleges, setColleges] = useState<College[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(1200);
 
   useEffect(() => {
     const fetchColleges = async () => {
@@ -115,10 +117,30 @@ export default function MeetTheTeam() {
     void fetchColleges();
   }, []);
 
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new ResizeObserver(([entry]) => {
+      setContainerWidth(entry.contentRect.width);
+    });
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const repeated = useMemo(() => {
+    if (colleges.length === 0) return [];
+    const sorted = [...colleges].sort((a, b) => a.order - b.order);
+    const singleSetWidth = sorted.length * 150;
+    const rawCopies = Math.ceil((containerWidth * 2) / singleSetWidth);
+    const copies = Math.max(4, rawCopies % 2 === 0 ? rawCopies : rawCopies + 1);
+    return Array.from({ length: copies }, (_, copyIndex) =>
+      sorted.map((college) => ({ ...college, uniqueKey: `${college._id}-copy${copyIndex}` })),
+    ).flat();
+  }, [colleges, containerWidth]);
+
   return (
     <>
       <div className="bg-white overflow-x-hidden">
-        <div className="flex w-full items-center justify-between self-stretch px-[100px] h-180">
+        <div className="flex w-full items-center justify-between self-stretch px-[100px] min-h-screen">
           <div className="flex flex-col">
             <h1 className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
               Meet the Team
@@ -126,7 +148,7 @@ export default function MeetTheTeam() {
             <h1 className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
               Without <span className="italic">Borders</span>
             </h1>
-            <p className="font-dm-sans mt-5 text-[24px] font-normal leading-[32px] text-[#5D5D5D] w-[80%]">
+            <p className="font-dm-sans mt-[50px] text-[20px] font-normal leading-[32px] text-[#5D5D5D]">
               Our professional team brings expertise from all over the world. Explore the clickable
               map of where our team members are from below.
             </p>
@@ -134,14 +156,14 @@ export default function MeetTheTeam() {
               <Button
                 text="join our team"
                 onClick_link="https://my-apply.vercel.app/org/f3-global-foundation"
-                className="flex justify-center items-center gap-[10px] px-[24px] py-[14px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] uppercase font-normal mt-12"
-                textClassName="text-white text-normal"
+                className="flex justify-center items-center gap-[10px] px-[24px] py-[14px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] mt-12"
+                textClassName="text-white font-semibold font-[600] uppercase"
               />
             </div>
           </div>
           <div
-            className="ml-8 rounded-[10px] overflow-hidden relative"
-            style={{ width: 1200, height: 550 }}
+            className="rounded-[10px] overflow-hidden relative flex-shrink-0 ml-[50px] mr-[-40px]"
+            style={{ width: 646, height: 581 }}
           >
             <Image
               src="/imgs/space.jpg"
@@ -161,7 +183,7 @@ export default function MeetTheTeam() {
 
         {/* colleges section */}
 
-        <div className="flex flex-col px-[100px] py-[50px] items-start gap-[50px] self-stretch border-t border-[#F4F4F4] bg-white shadow-[0_19px_43px_0_rgba(0,0,0,0.10)]">
+        <div className="flex flex-col px-[100px] py-[50px] items-start gap-[50px] self-stretch border-t border-[#F4F4F4] bg-white shadow-[inset_0_-19px_16px_0_rgba(0,0,0,0.02)]">
           <div className="flex flex-col gap-[20px]">
             <h2 className="font-dm-sans text-[48px] font-[500] text-[#172447] leading-[150%] tracking-[-0.96px]">
               Where We’ve Studied
@@ -172,42 +194,23 @@ export default function MeetTheTeam() {
               united by a shared commitment to innovation, equity, and lasting social impact.
             </p>
           </div>
-          <div style={{ position: "relative", width: 1312, height: 151 }}>
-            <div className="overflow-hidden" style={{ width: 1312, height: 151 }}>
+          <div
+            ref={containerRef}
+            className="relative w-full overflow-hidden"
+            style={{ height: 151 }}
+          >
+            <div className="pointer-events-none absolute left-0 top-0 h-full w-[200px] bg-gradient-to-r from-white to-transparent z-10" />
+            <div className="pointer-events-none absolute right-0 top-0 h-full w-[200px] bg-gradient-to-l from-white to-transparent z-10" />
+            <div className="overflow-hidden" style={{ height: 151 }}>
               <div
                 className="flex items-center h-full animate-marquee whitespace-nowrap"
                 style={{ width: "max-content" }}
               >
-                {[...colleges]
-                  .sort((a, b) => a.order - b.order)
-                  .concat(colleges)
-                  .map((college, idx) => (
-                    <CollegeCard key={college._id + idx} college={college} />
-                  ))}
+                {repeated.map((college) => (
+                  <CollegeCard key={college.uniqueKey} college={college} />
+                ))}
               </div>
             </div>
-            <div
-              style={{
-                position: "absolute",
-                left: 0,
-                top: 0,
-                width: 200,
-                height: 150,
-                pointerEvents: "none",
-                background: "linear-gradient(90deg, #FFF 0%, rgba(255,255,255,0) 100%)",
-              }}
-            />
-            <div
-              style={{
-                position: "absolute",
-                right: 0,
-                top: 0,
-                width: 200,
-                height: 150,
-                pointerEvents: "none",
-                background: "linear-gradient(270deg, #FFF 0%, rgba(255,255,255,0) 100%)",
-              }}
-            />
           </div>
         </div>
 
