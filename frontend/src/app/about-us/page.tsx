@@ -15,9 +15,12 @@ export default function About() {
     <div className="mx-auto flex flex-col justify-center bg-white w-[1513px]">
       <div className="flex h-[774px] px-[100px] justify-between items-center w-full">
         <div className="flex flex-col items-start gap-[50px] w-[639px]">
-            <h1 className="text-[#1E1E1E] font-ethic-new text-[64px] leading-[70px] font-light pr-[90px]" style={{ fontFamily: '"Ethic New"', fontWeight: 300, lineHeight: '1.1' }}>
-              From Vision to Global <i>Impact</i>
-            </h1>
+          <h1
+            className="text-[#1E1E1E] font-ethic-new text-[64px] leading-[70px] font-light pr-[90px]"
+            style={{ fontFamily: '"Ethic New"', fontWeight: 300, lineHeight: "1.1" }}
+          >
+            From Vision to Global <i>Impact</i>
+          </h1>
           <p className="text-[#5D5D5D] font-dm-sans text-[24px] font-normal leading-[32px] pr-[60px]">
             Our programs offer tailored microloans and business support, ensuring that our clients
             have the knowledge and resources necessary for long-term success.
