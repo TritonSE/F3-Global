@@ -4,6 +4,7 @@
     "target": "esnext",
     "jsx": "react-jsx",
     "moduleDetection": "force",
+
     // File Layout
     "rootDir": "./src",
 
