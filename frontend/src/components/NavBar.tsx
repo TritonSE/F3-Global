@@ -79,7 +79,7 @@ function NavLinks({
           <button
             ref={buttonRef}
             onClick={onToggleDropdown}
-            className={`get-involved-btn flex items-center gap-[10px] px-[15px] py-[10px] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm rounded-full hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer ${
+            className={`get-involved-btn flex items-center gap-[10px] px-[15px] py-[10px] text-[20px] font-[400] text-[#5D5D5D] leading-[32px] tracking-[-0.48px] font-dm rounded-full hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer ${
               isActive("/donors") || isActive("/members") || isActive("/clients")
                 ? "bg-[#E6E6E6] text-[#172447]"
                 : ""
