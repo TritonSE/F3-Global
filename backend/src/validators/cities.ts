@@ -8,7 +8,7 @@ export const updateCitiesValidation: ValidationChain[] = [
     .withMessage("cities is required")
     .bail()
     .isArray({ min: 1 })
-    .withMessage("cities must be a non-empty array "),
+    .withMessage("cities must be a non-empty array"),
 
   body("cities.*")
     .exists()
