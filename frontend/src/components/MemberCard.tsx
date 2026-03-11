@@ -39,7 +39,7 @@ export const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
           />
         </div>
         <div className="flex flex-col items-start gap-[10px] self-stretch">
-          <h1 className="font-dm-sans text-[24px] font-bold leading-[150%] tracking-[0.48px] self-stretch text-[#172447]">
+          <h1 className="font-dm-sans text-[24px] font-[700] leading-[150%] tracking-[0.48px] self-stretch text-[#172447]">
             {member.name}
           </h1>
           <p className="font-dm-sans text-[16px] font-normal leading-[24px] self-stretch text-[#172447]">

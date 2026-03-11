@@ -88,19 +88,19 @@ export function HighlightCard({
         }`}
       >
         <div
-          className={`flex w-full min-h-0 flex-col overflow-y-auto ${
-            isActive ? "gap-[8px] px-[20px] max-h-[180px]" : "gap-[5.5px] px-[13.8px]"
+          className={`flex w-full min-h-0 flex-col overflow-hidden ${
+            isActive ? "gap-[8px] px-[20px]" : "gap-[5.5px] px-[13.8px]"
           }`}
         >
           <p
-            className={`font-dm-sans font-semibold leading-[150%] text-[#1e1e1e] ${
+            className={`font-dm-sans font-semibold leading-[150%] text-[#1e1e1e] line-clamp-2 ${
               isActive ? "text-[24px]" : "text-[16.5px]"
             }`}
           >
             "{highlight.quoteText}"
           </p>
           <p
-            className={`font-dm-sans font-normal text-[#5d5d5d] ${
+            className={`font-dm-sans font-normal text-[#5d5d5d] line-clamp-2 ${
               isActive ? "text-[16px] leading-6" : "text-[11px] leading-[16.5px]"
             }`}
           >

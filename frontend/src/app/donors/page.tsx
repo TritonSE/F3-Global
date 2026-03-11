@@ -119,7 +119,9 @@ export default function Donors() {
           </a>
         </div>
       </div>
-      <ContactUs />
+      <div id="contact">
+        <ContactUs />
+      </div>
     </div>
   );
 }
