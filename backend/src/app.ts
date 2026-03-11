@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { FRONTEND_ORIGIN, MONGO_URI, PORT } from "./config";
 import errorHandler from "./middleware/errorHandler";
 import log from "./middleware/logger";
+import citiesRouter from "./routes/cities";
 import clientsRouter from "./routes/clients";
 import collegeRoutes from "./routes/colleges";
 import contactRoute from "./routes/contactRequest";
@@ -32,6 +33,7 @@ app.use("/api/client-highlights", highlightsRouter);
 app.use("/api/impact-metrics", impactMetricRouter);
 app.use("/api/faq", faqRouter);
 app.use("/api/colleges", collegeRoutes);
+app.use("/api/cities", citiesRouter);
 
 app.use(errorHandler);
 mongoose
