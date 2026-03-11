@@ -117,7 +117,7 @@ export const ContactUs: React.FC = () => {
             <h2 className="self-stretch text-black font-ethic text-[80px] mb-[-24px]">
               Contact Us
             </h2>
-            <p className="font-dm-sans font-normal text-[24px] leading-[32px]">
+            <p className="font-dm-sans font-normal text-[20px] leading-[32px]">
               Want to learn more? Fill out the form below to contact one of our representatives!
             </p>
             <div className="flex flex-col content-center items-start gap-[30px] content-between">
@@ -279,7 +279,7 @@ export const ContactUs: React.FC = () => {
               <h3 className="font-dm-sans text-[48px] text-[#1E1E1E] font-normal font-xl font-bold mb-2 leading-[-1px]">
                 Thank You!
               </h3>
-              <p className="font-dm-sans text-[24px] text-[#5D5D5D] font-normal leading-[32px]">
+              <p className="font-dm-sans text-[20px] text-[#5D5D5D] font-normal leading-[32px]">
                 We’ve received your message and will be in touch soon.
               </p>
             </div>

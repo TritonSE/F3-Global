@@ -7,7 +7,7 @@ import { WaysToGiveCarouselData } from "../carouselData";
 import Parallax from "./parallax";
 
 import { type FaqItem, getFaq } from "@/api/faq";
-import { Anchor } from "@/components/Anchor";
+import { Button } from "@/components/button";
 import { Carousel } from "@/components/Carousel";
 import { ContactUs } from "@/components/ContactUs";
 import { FaqAccordion } from "@/components/FaqAccordion";
@@ -46,9 +46,9 @@ export default function Donors() {
             traditional banking. Watch as your gift launches businesses, creates jobs, and
             strengthens families across the globe.
           </p>
-          <Anchor
+          <Button
             text="DONATE NOW"
-            link="https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390"
+            onClick_link="https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390"
           />
         </div>
         <Image
@@ -99,13 +99,13 @@ export default function Donors() {
           >
             Start Creating <br /> Impact <i>Now.</i>
           </p>
-          <p className="w-[530px] text-white text-[24px]">
+          <p className="w-[530px] text-white text-[20px]">
             Your $100 can launch a business, create jobs, and transform a family's future. See
             exactly where your donation goes and the lives you're changing.
           </p>
           <a
             target="_blank"
-            className="group inline-flex items-center justify-center text-[#012060] bg-white px-[20px] py-[10px] gap-[10px] rounded-[99px] font-semibold text-[24px] cursor-pointer hover:bg-[#172447] hover:text-white"
+            className="group inline-flex items-center justify-center text-[#012060] bg-white px-[20px] py-[10px] gap-[10px] rounded-[99px] font-semibold text-[20px] transition-colors duration-450 ease-in-out cursor-pointer hover:bg-[#172447] hover:text-white"
             href="https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390"
           >
             DONATE{" "}
@@ -114,7 +114,7 @@ export default function Donors() {
               alt="arrow forward"
               width={36}
               height={36}
-              className="group-hover:brightness-0 group-hover:invert"
+              className="transition-all duration-450 group-hover:brightness-0 group-hover:invert"
             />
           </a>
         </div>

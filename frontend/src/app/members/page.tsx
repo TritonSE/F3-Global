@@ -10,23 +10,18 @@ export default async function Members() {
     <>
       <div className="bg-white overflow-x-hidden">
         <div className="flex w-full items-center justify-between self-stretch px-[100px] min-h-screen">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-[50px]">
             <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
-              Become <span className="italic">Part</span> of Our
+              Become <span className="italic">Part</span> of Our <br /> Team Today!
             </h1>
-            <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
-              Team Today!
-            </h1>
-            <p className="font-dm-sans mt-5 text-[24px] font-normal leading-[32px] text-[#5D5D5D] w-[70%]">
+            <p className="font-dm-sans text-[20px] font-normal leading-[32px] text-[#5D5D5D] w-[70%]">
               Join F3 Global as a volunteer and make a meaningful impact in underserved communities
               worldwide.
             </p>
             <div>
               <Button
-                text="apply now"
+                text="APPLY NOW"
                 onClick_link="https://my-apply.vercel.app/org/f3-global-foundation"
-                className="flex justify-center items-center gap-[10px] px-[24px] py-[14px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] uppercase font-normal mt-12"
-                textClassName="text-white text-normal"
               />
             </div>
           </div>
@@ -44,7 +39,7 @@ export default async function Members() {
           </div>
         </div>
         <div
-          className="flex flex-row w-full px-[50px] py-[200px] content-end items-center gap-[50px] border-t border-[#F4F4F4] relative"
+          className="flex flex-row w-full px-[100px] py-[200px] content-end items-center gap-[50px] border-t border-[#F4F4F4] relative"
           style={{
             boxShadow: "0 19px 43px 0 rgba(0, 0, 0, 0.10)",
           }}
@@ -100,11 +95,11 @@ export default async function Members() {
               />
             </div>
           </div>
-          <div className="flex flex-col items-start gap-[20px] flex-3 mr-10">
+          <div className="flex flex-col items-start gap-[20px] flex-3">
             <h2 className="text-[#172447] font-dm-sans text-[48px] font-normal leading-[150%] spacing-[-0.96px]">
               Our Mission
             </h2>
-            <p className="text-[#1E1E1E] font-dm-sans text-[24px] font-normal leading-[32px] mr-2">
+            <p className="text-[#1E1E1E] font-dm-sans text-[20px] font-normal leading-[32px] max-w-[575px]">
               F3 Global{" "}
               <span className="text-[#012060] font-bold">
                 supports underserved individuals and small businesses
