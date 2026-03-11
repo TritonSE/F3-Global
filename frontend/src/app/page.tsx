@@ -113,7 +113,7 @@ export default function Home() {
             <Button
               text="join as a member"
               onClick_link="/members"
-              className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-white border-[1.5px] border-[#C7C7C7] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#C7C7C7] hover:border-black [&_p]:text-[#172447] [&_p]:uppercase [&_p]:font-semibold cursor-pointer"
+              className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-white border-[1.5px] border-[#C7C7C7] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#F4F4F4] hover:border-black [&_p]:text-[#172447] [&_p]:uppercase [&_p]:font-semibold cursor-pointer"
             />
           </div>
           {/* city scrolling */}
