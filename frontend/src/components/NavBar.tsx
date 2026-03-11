@@ -20,7 +20,7 @@ function NavLinks({
 }) {
   return (
     <>
-      <div className="flex w-full max-w-[1512px] mx-auto justify-between items-center px-[30px] pt-[30px] pb-[20px] leading-none">
+      <div className="flex w-full max-w-[1512px] mx-auto justify-between items-center px-[30px] py-[20px] leading-none">
         <div className="flex items-center gap-[12px] w-[274.5px] h-[55px] flex-shrink-0">
           <Link
             href="/"
@@ -43,7 +43,7 @@ function NavLinks({
           </div>
         </div>
 
-        <div className="flex items-center gap-[5px] px-[10px] py-[15px]">
+        <div className="flex items-center gap-[5px] px-[10px]">
           <Link
             href="/"
             className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
@@ -62,7 +62,7 @@ function NavLinks({
           </Link>
           <Link
             href="/meet-the-team"
-            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[500] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
+            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
               isActive("/meet-the-team") ? "bg-[#E6E6E6] text-[#172447]" : ""
             }`}
           >
@@ -105,7 +105,7 @@ function NavLinks({
             href="https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex px-[20px] py-[10px] justify-center items-center gap-[10px] rounded-full border border-[#C7C7C7] bg-[#FFF] text-[#172447] text-[24px] font-[600] leading-[36px] font-dm hover:bg-[#172447] hover:border-[#172447] hover:text-[#FFF] transition-all duration-300 ease-in-out group"
+            className="flex px-[20px] py-[10px] justify-center items-center gap-[10px] rounded-full border border-[#C7C7C7] bg-[#FFF] text-[#172447] text-[20px] font-[600] leading-[36px] font-dm hover:bg-[#172447] hover:border-[#172447] hover:text-[#FFF] transition-all duration-300 ease-in-out group"
           >
             DONATE
             <div className="w-[36px] h-[36px] flex items-center justify-center">
