@@ -406,7 +406,7 @@ export default function NavBar() {
         }
 
         .spin-180-left {
-          animation: spinToUp 0.25s ease-in-out forwards;
+          animation: spinToUp 0.35s ease-in-out forwards;
         }
 
         @keyframes spinToUp {
@@ -419,7 +419,7 @@ export default function NavBar() {
         }
 
         .spin-180-right {
-          animation: spinToDown 0.35s ease-in-out forwards;
+          animation: spinToDown 0.45s ease-in-out forwards;
         }
 
         @keyframes spinToDown {
