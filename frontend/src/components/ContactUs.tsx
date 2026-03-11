@@ -1,3 +1,5 @@
+"use client";
+
 import EmailValidatorImport from "email-validator";
 import Image from "next/image";
 import React, { useRef, useState } from "react";
