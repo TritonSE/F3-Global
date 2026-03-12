@@ -15,7 +15,7 @@ const MemberSchema = new Schema<MemberModel>({
   country: { type: String, required: true },
   memberPosition: { type: String, required: true },
   linkedinUrl: { type: String, required: true },
-  headshotUrl: { type: String, required: true },
+  headshotUrl: { type: String, required: false },
 });
 
 export default model<MemberModel>("Member", MemberSchema);
