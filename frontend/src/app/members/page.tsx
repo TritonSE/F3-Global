@@ -2,31 +2,29 @@ import Image from "next/image";
 
 import { getFaq } from "@/api/faq";
 import { Button } from "@/components/button";
+import { ContactUs } from "@/components/ContactUs";
 import { FaqAccordion } from "@/components/FaqAccordion";
+import EligibileCard from "@/components/members-page/EligibileCard";
 
 export default async function Members() {
   const faqItems = await getFaq("members");
   return (
     <>
-      <div className="bg-white overflow-x-hidden">
+      <div className="flex flex-col bg-white overflow-x-hidden">
+        {/* Hero Section */}
         <div className="flex w-full items-center justify-between self-stretch px-[100px] min-h-screen">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-[50px]">
             <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
-              Become <span className="italic">Part</span> of Our
+              Become <span className="italic">Part</span> of Our <br /> Team Today!
             </h1>
-            <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
-              Team Today!
-            </h1>
-            <p className="font-dm-sans mt-5 text-[24px] font-normal leading-[32px] text-[#5D5D5D] w-[70%]">
+            <p className="font-dm-sans text-[20px] font-normal leading-[32px] text-[#5D5D5D] w-[80%]">
               Join F3 Global as a volunteer and make a meaningful impact in underserved communities
               worldwide.
             </p>
             <div>
               <Button
-                text="apply now"
+                text="APPLY NOW"
                 onClick_link="https://my-apply.vercel.app/org/f3-global-foundation"
-                className="flex justify-center items-center gap-[10px] px-[24px] py-[14px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] uppercase font-normal mt-12"
-                textClassName="text-white text-normal"
               />
             </div>
           </div>
@@ -38,18 +36,14 @@ export default async function Members() {
               src="/imgs/members_hero.png"
               alt="Volunteers Working with Children"
               fill
-              className="object-cover object-center bg-cover bg-no-repeat bg-center"
+              className="object-cover object-center"
               priority
             />
           </div>
         </div>
-        <div
-          className="flex flex-row w-full px-[50px] py-[200px] content-end items-center gap-[50px] border-t border-[#F4F4F4] relative"
-          style={{
-            boxShadow: "0 19px 43px 0 rgba(0, 0, 0, 0.10)",
-          }}
-        >
-          <div className="flex flex-col flex-4">
+        {/* Mission Epic */}
+        <div className="flex flex-row w-full px-[100px] py-[50px] content-end items-center gap-[50px] border-t border-[#F4F4F4] relative overflow-hidden">
+          <div className="flex flex-col flex-4 min-h-[700]">
             <div
               className="ml-8 rounded-[16px] overflow-hidden absolute left-[80px] top-[40px] z-1 flex-shrink-0 flex-grow-0"
               style={{ width: 291, height: 193 }}
@@ -58,7 +52,7 @@ export default async function Members() {
                 src="/imgs/members_mission_1.jpg"
                 alt="People Walking at Sunset"
                 fill
-                className="object-cover object-center bg-cover bg-no-repeat bg-center"
+                className="object-cover object-center"
                 priority
               />
             </div>
@@ -70,7 +64,7 @@ export default async function Members() {
                 src="/imgs/members_mission_4.jpg"
                 alt="People Walking at Sunset"
                 fill
-                className="object-cover object-center bg-cover bg-no-repeat bg-center"
+                className="object-cover object-center"
                 priority
               />
               <div className="absolute inset-0 rounded-[16px] bg-[#172447] opacity-100 mix-blend-color pointer-events-none" />
@@ -83,7 +77,7 @@ export default async function Members() {
                 src="/imgs/members_mission_2.jpg"
                 alt="People Walking at Sunset"
                 fill
-                className="object-cover object-center bg-cover bg-no-repeat bg-center"
+                className="object-cover object-center"
                 priority
               />
             </div>
@@ -95,16 +89,16 @@ export default async function Members() {
                 src="/imgs/members_mission_3.jpg"
                 alt="People Walking at Sunset"
                 fill
-                className="object-cover object-center bg-cover bg-no-repeat bg-center"
+                className="object-cover object-center"
                 priority
               />
             </div>
           </div>
-          <div className="flex flex-col items-start gap-[20px] flex-3 mr-10">
-            <h2 className="text-[#172447] font-dm-sans text-[48px] font-normal leading-[150%] spacing-[-0.96px]">
+          <div className="flex flex-col items-start gap-[20px] flex-3">
+            <h2 className="text-[#172447] font-dm-sans text-[48px] font-normal leading-[150%] tracking-[-0.96px]">
               Our Mission
             </h2>
-            <p className="text-[#1E1E1E] font-dm-sans text-[24px] font-normal leading-[32px] mr-2">
+            <p className="text-[#1E1E1E] font-dm-sans text-[20px] font-normal leading-[1.6] max-w-[575px]">
               F3 Global{" "}
               <span className="text-[#012060] font-bold">
                 supports underserved individuals and small businesses
@@ -117,223 +111,181 @@ export default async function Members() {
             </p>
           </div>
         </div>
-      </div>
-      <div className="flex flex-col w-full py-[50px] gap-[10px] border-t border-[#F4F4F4]">
-        <h1 className="text-[48px] px-[5vw] font-medium self-stretch text-[#172447]">
-          Who We're Looking For
-        </h1>
-        <div className="inline-flex flex-row gap-[50px] justify-center">
-          <div className="flex flex-col w-[333px] h-max items-center">
-            <div className="flex w-[120px] h-[120px] items-center justify-center rounded-[60px] bg-[#012060] relative z-10 -mb-[50px]">
-              <Image src="/imgs/ic_goal.svg" alt="Goal Icon" width={60} height={60} />
-            </div>
-            <div className="flex flex-col w-[333px] h-[278px] pt-[60px] pb-[20px] px-[50px] items-center justify-center gap-[20px] rounded-[10px] bg-[#F4F4F4]">
-              <h2 className=" self-center text-center self-stretch text-[#s1E1E1E] font-dm-sans text-[32px] font-bold leading-[150%] tracking-[-0.46px]">
-                Commitment to the Mission
-              </h2>
-              <p className="text-center">
-                Demonstrated interest in and alignment with F3's values and goals.
-              </p>
-            </div>
+        {/* Who We're Looking For Section*/}
+        <div className="flex flex-col w-full py-[50px] gap-[100px] border-t border-[#F4F4F4]  overflow-hidden">
+          {/* Section title*/}
+          <div className="flex flex-col gap-[20px] items-start px-[5vw]">
+            <h2 className="text-[48px] font-medium self-stretch text-[#172447] tracking-[-0.96px]">
+              Who We're Looking For
+            </h2>
+            <p className="font-dm-sans font-normal leading-[24px] text-[16px] text-[#1e1e1e] w-full">
+              F3 membership is open to individuals who are passionate about entrepreneurship,
+              innovation, and community impact, including:
+            </p>
           </div>
-          <div className="flex flex-col w-[333px] h-max items-center">
-            <div className="flex w-[120px] h-[120px] items-center justify-center rounded-[60px] bg-[#012060] relative z-10 -mb-[50px]">
-              <Image src="/imgs/ic_time.svg" alt="Goal Icon" width={60} height={60} />
-            </div>
-            <div className="flex flex-col w-[333px] h-[278px] pt-[60px] pb-[20px] px-[50px] items-center justify-center gap-[20px] rounded-[10px] bg-[#F4F4F4]">
-              <h2 className=" self-center text-center self-stretch text-[#s1E1E1E] font-dm-sans text-[32px] font-bold leading-[150%] tracking-[-0.46px]">
-                Availability & Reliability
-              </h2>
-              <p className="text-center">
-                Ability to commit the required time and participate consistently.
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-col w-[333px] h-max items-center">
-            <div className="flex w-[120px] h-[120px] items-center justify-center rounded-[60px] bg-[#012060] relative z-10 -mb-[50px]">
-              <Image src="/imgs/ic_collab.svg" alt="Goal Icon" width={60} height={60} />
-            </div>
-            <div className="flex flex-col w-[333px] h-[278px] pt-[60px] pb-[20px] px-[50px] items-center justify-center gap-[20px] rounded-[10px] bg-[#F4F4F4]">
-              <h2 className=" self-center text-center self-stretch text-[#s1E1E1E] font-dm-sans text-[32px] font-bold leading-[150%] tracking-[-0.46px]">
-                Respectful Collaboration
-              </h2>
-              <p className="text-center">
-                Willingness to work respectfully with diverse communities and members.
-              </p>
-            </div>
+          {/* Eligibility Criteria */}
+          <div className="inline-flex flex-row gap-[24px] justify-center">
+            <EligibileCard
+              iconSrc="/imgs/ic_book.svg"
+              iconAlt="Book Icon"
+              title="Undergraduate students"
+              description="from all academic backgrounds"
+            />
+            <EligibileCard
+              iconSrc="/imgs/ic_graduate_cap.svg"
+              iconAlt="Graduate Cap Icon"
+              title="Graduate students"
+              description="seeking hands-on, real-world experience"
+            />
+            <EligibileCard
+              iconSrc="/imgs/ic_mentoring.svg"
+              iconAlt="Mentoring Icon"
+              title="Interns"
+              description="looking to build skills and contribute to meaningful projects"
+            />
+            <EligibileCard
+              iconSrc="/imgs/ic_briefcase.svg"
+              iconAlt="Briefcase Icon"
+              title="Young and working professionals"
+              description="interested in mentorship, collaboration, and giving back"
+            />
           </div>
         </div>
-      </div>
-      <div className="flex flex-col w-full py-[50px] gap-[10px] border-t border-[#F4F4F4]">
-        <h1 className="px-[5vw] text-[48px] font-medium self-stretch text-[#172447] mb-[60px]">
-          How You Get Involved
-        </h1>
-        <div className="flex flex-col relative">
-          <div className="relative h-[108px] mb-[-40px] max-w-[1097px] mx-auto w-full">
-            <div className="absolute left-[86.5px] top-0 w-[264px] h-[108px] text-[#A5D0F2]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="264"
-                height="110"
-                viewBox="0 0 264 110"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M2 109.978V12C2 6.4687 6.49041 1.98803 12.0217 2.00005L222.022 2.45651C227.536 2.46849 232 6.94212 232 12.4565V43.4783"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <g transform="translate(200.5 2.5)">
+        {/* How You Get Involved Section*/}
+        <div className="flex w-full overflow-hidden self-stretch flex-col gap-[100px] border-t border-[#F4F4F4] px-[100px] py-[50px]">
+          <h2 className="text-[48px] font-medium self-stretch text-[#172447] leading-[1.5] tracking-[-0.96px]">
+            How You Get Involved
+          </h2>
+          <div className="flex flex-col relative px-[80px] justify-center items-center gap-[80px]">
+            {/* Application flowchart */}
+            <div className="flex flex-row items-center gap-[273px] max-w-[1181px] mx-auto w-full">
+              {/* Number icons */}
+              <div className="w-[60px] z-10">
+                <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 font-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full">
+                  1
+                </div>
+              </div>
+              <div className="w-[60px] z-10">
+                <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 font-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full">
+                  2
+                </div>
+              </div>
+              <div className="w-[60px] z-10">
+                <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 font-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full">
+                  3
+                </div>
+              </div>
+              <div className="w-[60px] z-10">
+                <div className="flex size-[60px] bg-[#FFFFFF] border-[#172447] border-4 font-dm-sans text-[30px] font-semibold leading-none text-[#172447] items-center justify-center rounded-full">
+                  4
+                </div>
+              </div>
+              {/* Process arrows */}
+              <div className="absolute h-[68px] translate-y-[63px] z-0 -translate-x-[928px]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1212"
+                  height="105"
+                  viewBox="0 0 1212 105"
+                  preserveAspectRatio="xMaxYMid meet"
+                  fill="none"
+                >
                   <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M16.5188 24.3938C17.544 23.3687 19.206 23.3687 20.2312 24.3938L31.5 35.6627L42.7688 24.3938C43.794 23.3687 45.456 23.3687 46.4812 24.3938C47.5063 25.419 47.5063 27.081 46.4812 28.1062L33.3562 41.2312C32.331 42.2563 30.669 42.2563 29.6438 41.2312L16.5188 28.1062C15.4937 27.081 15.4937 25.419 16.5188 24.3938Z"
-                    fill="currentColor"
-                  />
-                </g>
-                <g transform="translate(200.5 14.5)">
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M16.5188 24.3938C17.544 23.3687 19.206 23.3687 20.2312 24.3938L31.5 35.6627L42.7688 24.3938C43.794 23.3687 45.456 23.3687 46.4812 24.3938C47.5063 25.419 47.5063 27.081 46.4812 28.1062L33.3562 41.2312C32.331 42.2563 30.669 42.2563 29.6438 41.2312L16.5188 28.1062C15.4937 27.081 15.4937 25.419 16.5188 24.3938Z"
-                    fill="currentColor"
-                  />
-                </g>
-              </svg>
-            </div>
-            <div className="absolute left-[546.5px] top-0 w-[264px] h-[108px] text-[#A5D0F2]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="264"
-                height="110"
-                viewBox="0 0 264 110"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M2 109.978V12C2 6.4687 6.49041 1.98803 12.0217 2.00005L222.022 2.45651C227.536 2.46849 232 6.94212 232 12.4565V43.4783"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <g transform="translate(200.5 2.5)">
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M16.5188 24.3938C17.544 23.3687 19.206 23.3687 20.2312 24.3938L31.5 35.6627L42.7688 24.3938C43.794 23.3687 45.456 23.3687 46.4812 24.3938C47.5063 25.419 47.5063 27.081 46.4812 28.1062L33.3562 41.2312C32.331 42.2563 30.669 42.2563 29.6438 41.2312L16.5188 28.1062C15.4937 27.081 15.4937 25.419 16.5188 24.3938Z"
-                    fill="currentColor"
-                  />
-                </g>
-                <g transform="translate(200.5 14.5)">
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M16.5188 24.3938C17.544 23.3687 19.206 23.3687 20.2312 24.3938L31.5 35.6627L42.7688 24.3938C43.794 23.3687 45.456 23.3687 46.4812 24.3938C47.5063 25.419 47.5063 27.081 46.4812 28.1062L33.3562 41.2312C32.331 42.2563 30.669 42.2563 29.6438 41.2312L16.5188 28.1062C15.4937 27.081 15.4937 25.419 16.5188 24.3938Z"
-                    fill="currentColor"
-                  />
-                </g>
-              </svg>
-            </div>
-          </div>
-          <div className="flex flex-row items-center justify-between max-w-[1097px] mx-auto w-full relative z-10">
-            <div
-              className="absolute top-1/2 right-full -translate-y-1/2 h-[4px] w-[max(0px,calc((100vw-1097px)/2))] bg-[#A5D0F2]"
-              aria-hidden="true"
-            />
-            <div
-              className="absolute top-1/2 left-full -translate-y-1/2 h-[4px] w-[max(0px,calc((100vw-1097px)/2))] bg-[#A5D0F2]"
-              aria-hidden="true"
-            />
-            <div className="flex w-[177px] h-[76px] bg-[#172447] text-dm-sans text-[24px] font-semibold leading-[150%] text-white items-center justify-center rounded-[10px]">
-              Apply
-            </div>
-            <div className="flex w-[177px] h-[76px] bg-[#FFFFFF] text-dm-sans text-[24px] font-semibold leading-[150%] text-[#172447] border-[#172447] border-4 items-center justify-center rounded-[10px]">
-              Review
-            </div>
-            <div className="flex w-[177px] h-[76px] bg-[#172447] text-dm-sans text-[24px] font-semibold leading-[150%] text-white items-center justify-center rounded-[10px]">
-              Interview
-            </div>
-            <div className="flex w-[177px] h-[76px] bg-[#FFFFFF] text-dm-sans text-[24px] font-semibold leading-[150%] text-[#172447] border-[#172447] border-4 items-center justify-center rounded-[10px]">
-              Decision
-            </div>
-            <div className="flex w-[177px] h-[76px] bg-[#172447] text-dm-sans text-[24px] font-semibold leading-[150%] text-white items-center justify-center rounded-[10px]">
-              Onboarding
-            </div>
-          </div>
-          <div className="relative h-[108px] max-w-[1097px] mx-auto w-full mt-[-40px]">
-            <div className="absolute left-[316.5px] top-0 w-[264px] h-[108px] text-[#A5D0F2]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="264"
-                height="110"
-                viewBox="0 0 264 110"
-                fill="none"
-                aria-hidden="true"
-              >
-                <g transform="translate(0, 110) scale(1, -1)">
-                  <path
-                    d="M2 109.978V12C2 6.4687 6.49041 1.98803 12.0217 2.00005L222.022 2.45651C227.536 2.46849 232 6.94212 232 12.4565V43.4783"
-                    stroke="currentColor"
+                    d="M0 42H950C955.523 42 960 37.5228 960 32V-50"
+                    stroke="#A5D0F2"
                     strokeWidth="4"
                   />
-                  <g transform="translate(200.5 2.5)">
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M16.5188 24.3938C17.544 23.3687 19.206 23.3687 20.2312 24.3938L31.5 35.6627L42.7688 24.3938C43.794 23.3687 45.456 23.3687 46.4812 24.3938C47.5063 25.419 47.5063 27.081 46.4812 28.1062L33.3562 41.2312C32.331 42.2563 30.669 42.2563 29.6438 41.2312L16.5188 28.1062C15.4937 27.081 15.4937 25.419 16.5188 24.3938Z"
-                      fill="currentColor"
-                    />
-                  </g>
-                  <g transform="translate(200.5 14.5)">
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M16.5188 24.3938C17.544 23.3687 19.206 23.3687 20.2312 24.3938L31.5 35.6627L42.7688 24.3938C43.794 23.3687 45.456 23.3687 46.4812 24.3938C47.5063 25.419 47.5063 27.081 46.4812 28.1062L33.3562 41.2312C32.331 42.2563 30.669 42.2563 29.6438 41.2312L16.5188 28.1062C15.4937 27.081 15.4937 25.419 16.5188 24.3938Z"
-                      fill="currentColor"
-                    />
-                  </g>
-                </g>
-              </svg>
+                </svg>
+              </div>
+              <div className="absolute h-[68px] translate-y-[-50px] translate-x-[30px] z-0">
+                <Image
+                  src="/imgs/involved_arrow_down.svg"
+                  alt="Downward Arrow"
+                  width={365}
+                  height={68}
+                />
+              </div>
+              <div className="absolute h-[68px] translate-y-[50px] translate-x-[363px] z-0 scale-y-[-1]">
+                <Image
+                  src="/imgs/involved_arrow_down.svg"
+                  alt="Downward Arrow"
+                  width={364}
+                  height={68}
+                />
+              </div>
+              <div className="absolute h-[68px] translate-y-[-50px] translate-x-[696px] z-0">
+                <Image
+                  src="/imgs/involved_arrow_down.svg"
+                  alt="Downward Arrow"
+                  width={364}
+                  height={68}
+                />
+              </div>
+              <div className="absolute h-[68px] translate-y-[63px] z-0 scale-x-[-1] translate-x-[777px]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1212"
+                  height="105"
+                  viewBox="0 0 1212 105"
+                  preserveAspectRatio="xMaxYMid meet"
+                  fill="none"
+                >
+                  <path
+                    d="M0 42H950C955.523 42 960 37.5228 960 32V-50"
+                    stroke="#A5D0F2"
+                    strokeWidth="4"
+                  />
+                </svg>
+              </div>
             </div>
 
-            <div className="absolute left-[776.5px] top-0 w-[264px] h-[108px] text-[#A5D0F2]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="264"
-                height="110"
-                viewBox="0 0 264 110"
-                fill="none"
-                aria-hidden="true"
-              >
-                <g transform="translate(0, 110) scale(1, -1)">
-                  <path
-                    d="M2 109.978V12C2 6.4687 6.49041 1.98803 12.0217 2.00005L222.022 2.45651C227.536 2.46849 232 6.94212 232 12.4565V43.4783"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <g transform="translate(200.5 2.5)">
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M16.5188 24.3938C17.544 23.3687 19.206 23.3687 20.2312 24.3938L31.5 35.6627L42.7688 24.3938C43.794 23.3687 45.456 23.3687 46.4812 24.3938C47.5063 25.419 47.5063 27.081 46.4812 28.1062L33.3562 41.2312C32.331 42.2563 30.669 42.2563 29.6438 41.2312L16.5188 28.1062C15.4937 27.081 15.4937 25.419 16.5188 24.3938Z"
-                      fill="currentColor"
-                    />
-                  </g>
-                  <g transform="translate(200.5 14.5)">
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M16.5188 24.3938C17.544 23.3687 19.206 23.3687 20.2312 24.3938L31.5 35.6627L42.7688 24.3938C43.794 23.3687 45.456 23.3687 46.4812 24.3938C47.5063 25.419 47.5063 27.081 46.4812 28.1062L33.3562 41.2312C32.331 42.2563 30.669 42.2563 29.6438 41.2312L16.5188 28.1062C15.4937 27.081 15.4937 25.419 16.5188 24.3938Z"
-                      fill="currentColor"
-                    />
-                  </g>
-                </g>
-              </svg>
+            {/* Application text */}
+            <div className="flex max-w-[1181px] mx-auto items-start gap-[90px]">
+              <div className="flex w-[243px] flex-col items-start gap-[20px]">
+                <h3 className="text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060]">
+                  Complete the Application Form
+                </h3>
+                <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
+                  Submit a short online application sharing your background, interests, and how
+                  you'd like to be involved with F3.
+                </p>
+              </div>
+
+              <div className="flex w-[243px] flex-col items-start gap-[20px]">
+                <h3 className="text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060] w-[224px]">
+                  Application Review
+                </h3>
+                <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
+                  Our team reviews applications on a rolling basis to ensure alignment with
+                  F3&apos;s mission and values.
+                </p>
+              </div>
+
+              <div className="flex w-[243px] flex-col items-start gap-[20px]">
+                <h3 className="text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060]">
+                  Confirmation &amp; Onboarding
+                </h3>
+                <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
+                  Accepted members receive a confirmation email with next steps, onboarding
+                  resources, and access to the F3 community.
+                </p>
+              </div>
+
+              <div className="flex w-[182px] flex-col items-start gap-[20px]">
+                <h3 className="text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060]">
+                  Get Involved
+                </h3>
+                <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
+                  Once onboarded, members can participate in projects, initiatives, and
+                  collaborative opportunities within F3.
+                </p>
+              </div>
             </div>
           </div>
         </div>
+        <FaqAccordion items={faqItems} />
+        <ContactUs />
       </div>
-      <FaqAccordion items={faqItems} />
     </>
   );
 }

@@ -141,23 +141,18 @@ export default function MeetTheTeam() {
     <>
       <div className="bg-white overflow-x-hidden">
         <div className="flex w-full items-center justify-between self-stretch px-[100px] min-h-screen">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-[50px]">
             <h1 className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
-              Meet the Team
+              Meet the Team <br /> Without <span className="italic">Borders</span>
             </h1>
-            <h1 className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
-              Without <span className="italic">Borders</span>
-            </h1>
-            <p className="font-dm-sans mt-[50px] text-[20px] font-normal leading-[32px] text-[#5D5D5D]">
+            <p className="font-dm-sans text-[20px] font-normal leading-[32px] text-[#5D5D5D] max-w-[580px]">
               Our professional team brings expertise from all over the world. Explore the clickable
               map of where our team members are from below.
             </p>
             <div>
               <Button
-                text="join our team"
+                text="JOIN OUR TEAM"
                 onClick_link="https://my-apply.vercel.app/org/f3-global-foundation"
-                className="flex justify-center items-center gap-[10px] px-[24px] py-[14px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] mt-12"
-                textClassName="text-white font-semibold font-[600] uppercase"
               />
             </div>
           </div>

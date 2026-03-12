@@ -1,6 +1,5 @@
 import Image from "next/image";
 
-import { Anchor } from "@/components/Anchor";
 import { Button } from "@/components/button";
 import { ClientCarousel } from "@/components/ClientCarousel";
 import { Highlights } from "@/components/Highlights";
@@ -25,7 +24,10 @@ export default function About() {
             Our programs offer tailored microloans and business support, ensuring that our clients
             have the knowledge and resources necessary for long-term success.
           </p>
-          <Anchor text="JOIN US NOW" link="https://my-apply.vercel.app/org/f3-global-foundation" />
+          <Button
+            text="JOIN US NOW"
+            onClick_link="https://my-apply.vercel.app/org/f3-global-foundation"
+          />
         </div>
         <div>
           <Image src="/imgs/about-us.png" alt="About us image" width={646} height={581} />
