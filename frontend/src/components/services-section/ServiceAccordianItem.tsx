@@ -45,16 +45,14 @@ export const ServiceAccordianItem: React.FC<ServiceAccordianItemProps> = ({
         onClick={onClick}
       >
         <span
-          className={`font-dm-sans text-[28px] font-medium tracking-[-0.56px] transition-colors duration-300 ${
+          className={`font-dm-sans text-[28px] font-medium tracking-[-0.56px] transition-colors duration-300 pl-[20px] ${
             isExpanded ? "text-[#012060]" : "text-[#5d5d5d]"
           }`}
         >
           {service.title}
         </span>
         <span
-          className={`w-8 h-8 flex items-center justify-center transition-colors duration-300 ${
-            isExpanded ? "text-[#012060]" : "text-[#5d5d5d]"
-          }`}
+          className={`w-8 h-8 flex items-center justify-center transition-colors duration-300 mr-[20px]`}
         >
           {isExpanded ? <MinusIcon /> : <PlusIcon />}
         </span>
@@ -65,7 +63,7 @@ export const ServiceAccordianItem: React.FC<ServiceAccordianItemProps> = ({
           isExpanded ? "max-h-[300px]" : "max-h-0"
         }`}
       >
-        <p className="text-[#5d5d5d] font-dm-sans text-base leading-6 m-0 pb-5">
+        <p className="text-[#5d5d5d] font-dm-sans text-base leading-6 m-0 pb-5 pl-[20px]">
           {service.description}
         </p>
       </div>
