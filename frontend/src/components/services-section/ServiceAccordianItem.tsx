@@ -63,7 +63,7 @@ export const ServiceAccordianItem: React.FC<ServiceAccordianItemProps> = ({
           isExpanded ? "max-h-[300px]" : "max-h-0"
         }`}
       >
-        <p className="text-[#5d5d5d] font-dm-sans text-base leading-6 m-0 pb-5 pl-[20px]">
+        <p className="text-[#5d5d5d] font-dm-sans text-base leading-6 m-0 pb-5 pl-[20px] pr-[20px]">
           {service.description}
         </p>
       </div>
