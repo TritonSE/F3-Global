@@ -39,7 +39,7 @@ export const ServiceAccordianItem: React.FC<ServiceAccordianItemProps> = ({
   onClick,
 }) => {
   return (
-    <div className="border-b border-[#c7c7c7]">
+    <div className="border-b border-[#c7c7c7] last:border-b-0">
       <button
         className="w-full flex justify-between items-center py-5 bg-transparent border-none cursor-pointer"
         onClick={onClick}
