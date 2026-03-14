@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { Button } from "@/components/button";
 import { ClientCarousel } from "@/components/ClientCarousel";
+import { Highlights } from "@/components/Highlights";
 import {
   TIMELINE_HEADER,
   TIMELINE_INSTRUCTION,
@@ -10,12 +11,12 @@ import {
 
 export default function About() {
   return (
-    <div className="mx-auto flex flex-col justify-center bg-white w-full">
-      <div className="flex min-h-screen px-[100px] justify-between items-center w-full">
+    <div className="mx-auto flex flex-col justify-center bg-white w-[1513px]">
+      <div className="flex h-[774px] px-[100px] justify-between items-center w-full">
         <div className="flex flex-col items-start gap-[50px] w-[639px]">
           <h1
-            className="text-[#1E1E1E] font-ethic-new text-[64px] leading-[1.1] font-light pr-[90px]"
-            style={{ fontFamily: '"Ethic New"', fontWeight: 300 }}
+            className="text-[#1E1E1E] font-ethic-new text-[64px] leading-[70px] font-light pr-[90px]"
+            style={{ fontFamily: '"Ethic New"', fontWeight: 300, lineHeight: "1.1" }}
           >
             From Vision to Global <i>Impact</i>
           </h1>
@@ -51,7 +52,11 @@ export default function About() {
             success.
           </p>
         </div>
-        <Button text="MORE ABOUT OUR TEAM" onClick_link="/members" />
+        <Button
+          text="MORE ABOUT OUR TEAM"
+          onClick_link="/meet-the-team"
+          textClassName="text-white text-normal"
+        />
       </div>
 
       {/* Path to Impact + Timeline */}
@@ -74,6 +79,7 @@ export default function About() {
         <TimelineSection />
       </div>
       <ClientCarousel />
+      <Highlights />
     </div>
   );
 }
