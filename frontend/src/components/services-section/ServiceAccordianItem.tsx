@@ -12,9 +12,9 @@ type ServiceAccordianItemProps = {
 const PlusIcon = () => (
   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
-      d="M16 6V26M6 16H26"
-      stroke="currentColor"
-      strokeWidth="2"
+      d="M7 16H25M16 7V25"
+      stroke="#1E1E1E"
+      strokeWidth="2.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -24,9 +24,9 @@ const PlusIcon = () => (
 const MinusIcon = () => (
   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
-      d="M6 16H26"
-      stroke="currentColor"
-      strokeWidth="2"
+      d="M7 16H25"
+      stroke="#1E1E1E"
+      strokeWidth="2.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
