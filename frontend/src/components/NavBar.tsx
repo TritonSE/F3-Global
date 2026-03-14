@@ -102,7 +102,7 @@ function NavLinks({
               width={24}
               height={24}
               className={`transition-transform duration-300 ease-in-out ${
-                isClosing ? "spin-180-right" : isDropdownOpen ? "spin-180-left" : "spin-180-right"
+                isClosing ? "spin-180-right" : isDropdownOpen ? "spin-180-left" : "rotate-0"
               }`}
             />
           </button>
@@ -320,14 +320,7 @@ export default function NavBar() {
     };
   }, [pathname]);
 
-  useEffect(() => {
-    const shouldPad = isDropdownOpen || isClosing;
-    document.body.classList.toggle("navbar-dropdown-open", shouldPad);
-
-    return () => {
-      document.body.classList.remove("navbar-dropdown-open");
-    };
-  }, [isDropdownOpen, isClosing]);
+  const navHeight = 97;
 
   const handleToggleDropdown = () => {
     if (isDropdownOpen) {
@@ -369,96 +362,93 @@ export default function NavBar() {
   };
 
   const wrapperClass =
-    isDropdownOpen || isClosing
-      ? "fixed top-0 left-0 right-0 z-50 w-full font-dm bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px] shadow-[0_301px_84px_0_rgba(0,0,0,0.00),0_12px_26px_0_rgba(0,0,0,0.10)]"
-      : "sticky top-0 z-50 w-full font-dm bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px]";
+    "fixed top-0 left-0 right-0 z-50 w-full font-dm bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px] shadow-[0_301px_84px_0_rgba(0,0,0,0.00),0_12px_26px_0_rgba(0,0,0,0.10)]";
 
   return (
-    <div className={wrapperClass}>
-      <nav className="flex justify-between items-center">
-        <NavLinks
-          isActive={isActive}
-          isDropdownOpen={isDropdownOpen}
-          isClosing={isClosing}
-          onToggleDropdown={handleToggleDropdown}
-          onLogoClick={handleLogoClick}
-          buttonRef={buttonRef}
-          //isBlinking={isBlinking}
-        />
-      </nav>
+    <>
+      <div aria-hidden="true" style={{ height: navHeight }} />
+      <div className={wrapperClass}>
+        <nav className="flex justify-between items-center">
+          <NavLinks
+            isActive={isActive}
+            isDropdownOpen={isDropdownOpen}
+            isClosing={isClosing}
+            onToggleDropdown={handleToggleDropdown}
+            onLogoClick={handleLogoClick}
+            buttonRef={buttonRef}
+            //isBlinking={isBlinking}
+          />
+        </nav>
 
-      {isDropdownOpen && (
-        <div
-          className="origin-top"
-          style={{
-            animation: isClosing
-              ? "slideUp 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards"
-              : "slideDown 0.35s cubic-bezier(0.0, 0, 0.2, 1) forwards",
-          }}
-        >
-          <DropdownContent />
-        </div>
-      )}
+        {isDropdownOpen && (
+          <div
+            className="origin-top"
+            style={{
+              animation: isClosing
+                ? "slideUp 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards"
+                : "slideDown 0.35s cubic-bezier(0.0, 0, 0.2, 1) forwards",
+            }}
+          >
+            <DropdownContent />
+          </div>
+        )}
 
-      <style jsx global>{`
-        body.navbar-dropdown-open {
-          padding-top: 97px;
-        }
+        <style jsx global>{`
+          .spin-180-left {
+            animation: spinToUp 0.35s ease-in-out forwards;
+          }
 
-        .spin-180-left {
-          animation: spinToUp 0.35s ease-in-out forwards;
-        }
+          @keyframes spinToUp {
+            0% {
+              transform: rotate(0deg);
+            }
+            100% {
+              transform: rotate(180deg);
+            }
+          }
 
-        @keyframes spinToUp {
-          0% {
-            transform: rotate(0deg);
+          .spin-180-right {
+            animation: spinToDown 0.45s ease-in-out forwards;
           }
-          100% {
-            transform: rotate(180deg);
-          }
-        }
 
-        .spin-180-right {
-          animation: spinToDown 0.45s ease-in-out forwards;
-        }
+          @keyframes spinToDown {
+            0% {
+              transform: rotate(180deg);
+            }
+            100% {
+              transform: rotate(0deg);
+            }
+          }
 
-        @keyframes spinToDown {
-          0% {
-            transform: rotate(180deg);
+          @keyframes slideDown {
+            0% {
+              opacity: 0;
+              transform: translateY(-15px);
+            }
+            60% {
+              opacity: 1;
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0);
+            }
           }
-          100% {
-            transform: rotate(0deg);
-          }
-        }
 
-        @keyframes slideDown {
-          0% {
-            opacity: 0;
-            transform: translateY(-15px);
+          @keyframes slideUp {
+            0% {
+              opacity: 1;
+              transform: translateY(0);
+            }
+            40% {
+              opacity: 0.5;
+            }
+            100% {
+              opacity: 0;
+              transform: translateY(-15px);
+            }
           }
-          60% {
-            opacity: 1;
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes slideUp {
-          0% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-          40% {
-            opacity: 0.5;
-          }
-          100% {
-            opacity: 0;
-            transform: translateY(-15px);
-          }
-        }
-      `}</style>
-    </div>
+        `}</style>
+      </div>
+    </>
   );
 }
