@@ -33,7 +33,7 @@ function NavLinks({
           >
             <div className="flex h-[55px] w-[55px] flex-shrink-0 items-center justify-center">
               <Image
-                src="/imgs/f3logo_nobg 2.png"
+                src="/imgs/f3-logo.svg"
                 alt="F3 Global Logo"
                 width={55}
                 height={55}
