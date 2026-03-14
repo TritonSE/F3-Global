@@ -13,8 +13,24 @@ type ImageDeckProps = {
 const POSITION_CONFIGS = [
   { width: 501, height: 658, rotation: 0, hasOverlay: false, zIndex: 4, bottom: 0, opacity: 1 }, // Front
   { width: 418, height: 530, rotation: -3.86, hasOverlay: true, zIndex: 3, bottom: 80, opacity: 1 }, // Second
-  { width: 340, height: 470, rotation: -5.96, hasOverlay: true, zIndex: 2, bottom: 110, opacity: 1 }, // Third
-  { width: 340, height: 470, rotation: -5.96, hasOverlay: true, zIndex: 1, bottom: 110, opacity: 0 }, // Fourth (fades and shrinks away)
+  {
+    width: 340,
+    height: 470,
+    rotation: -5.96,
+    hasOverlay: true,
+    zIndex: 2,
+    bottom: 110,
+    opacity: 1,
+  }, // Third
+  {
+    width: 340,
+    height: 470,
+    rotation: -5.96,
+    hasOverlay: true,
+    zIndex: 1,
+    bottom: 110,
+    opacity: 0,
+  }, // Fourth (fades and shrinks away)
 ];
 
 // Position left values for each position
@@ -31,7 +47,7 @@ export const ImageDeck = ({ activeID }: ImageDeckProps) => {
     if (position < 0) {
       position += DEFAULT_SERVICES.length;
     }
-    
+
     // Invert the position mapping so 0 -> 0, 1 -> 3, 2 -> 2, 3 -> 1
     // This makes the active card front, and the *previously active* card move to position 3 (fading away)
     if (position === 1) return 3;
