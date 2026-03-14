@@ -2,51 +2,58 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useRef, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 function NavLinks({
   isActive,
   isDropdownOpen,
+  isClosing,
   onToggleDropdown,
+  onLogoClick,
   buttonRef,
-  isBlinking,
+  //isBlinking,
 }: {
   isActive: (href: string) => boolean;
   isDropdownOpen: boolean;
+  isClosing: boolean;
   onToggleDropdown: () => void;
+  onLogoClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
   buttonRef: React.RefObject<HTMLButtonElement | null>;
-  isBlinking: boolean;
+  //isBlinking: boolean;
 }) {
   return (
     <>
-      <div className="flex w-full max-w-[1512px] mx-auto justify-between items-center px-[30px] pt-[30px] pb-[20px] leading-none">
+      <div className="flex w-full max-w-[1512px] mx-auto justify-between items-center px-[30px] pt-[10px] leading-none">
         <div className="flex items-center gap-[12px] w-[274.5px] h-[55px] flex-shrink-0">
           <Link
             href="/"
-            className="flex h-[55px] w-[55px] flex-shrink-0 items-center justify-center"
+            onClick={onLogoClick}
+            className="flex items-center gap-[12px] h-[55px] cursor-pointer"
           >
-            <Image
-              src="/imgs/f3logo_nobg 2.png"
-              alt="F3 Global Logo"
-              width={55}
-              height={55}
-              className="block w-[55px] h-[55px] object-contain"
-            />
+            <div className="flex h-[55px] w-[55px] flex-shrink-0 items-center justify-center">
+              <Image
+                src="/imgs/f3-logo.svg"
+                alt="F3 Global Logo"
+                width={55}
+                height={55}
+                className="block w-[55px] h-[55px] object-contain"
+              />
+            </div>
+            <div className="flex flex-col justify-center h-full">
+              <span className="text-[#172447] text-[12px] font-[900] leading-[110%] tracking-[2.64px] font-dm">
+                <span className="block">FUTURE</span>
+                <span className="block">FORWARD</span>
+                <span className="block">FOUNDATION</span>
+              </span>
+            </div>
           </Link>
-          <div className="flex flex-col justify-center h-full">
-            <span className="text-[#172447] text-[12px] font-[900] leading-[110%] tracking-[2.64px] font-dm">
-              <span className="block">FUTURE</span>
-              <span className="block">FORWARD</span>
-              <span className="block">FOUNDATION</span>
-            </span>
-          </div>
         </div>
 
         <div className="flex items-center gap-[5px] px-[10px] py-[15px]">
           <Link
             href="/"
-            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
+            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer ${
               isActive("/") ? "bg-[#E6E6E6] text-[#172447]" : ""
             }`}
           >
@@ -54,7 +61,7 @@ function NavLinks({
           </Link>
           <Link
             href="/about-us"
-            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
+            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer ${
               isActive("/about-us") ? "bg-[#E6E6E6] text-[#172447]" : ""
             }`}
           >
@@ -62,7 +69,7 @@ function NavLinks({
           </Link>
           <Link
             href="/meet-the-team"
-            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[500] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
+            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer ${
               isActive("/meet-the-team") ? "bg-[#E6E6E6] text-[#172447]" : ""
             }`}
           >
@@ -72,29 +79,37 @@ function NavLinks({
           <button
             ref={buttonRef}
             onClick={onToggleDropdown}
-            className={`get-involved-btn flex items-center gap-[10px] px-[15px] py-[10px] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm rounded-full hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
-              isActive("/donors") || isActive("/members") || isActive("/clients")
+            className={`get-involved-btn flex items-center gap-[10px] px-[15px] py-[10px] text-[20px] font-[400] text-[#5D5D5D] leading-[32px] tracking-[-0.48px] font-dm rounded-full hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer ${
+              isDropdownOpen ||
+              isClosing ||
+              isActive("/donors") ||
+              isActive("/members") ||
+              isActive("/clients")
                 ? "bg-[#E6E6E6] text-[#172447]"
                 : ""
             }`}
-            style={{
-              color:
-                isBlinking && !(isActive("/donors") || isActive("/members") || isActive("/clients"))
-                  ? "rgba(244, 244, 244, 0.70)"
-                  : "#5D5D5D",
-            }}
+            // style={{
+            //   color:
+            //     isBlinking && !(isActive("/donors") || isActive("/members") || isActive("/clients"))
+            //       ? "rgba(244, 244, 244, 0.70)"
+            //       : "#5D5D5D",
+            // }}
           >
             Get Involved
-            {isDropdownOpen ? (
-              <Image src="/imgs/ic_arrowup.svg" alt="Upward Arrow" width={24} height={24} />
-            ) : (
-              <Image src="/imgs/ic_arrowdown.svg" alt="Downward Arrow" width={24} height={24} />
-            )}
+            <Image
+              src="/imgs/ic_arrowdown.svg"
+              alt="Dropdown Arrow"
+              width={24}
+              height={24}
+              className={`transition-transform duration-300 ease-in-out ${
+                isClosing ? "spin-180-right" : isDropdownOpen ? "spin-180-left" : "rotate-0"
+              }`}
+            />
           </button>
 
           <Link
             href=""
-            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out ${
+            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer ${
               isActive("") ? "bg-[#E6E6E6] text-[#172447]" : ""
             }`}
           >
@@ -105,7 +120,7 @@ function NavLinks({
             href="https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex px-[20px] py-[10px] justify-center items-center gap-[10px] rounded-full border border-[#C7C7C7] bg-[#FFF] text-[#172447] text-[24px] font-[600] leading-[36px] font-dm hover:bg-[#172447] hover:border-[#172447] hover:text-[#FFF] transition-all duration-300 ease-in-out group"
+            className="flex px-[20px] py-[10px] justify-center items-center gap-[10px] rounded-full border border-[#C7C7C7] bg-[#FFF] text-[#172447] text-[24px] font-[600] leading-[36px] font-dm hover:bg-[#172447] hover:border-[#172447] hover:text-[#FFF] transition-all duration-300 ease-in-out group cursor-pointer"
           >
             DONATE
             <div className="w-[36px] h-[36px] flex items-center justify-center">
@@ -273,70 +288,138 @@ function DropdownContent() {
 
 export default function NavBar() {
   const pathname = usePathname();
+  const router = useRouter();
   const isActive = (href: string) => pathname === href;
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [isBlinking, setIsBlinking] = useState(false);
+  //const [isBlinking, setIsBlinking] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!isDropdownOpen) {
+      return;
+    }
+
+    setIsClosing(true);
+
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsDropdownOpen(false);
+      setIsClosing(false);
+    }, 250);
+
+    return () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
+    };
+  }, [pathname]);
+
+  const navHeight = 97;
 
   const handleToggleDropdown = () => {
     if (isDropdownOpen) {
       setIsClosing(true);
-      setTimeout(() => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
+
+      closeTimeoutRef.current = setTimeout(() => {
         setIsDropdownOpen(false);
         setIsClosing(false);
       }, 250);
     } else {
-      setIsBlinking(true);
+      //setIsBlinking(true);
       setTimeout(() => {
-        setIsBlinking(false);
+        //setIsBlinking(false);
       }, 80);
       setIsDropdownOpen(true);
     }
   };
 
-  if (!isDropdownOpen) {
-    return (
-      <nav className="sticky top-0 z-50 flex justify-between items-center bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px]">
-        <NavLinks
-          isActive={isActive}
-          isDropdownOpen={isDropdownOpen}
-          onToggleDropdown={handleToggleDropdown}
-          buttonRef={buttonRef}
-          isBlinking={isBlinking}
-        />
-      </nav>
-    );
-  }
+  const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!isDropdownOpen) {
+      return;
+    }
+
+    event.preventDefault();
+    setIsClosing(true);
+
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsDropdownOpen(false);
+      setIsClosing(false);
+      router.push("/");
+    }, 250);
+  };
+
+  const wrapperClass =
+    "fixed top-0 left-0 right-0 z-50 w-full font-dm bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px] shadow-[0_301px_84px_0_rgba(0,0,0,0.00),0_12px_26px_0_rgba(0,0,0,0.10)]";
 
   return (
     <>
-      <div className="w-full" />
-
-      <div className="fixed top-0 left-0 right-0 z-50 w-full font-dm bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px] shadow-[0_301px_84px_0_rgba(0,0,0,0.00),0_12px_26px_0_rgba(0,0,0,0.10)]">
+      <div aria-hidden="true" style={{ height: navHeight }} />
+      <div className={wrapperClass}>
         <nav className="flex justify-between items-center">
           <NavLinks
             isActive={isActive}
             isDropdownOpen={isDropdownOpen}
+            isClosing={isClosing}
             onToggleDropdown={handleToggleDropdown}
+            onLogoClick={handleLogoClick}
             buttonRef={buttonRef}
-            isBlinking={isBlinking}
+            //isBlinking={isBlinking}
           />
         </nav>
 
-        <div
-          className="origin-top"
-          style={{
-            animation: isClosing
-              ? "slideUp 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards"
-              : "slideDown 0.35s cubic-bezier(0.0, 0, 0.2, 1) forwards",
-          }}
-        >
-          <DropdownContent />
-        </div>
+        {isDropdownOpen && (
+          <div
+            className="origin-top"
+            style={{
+              animation: isClosing
+                ? "slideUp 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards"
+                : "slideDown 0.35s cubic-bezier(0.0, 0, 0.2, 1) forwards",
+            }}
+          >
+            <DropdownContent />
+          </div>
+        )}
 
         <style jsx global>{`
+          .spin-180-left {
+            animation: spinToUp 0.35s ease-in-out forwards;
+          }
+
+          @keyframes spinToUp {
+            0% {
+              transform: rotate(0deg);
+            }
+            100% {
+              transform: rotate(180deg);
+            }
+          }
+
+          .spin-180-right {
+            animation: spinToDown 0.45s ease-in-out forwards;
+          }
+
+          @keyframes spinToDown {
+            0% {
+              transform: rotate(180deg);
+            }
+            100% {
+              transform: rotate(0deg);
+            }
+          }
+
           @keyframes slideDown {
             0% {
               opacity: 0;
