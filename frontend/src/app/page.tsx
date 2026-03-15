@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { getAllCities } from "@/api/cities";
 import { DonorsClientsMembersCarouselData } from "@/app/carouselData";
 import { Button } from "@/components/button";
 import { Carousel } from "@/components/Carousel";
@@ -14,18 +15,19 @@ import { ServicesSection } from "@/components/services-section";
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(1200);
-  const cities = [
-    "Hong Kong",
-    "Mumbai",
-    "São Paulo",
-    "Tokyo",
-    "San Diego",
-    "Mexico City",
-    "London",
-    "Seattle",
-    "Jakarta",
-    "Cairo",
-  ];
+  const [cities, setCities] = useState<string[]>([]);
+
+  useEffect(() => {
+    async function loadCities() {
+      try {
+        const fetchedCities = await getAllCities();
+        setCities(fetchedCities);
+      } catch (error) {
+        console.error("Failed to fetch cities:", error);
+      }
+    }
+    void loadCities();
+  }, []);
 
   useEffect(() => {
     if (window.location.search.includes("contact=true")) {
@@ -49,6 +51,8 @@ export default function Home() {
   }, []);
 
   const repeated = useMemo(() => {
+    if (cities.length === 0) return [];
+
     const singleSetWidth = cities.length * 180;
     const rawCopies = Math.ceil((containerWidth * 2) / singleSetWidth);
     const copies = Math.max(4, rawCopies % 2 === 0 ? rawCopies : rawCopies + 1);
@@ -58,7 +62,7 @@ export default function Home() {
         uniqueKey: `${city}-copy${copyIndex}`,
       })),
     ).flat();
-  }, [containerWidth]);
+  }, [containerWidth, cities]);
 
   return (
     <div className="relative w-full bg-white flex flex-col overflow-hidden">
