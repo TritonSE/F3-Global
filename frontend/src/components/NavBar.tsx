@@ -120,7 +120,7 @@ function NavLinks({
             href="https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex px-[20px] py-[10px] justify-center items-center gap-[10px] rounded-full border border-[#C7C7C7] bg-[#FFF] text-[#172447] text-[24px] font-[600] leading-[36px] font-dm hover:bg-[#172447] hover:border-[#172447] hover:text-[#FFF] transition-all duration-300 ease-in-out group cursor-pointer"
+            className="flex px-[20px] py-[10px] justify-center items-center gap-[10px] rounded-full border border-[#C7C7C7] bg-[#FFF] text-[#172447] text-[20px] font-[600] leading-[36px] font-dm hover:bg-[#172447] hover:border-[#172447] hover:text-[#FFF] transition-all duration-300 ease-in-out group cursor-pointer"
           >
             DONATE
             <div className="w-[36px] h-[36px] flex items-center justify-center">
