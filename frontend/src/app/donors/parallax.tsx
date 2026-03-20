@@ -15,7 +15,7 @@ const parallaxSections = [
     title1: "We",
     title2: "Process",
     content:
-      "Once your donation arrives, our team immediately allocates **% directly to our microloan fund while dedicating **% to essential operations like vetting entrepreneurs, managing loans, and tracking impact. This careful distribution ensures your gift creates maximum sustainable change while maintaining the infrastructure needed to serve entrepreneurs effectively. We match available funds with pre-vetted entrepreneurs who've demonstrated business viability, strong community ties, and clear repayment plans.",
+      "Once your donation arrives, our team immediately allocates 90% directly to our microloan fund while dedicating 10% to essential operations like vetting entrepreneurs, managing loans, and tracking impact. This careful distribution ensures your gift creates maximum sustainable change while maintaining the infrastructure needed to serve entrepreneurs effectively. We match available funds with pre-vetted entrepreneurs who've demonstrated business viability, strong community ties, and clear repayment plans.",
   },
   {
     number: 3,
@@ -36,7 +36,7 @@ const parallaxSections = [
     title1: "Impact",
     title2: "Measured",
     content:
-      "You'll receive regular updates showing the entrepreneur's journey from loan recipient to thriving business owner, complete with progress photos, revenue growth data, and personal stories about how the opportunity changed their lives. We track key metrics like repayment rates (consistently above 95**%), jobs created, household income increases, and broader community benefits. These aren't just feel-good stories—they're verified results that demonstrate your donation's tangible, measurable impact on real people building real futures for themselves and their families.",
+      "You'll receive regular updates showing the entrepreneur's journey from loan recipient to thriving business owner, complete with progress photos, revenue growth data, and personal stories about how the opportunity changed their lives. We track key metrics like repayment rates (consistently above 95%), jobs created, household income increases, and broader community benefits. These aren't just feel-good stories—they're verified results that demonstrate your donation's tangible, measurable impact on real people building real futures for themselves and their families.",
   },
 ];
 
