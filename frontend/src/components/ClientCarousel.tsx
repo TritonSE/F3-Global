@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import type { Client } from "@/api/client";
@@ -69,9 +70,11 @@ export const ClientCarousel = () => {
         <div className="flex animate-marquee whitespace-nowrap gap-[40px] py-[18px]">
           {repeated.map((client) => (
             <div key={client.uniqueKey} className="flex items-center h-[114px] shrink-0">
-              <img
+              <Image
                 src={client.imageUrl}
                 alt={client.name}
+                width={220}
+                height={114}
                 className="object-contain h-full w-auto max-w-[220px]"
               />
             </div>

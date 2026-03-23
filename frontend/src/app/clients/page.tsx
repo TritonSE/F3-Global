@@ -45,22 +45,17 @@ export default function About() {
     <>
       <div className="bg-white overflow-x-hidden">
         <div className="flex w-full items-center justify-between self-stretch px-[100px] min-h-screen">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-[50px]">
             <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
-              Services That Create
+              Services That Create <br /> <span className="italic">Lasting</span> Impact
             </h1>
-            <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
-              <span className="italic">Lasting</span> Impact
-            </h1>
-            <p className="font-dm-sans mt-5 text-[24px] font-normal leading-[32px] text-[#5D5D5D] w-[80%]">
+            <p className="font-dm-sans text-[20px] font-normal leading-[32px] text-[#5D5D5D] w-[80%]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
               incididunt ut labore et dolore magna aliqua.
             </p>
             <div>
               <Button
-                text="Contact Us"
-                className="flex justify-center items-center gap-[10px] px-[24px] py-[14px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] cursor-pointer uppercase font-normal mt-12"
-                textClassName="text-white text-normal"
+                text="CONTACT US"
                 onClick={() => {
                   const contactSection = document.getElementById("contact");
                   if (contactSection) {

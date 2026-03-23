@@ -1,8 +1,8 @@
 import Image from "next/image";
 
-import { Anchor } from "@/components/Anchor";
 import { Button } from "@/components/button";
 import { ClientCarousel } from "@/components/ClientCarousel";
+import { Highlights } from "@/components/Highlights";
 import {
   TIMELINE_HEADER,
   TIMELINE_INSTRUCTION,
@@ -11,20 +11,23 @@ import {
 
 export default function About() {
   return (
-    <div className="mx-auto flex flex-col justify-center bg-white w-full">
-      <div className="flex min-h-screen px-[100px] justify-between items-center w-full">
+    <div className="mx-auto flex flex-col justify-center bg-white w-[1513px]">
+      <div className="flex h-[774px] px-[100px] justify-between items-center w-full">
         <div className="flex flex-col items-start gap-[50px] w-[639px]">
           <h1
-            className="text-[#1E1E1E] font-ethic-new text-[64px] leading-[96px] font-light pr-[90px]"
-            style={{ fontFamily: '"Ethic New"', fontWeight: 300 }}
+            className="text-[#1E1E1E] font-ethic-new text-[64px] leading-[70px] font-light pr-[90px]"
+            style={{ fontFamily: '"Ethic New"', fontWeight: 300, lineHeight: "1.1" }}
           >
             From Vision to Global <i>Impact</i>
           </h1>
-          <p className="text-[#5D5D5D] font-dm-sans text-[24px] font-normal leading-[32px] pr-[60px]">
+          <p className="text-[#5D5D5D] font-dm-sans text-[20px] font-normal leading-[32px] pr-[60px]">
             Our programs offer tailored microloans and business support, ensuring that our clients
             have the knowledge and resources necessary for long-term success.
           </p>
-          <Anchor text="JOIN US NOW" link="https://my-apply.vercel.app/org/f3-global-foundation" />
+          <Button
+            text="JOIN US NOW"
+            onClick_link="https://my-apply.vercel.app/org/f3-global-foundation"
+          />
         </div>
         <div>
           <Image src="/imgs/about-us.png" alt="About us image" width={646} height={581} />
@@ -35,7 +38,7 @@ export default function About() {
         <h1 className="text-[#172447] font-dm-sans text-[48px] font-medium leading-[72px] tracking-[-0.96px]">
           Our Story
         </h1>
-        <div className="flex flex-col gap-[20px] w-full text-black font-dm-sans text-[24px] font-normal leading-[32px]">
+        <div className="flex flex-col gap-[20px] w-full text-black font-dm-sans text-[20px] font-normal leading-[32px]">
           <p>
             At F3 Global, we are a 501(c)(3) non-profit organization dedicated to empowering
             underserved communities around the globe through innovative microfinance solutions. Our
@@ -51,7 +54,7 @@ export default function About() {
         </div>
         <Button
           text="MORE ABOUT OUR TEAM"
-          onClick_link="/members"
+          onClick_link="/meet-the-team"
           textClassName="text-white text-normal"
         />
       </div>
@@ -63,7 +66,7 @@ export default function About() {
             <h2 className="font-dm font-medium text-[48px] text-[#172447] tracking-[-0.96px] leading-[1.5]">
               {TIMELINE_HEADER.title}
             </h2>
-            <p className="font-dm font-normal text-[24px] text-black leading-[32px] max-w-[1073px]">
+            <p className="font-dm font-normal text-[20px] text-black leading-[32px] max-w-[1073px]">
               {TIMELINE_HEADER.description}
             </p>
           </div>
@@ -76,6 +79,7 @@ export default function About() {
         <TimelineSection />
       </div>
       <ClientCarousel />
+      <Highlights />
     </div>
   );
 }

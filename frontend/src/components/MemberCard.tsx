@@ -32,10 +32,16 @@ export const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
       <div className="flex flex-col flex-start gap-[30px]">
         <div className="relative" style={{ width: 250, height: 250 }}>
           <Image
-            src={member.headshotUrl}
+            src={
+              !member.headshotUrl || member.headshotUrl === ""
+                ? "https://firebasestorage.googleapis.com/v0/b/f3-global.firebasestorage.app/o/members-pictures%2Fdefault%20profile%20picture.jpg?alt=media&token=c3eb3836-5edf-42c5-bf4a-5a47ee5ba1df"
+                : member.headshotUrl
+            }
             alt={`${member.name} headshot image`}
             fill
+            sizes="250px"
             className="object-cover object-center bg-cover bg-no-repeat bg-center rounded-[250px] "
+            unoptimized
           />
         </div>
         <div className="flex flex-col items-start gap-[10px] self-stretch">

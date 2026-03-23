@@ -94,7 +94,7 @@ export function HighlightCard({
         >
           <p
             className={`font-dm-sans font-semibold leading-[150%] text-[#1e1e1e] line-clamp-2 ${
-              isActive ? "text-[24px]" : "text-[16.5px]"
+              isActive ? "text-[20px]" : "text-[16.5px]"
             }`}
           >
             "{highlight.quoteText}"

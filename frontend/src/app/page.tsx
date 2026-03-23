@@ -61,97 +61,93 @@ export default function Home() {
   }, [containerWidth]);
 
   return (
-    <>
-      <div className="relative w-full bg-white flex flex-col">
-        {/* hero */}
-        <div className="relative flex flex-col items-center h-screen">
-          {/* map gradient */}
-          <div className="absolute top-0 left-0 w-full h-screen pointer-events-none select-none overflow-hidden">
-            <div className="absolute -top-[35%] -right-[55%] w-[120%] h-[120%] opacity-25">
-              <Image
-                src="/imgs/worldmap.png"
-                alt="World Map Background"
-                fill
-                className="object-cover"
-                priority
-                style={{
-                  objectPosition: "100% 30%",
-                }}
-              />
-            </div>
-
-            <div
-              className="absolute inset-0"
+    <div className="relative w-full bg-white flex flex-col overflow-hidden">
+      {/* hero */}
+      <div className="relative flex flex-col items-center min-h-screen">
+        {/* map gradient */}
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none select-none overflow-hidden">
+          <div className="absolute -top-[35%] -right-[55%] w-[120%] h-[120%] opacity-25">
+            <Image
+              src="/imgs/worldmap.png"
+              alt="World Map Background"
+              fill
+              className="object-cover"
+              priority
               style={{
-                background:
-                  "linear-gradient(197.05deg, rgba(107, 53, 53, 0) 12.21%, #FFFFFF 68.32%)",
+                objectPosition: "100% 30%",
               }}
             />
           </div>
-          {/* hero text */}
-          <div className="relative flex flex-col self-stretch px-[100px] pt-[80px] justify-center items-start gap-[32px]">
-            <p className="font-ethic text-[120px] text-[#172447] font-light [font-feature-settings:'dlig'_on] font-[300] leading-[110px]">
-              <span className="block italic">Empowering</span>
-              <span className="block">Small</span>
-              <span className="block">Businesses</span>
-            </p>
-            <div className="flex w-[754px] h-[74px] flex-col justify-center">
-              <p className="font-dm-sans text-[#5D5D5D] text-[20px] font-normal font-[400] leading-[32px]">
-                Join us in our mission to foster economic growth and financial inclusion for
-                underserved communities worldwide.
-              </p>
-            </div>
-          </div>
-          {/* buttons */}
-          <div className="relative flex flex-inline items-center gap-[30px] mt-[60px]">
-            <Button
-              text="become a client"
-              onClick_link="/clients"
-              className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] [&_p]:uppercase [&_p]:font-semibold cursor-pointer"
-              textClassName="text-white"
-            />
-            <Button
-              text="join as a member"
-              onClick_link="/members"
-              className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-white border-[1.5px] border-[#C7C7C7] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#C7C7C7] hover:border-black [&_p]:text-[#172447] [&_p]:uppercase [&_p]:font-semibold cursor-pointer"
-            />
-          </div>
-          {/* city scrolling */}
-          <div ref={containerRef} className="w-full mt-[67px] overflow-hidden flex">
-            <div className="flex animate-marquee whitespace-nowrap">
-              {repeated.map((city) => (
-                <div key={city.uniqueKey} className="flex items-center">
-                  <span className="text-[#5D5D5D] text-[32px] leading-[32px] font-ethic font-light italic [font-feature-settings:'dlig'_on]">
-                    {city.city}
-                  </span>
-                  <span className="text-[#5D5D5D] text-[32px] leading-[32px] mx-6">•</span>
-                </div>
-              ))}
-            </div>
-          </div>
+
+          <div
+            className="absolute inset-0"
+            style={{
+              background: "linear-gradient(197.05deg, rgba(107, 53, 53, 0) 12.21%, #FFFFFF 68.32%)",
+            }}
+          />
         </div>
-        {/* mission */}
-        <div className="flex flex-col w-full pt-[100px] px-[200px] pb-[100px] items-center gap-[50px]">
-          <h2 className="text-[#172447] text-[96px] leading-[1.5] font-ethic font-light italic">
-            Mission
-          </h2>
-          <p className="text-[#1E1E1E] text-center font-dm text-[24px] font-normal leading-[32px] self-stretch">
-            Microfinancing is transforming lives across continents, empowering{" "}
-            <span className="text-[#012060] font-bold">millions</span> with access to essential
-            financial services. Join us in our mission to foster{" "}
-            <span className="text-[#012060] font-bold">economic growth</span> and financial
-            inclusion for <span className="text-[#012060] font-bold">underserved communities</span>{" "}
-            worldwide.
+        {/* hero text */}
+        <div className="relative flex flex-col self-stretch px-[100px] pt-[80px] justify-center items-start gap-[32px]">
+          <p className="font-ethic text-[120px] text-[#172447] font-light [font-feature-settings:'dlig'_on] font-[300] leading-[110px]">
+            <span className="block italic">Empowering</span>
+            <span className="block">Small</span>
+            <span className="block">Businesses</span>
           </p>
+          <div className="flex w-[754px] h-[74px] flex-col justify-center">
+            <p className="font-dm-sans text-[#5D5D5D] text-[20px] font-normal font-[400] leading-[32px]">
+              Join us in our mission to foster economic growth and financial inclusion for
+              underserved communities worldwide.
+            </p>
+          </div>
         </div>
-        <ImpactSection title="Building Futures Together" />
-        <ServicesSection />
-        <Carousel data={DonorsClientsMembersCarouselData} />
-        <Highlights />
-        <div id="contact">
-          <ContactUs />
+        {/* buttons */}
+        <div className="relative flex flex-inline items-center gap-[30px] mt-[60px]">
+          <Button
+            text="become a client"
+            onClick_link="/clients"
+            className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-[#172447] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] [&_p]:uppercase [&_p]:font-semibold cursor-pointer"
+            textClassName="text-white"
+          />
+          <Button
+            text="join as a member"
+            onClick_link="/members"
+            className="flex justify-center items-center gap-[10px] px-[20px] py-[15px] bg-white border-[1.5px] border-[#C7C7C7] rounded-[99px] transition-colors duration-450 ease-in-out hover:bg-[#C7C7C7] hover:border-black [&_p]:text-[#172447] [&_p]:uppercase [&_p]:font-semibold cursor-pointer"
+          />
+        </div>
+        {/* city scrolling */}
+        <div ref={containerRef} className="w-full mt-[67px] overflow-hidden flex">
+          <div className="flex animate-marquee whitespace-nowrap">
+            {repeated.map((city) => (
+              <div key={city.uniqueKey} className="flex items-center">
+                <span className="text-[#5D5D5D] text-[32px] leading-[32px] font-ethic font-light italic [font-feature-settings:'dlig'_on]">
+                  {city.city}
+                </span>
+                <span className="text-[#5D5D5D] text-[32px] leading-[32px] mx-6">•</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </>
+      {/* mission */}
+      <div className="flex flex-col w-full pt-[100px] px-[200px] pb-[100px] items-center gap-[50px]">
+        <h2 className="text-[#172447] text-[96px] leading-[1.5] font-ethic font-light italic">
+          Mission
+        </h2>
+        <p className="text-[#1E1E1E] text-center font-dm text-[20px] font-normal leading-[32px] max-w-[870px]">
+          Microfinancing is transforming lives across continents, empowering{" "}
+          <span className="text-[#012060] font-bold">millions</span> with access to essential
+          financial services. Join us in our mission to foster{" "}
+          <span className="text-[#012060] font-bold">economic growth</span> and financial inclusion
+          for <span className="text-[#012060] font-bold">underserved communities</span> worldwide.
+        </p>
+      </div>
+      <ImpactSection title="Building Futures Together" />
+      <ServicesSection />
+      <Carousel data={DonorsClientsMembersCarouselData} />
+      <Highlights />
+      <div id="contact">
+        <ContactUs />
+      </div>
+    </div>
   );
 }
