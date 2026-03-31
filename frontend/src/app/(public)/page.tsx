@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { DonorsClientsMembersCarouselData } from "@/app/carouselData";
+import { DonorsClientsMembersCarouselData } from "@/app/(public)/carouselData";
 import { Button } from "@/components/button";
 import { Carousel } from "@/components/Carousel";
 import { ContactUs } from "@/components/ContactUs";
