@@ -16,7 +16,7 @@ const ClientsStory: React.FC<ClientStoryProps> = ({ image, description, onShowMo
       className="flex items-stretch gap-[50px] p-[50px] rounded-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.25)] w-[1147px] mb-[50px] mt-5 mx-auto cursor-pointer"
     >
       {/* Image Section */}
-      <div className="relative flex-shrink-0 w-[546px]">
+      <div className="relative flex-shrink-0 w-[546px] aspect-video ml-[-50px]">
         <Image src={image} alt="Client highlight" fill className="rounded-[10px] object-contain" />
       </div>
 
