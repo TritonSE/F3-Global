@@ -32,9 +32,9 @@ const ClientsStoryOverall: React.FC<ClientStoryProps> = ({ image, description, f
   };
 
   return (
-    <div className="flex justify-center">
-      <div className="mt-50px mb-50px" style={{ width: "1347px" }}>
-        <h1 className="text-[48px] font-[500] leading-[150%] tracking-[-0.96px] font-['DM Sans'] text-[var(--F3-Blue,#172447)] mb-40px">
+    <div className="w-full">
+      <div className="py-[50px] px-[100px]">
+        <h1 className="text-[48px] font-[500] leading-[150%] tracking-[-0.96px] font-['DM Sans'] text-[var(--F3-Blue,#172447)] mb-[80px]">
           Real Impact, Real Stories
         </h1>
         <div
