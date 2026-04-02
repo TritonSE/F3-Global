@@ -168,7 +168,7 @@ export default function Login() {
                 `}
                   >
                     <input
-                      className={`bg-transparent outline-none w-full font-dm-sans text-[24px] font-normal font-[500] leading-[1.5] tracking-[-0.48px]
+                      className={`bg-transparent outline-none w-full font-dm-sans text-[24px] font-[500] leading-[1.5] tracking-[-0.48px]
                     ${email.length > 0 ? "text-black" : "text-[#C7C7C7]"}
                   `}
                       type="email"
@@ -196,7 +196,7 @@ export default function Login() {
                     type="button"
                     disabled
                     className="flex w-full py-[10px] px-[20px] justify-center items-center gap-[10px] rounded-[99px] bg-[#3BB966] cursor-not-allowed"
-                    textClassName="text-white font-dm-sans text-[24px] font-normal font-[500] leading-[1.5] tracking-[-0.48px]"
+                    textClassName="text-white font-dm-sans text-[24px] font-[500] leading-[1.5] tracking-[-0.48px]"
                     trailingIcon={
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -240,17 +240,17 @@ export default function Login() {
                     text="Send Reset Link"
                     type="submit"
                     className="flex w-full py-[10px] px-[20px] justify-center items-center gap-[10px] rounded-[99px] bg-[#172447] cursor-pointer hover:bg-[#1169B0] transition-colors"
-                    textClassName="text-white font-dm-sans text-[24px] font-normal font-[500] leading-[1.5] tracking-[-0.48px]"
+                    textClassName="text-white font-dm-sans text-[24px] font-[500] leading-[1.5] tracking-[-0.48px]"
                   />
                 )}
                 <Button
                   text="Cancel"
                   type="button"
                   className="flex w-full py-[10px] px-[20px] justify-center items-center gap-[10px] rounded-[99px] bg-[#F4F4F4] cursor-pointer hover:bg-[#C7C7C7] hover:border-black transition-colors border border-[#C7C7C7] mt-[-10px]"
-                  textClassName="text-black font-dm-sans text-[24px] font-normal font-[500] leading-[1.5] tracking-[-0.48px]"
+                  textClassName="text-black font-dm-sans text-[24px] font-[500] leading-[1.5] tracking-[-0.48px]"
                   onClick={() => toggleForgot(false)}
                 />
-                <p className="w-[335px] text-[#5D5D5D] text-center font-dm-sans text-[12px] font-normal font-[400] leading-[16px] mt-[15px]">
+                <p className="w-[335px] text-[#5D5D5D] text-center font-dm-sans text-[12px] font-[400] leading-[16px] mt-[15px]">
                   Don’t know the login? Contact info@f3global.org if you think this is a mistake.
                 </p>
               </form>
@@ -273,7 +273,7 @@ export default function Login() {
                 `}
                   >
                     <input
-                      className={`bg-transparent outline-none w-full font-dm-sans text-[24px] font-normal font-[500] leading-[1.5] tracking-[-0.48px]
+                      className={`bg-transparent outline-none w-full font-dm-sans text-[24px] font-[500] leading-[1.5] tracking-[-0.48px]
                     ${email.length > 0 ? "text-black" : "text-[#C7C7C7]"}
                   `}
                       type="email"
@@ -303,7 +303,7 @@ export default function Login() {
                 `}
                   >
                     <input
-                      className={`bg-transparent outline-none w-full font-dm-sans text-[24px] font-normal font-[500] leading-[1.5] tracking-[-0.48px]
+                      className={`bg-transparent outline-none w-full font-dm-sans text-[24px] font-[500] leading-[1.5] tracking-[-0.48px]
                     ${password.length > 0 ? "text-black" : "text-[#C7C7C7]"}
                   `}
                       type="password"
@@ -327,7 +327,7 @@ export default function Login() {
 
                   <div className="flex w-[514px] height-[16px] justify-center items-center mt-[-20px]">
                     <p
-                      className="flex-[1_0_0] text-[#5D5D5D] text-right font-dm-sans text-[12px] font-normal font-[400] leading-[16px] cursor-pointer hover:text-[#A5D0F2] transition-colors"
+                      className="flex-[1_0_0] text-[#5D5D5D] text-right font-dm-sans text-[12px] font-[400] leading-[16px] cursor-pointer hover:text-[#A5D0F2] transition-colors"
                       onClick={() => toggleForgot(true)}
                     >
                       Forgot password?
@@ -340,11 +340,11 @@ export default function Login() {
                   text="Log In"
                   type="submit"
                   className="flex w-full py-[10px] px-[20px] justify-center items-center gap-[10px] rounded-[99px] bg-[#172447] cursor-pointer hover:bg-[#1169B0] transition-colors"
-                  textClassName="text-white font-dm-sans text-[24px] font-normal font-[500] leading-[1.5] tracking-[-0.48px]"
+                  textClassName="text-white font-dm-sans text-[24px] font-[500] leading-[1.5] tracking-[-0.48px]"
                 />
               </form>
 
-              <p className="w-[335px] text-[#5D5D5D] text-center font-dm-sans text-[12px] font-normal font-[400] leading-[16px]">
+              <p className="w-[335px] text-[#5D5D5D] text-center font-dm-sans text-[12px] font-[400] leading-[16px]">
                 Don’t know the login? Contact info@f3global.org if you think this is a mistake.
               </p>
             </>
