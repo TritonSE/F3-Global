@@ -1,15 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { FooterMiniBtn } from "./FooterMiniBtn";
 
 export const Footer = function Footer() {
   const router = useRouter();
-  const pathname = usePathname();
-
-  if (pathname === "/admin-portal") return null;
 
   // looks for header tags that contain `contact`
   const handleContactClick = () => {

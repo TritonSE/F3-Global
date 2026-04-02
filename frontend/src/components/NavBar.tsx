@@ -320,8 +320,6 @@ export default function NavBar() {
     };
   }, [pathname]);
 
-  if (pathname === "/admin-portal") return null;
-
   const navHeight = 97;
 
   const handleToggleDropdown = () => {
