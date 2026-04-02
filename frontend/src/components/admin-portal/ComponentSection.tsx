@@ -15,9 +15,9 @@ export const ComponentSection = function ComponentSection({
   href,
 }: ComponentSectionProps) {
   return (
-    <div className="flex p-[10px] justify-center items-center gap-[10px] rounded-2xl border-[1px] border-[#F4F4F4]">
+    <div className="flex p-[10px] justify-center items-center gap-[10px] rounded-2xl border-[1px] border-[#F4F4F4] cursor-pointer transition-all duration-100 ease-in hover:shadow-xl">
       <div
-        className="flex flex-col w-[290px] rounded-2xl border-[1px] border-[#D9D9D9] cursor-pointer"
+        className="flex flex-col w-[290px] rounded-2xl border-[1px] border-[#D9D9D9] "
         onClick={() => (window.location.href = href)}
       >
         <Image
