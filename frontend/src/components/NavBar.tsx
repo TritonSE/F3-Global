@@ -297,8 +297,6 @@ export default function NavBar() {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  if (pathname === "/login") return null;
-
   useEffect(() => {
     if (!isDropdownOpen) {
       return;
@@ -321,6 +319,8 @@ export default function NavBar() {
       }
     };
   }, [pathname]);
+
+  if (pathname === "/login") return null;
 
   const navHeight = 97;
 
