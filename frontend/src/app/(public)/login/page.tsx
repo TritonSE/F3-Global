@@ -26,9 +26,11 @@ export default function Login() {
   const [passwordError, setPasswordError] = useState("");
   const [isForgot, setForgot] = useState(false);
   const [firebaseError, setFirebaseError] = useState("");
-  const [resetSent, setResetSent] = useState(false);
+  const [resetPhase, setResetPhase] = useState<"idle" | "green" | "cooldown">("idle");
   const [resetInitiated, setResetInitiated] = useState(false);
-  const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [cooldownSecsLeft, setCooldownSecsLeft] = useState(0);
+  const greenTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const cooldownIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -46,9 +48,7 @@ export default function Login() {
     setEmailError("");
     setPasswordError("");
     setFirebaseError("");
-    setResetSent(false);
     setResetInitiated(false);
-    if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
   };
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -84,7 +84,7 @@ export default function Login() {
 
   const handleForgot = (e: React.FormEvent) => {
     e.preventDefault();
-    if (resetSent) return;
+    if (resetPhase !== "idle") return;
 
     let valid = true;
 
@@ -102,12 +102,24 @@ export default function Login() {
 
     void sendPasswordResetEmail(auth, email).catch(() => {});
 
-    setResetSent(true);
+    setResetPhase("green");
     setResetInitiated(true);
-    if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
-    resetTimerRef.current = setTimeout(() => {
-      setResetSent(false);
-    }, 60000);
+
+    greenTimerRef.current = setTimeout(() => {
+      setResetPhase("cooldown");
+      setCooldownSecsLeft(58);
+
+      cooldownIntervalRef.current = setInterval(() => {
+        setCooldownSecsLeft((prev) => {
+          if (prev <= 1) {
+            clearInterval(cooldownIntervalRef.current!);
+            setResetPhase("idle");
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }, 2000);
   };
 
   return (
@@ -168,7 +180,7 @@ export default function Login() {
                 `}
                   >
                     <input
-                      className={`bg-transparent outline-none w-full font-dm-sans text-[24px] font-[500] leading-[1.5] tracking-[-0.48px]
+                      className={`bg-transparent outline-none w-full font-dm-sans text-[24px] font-[500] leading-[1.5] tracking-[-0.48px] cursor-pointer 
                     ${email.length > 0 ? "text-black" : "text-[#C7C7C7]"}
                   `}
                       type="email"
@@ -189,8 +201,8 @@ export default function Login() {
                     )}
                   </div>
                 </div>
-                <hr className="w-[514px] bg-[#C7C7C7]" />
-                {resetSent ? (
+                <hr className="w-[514px] border-[#C7C7C7]" />
+                {resetPhase === "green" ? (
                   <Button
                     text="Reset Link Sent"
                     type="button"
@@ -235,6 +247,19 @@ export default function Login() {
                       </svg>
                     }
                   />
+                ) : resetPhase === "cooldown" ? (
+                  <Button
+                    text="Resend Link"
+                    type="button"
+                    disabled
+                    className="flex w-full py-[10px] px-[20px] justify-center items-center gap-[10px] rounded-[99px] bg-[#C7C7C7] cursor-not-allowed"
+                    textClassName="text-white font-dm-sans text-[24px] font-[500] leading-[1.5] tracking-[-0.48px]"
+                    trailingIcon={
+                      <span className="font-dm-sans text-[24px] font-[500] leading-[1.5] tracking-[-0.48px] text-white">
+                        {`${Math.floor(cooldownSecsLeft / 60)}:${String(cooldownSecsLeft % 60).padStart(2, "0")}`}
+                      </span>
+                    }
+                  />
                 ) : (
                   <Button
                     text="Send Reset Link"
@@ -273,7 +298,7 @@ export default function Login() {
                 `}
                   >
                     <input
-                      className={`bg-transparent outline-none w-full font-dm-sans text-[24px] font-[500] leading-[1.5] tracking-[-0.48px]
+                      className={`bg-transparent outline-none w-full font-dm-sans text-[24px] font-[500] leading-[1.5] tracking-[-0.48px] cursor-pointer 
                     ${email.length > 0 ? "text-black" : "text-[#C7C7C7]"}
                   `}
                       type="email"
@@ -303,7 +328,7 @@ export default function Login() {
                 `}
                   >
                     <input
-                      className={`bg-transparent outline-none w-full font-dm-sans text-[24px] font-[500] leading-[1.5] tracking-[-0.48px]
+                      className={`bg-transparent outline-none w-full font-dm-sans text-[24px] font-[500] leading-[1.5] tracking-[-0.48px] cursor-pointer 
                     ${password.length > 0 ? "text-black" : "text-[#C7C7C7]"}
                   `}
                       type="password"
@@ -327,13 +352,13 @@ export default function Login() {
 
                   <div className="flex w-[514px] height-[16px] justify-center items-center mt-[-20px]">
                     <p
-                      className="flex-[1_0_0] text-[#5D5D5D] text-right font-dm-sans text-[12px] font-[400] leading-[16px] cursor-pointer hover:text-[#A5D0F2] transition-colors"
+                      className="flex-[1_0_0] text-[#5D5D5D] text-right font-dm-sans text-[12px] font-[400] leading-[16px] cursor-pointer hover:text-[#A5D0F2] transition-colors cursor-pointer"
                       onClick={() => toggleForgot(true)}
                     >
-                      Forgot password?
+                      Forgot Password?
                     </p>
                   </div>
-                  <hr className="w-[514px] bg-[#C7C7C7]" />
+                  <hr className="w-[514px] border-[#C7C7C7] mb-[15px]" />
                 </div>
 
                 <Button
@@ -353,14 +378,19 @@ export default function Login() {
 
         {/* F3GLOBAL */}
         <div
-          className="absolute -bottom-[80px] left-[35px] w-[2000px] h-[400px] bg-white/10 backdrop-blur-[10px] z-0 pointer-events-none"
+          className="absolute -bottom-[80px] left-0 w-full h-[400px] bg-white/10 backdrop-blur-[10px] z-0 pointer-events-none"
           style={{ clipPath: "url(#text-clip)" }}
         ></div>
 
-        <svg className="absolute -bottom-[80px] left-[35px] z-0 select-none pointer-events-none w-full h-[400px] overflow-visible">
+        <svg className="absolute -bottom-[80px] left-0 z-0 select-none pointer-events-none w-full h-[400px] overflow-visible">
           <defs>
             <clipPath id="text-clip">
-              <text x="0" y="300" className="font-['Ethic_New'] text-[305px] font-light">
+              <text
+                x="50%"
+                y="300"
+                textAnchor="middle"
+                className="font-['Ethic_New'] text-[305px] font-light"
+              >
                 <tspan fontStyle="italic">F3</tspan>
                 <tspan fontStyle="normal">GLOBAL</tspan>
               </text>
@@ -368,8 +398,9 @@ export default function Login() {
           </defs>
 
           <text
-            x="0"
+            x="50%"
             y="300"
+            textAnchor="middle"
             className="font-['Ethic_New'] text-[305px] font-light"
             fill="transparent"
             stroke="#FFF"
