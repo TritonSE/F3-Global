@@ -13,89 +13,18 @@ import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
-  useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { getAllCities, updateCities } from "@/api/cities";
+import { DraggableSortablePill } from "@/components/admin-portal/DraggableSortablePill";
+import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { auth } from "@/firebase/firebase";
 
 type CityItem = { id: string; name: string };
-
-function DraggableCityPill({
-  city,
-  onNameChange,
-  onDelete,
-}: {
-  city: CityItem;
-  onNameChange: (id: string, name: string) => void;
-  onDelete: (id: string) => void;
-}) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-    id: city.id,
-  });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    opacity: isDragging ? 0.5 : 1,
-  };
-
-  return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className="bg-white border border-[#C7C7C7] flex gap-[10px] items-center px-[10px] py-[5px] rounded-[10px]"
-    >
-      <button
-        type="button"
-        className="shrink-0 size-[24px] flex items-center justify-center cursor-grab text-[#5D5D5D] touch-none"
-        aria-label="Drag to reorder"
-        {...attributes}
-        {...listeners}
-      >
-        <svg viewBox="0 0 24 24" fill="currentColor" className="size-[24px]">
-          <path d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-        </svg>
-      </button>
-
-      <input
-        aria-label={`City name: ${city.name}`}
-        className="bg-[#F4F4F4] border border-[#C7C7C7] px-[15px] py-[10px] rounded-[8px] w-[337px] font-dm-sans text-[16px] text-[#1e1e1e] outline-none"
-        value={city.name}
-        onChange={(e) => onNameChange(city.id, e.target.value)}
-      />
-
-      <button
-        type="button"
-        className="shrink-0 size-[24px] flex items-center justify-center text-[#5D5D5D] hover:text-[#F26262] cursor-pointer transition-colors"
-        aria-label="Delete city"
-        onClick={() => onDelete(city.id)}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <polyline points="3 6 5 6 21 6" />
-          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-          <line x1="10" y1="11" x2="10" y2="17" />
-          <line x1="14" y1="11" x2="14" y2="17" />
-        </svg>
-      </button>
-    </div>
-  );
-}
 
 export default function CitiesEditor() {
   const router = useRouter();
@@ -196,9 +125,14 @@ export default function CitiesEditor() {
           type="button"
           aria-label="Go back to admin portal"
           onClick={() => (hasChanges ? setShowBackDialog(true) : router.push("/admin-portal"))}
-          className="flex gap-[10px] items-center cursor-pointer"
+          className="group flex gap-[10px] items-center cursor-pointer py-[12px] pr-[15px] transition-transform duration-350 hover:-translate-x-2"
         >
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="#1e1e1e" className="size-[24px]">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="#1e1e1e"
+            className="size-[24px] transition-transform duration-350 group-hover:-translate-x-1"
+          >
             <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
           </svg>
           <span className="font-dm-sans font-semibold text-[16px] text-[#1E1E1E]">BACK</span>
@@ -242,12 +176,14 @@ export default function CitiesEditor() {
                 strategy={verticalListSortingStrategy}
               >
                 {cities.map((city) => (
-                  <DraggableCityPill
-                    key={city.id}
-                    city={city}
-                    onNameChange={handleNameChange}
-                    onDelete={handleDelete}
-                  />
+                  <DraggableSortablePill key={city.id} id={city.id} onDelete={handleDelete}>
+                    <input
+                      aria-label={`Item: ${city.name}`}
+                      className="bg-[#F4F4F4] border border-[#C7C7C7] px-[15px] py-[10px] rounded-[8px] w-full font-dm-sans text-[16px] text-[#1e1e1e] outline-none"
+                      value={city.name}
+                      onChange={(e) => handleNameChange(city.id, e.target.value)}
+                    />
+                  </DraggableSortablePill>
                 ))}
               </SortableContext>
             </DndContext>
@@ -255,7 +191,7 @@ export default function CitiesEditor() {
               <button
                 type="button"
                 onClick={handleAddCity}
-                className={`shrink-0 size-[24px] flex items-center justify-center text-[#5D5D5D] ${
+                className={`shrink-0 size-[24px] flex items-center justify-center text-[#C7C7C7] ${
                   addInput.length === 0 ? "cursor-not-allowed" : "cursor-pointer"
                 }`}
                 aria-label="Add city"
@@ -266,7 +202,7 @@ export default function CitiesEditor() {
               </button>
               <input
                 aria-label="New city name"
-                className="bg-[#F4F4F4] border border-[#C7C7C7] px-[15px] py-[10px] rounded-[8px] w-[337px] font-dm-sans text-[16px] text-[#5D5D5D] outline-none"
+                className="bg-[#F4F4F4] border border-[#C7C7C7] px-[15px] py-[10px] rounded-[8px] w-[337px] font-dm-sans text-[16px] text-[#5D5D5D] font-normal outline-none"
                 placeholder="Add City"
                 value={addInput}
                 onChange={(e) => setAddInput(e.target.value)}
@@ -314,79 +250,28 @@ export default function CitiesEditor() {
         </div>
       </div>
 
-      {showBackDialog && (
-        <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-          onClick={() => setShowBackDialog(false)}
-        >
-          <div
-            className="bg-white border border-[#C7C7C7] flex flex-col gap-[25px] p-[25px] rounded-[10px] w-[450px]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2 className="font-dm-sans font-medium text-[24px] text-[#1E1E1E] tracking-[-0.48px]">
-              Are You Sure?
-            </h2>
-            <p className="font-dm-sans text-[16px] text-[#5D5D5D] leading-[24px]">
-              Are you sure you want to go back? This will cancel all your changes. This action
-              cannot be undone.
-            </p>
-            <div className="flex gap-[25px] items-center justify-end">
-              <button
-                type="button"
-                onClick={() => setShowBackDialog(false)}
-                className="bg-[#F4F4F4] border border-[#C7C7C7] flex items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans text-[16px] text-[#1E1E1E] hover:bg-[#ECECEC] transition-colors"
-              >
-                Stay
-              </button>
-              <button
-                type="button"
-                onClick={() => router.push("/admin-portal")}
-                className="bg-[#B93B3B] flex items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans font-semibold text-[16px] text-white hover:bg-[#A03030] transition-colors"
-              >
-                YES, GO BACK
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ConfirmationDialog
+        open={showBackDialog}
+        onClose={() => setShowBackDialog(false)}
+        title="Are You Sure?"
+        body="Are you sure you want to go back? Your changes will not be saved. This action cannot be de undone."
+        cancelLabel="Cancel"
+        confirmLabel="YES, GO BACK"
+        onConfirm={() => router.push("/admin-portal")}
+      />
 
-      {showRevertDialog && (
-        <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-          onClick={() => setShowRevertDialog(false)}
-        >
-          <div
-            className="bg-white border border-[#C7C7C7] flex flex-col gap-[25px] p-[25px] rounded-[10px] w-[450px]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2 className="font-dm-sans font-medium text-[24px] text-[#1E1E1E] tracking-[-0.48px]">
-              Are You Sure?
-            </h2>
-            <p className="font-dm-sans text-[16px] text-[#5D5D5D] leading-[24px]">
-              Are you sure you want to revert all changes made? This action cannot be undone.
-            </p>
-            <div className="flex gap-[25px] items-center justify-end">
-              <button
-                type="button"
-                onClick={() => setShowRevertDialog(false)}
-                className="bg-[#F4F4F4] border border-[#C7C7C7] flex items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans text-[16px] text-[#1E1E1E] hover:bg-[#ECECEC] transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  handleRevert();
-                  setShowRevertDialog(false);
-                }}
-                className="bg-[#B93B3B] flex items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans font-semibold text-[16px] text-white hover:bg-[#A03030] transition-colors"
-              >
-                YES, REVERT
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ConfirmationDialog
+        open={showRevertDialog}
+        onClose={() => setShowRevertDialog(false)}
+        title="Are You Sure?"
+        body="Are you sure you want to revert all changes made? This action cannot be undone."
+        cancelLabel="Cancel"
+        confirmLabel="YES, REVERT"
+        onConfirm={() => {
+          handleRevert();
+          setShowRevertDialog(false);
+        }}
+      />
     </div>
   );
 }
