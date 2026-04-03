@@ -18,7 +18,7 @@ export const Section = function Section({ name, components }: SectionProps) {
         <p className="text-[#172447] text-[24px] font-bold tracking-[3px] ">{name}</p>
         <ScrollTopButton />
       </div>
-      <div className="flex gap-[30px] items-start">
+      <div className="flex flex-wrap gap-[30px] items-start">
         {components.map((c) => (
           <ComponentSection key={c.name} {...c} />
         ))}

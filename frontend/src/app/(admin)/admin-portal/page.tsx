@@ -26,6 +26,13 @@ export default function AdminPortal() {
 
   const AboutComponents = [
     {
+      name: "Interactive Timeline",
+      description:
+        "Edit the year, description, and image of each of the five slots available in the timeline component that shows F3’s growth.",
+      tags: ["About Us"],
+      href: "/interactive-timeline-editor",
+    },
+    {
       name: "Clients Logos",
       description: "Replace client logos, reorder by dragging, or add/remove logos.",
       tags: ["About Us"],
@@ -39,9 +46,8 @@ export default function AdminPortal() {
     },
     {
       name: "Affiliation Logos",
-      description:
-        "Edit, add, or remove a testimonial from the Clients Carousel which rotates between a set of three client testimonials.",
-      tags: ["Homepage", "About Us", "Donors"],
+      description: "Replace affiliation logos, reorder by dragging, or add/remove logos.",
+      tags: ["About Us"],
       href: "/affiliation-logos-editor",
     },
   ];
