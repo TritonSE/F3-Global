@@ -320,6 +320,8 @@ export default function NavBar() {
     };
   }, [pathname]);
 
+  if (pathname === "/login") return null;
+
   const navHeight = 97;
 
   const handleToggleDropdown = () => {
