@@ -30,7 +30,7 @@ export default function AdminPortal() {
       description:
         "Edit city names by clicking into the text box, reorder by dragging, or add/delete cities.",
       tags: ["Homepage"],
-      href: "/rotating-cities-editor",
+      href: "/cities-editor",
     },
     {
       name: "Impact Metrics",
