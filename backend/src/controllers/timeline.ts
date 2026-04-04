@@ -15,8 +15,12 @@ export const createTimeline: RequestHandler = async (req, res, next) => {
     const errors = validationResult(req);
     validationErrorParser(errors);
 
-    const { year, text, imageUrl } = req.body as { year: number; text: string; imageUrl: string };
-    const timeline = await Timeline.create({ year, text, imageUrl });
+    const { year, description, imageUrl } = req.body as {
+      year: number;
+      description: string;
+      imageUrl: string;
+    };
+    const timeline = await Timeline.create({ year, description, imageUrl });
     res.status(201).json(timeline);
   } catch (error) {
     next(error);
@@ -33,7 +37,7 @@ export const updateTimeline: RequestHandler = async (req, res, next) => {
     type IncomingTimelineItem = {
       _id?: string;
       year: number;
-      text: string;
+      description: string;
       imageUrl: string;
     };
 
@@ -85,7 +89,7 @@ export const updateTimeline: RequestHandler = async (req, res, next) => {
         ops.push({
           updateOne: {
             filter: { _id: item._id },
-            update: { year: item.year, text: item.text, imageUrl: item.imageUrl },
+            update: { year: item.year, description: item.description, imageUrl: item.imageUrl },
           },
         });
       } else {
@@ -94,7 +98,7 @@ export const updateTimeline: RequestHandler = async (req, res, next) => {
           insertOne: {
             document: {
               year: item.year,
-              text: item.text,
+              description: item.description,
               imageUrl: item.imageUrl,
             } as unknown as timelineModel,
           },

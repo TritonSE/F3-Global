@@ -4,13 +4,13 @@ import type { Document } from "mongoose";
 
 export type timelineModel = {
   year: number;
-  text: string;
+  description: string;
   imageUrl: string;
 } & Document;
 
 const timelineSchema = new Schema<timelineModel>({
   year: { type: Number, required: true, unique: true },
-  text: { type: String, required: true },
+  description: { type: String, required: true },
   imageUrl: { type: String, required: true },
 });
 

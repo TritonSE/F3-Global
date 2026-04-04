@@ -22,11 +22,11 @@ export const createTimelineValidator: ValidationChain[] = [
 
       return true;
     }),
-  body("text")
+  body("description")
     .exists()
-    .withMessage("text is required")
+    .withMessage("description is required")
     .isString()
-    .withMessage("text must be a string"),
+    .withMessage("description must be a string"),
   body("imageUrl")
     .exists({ checkFalsy: true })
     .withMessage("Image URL is required")
@@ -54,12 +54,12 @@ export const updateTimelineValidator: ValidationChain[] = [
     .isInt({ min: 1 })
     .withMessage("year must be a number greater than 0")
     .bail(),
-  body("*.text")
+  body("*.description")
     .exists()
-    .withMessage("text is required")
+    .withMessage("description is required")
     .bail()
     .isString()
-    .withMessage("text must be a string")
+    .withMessage("description must be a string")
     .bail(),
   body("*.imageUrl")
     .exists({ checkFalsy: true })
