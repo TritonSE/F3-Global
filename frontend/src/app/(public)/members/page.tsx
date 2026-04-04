@@ -114,7 +114,7 @@ export default async function Members() {
         {/* Who We're Looking For Section*/}
         <div className="flex flex-col w-full py-[50px] gap-[100px] border-t border-[#F4F4F4]  overflow-hidden">
           {/* Section title*/}
-          <div className="flex flex-col gap-[20px] items-start px-[5vw]">
+          <div className="flex flex-col gap-[20px] items-start px-[100px]">
             <h2 className="text-[48px] font-medium self-stretch text-[#172447] tracking-[-0.96px]">
               Who We're Looking For
             </h2>

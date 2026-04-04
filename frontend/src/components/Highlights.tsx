@@ -53,7 +53,7 @@ export function Highlights() {
 
   return (
     <section className="relative flex w-full flex-col items-center gap-[50px] border-t border-[#f4f4f4] bg-white py-[50px] box-border">
-      <div className="flex w-[1309px] items-center justify-start">
+      <div className="flex w-full px-[100px] items-center justify-start">
         <h2 className="font-dm-sans text-[48px] font-medium leading-[150%] tracking-[-0.96px] text-[#172447]">
           Client Highlights
         </h2>
