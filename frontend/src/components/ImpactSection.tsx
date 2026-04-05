@@ -40,7 +40,7 @@ export const ImpactSection = ({ title = "Our Impact" }: ImpactSectionProps) => {
   const formattedDate = formatDate(lastUpdated);
 
   return (
-    <div className="relative z-20 w-full py-[75px] px-[5vw] flex gap-6 flex-col items-start border-t border-[#F4F4F4] bg-white shadow-[inset_0_-12px_10px_rgba(0,0,0,0.02)]">
+    <div className="relative z-20 w-full py-[50px] px-[100px] flex gap-6 flex-col items-start border-t border-[#F4F4F4] bg-white shadow-[inset_0_-12px_10px_rgba(0,0,0,0.02)]">
       <h3 className="text-[#172447] font-dm text-[48px] font-medium leading-[1.5] tracking-[-0.96px]">
         {title}
       </h3>

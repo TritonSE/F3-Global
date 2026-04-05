@@ -1,12 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { FooterMiniBtn } from "./FooterMiniBtn";
 
 export const Footer = function Footer() {
   const router = useRouter();
+  const pathname = usePathname();
+
+  if (pathname === "/login") return null;
   // looks for header tags that contain `contact`
   const handleContactClick = () => {
     const headings = Array.from(document.querySelectorAll("h1, h2, h3, h4, h5, h6"));
