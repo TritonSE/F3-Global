@@ -11,6 +11,7 @@ export type TimelineHeader = {
 export type TimelineItem = {
   year: number;
   description: string;
+  imageUrl: string;
 };
 
 export const TIMELINE_HEADER: TimelineHeader = {
@@ -21,26 +22,6 @@ export const TIMELINE_HEADER: TimelineHeader = {
 
 export const TIMELINE_INSTRUCTION = "Click on each year to explore our growth during that time.";
 
-export const TIMELINE_ITEMS: TimelineItem[] = [
-  {
-    year: 2015,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus dolor, pulvinar tempus commodo at. Lorem ipsum dolor sit amet, adipiscing elit. Etiam risus dolor pulvinar tempus commodo at.",
-  },
-  {
-    year: 2022,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus dolor, pulvinar tempus commodo at. Lorem ipsum dolor sit amet, adipiscing elit. Etiam risus dolor pulvinar tempus commodo at.",
-  },
-  {
-    year: 2026,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus dolor, pulvinar tempus commodo at. Lorem ipsum dolor sit amet, adipiscing elit. Etiam risus dolor pulvinar tempus commodo at.",
-  },
-];
-
-export const TIMELINE_IMAGES: TimelineImage[] = [
-  { src: "/imgs/timeline/Laptop-Image.jpg", alt: "Timeline photo 4" },
-  { src: "/imgs/timeline/People-working-Image.jpg", alt: "Timeline photo 2" },
-  { src: "/imgs/timeline/People-Talking-Image.jpg", alt: "Timeline photo 1" },
-];
+export type TimelineSectionProps = {
+  items: TimelineItem[];
+};

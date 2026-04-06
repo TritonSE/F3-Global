@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { getTimeline } from "@/api/timeline";
 import { Button } from "@/components/button";
 import { ClientCarousel } from "@/components/ClientCarousel";
 import { Highlights } from "@/components/Highlights";
@@ -9,7 +10,12 @@ import {
   TimelineSection,
 } from "@/components/timeline-section";
 
-export default function About() {
+export default async function About() {
+  const timelineItems = (await getTimeline()).map((item) => ({
+    year: item.year,
+    description: item.description,
+    imageUrl: item.imageUrl,
+  }));
   return (
     <div className="mx-auto flex flex-col justify-center bg-white w-full">
       <div className="flex h-[774px] px-[100px] justify-between items-center w-full">
@@ -76,7 +82,7 @@ export default function About() {
             </p>
           </div>
         </div>
-        <TimelineSection />
+        <TimelineSection items={timelineItems} />
       </div>
       <ClientCarousel />
       <Highlights />

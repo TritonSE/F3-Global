@@ -3,9 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { PhotoStack } from "./PhotoStack";
-import { TIMELINE_ITEMS } from "./types";
 
-export const TimelineSection = () => {
+import type { TimelineSectionProps } from "./types";
+
+export const TimelineSection = ({ items }: TimelineSectionProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const firstDotRef = useRef<HTMLDivElement>(null);
@@ -37,7 +38,7 @@ export const TimelineSection = () => {
     return () => window.removeEventListener("resize", updateLineStyle);
   }, [updateLineStyle]);
 
-  const lastIndex = TIMELINE_ITEMS.length - 1;
+  const lastIndex = items.length - 1;
 
   return (
     <section className="flex items-center justify-between bg-white py-[50px] max-w-[1440px] mx-auto w-full">
@@ -51,7 +52,7 @@ export const TimelineSection = () => {
 
         {/* Year entries with dots */}
         <div className="flex flex-col gap-[50px]">
-          {TIMELINE_ITEMS.map((item, index) => (
+          {items.map((item, index) => (
             <button
               key={item.year}
               onClick={() => setActiveIndex(index)}
@@ -78,7 +79,7 @@ export const TimelineSection = () => {
         </div>
       </div>
 
-      <PhotoStack activeIndex={activeIndex} />
+      <PhotoStack activeIndex={activeIndex} items={items} />
     </section>
   );
 };
