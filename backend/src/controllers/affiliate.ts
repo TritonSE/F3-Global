@@ -37,7 +37,7 @@ export const updateAffiliates: RequestHandler = async (req, res, next) => {
     const errors = validationResult(req);
     validationErrorParser(errors);
 
-    type IncomingAffiliate = { _id?: string; name: string; imageUrl: string; order?: number }; // type for affiliate data coming from client
+    type IncomingAffiliate = { _id?: string; name: string; imageUrl: string; order?: number };
     const incomingAffiliates = req.body as IncomingAffiliate[];
     const existingAffiliates: (IncomingAffiliate & { _id: mongoose.Types.ObjectId })[] =
       await Affiliate.find();
