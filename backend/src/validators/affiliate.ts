@@ -3,14 +3,14 @@ import {body, param} from "express-validator";
 //POST
 export const createAffiliateValidator = [
     body("name")
-        .exists()
+        .exists({checkFalsy: true})
         .withMessage("Name is required")
         .bail()
         .isString()
         .withMessage("Name must be a string"),
     
     body("imageUrl")
-        .exists()
+        .exists({checkFalsy: true})
         .withMessage("Image URL is required")
         .bail()
         .isURL()
@@ -29,18 +29,15 @@ export const updateAffiliatesValidator = [
         .withMessage("Body must be an array"),
 
     body("*.name")
-        .isString()
-        .withMessage("Name must be a string")
+        .exists({checkFalsy: true})
+        .withMessage("Name is required")
         .bail()
-        .notEmpty()
-        .withMessage("Name cannot be empty"),
+        .isString()
+        .withMessage("Name must be a string"),
         
     body("*.imageUrl")
-        .isString()
-        .withMessage("Image URL must be a string")
-        .bail()
-        .notEmpty()
-        .withMessage("Image URL cannot be empty")
+        .exists({checkFalsy: true})
+        .withMessage("Image URL is required")
         .bail()
         .isURL()
         .withMessage("Image URL must be a valid URL"),
