@@ -14,6 +14,7 @@ import faqRouter from "./routes/faq";
 import highlightsRouter from "./routes/highlights";
 import impactMetricRouter from "./routes/impact-metrics";
 import membersRouter from "./routes/members";
+import timelineRouter from "./routes/timeline";
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use("/api/faq", faqRouter);
 app.use("/api/colleges", collegeRoutes);
 app.use("/api/cities", citiesRouter);
 app.use("/api/affiliates", affiliatesRoutes);
+app.use("/api/timeline", timelineRouter);
 
 app.use(errorHandler);
 mongoose
