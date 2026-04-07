@@ -26,10 +26,18 @@ export async function getImpactMetric(): Promise<ImpactMetricResponse> {
 }
 
 export async function updateImpactMetric(metrics: ImpactMetric[]): Promise<void> {
+  const { auth } = await import("@/firebase/firebase");
+
+  const token = await auth.currentUser?.getIdToken();
+  if (!token) throw new Error("Not authenticated");
+
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const res = await fetch(`${backendUrl}/api/impact-metrics`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify({ metrics }),
   });
 
