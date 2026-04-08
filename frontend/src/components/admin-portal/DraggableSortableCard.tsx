@@ -9,9 +9,16 @@ type DraggableCollegeCardProps = {
   name: string;
   imageUrl: string;
   onDelete: (id: string) => void;
+  onReplace: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export function DraggableCollegeCard({ id, name, imageUrl, onDelete }: DraggableCollegeCardProps) {
+export function DraggableCollegeCard({
+  id,
+  name,
+  imageUrl,
+  onDelete,
+  onReplace,
+}: DraggableCollegeCardProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id,
   });
@@ -28,14 +35,19 @@ export function DraggableCollegeCard({ id, name, imageUrl, onDelete }: Draggable
       style={style}
       className="border border-[#C7C7C7] rounded-[10px] flex flex-col overflow-hidden p-[10px] gap-[10px] w-[314px] h-[250px]"
     >
-      <div className="w-full h-[164px] rounded-[9px] overflow-hidden flex items-center justify-center">
+      <div className="relative w-full h-[164px] group rounded-[9px] overflow-hidden flex items-center justify-center">
         <Image
           src={imageUrl}
           alt={name}
           width={294}
           height={164}
+          unoptimized
           className="object-contain w-full h-full"
         />
+        <label className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-black/60 transition-opacity cursor-pointer">
+          <input type="file" accept="image/*" className="hidden" onChange={onReplace} />
+          <p className="text-[16px] text-center text-white font-bold">REPLACE IMAGE</p>
+        </label>
       </div>
 
       <div className="flex items-center p-[10px]">

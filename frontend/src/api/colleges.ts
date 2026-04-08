@@ -1,6 +1,7 @@
 export type College = {
   name: string;
   imageUrl: string;
+  order: number;
 };
 
 export async function getAllColleges(): Promise<College[]> {

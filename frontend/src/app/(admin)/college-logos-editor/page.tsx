@@ -18,16 +18,25 @@ import {
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+  type StorageReference,
+} from "firebase/storage";
+import { storage } from "@/firebase/firebase";
 
 import type { College } from "@/api/colleges";
 
 import { getAllColleges, updateColleges } from "@/api/colleges";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { DraggableCollegeCard } from "@/components/admin-portal/DraggableSortableCard";
+import { AddCollegeDialog } from "@/components/admin-portal/AddCollegeDialog";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
 import { auth } from "@/firebase/firebase";
 
-type CollegeItem = { id: string; name: string; imageUrl: string };
+type CollegeItem = { id: string; name: string; imageUrl: string; file?: File };
 
 export default function CollegeLogosEditorPage() {
   const router = useRouter();
@@ -37,9 +46,7 @@ export default function CollegeLogosEditorPage() {
   const [colleges, setColleges] = useState<CollegeItem[]>([]);
   const [showRevertDialog, setShowRevertDialog] = useState(false);
   const [showBackDialog, setShowBackDialog] = useState(false);
-  const [addNameInput, setAddNameInput] = useState("");
-  const [addImageFile, setAddImageFile] = useState<File | null>(null);
-  const [addImagePreview, setAddImagePreview] = useState<string>("");
+  const [showAddDialog, setShowAddDialog] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -50,8 +57,10 @@ export default function CollegeLogosEditorPage() {
         async function loadColleges() {
           try {
             const fetched = await getAllColleges();
-            setOriginalColleges(fetched);
-            setColleges(fetched.map((c) => ({ ...c, id: crypto.randomUUID() })));
+            const sorted = fetched.sort((a, b) => a.order - b.order);
+
+            setOriginalColleges(sorted);
+            setColleges(sorted.map((c) => ({ ...c, id: crypto.randomUUID() })));
           } catch (error) {
             console.error("Failed to fetch colleges:", error);
           } finally {
@@ -64,23 +73,30 @@ export default function CollegeLogosEditorPage() {
     return () => unsubscribe();
   }, [router]);
 
-  function handleImageSelect(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleImageSelect(e: React.ChangeEvent<HTMLInputElement>, id?: string) {
     const file = e.target.files?.[0];
-    if (!file) return;
-    setAddImageFile(file);
-    setAddImagePreview(URL.createObjectURL(file));
+    if (!file || !id) return;
+
+    const previewUrl = URL.createObjectURL(file);
+
+    setColleges((current) =>
+      current.map((c) => (c.id === id ? { ...c, imageUrl: previewUrl, file: file } : c)),
+    );
+
+    e.target.value = "";
   }
 
-  function handleAddCollege() {
-    const trimmedName = addNameInput.trim();
-    if (!trimmedName || !addImagePreview) return;
+  function handleAddCollege(name: string, file: File) {
+    const previewUrl = URL.createObjectURL(file as Blob);
     setColleges((prev) => [
       ...prev,
-      { id: crypto.randomUUID(), name: trimmedName, imageUrl: addImagePreview },
+      {
+        id: crypto.randomUUID(),
+        name: name,
+        imageUrl: previewUrl,
+        file: file,
+      },
     ]);
-    setAddNameInput("");
-    setAddImageFile(null);
-    setAddImagePreview("");
   }
 
   function handleDelete(id: string) {
@@ -93,11 +109,44 @@ export default function CollegeLogosEditorPage() {
 
   async function handlePublish() {
     setIsPublishing(true);
+
+    const newlyUploadedRefs: StorageReference[] = [];
+
     try {
-      await updateColleges(colleges.map(({ name, imageUrl }) => ({ name, imageUrl })));
+      const finalData = await Promise.all(
+        colleges.map(async (college, index) => {
+          let url = college.imageUrl;
+
+          if (college.file) {
+            const storageRef = ref(storage, `${Date.now()}-${college.file.name}`);
+            const snapshot = await uploadBytes(storageRef, college.file);
+            url = await getDownloadURL(snapshot.ref);
+            newlyUploadedRefs.push(snapshot.ref);
+          }
+
+          return {
+            name: college.name,
+            imageUrl: url,
+            order: index,
+          };
+        }),
+      );
+
+      await updateColleges(finalData);
+
       router.push("/admin-portal");
     } catch (error) {
-      console.error("Failed to update colleges:", error);
+      console.error("Publish failed. Cleaning up orphaned uploads...");
+
+      await Promise.all(
+        newlyUploadedRefs.map((fileRef) =>
+          deleteObject(fileRef).catch((err) =>
+            console.error("Cleanup failed for:", fileRef.fullPath, err),
+          ),
+        ),
+      );
+
+      alert("Failed to update database. Changes were rolled back.");
       setIsPublishing(false);
     }
   }
@@ -155,37 +204,27 @@ export default function CollegeLogosEditorPage() {
                   name={college.name}
                   imageUrl={college.imageUrl}
                   onDelete={handleDelete}
+                  onReplace={(e) => handleImageSelect(e, college.id)}
                 />
               ))}
               <div className="border border-[#C7C7C7] rounded-[10px] flex flex-col overflow-hidden p-[10px] gap-[10px] w-[314px] h-[250px]">
-                <label className="flex-1 min-h-0 rounded-[9px] overflow-hidden bg-[#C7C7C7] flex items-center justify-center cursor-pointer hover:bg-[#ECECEC] transition-colors">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleImageSelect}
-                  />
-                  {addImagePreview ? ( //FIX THIS TO SHOW POPUP
-                    <img
-                      src={addImagePreview}
-                      alt="Preview"
-                      className="object-contain w-full h-full"
+                <div
+                  className="flex-1 min-h-0 rounded-[9px] overflow-hidden bg-[#C7C7C7] flex items-center justify-center cursor-pointer"
+                  onClick={() => setShowAddDialog(true)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    viewBox="0 0 30 30"
+                    fill="none"
+                  >
+                    <path
+                      d="M16.25 7.5C16.25 6.80964 15.6904 6.25 15 6.25C14.3096 6.25 13.75 6.80964 13.75 7.5V13.75H7.5C6.80964 13.75 6.25 14.3096 6.25 15C6.25 15.6904 6.80964 16.25 7.5 16.25H13.75V22.5C13.75 23.1904 14.3096 23.75 15 23.75C15.6904 23.75 16.25 23.1904 16.25 22.5V16.25H22.5C23.1904 16.25 23.75 15.6904 23.75 15C23.75 14.3096 23.1904 13.75 22.5 13.75H16.25V7.5Z"
+                      fill="#5D5D5D"
                     />
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="30"
-                      height="30"
-                      viewBox="0 0 30 30"
-                      fill="none"
-                    >
-                      <path
-                        d="M16.25 7.5C16.25 6.80964 15.6904 6.25 15 6.25C14.3096 6.25 13.75 6.80964 13.75 7.5V13.75H7.5C6.80964 13.75 6.25 14.3096 6.25 15C6.25 15.6904 6.80964 16.25 7.5 16.25H13.75V22.5C13.75 23.1904 14.3096 23.75 15 23.75C15.6904 23.75 16.25 23.1904 16.25 22.5V16.25H22.5C23.1904 16.25 23.75 15.6904 23.75 15C23.75 14.3096 23.1904 13.75 22.5 13.75H16.25V7.5Z"
-                        fill="#5D5D5D"
-                      />
-                    </svg>
-                  )}
-                </label>
+                  </svg>
+                </div>
                 <div className="flex items-center p-[10px]">
                   <p className="text-[24px] font-medium text-[#1E1E1E]">Add College</p>
                 </div>
@@ -229,6 +268,13 @@ export default function CollegeLogosEditorPage() {
           </button>
         </div>
       </div>
+
+      <AddCollegeDialog
+        key={Date.now()}
+        open={showAddDialog}
+        onClose={() => setShowAddDialog(false)}
+        onAdd={handleAddCollege}
+      />
 
       <ConfirmationDialog
         open={showBackDialog}
