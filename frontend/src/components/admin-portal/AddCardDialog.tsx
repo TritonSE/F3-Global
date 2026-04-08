@@ -4,9 +4,12 @@ type Props = {
   open: boolean;
   onClose: () => void;
   onAdd: (name: string, file: File) => void;
+  toggleNote: true | false;
+  title: string;
+  placeholder: string;
 };
 
-export function AddCollegeDialog({ open, onClose, onAdd }: Props) {
+export function AddCardDialog({ open, onClose, onAdd, toggleNote, title, placeholder }: Props) {
   const [name, setName] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -44,19 +47,21 @@ export function AddCollegeDialog({ open, onClose, onAdd }: Props) {
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-[24px] text-[#1E1E1E] font-medium -tracking-[0.48px]">
-          Add College Logo
+          Add {title} Logo
         </h2>
 
         <div className="flex items-center justify-between">
           <div>
-            <p className="font-semibold text-[#1E1E1E] text-[16px]">College Name:</p>
-            <p className="font-normal text-[#5D5D5D] text-[12px] leading-[16px]">
-              Abbreviations okay
-            </p>
+            <p className="font-semibold text-[#1E1E1E] text-[16px]">{title} Name:</p>
+            {toggleNote && (
+              <p className="font-normal text-[#5D5D5D] text-[12px] leading-[16px]">
+                Abbreviations okay
+              </p>
+            )}
           </div>
           <input
             className="border border-[#C7C7C7] rounded-[10px] px-[15px] py-[10px] w-[350px] bg-[#F4F4F4] text-[#5D5D5D] text-[16px"
-            placeholder="UCSD"
+            placeholder={placeholder}
             value={name}
             onChange={(e) => setName(e.target.value)}
           />

@@ -29,7 +29,7 @@ import { useEffect, useState } from "react";
 import type { College } from "@/api/colleges";
 
 import { getAllColleges, updateColleges } from "@/api/colleges";
-import { AddCollegeDialog } from "@/components/admin-portal/AddCollegeDialog";
+import { AddCardDialog } from "@/components/admin-portal/AddCardDialog";
 import { DraggableCollegeCard } from "@/components/admin-portal/DraggableSortableCard";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
@@ -277,11 +277,14 @@ export default function CollegeLogosEditorPage() {
         </div>
       </div>
 
-      <AddCollegeDialog
+      <AddCardDialog
         key={Date.now()}
         open={showAddDialog}
         onClose={() => setShowAddDialog(false)}
         onAdd={handleAddCollege}
+        toggleNote={true}
+        title="College"
+        placeholder="UCSD"
       />
 
       <ConfirmationDialog
