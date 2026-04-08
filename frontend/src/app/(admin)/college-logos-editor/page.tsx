@@ -11,32 +11,31 @@ import {
 } from "@dnd-kit/core";
 import {
   arrayMove,
+  rectSortingStrategy,
   SortableContext,
   sortableKeyboardCoordinates,
-  rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { onAuthStateChanged } from "firebase/auth";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref as storageRef,
+  type StorageReference,
+  uploadBytes,
+} from "firebase/storage";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-  type StorageReference,
-} from "firebase/storage";
-import { storage } from "@/firebase/firebase";
 
 import type { College } from "@/api/colleges";
 
 import { getAllColleges, updateColleges } from "@/api/colleges";
-import { ConfirmationDialog } from "@/components/ConfirmationDialog";
-import { DraggableCollegeCard } from "@/components/admin-portal/DraggableSortableCard";
 import { AddCollegeDialog } from "@/components/admin-portal/AddCollegeDialog";
+import { DraggableCollegeCard } from "@/components/admin-portal/DraggableSortableCard";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
-import { auth } from "@/firebase/firebase";
+import { ConfirmationDialog } from "@/components/ConfirmationDialog";
+import { auth, storage } from "@/firebase/firebase";
 
-type CollegeItem = { id: string; name: string; imageUrl: string; file?: File };
+type CollegeItem = { id: string; _id?: string; name: string; imageUrl: string; file?: File };
 
 export default function CollegeLogosEditorPage() {
   const router = useRouter();
@@ -80,7 +79,7 @@ export default function CollegeLogosEditorPage() {
     const previewUrl = URL.createObjectURL(file);
 
     setColleges((current) =>
-      current.map((c) => (c.id === id ? { ...c, imageUrl: previewUrl, file: file } : c)),
+      current.map((c) => (c.id === id ? { ...c, imageUrl: previewUrl, file } : c)),
     );
 
     e.target.value = "";
@@ -92,12 +91,17 @@ export default function CollegeLogosEditorPage() {
       ...prev,
       {
         id: crypto.randomUUID(),
-        name: name,
+        name,
         imageUrl: previewUrl,
-        file: file,
+        file,
       },
     ]);
   }
+
+  const getStoragePathFromUrl = (url: string) => {
+    const match = /\/o\/(.*?)\?/.exec(url);
+    return match ? decodeURIComponent(match[1]) : null;
+  };
 
   function handleDelete(id: string) {
     setColleges((prev) => prev.filter((c) => c.id !== id));
@@ -109,22 +113,20 @@ export default function CollegeLogosEditorPage() {
 
   async function handlePublish() {
     setIsPublishing(true);
-
     const newlyUploadedRefs: StorageReference[] = [];
 
     try {
       const finalData = await Promise.all(
         colleges.map(async (college, index) => {
           let url = college.imageUrl;
-
           if (college.file) {
-            const storageRef = ref(storage, `${Date.now()}-${college.file.name}`);
-            const snapshot = await uploadBytes(storageRef, college.file);
+            const firebaseRef = storageRef(storage, `colleges/${Date.now()}-${college.file.name}`);
+            const snapshot = await uploadBytes(firebaseRef, college.file);
             url = await getDownloadURL(snapshot.ref);
             newlyUploadedRefs.push(snapshot.ref);
           }
-
           return {
+            _id: originalColleges.find((o) => o.name === college.name)?._id,
             name: college.name,
             imageUrl: url,
             order: index,
@@ -134,19 +136,25 @@ export default function CollegeLogosEditorPage() {
 
       await updateColleges(finalData);
 
-      router.push("/admin-portal");
-    } catch (error) {
-      console.error("Publish failed. Cleaning up orphaned uploads...");
+      const replacedUrls = colleges
+        .filter((c) => c.file)
+        .map((c) => originalColleges.find((o) => o.name === c.name)?.imageUrl)
+        .filter(Boolean) as string[];
 
       await Promise.all(
-        newlyUploadedRefs.map((fileRef) =>
-          deleteObject(fileRef).catch((err) =>
-            console.error("Cleanup failed for:", fileRef.fullPath, err),
-          ),
-        ),
+        replacedUrls.map(async (url) => {
+          const path = getStoragePathFromUrl(url);
+          if (path) {
+            const fileRef = storageRef(storage, path);
+            await deleteObject(fileRef).catch(() => {});
+          }
+        }),
       );
 
-      alert("Failed to update database. Changes were rolled back.");
+      router.push("/admin-portal");
+    } catch (error) {
+      console.error("Critical Publish Error:", error);
+      await Promise.all(newlyUploadedRefs.map(async (ref) => deleteObject(ref).catch(() => {})));
       setIsPublishing(false);
     }
   }

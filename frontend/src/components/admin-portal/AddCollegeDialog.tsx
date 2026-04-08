@@ -1,10 +1,10 @@
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 
-interface Props {
+type Props = {
   open: boolean;
   onClose: () => void;
   onAdd: (name: string, file: File) => void;
-}
+};
 
 export function AddCollegeDialog({ open, onClose, onAdd }: Props) {
   const [name, setName] = useState("");
@@ -123,9 +123,7 @@ export function AddCollegeDialog({ open, onClose, onAdd }: Props) {
               </div>
 
               {file && (
-                <button
-                  onClick={handleClose}
-                >
+                <button onClick={handleClose}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"

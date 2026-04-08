@@ -6,7 +6,7 @@ type HeaderSectionProps = {
   onPreview?: () => void;
 };
 
-export function HeaderSection({ title, description, onBack, tags, onPreview }: HeaderSectionProps) {
+export function HeaderSection({ title, description, onBack, tags }: HeaderSectionProps) {
   return (
     <header className="border-b border-[#C7C7C7] flex flex-col gap-[10px] items-start justify-center px-[100px] py-[50px]">
       <button

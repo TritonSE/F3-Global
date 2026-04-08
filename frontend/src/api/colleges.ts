@@ -1,4 +1,5 @@
 export type College = {
+  _id?: string;
   name: string;
   imageUrl: string;
   order: number;
@@ -10,7 +11,8 @@ export async function getAllColleges(): Promise<College[]> {
   if (!res.ok) {
     throw new Error("Failed to fetch colleges");
   }
-  return res.json();
+  const data = (await res.json()) as College[];
+  return data;
 }
 
 export async function updateColleges(colleges: College[]): Promise<College[]> {
@@ -18,7 +20,7 @@ export async function updateColleges(colleges: College[]): Promise<College[]> {
   const res = await fetch(`${backendUrl}/api/colleges/`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ colleges }),
+    body: JSON.stringify(colleges),
   });
   if (!res.ok) {
     throw new Error("Failed to update colleges");
