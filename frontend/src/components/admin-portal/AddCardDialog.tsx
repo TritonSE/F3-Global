@@ -6,10 +6,9 @@ type Props = {
   onAdd: (name: string, file: File) => void;
   toggleNote: true | false;
   title: string;
-  placeholder: string;
 };
 
-export function AddCardDialog({ open, onClose, onAdd, toggleNote, title, placeholder }: Props) {
+export function AddCardDialog({ open, onClose, onAdd, toggleNote, title }: Props) {
   const [name, setName] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -61,7 +60,6 @@ export function AddCardDialog({ open, onClose, onAdd, toggleNote, title, placeho
           </div>
           <input
             className="border border-[#C7C7C7] rounded-[10px] px-[15px] py-[10px] w-[350px] bg-[#F4F4F4] text-[#5D5D5D] text-[16px"
-            placeholder={placeholder}
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -128,7 +126,13 @@ export function AddCardDialog({ open, onClose, onAdd, toggleNote, title, placeho
               </div>
 
               {file && (
-                <button onClick={handleClose}>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setFile(null);
+                    if (fileInputRef.current) fileInputRef.current.value = "";
+                  }}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
