@@ -284,7 +284,6 @@ export default function CollegeLogosEditorPage() {
         onAdd={handleAddCollege}
         toggleNote={true}
         title="College"
-        placeholder="UCSD"
       />
 
       <ConfirmationDialog
