@@ -59,7 +59,7 @@ export function AddCardDialog({ open, onClose, onAdd, toggleNote, title }: Props
             )}
           </div>
           <input
-            className="border border-[#C7C7C7] rounded-[10px] px-[15px] py-[10px] w-[350px] bg-[#F4F4F4] text-[#5D5D5D] text-[16px"
+            className="border border-[#C7C7C7] rounded-[10px] px-[15px] py-[10px] w-[350px] bg-[#F4F4F4] text-[#5D5D5D] text-[16px]"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
