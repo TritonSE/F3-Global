@@ -160,25 +160,25 @@ export default function AdminPortal() {
           <p className="text-[#172447] text-[32px] font-bold -tracking-[0.64px]">F3 Global!</p>
         </div>
 
-        <div id="home">
+        <div id="home" className="w-full">
           <Section name={"HOME"} components={HomeComponents} />
         </div>
-        <div id="about-us">
+        <div id="about-us" className="w-full">
           <Section name={"ABOUT US"} components={AboutComponents} />
         </div>
-        <div id="meet-the-team">
+        <div id="meet-the-team" className="w-full">
           <Section name={"MEET THE TEAM"} components={TeamComponents} />
         </div>
-        <div id="donate">
+        <div id="donate" className="w-full">
           <Section name={"DONATE"} components={DonorComponents} />
         </div>
-        <div id="members">
+        <div id="members" className="w-full">
           <Section name={"MEMBERS"} components={MemberComponents} />
         </div>
-        <div id="clients">
+        <div id="clients" className="w-full">
           <Section name={"CLIENTS"} components={ClientComponents} />
         </div>
-        <div id="newsletter">
+        <div id="newsletter" className="w-full">
           <Section name={"NEWSLETTER"} components={NewsletterComponents} />
         </div>
       </div>

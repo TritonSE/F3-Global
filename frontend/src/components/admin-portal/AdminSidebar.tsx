@@ -147,7 +147,7 @@ export function AdminSidebar() {
           setActiveSection(visible[0].target.id);
         }
       },
-      { rootMargin: "-10% 0px -70% 0px", threshold: 0 },
+      { rootMargin: "-10% 0px -50% 0px", threshold: 0 },
     );
 
     const sectionIds = navItems.map((item) => item.id);
@@ -182,15 +182,15 @@ export function AdminSidebar() {
         height: "100vh",
         overflow: "hidden",
         backgroundColor: "#172447",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       {/* Branding */}
       <div
         style={{
-          position: "absolute",
-          left: 20,
-          top: 69.5,
-          transform: "translateY(-50%)",
+          paddingLeft: 20,
+          paddingTop: 45,
           width: 103,
         }}
       >
@@ -238,9 +238,7 @@ export function AdminSidebar() {
       {/* Nav Items */}
       <div
         style={{
-          position: "absolute",
-          left: 0,
-          top: 139,
+          marginTop: 25,
           width: 203,
           display: "flex",
           flexDirection: "column",
@@ -304,83 +302,89 @@ export function AdminSidebar() {
         })}
       </div>
 
-      {/* Profile */}
+      {/* Bottom group: Profile + Sign Out */}
       <div
         style={{
-          position: "absolute",
-          left: 13,
-          bottom: 110,
+          marginTop: "auto",
+          paddingLeft: 13,
+          paddingBottom: 40,
           width: 178,
-          padding: 10,
-          borderRadius: 8,
           display: "flex",
           flexDirection: "column",
-          alignItems: "flex-start",
+          gap: 30,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <AvatarIcon color="#F4F4F4" />
-          <div style={{ display: "flex", flexDirection: "column", width: 96, gap: 4 }}>
-            <span
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: 14,
-                fontWeight: 600,
-                lineHeight: 1.5,
-                color: "white",
-                height: 13,
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              {user?.displayName || "Admin"}
-            </span>
-            <span
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: 10,
-                fontWeight: 400,
-                lineHeight: "16px",
-                color: "white",
-                height: 13,
-                display: "flex",
-                alignItems: "center",
-                textDecoration: "underline",
-              }}
-            >
-              {user?.email || ""}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Sign Out */}
-      <div
-        onClick={() => void handleSignOut()}
-        style={{
-          position: "absolute",
-          left: 13,
-          bottom: 40,
-          width: 178,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 5,
-          cursor: "pointer",
-        }}
-      >
-        <SignOutIcon color="white" />
-        <span
+        {/* Profile */}
+        <div
           style={{
-            fontFamily: "'Rubik', sans-serif",
-            fontSize: 14,
-            fontWeight: 400,
-            lineHeight: "20px",
-            color: "white",
+            padding: 10,
+            borderRadius: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
           }}
         >
-          Sign out
-        </span>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <AvatarIcon color="#F4F4F4" />
+            <div style={{ display: "flex", flexDirection: "column", width: 96, gap: 4 }}>
+              <span
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 14,
+                  fontWeight: 600,
+                  lineHeight: 1.5,
+                  color: "white",
+                  height: 13,
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {user?.displayName || "Admin"}
+              </span>
+              <span
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 10,
+                  fontWeight: 400,
+                  lineHeight: "16px",
+                  color: "white",
+                  height: 13,
+                  display: "flex",
+                  alignItems: "center",
+                  textDecoration: "underline",
+                }}
+              >
+                {user?.email || ""}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Sign Out */}
+        <div
+          onClick={() => void handleSignOut()}
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 5,
+            cursor: "pointer",
+          }}
+        >
+          <SignOutIcon color="white" />
+          <span
+            style={{
+              fontFamily: "'Rubik', sans-serif",
+              fontSize: 14,
+              fontWeight: 400,
+              lineHeight: "20px",
+              color: "white",
+            }}
+          >
+            Sign out
+          </span>
+        </div>
       </div>
     </nav>
   );
