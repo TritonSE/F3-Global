@@ -20,8 +20,23 @@ export const getAllNewsletters: RequestHandler = async (req, res, next) => {
     const errors = validationResult(req);
     validationErrorParser(errors);
 
-    const data = await NewsletterModel.find();
-    res.status(200).json(data);
+    // Pagination parameters - default to page 1 and limit 10 if not provided, ideally in the frontend we should have different pages
+    const page = Math.max(1, Number.parseInt(req.query.page as string) || 1);
+    const limit = Math.max(1, Number.parseInt(req.query.limit as string) || 10);
+    const skip = (page - 1) * limit;
+
+    const data = await NewsletterModel.find().skip(skip).limit(limit);
+    const total = await NewsletterModel.countDocuments();
+
+    res.status(200).json({
+      data,
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit),
+      },
+    });
   } catch (error) {
     next(error);
   }
