@@ -13,6 +13,28 @@ import { InteractiveWorldMap } from "@/components/InteractiveWorldMap";
 
 countriesInfo.registerLocale(enLocale);
 
+const CSUITE_KEYWORDS = [
+  "ceo",
+  "coo",
+  "cfo",
+  "cto",
+  "cmo",
+  "cio",
+  "cso",
+  "cpo",
+  "co-head",
+  "cohead",
+  "co-founder",
+];
+const DIRECTOR_KEYWORDS = ["director"];
+
+function getMemberTier(position: string): number {
+  const lower = position.toLowerCase();
+  if (CSUITE_KEYWORDS.some((k) => lower.includes(k))) return 0;
+  if (DIRECTOR_KEYWORDS.some((k) => lower.includes(k))) return 1;
+  return 2;
+}
+
 export type Member = {
   _id: string;
   name: string;
@@ -95,7 +117,21 @@ export default function MeetTheTeam() {
     });
   }, [membersByCountry]);
 
-  const countries = Object.keys(membersByCountry).sort((a, b) => a.localeCompare(b));
+  const sortedMembersByCountry = useMemo(() => {
+    const sorted: Record<string, Member[]> = {};
+    for (const country of Object.keys(membersByCountry)) {
+      sorted[country] = [...membersByCountry[country]].sort(
+        (a, b) => getMemberTier(a.memberPosition) - getMemberTier(b.memberPosition),
+      );
+    }
+    return sorted;
+  }, [membersByCountry]);
+
+  const countries = Object.keys(membersByCountry).sort((a, b) => {
+    if (a === "United States") return -1;
+    if (b === "United States") return 1;
+    return a.localeCompare(b);
+  });
 
   const [colleges, setColleges] = useState<College[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -222,7 +258,7 @@ export default function MeetTheTeam() {
                 key={countryName}
                 id={`members-${code}`}
                 countryName={countryName}
-                members={membersByCountry[countryName]}
+                members={sortedMembersByCountry[countryName]}
               />
             );
           })}
