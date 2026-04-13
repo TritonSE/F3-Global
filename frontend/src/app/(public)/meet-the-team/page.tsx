@@ -128,8 +128,8 @@ export default function MeetTheTeam() {
   }, [membersByCountry]);
 
   const countries = Object.keys(membersByCountry).sort((a, b) => {
-    if (a === "United States") return -1;
-    if (b === "United States") return 1;
+    if (a === "United States of America") return -1;
+    if (b === "United States of America") return 1;
     return a.localeCompare(b);
   });
 
