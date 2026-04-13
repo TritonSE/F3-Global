@@ -123,7 +123,7 @@ export default function MeetTheTeam() {
       sorted[country] = [...membersByCountry[country]].sort(
         (a, b) => getMemberTier(a.memberPosition) - getMemberTier(b.memberPosition),
       );
-}
+    }
     return sorted;
   }, [membersByCountry]);
 
