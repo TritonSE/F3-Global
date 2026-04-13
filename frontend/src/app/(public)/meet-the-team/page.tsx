@@ -30,8 +30,8 @@ const DIRECTOR_KEYWORDS = ["director"];
 
 function getMemberTier(position: string): number {
   const lower = position.toLowerCase();
-  if (CSUITE_KEYWORDS.some((k) => lower.includes(k))) return 0;
-  if (DIRECTOR_KEYWORDS.some((k) => lower.includes(k))) return 1;
+  if (CSUITE_KEYWORDS.some((k) => new RegExp(`\\b${k}\\b`).test(lower))) return 0;
+  if (DIRECTOR_KEYWORDS.some((k) => new RegExp(`\\b${k}\\b`).test(lower))) return 1;
   return 2;
 }
 
@@ -123,7 +123,7 @@ export default function MeetTheTeam() {
       sorted[country] = [...membersByCountry[country]].sort(
         (a, b) => getMemberTier(a.memberPosition) - getMemberTier(b.memberPosition),
       );
-    }
+}
     return sorted;
   }, [membersByCountry]);
 
