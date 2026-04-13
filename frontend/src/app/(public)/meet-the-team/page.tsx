@@ -140,7 +140,7 @@ export default function MeetTheTeam() {
   return (
     <>
       <div className="bg-white overflow-x-hidden">
-        <div className="flex w-full items-center justify-between self-stretch px-[100px] min-h-screen">
+        <div className="flex h-[774px] w-full items-center justify-between px-[100px]">
           <div className="flex flex-col gap-[50px]">
             <h1 className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
               Meet the Team <br /> Without <span className="italic">Borders</span>
@@ -157,11 +157,11 @@ export default function MeetTheTeam() {
             </div>
           </div>
           <div
-            className="rounded-[10px] overflow-hidden relative flex-shrink-0 ml-[50px] mr-[-40px]"
+            className="rounded-[10px] overflow-hidden relative flex-shrink-0"
             style={{ width: 646, height: 581 }}
           >
             <Image
-              src="/imgs/space.jpg"
+              src="/imgs/space.webp"
               alt="Space View of Earth"
               fill
               className="object-cover object-center bg-cover bg-no-repeat bg-center"

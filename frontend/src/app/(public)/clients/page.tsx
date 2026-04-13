@@ -70,7 +70,7 @@ export default function About() {
             style={{ width: 1200, height: 550 }}
           >
             <Image
-              src="/imgs/clients/computer-lab.jpg"
+              src="/imgs/clients/computer-lab.webp"
               alt="Modern computer lab"
               fill
               className="object-cover object-center bg-cover bg-no-repeat bg-center"

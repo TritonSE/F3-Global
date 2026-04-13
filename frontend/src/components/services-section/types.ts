@@ -26,7 +26,7 @@ export const DEFAULT_SERVICES: ServiceDescription[] = [
     description:
       "We provide low or zero-interest microloans to small entrepreneurs who are ready to take the next step in growing their business. These loans are designed to fund strategic initiatives, whether that is purchasing inventory, expanding operations, or launching new services. Our goal is to remove financial barriers and empower business owners to build long-term economic stability.",
     image: {
-      src: "/imgs/services/microloans.jpg",
+      src: "/imgs/services/microloans.webp",
       alt: "Credit card payment with Square reader",
     },
   },
@@ -37,7 +37,7 @@ export const DEFAULT_SERVICES: ServiceDescription[] = [
     description:
       "Our consulting services offer entrepreneurs tailored guidance on how to improve, grow and sustain their ventures. We analyze each client's unique needs to develop personalized strategies, and we remain engaged through the implementation process to refine our approach. From initial strategic planning to customer engagement, we help turn vision into action.",
     image: {
-      src: "/imgs/services/consulting.jpg",
+      src: "/imgs/services/consulting.webp",
       alt: "Business partners high-fiving in office",
     },
   },
@@ -48,7 +48,7 @@ export const DEFAULT_SERVICES: ServiceDescription[] = [
     description:
       "We conduct rigorous market and economic research to ensure every recommendation we give is grounded in real data. Our team analyzes industry trends, competitive landscapes, and regional dynamics to help clients make informed, future-ready decisions. This research not only supports our consulting work, but also helps entrepreneurs navigate uncertainty with clarity.",
     image: {
-      src: "/imgs/services/research.jpg",
+      src: "/imgs/services/research.webp",
       alt: "Team planning with sticky notes and wireframes",
     },
   },
@@ -59,7 +59,7 @@ export const DEFAULT_SERVICES: ServiceDescription[] = [
     description:
       "We offer training and resources designed to sharpen professional skills and strengthen organizational positioning in today's evolving marketplace. Whether it's through leadership workshops, branding strategies, or communication development, we help individuals and companies increase their impact. Our approach is rooted in modern best practices and real-world adaptability.",
     image: {
-      src: "/imgs/services/professional-development.jpg",
+      src: "/imgs/services/professional-development.webp",
       alt: "Professionals collaborating at laptop",
     },
   },

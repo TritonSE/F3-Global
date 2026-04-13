@@ -46,7 +46,7 @@ const Background = ({ children, style }: BackgroundProps) => {
   return (
     <div
       ref={containerRef}
-      className="relative w-full bg-[url('/imgs/donors.png')] bg-cover bg-no-repeat bg-center"
+      className="relative w-full bg-[url('/imgs/donors.webp')] bg-cover bg-no-repeat bg-center"
       style={{
         backgroundAttachment: "fixed",
         ...style,
