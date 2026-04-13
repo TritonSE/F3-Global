@@ -15,18 +15,7 @@ type MemberCardProps = {
   member: Member;
 };
 
-const getLinkedInUsername = (url: string) => {
-  try {
-    const cleanUrl = url.endsWith("/") ? url.slice(0, -1) : url;
-    const parts = cleanUrl.split("/");
-    return parts[parts.length - 1];
-  } catch {
-    return "LinkedIn";
-  }
-};
-
 export const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
-  const linkedInUsername = getLinkedInUsername(member.linkedinUrl);
   return (
     <>
       <div className="flex flex-col flex-start gap-[30px]">
@@ -87,9 +76,6 @@ export const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
                 />
               </svg>
             </div>
-            <p className="font-dm-sans text-[16px] font-normal text-[#1E1E1E] leading-[24px] text-[#1E1E1E] group-hover:text-[#1169B0] transition-colors duration-300">
-              {linkedInUsername}
-            </p>
           </Link>
         </div>
       </div>
