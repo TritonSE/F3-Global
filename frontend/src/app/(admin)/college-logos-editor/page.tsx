@@ -16,11 +16,11 @@ import {
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
 import { onAuthStateChanged } from "firebase/auth";
-import type { StorageReference } from "firebase/storage";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import type { College } from "@/api/colleges";
+import type { StorageReference } from "firebase/storage";
 
 import { getAllColleges, updateColleges } from "@/api/colleges";
 import { AddCardDialog } from "@/components/admin-portal/AddCardDialog";

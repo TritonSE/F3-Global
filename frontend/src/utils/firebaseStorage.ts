@@ -1,4 +1,5 @@
 import { deleteObject, getDownloadURL, ref as storageRef, uploadBytes } from "firebase/storage";
+
 import type { StorageReference } from "firebase/storage";
 
 import { storage } from "@/firebase/firebase";
@@ -42,5 +43,5 @@ export async function deleteFromStorageUrl(url: string): Promise<void> {
  * Deletes all StorageReferences in the provided array. Used to roll back a failed publish.
  */
 export async function rollbackUploads(refs: StorageReference[]): Promise<void> {
-  await Promise.all(refs.map((ref) => deleteObject(ref).catch(() => {})));
+  await Promise.all(refs.map(async (ref) => deleteObject(ref).catch(() => {})));
 }
