@@ -4,6 +4,7 @@ const clientSchema = new Schema(
   {
     name: { type: String, required: true },
     imageUrl: { type: String, required: true },
+    order: { type: Number, required: true, default: 0 },
   },
   { collection: "clients" },
 );
