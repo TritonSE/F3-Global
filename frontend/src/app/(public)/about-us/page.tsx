@@ -29,9 +29,7 @@ export default function About() {
             onClick_link="https://my-apply.vercel.app/org/f3-global-foundation"
           />
         </div>
-        <div
-          className="relative w-[646px] h-[581px] overflow-hidden rounded-[10px] flex-shrink-0"
-        >
+        <div className="relative w-[646px] h-[581px] overflow-hidden rounded-[10px] flex-shrink-0">
           <Image
             src="/imgs/about-us.webp"
             alt="About us image"
