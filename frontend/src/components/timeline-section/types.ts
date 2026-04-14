@@ -40,7 +40,7 @@ export const TIMELINE_ITEMS: TimelineItem[] = [
 ];
 
 export const TIMELINE_IMAGES: TimelineImage[] = [
-  { src: "/imgs/timeline/Laptop-Image.jpg", alt: "Timeline photo 4" },
-  { src: "/imgs/timeline/People-working-Image.jpg", alt: "Timeline photo 2" },
-  { src: "/imgs/timeline/People-Talking-Image.jpg", alt: "Timeline photo 1" },
+  { src: "/imgs/timeline/Laptop-Image.webp", alt: "Timeline photo 4" },
+  { src: "/imgs/timeline/People-working-Image.webp", alt: "Timeline photo 2" },
+  { src: "/imgs/timeline/People-Talking-Image.webp", alt: "Timeline photo 1" },
 ];
