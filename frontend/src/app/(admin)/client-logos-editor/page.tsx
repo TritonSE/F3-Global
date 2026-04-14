@@ -16,24 +16,19 @@ import {
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
 import { onAuthStateChanged } from "firebase/auth";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref as storageRef,
-  type StorageReference,
-  uploadBytes,
-} from "firebase/storage";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import type { Client } from "@/api/client";
+import type { StorageReference } from "firebase/storage";
 
 import { getAllClients, updateClients } from "@/api/client";
 import { AddCardDialog } from "@/components/admin-portal/AddCardDialog";
 import { DraggableCollegeCard } from "@/components/admin-portal/DraggableSortableCard";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
-import { auth, storage } from "@/firebase/firebase";
+import { auth } from "@/firebase/firebase";
+import { deleteFromStorageUrl, rollbackUploads, uploadToStorage } from "@/utils/firebaseStorage";
 
 type ClientItem = { id: string; _id?: string; name: string; imageUrl: string; file?: File };
 
@@ -96,11 +91,6 @@ export default function ClientLogosEditorPage() {
     ]);
   }
 
-  const getStoragePathFromUrl = (url: string) => {
-    const match = /\/o\/(.*?)\?/.exec(url);
-    return match ? decodeURIComponent(match[1]) : null;
-  };
-
   function handleDelete(id: string) {
     setClients((prev) => prev.filter((c) => c.id !== id));
   }
@@ -118,10 +108,11 @@ export default function ClientLogosEditorPage() {
         clients.map(async (client, index) => {
           let url = client.imageUrl;
           if (client.file) {
-            const firebaseRef = storageRef(storage, `clients/${Date.now()}-${client.file.name}`);
-            const snapshot = await uploadBytes(firebaseRef, client.file);
-            url = await getDownloadURL(snapshot.ref);
-            newlyUploadedRefs.push(snapshot.ref);
+            url = await uploadToStorage(
+              client.file,
+              `clients/${Date.now()}-${client.file.name}`,
+              newlyUploadedRefs,
+            );
           }
           return {
             _id: originalClients.find((o) => o.name === client.name)?._id,
@@ -139,20 +130,12 @@ export default function ClientLogosEditorPage() {
         .map((c) => originalClients.find((o) => o.name === c.name)?.imageUrl)
         .filter(Boolean) as string[];
 
-      await Promise.all(
-        replacedUrls.map(async (url) => {
-          const path = getStoragePathFromUrl(url);
-          if (path) {
-            const fileRef = storageRef(storage, path);
-            await deleteObject(fileRef).catch(() => {});
-          }
-        }),
-      );
+      await Promise.all(replacedUrls.map(deleteFromStorageUrl));
 
       router.push("/admin-portal");
     } catch (error) {
       console.error("Critical Publish Error:", error);
-      await Promise.all(newlyUploadedRefs.map(async (ref) => deleteObject(ref).catch(() => {})));
+      await rollbackUploads(newlyUploadedRefs);
       setIsPublishing(false);
     }
   }
