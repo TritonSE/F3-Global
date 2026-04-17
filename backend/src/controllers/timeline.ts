@@ -5,9 +5,8 @@ import Timeline from "../models/timeline";
 import { deleteImageFromFirebaseStorage } from "../utils/firebaseStorage";
 import validationErrorParser from "../utils/validationErrorParser";
 
-import type { timelineModel } from "../models/timeline";
 import type { RequestHandler } from "express";
-import type { AnyBulkWriteOperation } from "mongoose";
+import type mongoose from "mongoose";
 
 // POST api/timeline
 export const createTimeline: RequestHandler = async (req, res, next) => {
@@ -29,100 +28,50 @@ export const createTimeline: RequestHandler = async (req, res, next) => {
 
 // PUT api/timeline
 export const updateTimeline: RequestHandler = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json(validationErrorParser(errors));
+  }
   try {
-    const errors = validationResult(req);
-    validationErrorParser(errors);
-
-    // Treat the PUT body as the full final timeline list from the admin client.
     type IncomingTimelineItem = {
       _id?: string;
       year: number;
       description: string;
       imageUrl: string;
     };
+    const incoming = req.body as IncomingTimelineItem[];
+    const existing: (IncomingTimelineItem & { _id: mongoose.Types.ObjectId })[] =
+      await Timeline.find();
+    const incomingIds = incoming.filter((item) => item._id).map((item) => String(item._id));
 
-    const incomingTimeline = req.body as IncomingTimelineItem[];
+    // Delete items not in incoming
+    const toDelete = existing.filter((item) => !incomingIds.includes(item._id.toString()));
+    await Timeline.deleteMany({ _id: { $in: toDelete.map((item) => item._id) } });
 
-    // Load the current DB state so we can compare old items against the incoming list.
-    const existingTimeline = await Timeline.find();
-    const existingById = new Map(existingTimeline.map((doc) => [doc._id.toString(), doc]));
+    // Delete their images from Firebase
+    await Promise.all(toDelete.map(async (item) => deleteImageFromFirebaseStorage(item.imageUrl)));
 
-    // Split out items that already exist so we can validate their ids and reuse them.
-    const incomingExistingItems = incomingTimeline.filter(
-      (item): item is IncomingTimelineItem & { _id: string } => Boolean(item._id),
+    // Update existing items
+    await Promise.all(
+      incoming
+        .filter((item) => item._id)
+        .map((item) =>
+          Timeline.findByIdAndUpdate(item._id, {
+            year: item.year,
+            description: item.description,
+            imageUrl: item.imageUrl,
+          }),
+        ),
     );
-    const unknownIds = incomingExistingItems
-      .filter((item) => !existingById.has(item._id))
-      .map((item) => item._id);
 
-    // Reject stale ids before we start deleting or updating anything.
-    if (unknownIds.length > 0) {
-      throw createHttpError(404, `timeline item not found for _id: ${unknownIds[0]}`);
-    }
-
-    // Anything missing from the incoming list should be removed from MongoDB.
-    const incomingIds = new Set(incomingExistingItems.map((item) => item._id));
-    const timelineToDelete = existingTimeline.filter((doc) => !incomingIds.has(doc._id.toString()));
-
-    // Keep track of old Firebase URLs that should be cleaned up after the DB write.
-    const outdatedImageUrls: string[] = [];
-
-    // Start the bulk write with a delete step so PUT behaves like full replacement.
-    const ops: AnyBulkWriteOperation<timelineModel>[] = [
-      {
-        deleteMany: {
-          filter: { _id: { $nin: [...incomingIds] } },
-        },
-      },
-    ];
-
-    for (const item of incomingTimeline) {
-      if (item._id) {
-        const existingItem = existingById.get(item._id);
-
-        // If the image changed, remember the old one so Firebase can delete it later.
-        if (existingItem && existingItem.imageUrl !== item.imageUrl) {
-          outdatedImageUrls.push(existingItem.imageUrl);
-        }
-
-        // Existing item: update it in place.
-        ops.push({
-          updateOne: {
-            filter: { _id: item._id },
-            update: { year: item.year, description: item.description, imageUrl: item.imageUrl },
-          },
-        });
-      } else {
-        // New item: insert it because there is no _id yet.
-        ops.push({
-          insertOne: {
-            document: {
-              year: item.year,
-              description: item.description,
-              imageUrl: item.imageUrl,
-            } as unknown as timelineModel,
-          },
-        });
-      }
-    }
-
-    // Apply the full replacement in MongoDB.
-    await Timeline.bulkWrite(ops);
-
-    // Delete images for removed items and for items whose image URL changed.
-    const imageUrlsToDelete = [
-      ...timelineToDelete.map((item) => item.imageUrl),
-      ...outdatedImageUrls,
-    ];
-
-    await Promise.allSettled(
-      imageUrlsToDelete.map(async (imageUrl) => deleteImageFromFirebaseStorage(imageUrl)),
-    );
+    // Create new items
+    const toCreate = incoming.filter((item) => !item._id);
+    if (toCreate.length) await Timeline.insertMany(toCreate);
 
     const updated = await Timeline.find().sort({ year: 1 });
     res.status(200).json(updated);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
