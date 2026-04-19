@@ -44,8 +44,8 @@ export default function About() {
   return (
     <>
       <div className="bg-white overflow-x-hidden">
-        <div className="flex h-[774px] w-full items-center justify-between self-stretch px-[100px]">
-          <div className="flex w-[639px] flex-col items-start gap-[50px] shrink-0">
+        <div className="flex w-full items-center justify-between self-stretch px-[100px] min-h-screen">
+          <div className="flex flex-col gap-[50px]">
             <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
               Services That Create <br /> <span className="italic">Lasting</span> Impact
             </h1>
@@ -65,12 +65,14 @@ export default function About() {
               />
             </div>
           </div>
-          <div className="relative h-[581px] w-[646px] flex-shrink-0 overflow-hidden rounded-[10px]">
+          <div
+            className="ml-8 rounded-[10px] overflow-hidden relative"
+            style={{ width: 1200, height: 550 }}
+          >
             <Image
               src="/imgs/clients/computer-lab.webp"
               alt="Modern computer lab"
               fill
-              sizes="646px"
               className="object-cover object-center bg-cover bg-no-repeat bg-center"
               priority
             />
