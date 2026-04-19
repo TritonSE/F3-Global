@@ -34,6 +34,25 @@
   }
 }
 
+@keyframes spin-once {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-once {
+  animation: spin-once 0.8s ease-in-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-spin-once {
+    animation: none;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: white;
