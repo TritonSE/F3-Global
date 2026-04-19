@@ -58,8 +58,15 @@ export const updateTimeline: RequestHandler = async (req, res, next) => {
     }
 
     const incomingIds = new Set(incomingExistingItems.map((item) => item._id));
-    const timelineToDelete = existingTimeline.filter((doc) => !incomingIds.has(doc._id.toString()));
-    const outdatedImageUrls: string[] = [];
+
+    const imageUrlsToDelete = [
+      ...new Set(
+        existingTimeline
+          .map((item) => item.imageUrl)
+          .filter((imageUrl) => !incomingImageUrls.has(imageUrl)),
+      ),
+    ];
+
     const ops: AnyBulkWriteOperation<timelineModel>[] = [
       {
         deleteMany: {
@@ -70,12 +77,6 @@ export const updateTimeline: RequestHandler = async (req, res, next) => {
 
     for (const item of incomingTimeline) {
       if (item._id) {
-        const existingItem = existingById.get(item._id);
-
-        if (existingItem && existingItem.imageUrl !== item.imageUrl) {
-          outdatedImageUrls.push(existingItem.imageUrl);
-        }
-
         ops.push({
           updateOne: {
             filter: { _id: item._id },
@@ -96,12 +97,6 @@ export const updateTimeline: RequestHandler = async (req, res, next) => {
     }
 
     await Timeline.bulkWrite(ops);
-
-    // Delete images for removed items and for items whose image URL changed.
-    const imageUrlsToDelete = [
-      ...timelineToDelete.map((item) => item.imageUrl),
-      ...outdatedImageUrls,
-    ];
 
     await Promise.allSettled(
       imageUrlsToDelete.map(async (imageUrl) => deleteImageFromFirebaseStorage(imageUrl)),
