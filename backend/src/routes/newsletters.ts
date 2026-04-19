@@ -8,7 +8,12 @@ const router = Router();
 
 router.get("/all", NewsletterController.getAllNewsletters);
 
-router.post("/", verifyAuthToken, Validators.createNewsletter, NewsletterController.createNewsletter);
+router.post(
+  "/",
+  verifyAuthToken,
+  Validators.createNewsletter,
+  NewsletterController.createNewsletter,
+);
 
 router.put(
   "/:id",
