@@ -52,7 +52,7 @@ export default function Donors() {
           />
         </div>
         <Image
-          src="/imgs/donorHero.png"
+          src="/imgs/donorHero.webp"
           alt="donor hero img"
           width={646}
           height={581}
@@ -73,7 +73,7 @@ export default function Donors() {
             className="relative h-full"
             style={{
               aspectRatio: "1307 / 767",
-              backgroundImage: `linear-gradient(to right, #172447 0%, rgba(23, 36, 71, 0.9) 12%, rgba(23, 36, 71, 0) 75%), url('/imgs/donateNow.png')`,
+              backgroundImage: `linear-gradient(to right, #172447 0%, rgba(23, 36, 71, 0.9) 12%, rgba(23, 36, 71, 0) 75%), url('/imgs/donateNow.webp')`,
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "right center",
@@ -83,7 +83,7 @@ export default function Donors() {
               className="absolute top-0 right-0 h-full w-auto"
               style={{
                 aspectRatio: "1307 / 767",
-                backgroundImage: `url('/imgs/donateNowMask.png')`,
+                backgroundImage: `url('/imgs/donateNowMask.webp')`,
                 backgroundSize: "863px 872px",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "right center",

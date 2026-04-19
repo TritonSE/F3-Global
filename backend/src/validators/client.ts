@@ -22,6 +22,8 @@ export const createClientValidation: ValidationChain[] = [
     .bail()
     .notEmpty()
     .withMessage("imageUrl cannot be empty"),
+
+  body("order").optional().isInt().withMessage("order must be an integer"),
 ];
 
 export const updateClientValidation: ValidationChain[] = [
@@ -48,4 +50,5 @@ export const updateClientValidation: ValidationChain[] = [
     .withMessage("imageUrl cannot be empty"),
 
   body("*._id").optional().isMongoId().withMessage("_id must be a valid MongoDB ObjectID"),
+  body("*.order").optional().isInt().withMessage("order must be in integer"),
 ];

@@ -35,8 +35,14 @@ export default async function About() {
             onClick_link="https://my-apply.vercel.app/org/f3-global-foundation"
           />
         </div>
-        <div>
-          <Image src="/imgs/about-us.png" alt="About us image" width={646} height={581} />
+        <div className="relative w-[646px] h-[581px] overflow-hidden rounded-[10px] flex-shrink-0">
+          <Image
+            src="/imgs/about-us.webp"
+            alt="About us image"
+            fill
+            sizes="646px"
+            className="object-cover object-center"
+          />
         </div>
       </div>
 
