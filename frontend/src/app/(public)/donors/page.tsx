@@ -33,8 +33,8 @@ export default function Donors() {
   return (
     <div className="mx-auto flex flex-col justify-center items-center bg-white w-full">
       {/* Donors Hero */}
-      <div className="flex py-[150px] px-[5vw] min-h-screen justify-between items-center w-full">
-        <div className="flex w-[639px] flex-col items-start gap-[50px] shrink-0">
+      <div className="flex w-full items-center justify-between self-stretch px-[100px] py-[150px] min-h-screen">
+        <div className="flex w-[639px] flex-col items-start gap-[50px]">
           <h1
             className="text-[#172447] text-[64px] leading-[110%]"
             style={{ fontFamily: '"Ethic New", sans-serif' }}
@@ -51,13 +51,15 @@ export default function Donors() {
             onClick_link="https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390"
           />
         </div>
-        <Image
-          src="/imgs/donorHero.webp"
-          alt="donor hero img"
-          width={646}
-          height={581}
-          className="rounded-[10px] h-[581px] w-[646px] object-center object-cover"
-        />
+        <div className="relative w-[646px] h-[581px] overflow-hidden rounded-[10px] flex-shrink-0">
+          <Image
+            src="/imgs/donorHero.webp"
+            alt="donor hero img"
+            fill
+            sizes="646px"
+            className="object-cover object-center"
+          />
+        </div>
       </div>
       <Parallax />
       <Highlights />
