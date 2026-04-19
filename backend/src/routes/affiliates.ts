@@ -1,8 +1,8 @@
 import { Router } from "express";
 
 import * as AffiliateController from "../controllers/affiliate";
-import { verifyAuthToken } from "../validators/auth";
 import * as Validators from "../validators/affiliate";
+import { verifyAuthToken } from "../validators/auth";
 
 const router = Router();
 
