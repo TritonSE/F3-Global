@@ -1,3 +1,5 @@
+import { getAuthHeaders } from "@/api/auth";
+
 export type College = {
   _id?: string;
   name: string;
@@ -17,9 +19,10 @@ export async function getAllColleges(): Promise<College[]> {
 
 export async function updateColleges(colleges: College[]): Promise<College[]> {
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const authHeaders = await getAuthHeaders();
   const res = await fetch(`${backendUrl}/api/colleges/`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: { ...authHeaders, "Content-Type": "application/json" },
     body: JSON.stringify(colleges),
   });
   if (!res.ok) {
