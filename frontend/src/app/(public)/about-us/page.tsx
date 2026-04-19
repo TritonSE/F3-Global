@@ -7,6 +7,7 @@ import {
   TIMELINE_HEADER,
   TIMELINE_INSTRUCTION,
   TimelineSection,
+  UpdatedTimeline,
 } from "@/components/timeline-section";
 
 export default function About() {
@@ -76,13 +77,8 @@ export default function About() {
               {TIMELINE_HEADER.description}
             </p>
           </div>
-          <div className="flex items-center justify-center w-full">
-            <p className="font-dm italic text-[16px] text-[#5d5d5d] leading-[24px] text-center">
-              {TIMELINE_INSTRUCTION}
-            </p>
-          </div>
         </div>
-        <TimelineSection />
+        <UpdatedTimeline />
       </div>
       <ClientCarousel />
       <Highlights />
