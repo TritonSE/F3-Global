@@ -54,6 +54,7 @@ export default function FaqsEditor() {
   const [originalFaqs, setOriginalFaqs] = useState<OriginalsRecord>(EMPTY_ORIGINALS);
   const [isPublishing, setIsPublishing] = useState(false);
   const [notification, setNotification] = useState<"published" | "added" | null>(null);
+  const [notificationFading, setNotificationFading] = useState(false);
   const [activeDialog, setActiveDialog] = useState<"back" | "revert" | "delete" | null>(null);
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const [addForm, setAddForm] = useState({ question: "", answer: "" });
@@ -127,10 +128,24 @@ export default function FaqsEditor() {
   }, [anyPageHasChanges]);
 
   useEffect(() => {
-    if (!notification) return;
-    const id = setTimeout(() => setNotification(null), 5000);
-    return () => clearTimeout(id);
+    if (!notification) {
+      setNotificationFading(false);
+      return;
+    }
+    setNotificationFading(false);
+    const fadeId = setTimeout(() => setNotificationFading(true), 5000);
+    const hideId = setTimeout(() => setNotification(null), 6500);
+    return () => {
+      clearTimeout(fadeId);
+      clearTimeout(hideId);
+    };
   }, [notification]);
+
+  function handleDismissNotification() {
+    if (notificationFading) return;
+    setNotificationFading(true);
+    setTimeout(() => setNotification(null), 1500);
+  }
 
   function updateCurrentFaqs(updater: (prev: FaqWithLocalId[]) => FaqWithLocalId[]) {
     setAllFaqs((prev) => ({ ...prev, [selectedPage]: updater(prev[selectedPage]) }));
@@ -219,7 +234,9 @@ export default function FaqsEditor() {
   }
 
   const notificationOverlay = notification && (
-    <div className="absolute inset-x-[180px] top-[125px] z-50 px-[20px] py-[10px] bg-[#e1f2df] border border-[#3BB966] rounded-[5px] flex items-center justify-between shadow-[0_3px_6px_rgba(0,0,0,0.15)]">
+    <div
+      className={`absolute inset-x-[180px] top-[125px] z-50 px-[20px] py-[10px] bg-[#e1f2df] border border-[#3BB966] rounded-[5px] flex items-center justify-between shadow-[0_3px_6px_rgba(0,0,0,0.15)] transition-opacity duration-[1500ms] ${notificationFading ? "opacity-0" : "opacity-100"}`}
+    >
       <div className="flex gap-[20px] items-center">
         <svg viewBox="0 0 20 20" fill="none" className="size-[20px] shrink-0">
           <circle cx="10" cy="10" r="10" fill="#3BB966" />
@@ -241,7 +258,7 @@ export default function FaqsEditor() {
             href={`/${selectedPage}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-dm-sans text-[14px] text-[#1E1E1E] underline"
+            className="font-dm-sans text-[14px] text-[#1E1E1E] underline cursor-pointer"
           >
             View Live Site
           </a>
@@ -249,7 +266,7 @@ export default function FaqsEditor() {
       </div>
       <button
         type="button"
-        onClick={() => setNotification(null)}
+        onClick={handleDismissNotification}
         aria-label="Dismiss notification"
         className="shrink-0 cursor-pointer text-[#1E1E1E] hover:opacity-70 transition-opacity"
       >
@@ -270,7 +287,7 @@ export default function FaqsEditor() {
       type="button"
       onClick={() => void handlePublish()}
       disabled={!hasChanges || isPublishing}
-      className="bg-[#3BB966] flex gap-[10px] items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans font-semibold text-[16px] text-white hover:bg-[#309854] transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+      className="bg-[#3BB966] flex gap-[10px] items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans font-semibold text-[16px] text-white hover:bg-[#309854] transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
     >
       PUBLISH
       <svg
@@ -461,10 +478,10 @@ export default function FaqsEditor() {
                 type="button"
                 aria-pressed={selectedPage === key}
                 onClick={() => setSelectedPage(key)}
-                className={`flex items-center justify-between w-[185px] px-[15px] py-[10px] rounded-[10px] bg-[#F4F4F4] border transition-colors font-dm-sans text-[16px] text-[#1E1E1E] ${
+                className={`flex items-center justify-between w-[185px] px-[15px] py-[10px] rounded-[10px] bg-[#F4F4F4] border transition-colors font-dm-sans text-[16px] text-[#1E1E1E] cursor-pointer ${
                   selectedPage === key
                     ? "border-[#1169B0] font-semibold"
-                    : "border-[#C7C7C7] font-normal cursor-pointer hover:border-[#1169B0]"
+                    : "border-[#C7C7C7] font-normal hover:border-[#1169B0]"
                 }`}
               >
                 {label}
