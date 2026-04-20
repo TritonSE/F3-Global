@@ -111,7 +111,7 @@ export default function AdminPortal() {
       description:
         "Reorder FAQs by dragging, or easily add, edit, or remove questions and answers.",
       tags: ["Donors", "Members", "Clients"],
-      href: "/faqs-editor",
+      href: "/faqs-editor?page=donors",
     },
   ];
 
@@ -121,7 +121,7 @@ export default function AdminPortal() {
       description:
         "Reorder FAQs by dragging, or easily add, edit, or remove questions and answers.",
       tags: ["Donors", "Members", "Clients"],
-      href: "/faqs-editor",
+      href: "/faqs-editor?page=members",
     },
   ];
 
@@ -137,7 +137,7 @@ export default function AdminPortal() {
       description:
         "Reorder FAQs by dragging, or easily add, edit, or remove questions and answers.",
       tags: ["Donors", "Members", "Clients"],
-      href: "/faqs-editor",
+      href: "/faqs-editor?page=clients",
     },
   ];
 

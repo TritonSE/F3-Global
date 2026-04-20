@@ -16,8 +16,8 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { onAuthStateChanged } from "firebase/auth";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 import type { FaqItem, FaqPage } from "@/api/faq";
 
@@ -48,8 +48,12 @@ function withLocalIds(items: FaqItem[]): FaqWithLocalId[] {
 
 export default function FaqsEditor() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialPage = (PAGES as string[]).includes(searchParams.get("page") ?? "")
+    ? (searchParams.get("page") as FaqPage)
+    : "donors";
   const [loading, setLoading] = useState(true);
-  const [selectedPage, setSelectedPage] = useState<FaqPage>("donors");
+  const [selectedPage, setSelectedPage] = useState<FaqPage>(initialPage);
   const [allFaqs, setAllFaqs] = useState<FaqsRecord>(EMPTY_FAQS);
   const [originalFaqs, setOriginalFaqs] = useState<OriginalsRecord>(EMPTY_ORIGINALS);
   const [isPublishing, setIsPublishing] = useState(false);
@@ -60,6 +64,21 @@ export default function FaqsEditor() {
   const [addForm, setAddForm] = useState({ question: "", answer: "" });
   const [isPreview, setIsPreview] = useState(false);
   const [expandedPreviewId, setExpandedPreviewId] = useState<string | null>(null);
+
+  const addQuestionRef = useRef<HTMLTextAreaElement>(null);
+  const addAnswerRef = useRef<HTMLTextAreaElement>(null);
+  useEffect(() => {
+    const el = addQuestionRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight}px`;
+  }, [addForm.question]);
+  useEffect(() => {
+    const el = addAnswerRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight}px`;
+  }, [addForm.answer]);
 
   const faqs = allFaqs[selectedPage];
   const originals = originalFaqs[selectedPage];
@@ -545,13 +564,14 @@ export default function FaqsEditor() {
                 >
                   Question
                 </label>
-                <input
+                <textarea
+                  ref={addQuestionRef}
                   id="add-faq-question"
-                  type="text"
                   value={addForm.question}
                   onChange={(e) => setAddForm((f) => ({ ...f, question: e.target.value }))}
                   placeholder="Add Question"
-                  className="bg-[#F4F4F4] border border-[#C7C7C7] rounded-[8px] px-[15px] py-[10px] font-dm-sans text-[16px] text-[#5D5D5D] w-full focus:outline-none focus:border-[#1169B0]"
+                  rows={1}
+                  className="bg-[#F4F4F4] border border-[#C7C7C7] rounded-[8px] px-[15px] py-[10px] font-dm-sans text-[16px] text-[#5D5D5D] w-full resize-none overflow-hidden focus:outline-none focus:border-[#1169B0]"
                 />
               </div>
               <div className="flex flex-col gap-[10px]">
@@ -559,12 +579,13 @@ export default function FaqsEditor() {
                   Answer
                 </label>
                 <textarea
+                  ref={addAnswerRef}
                   id="add-faq-answer"
                   value={addForm.answer}
                   onChange={(e) => setAddForm((f) => ({ ...f, answer: e.target.value }))}
                   placeholder="Add Answer"
-                  rows={3}
-                  className="bg-[#F4F4F4] border border-[#C7C7C7] rounded-[8px] px-[15px] py-[10px] font-dm-sans text-[16px] text-[#5D5D5D] w-full resize-none focus:outline-none focus:border-[#1169B0]"
+                  rows={1}
+                  className="bg-[#F4F4F4] border border-[#C7C7C7] rounded-[8px] px-[15px] py-[10px] font-dm-sans text-[16px] text-[#5D5D5D] w-full resize-none overflow-hidden focus:outline-none focus:border-[#1169B0]"
                 />
               </div>
             </div>
