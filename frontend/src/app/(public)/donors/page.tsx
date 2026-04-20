@@ -33,7 +33,7 @@ export default function Donors() {
   return (
     <div className="mx-auto flex flex-col justify-center items-center bg-white w-full">
       {/* Donors Hero */}
-      <div className="flex py-[150px] px-[5vw] min-h-screen justify-between items-center w-full">
+      <div className="flex py-[150px] px-[100px] min-h-screen justify-between items-center w-full">
         <div className="flex w-[639px] flex-col items-start gap-[50px] shrink-0">
           <h1
             className="text-[#172447] text-[64px] leading-[110%]"
@@ -92,7 +92,7 @@ export default function Donors() {
           </div>
         </div>
 
-        <div className="absolute flex flex-col px-[5vw] py-[75px] mt-[12vh] items-start gap-[40px]">
+        <div className="absolute flex flex-col px-[100px] py-[75px] mt-[12vh] items-start gap-[40px]">
           <p
             className="text-white text-[64px] leading-[110%]"
             style={{ fontFamily: '"Ethic New", sans-serif' }}
