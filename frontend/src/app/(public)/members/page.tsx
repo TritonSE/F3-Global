@@ -49,7 +49,7 @@ export default async function Members() {
               style={{ width: 291, height: 193 }}
             >
               <Image
-                src="/imgs/members_mission_1.jpg"
+                src="/imgs/members_mission_1.webp"
                 alt="People Walking at Sunset"
                 fill
                 className="object-cover object-center"

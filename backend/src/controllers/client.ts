@@ -14,7 +14,7 @@ export type Client = {
 
 export const getAllClients: RequestHandler = async (req, res, next) => {
   try {
-    const clients = await ClientModel.find();
+    const clients = await ClientModel.find().sort({ order: 1 });
     res.status(200).json(clients);
   } catch (error) {
     next(error);
@@ -55,6 +55,7 @@ export type ClientInput = {
   _id?: string;
   name: string;
   imageUrl: string;
+  order?: number;
 };
 
 type UpdateClientsReqBody = ClientInput[];
@@ -81,7 +82,7 @@ export const updateClients: RequestHandler<
     const docsToDelete = existing.filter((doc) => !incomingIds.has(doc._id.toString()));
     const outdatedImageUrls: string[] = [];
 
-    const updateOps: AnyBulkWriteOperation[] = incomingWithId.map((c) => {
+    const updateOps: AnyBulkWriteOperation[] = incomingWithId.map((c, index) => {
       const id = c._id;
       const doc = existingById.get(id);
 
@@ -96,7 +97,7 @@ export const updateClients: RequestHandler<
       return {
         updateOne: {
           filter: { _id: id },
-          update: { $set: { name: c.name, imageUrl: c.imageUrl } },
+          update: { $set: { name: c.name, imageUrl: c.imageUrl, order: c.order ?? index } },
         },
       };
     });
@@ -105,7 +106,13 @@ export const updateClients: RequestHandler<
       await ClientModel.bulkWrite(updateOps);
     }
     if (incomingNew.length > 0) {
-      await ClientModel.insertMany(incomingNew.map(({ name, imageUrl }) => ({ name, imageUrl })));
+      await ClientModel.insertMany(
+        incomingNew.map(({ name, imageUrl, order }, index) => ({
+          name,
+          imageUrl,
+          order: order ?? incomingWithId.length + index,
+        })),
+      );
     }
     if (docsToDelete.length > 0) {
       await ClientModel.deleteMany({ _id: { $in: docsToDelete.map((d) => d._id) } });

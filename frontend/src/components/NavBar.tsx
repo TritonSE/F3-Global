@@ -254,7 +254,7 @@ function DropdownContent() {
           <div className="flex flex-col justify-center items-center gap-[20px] flex-1 self-stretch">
             <div className="flex flex-1 self-stretch px-[29px]">
               <div className="relative w-full h-full overflow-hidden rounded-[8px]">
-                <Image src="/imgs/clients.jpg" alt="Clients" fill className="object-cover" />
+                <Image src="/imgs/clients.webp" alt="Clients" fill className="object-cover" />
               </div>
             </div>
             <div className="px-[29px] self-stretch">
