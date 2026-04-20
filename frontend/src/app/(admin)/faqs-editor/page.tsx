@@ -16,7 +16,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { onAuthStateChanged } from "firebase/auth";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import type { FaqItem, FaqPage } from "@/api/faq";
@@ -48,12 +48,8 @@ function withLocalIds(items: FaqItem[]): FaqWithLocalId[] {
 
 export default function FaqsEditor() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const initialPage = (PAGES as string[]).includes(searchParams.get("page") ?? "")
-    ? (searchParams.get("page") as FaqPage)
-    : "donors";
   const [loading, setLoading] = useState(true);
-  const [selectedPage, setSelectedPage] = useState<FaqPage>(initialPage);
+  const [selectedPage, setSelectedPage] = useState<FaqPage>("donors");
   const [allFaqs, setAllFaqs] = useState<FaqsRecord>(EMPTY_FAQS);
   const [originalFaqs, setOriginalFaqs] = useState<OriginalsRecord>(EMPTY_ORIGINALS);
   const [isPublishing, setIsPublishing] = useState(false);
