@@ -8,7 +8,12 @@ type TimelineCardProps = {
   onChange: (id: string, updated: Partial<TimelineItem>) => void;
 };
 
-const MAX_CHARS = 180;
+const MAX_CHARS = 200;
+
+function getFirebaseFileName(url: string): string {
+  const path = decodeURIComponent(new URL(url).pathname);
+  return path.split("/").pop() ?? url;
+}
 
 export function TimelineCard({ index, item, onChange }: TimelineCardProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -32,7 +37,8 @@ export function TimelineCard({ index, item, onChange }: TimelineCardProps) {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  const displayName = item.newImage?.name ?? (item.imageUrl ? "Current image" : null);
+  const displayName =
+    item.newImage?.name ?? (item.imageUrl ? getFirebaseFileName(item.imageUrl) : null);
 
   return (
     <div className="flex flex-col gap-[25px] w-[585px] justify-center">
@@ -57,9 +63,17 @@ export function TimelineCard({ index, item, onChange }: TimelineCardProps) {
           maxLength={MAX_CHARS}
           onChange={(e) => onChange(item._id, { description: e.target.value })}
           rows={1}
-          className="w-full bg-[#F4F4F4] border-[#C7C7C7] border-[1px] rounded-[10px] py-[10px] px-[15px] text-[#5D5D5D] leading-[24px] outline-none focus:ring-1 focus:ring-blue-300 resize-none overflow-hidden"
+          className={`w-full bg-[#F4F4F4] border-[1px] rounded-[10px] py-[10px] px-[15px] text-[#5D5D5D] leading-[24px] outline-none focus:ring-1 resize-none overflow-hidden ${
+            item.description.length >= MAX_CHARS
+              ? "border-[#B93B3B] focus:ring-[#B93B3B]"
+              : "border-[#C7C7C7] focus:ring-blue-300"
+          }`}
         />
-        <p className="text-right text-[12px] text-[#5D5D5D] leading-[16px]">
+        <p
+          className={`text-right text-[12px] leading-[16px] ${
+            item.description.length >= MAX_CHARS ? "text-[#B93B3B]" : "text-[#5D5D5D]"
+          }`}
+        >
           Characters: {item.description.length}/{MAX_CHARS}
         </p>
       </div>
