@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { bulkWriteFaqs, createFaq, deleteFaq, getFaqsByPage } from "../controllers/faq";
+import { verifyAuthToken } from "../validators/auth";
 import {
   deleteFaqValidator,
   getFaqValidator,
@@ -10,9 +11,9 @@ import {
 
 const router = Router();
 
-router.post("/create", postFaqValidator, createFaq);
+router.post("/create", verifyAuthToken, postFaqValidator, createFaq);
 router.get("/", getFaqValidator, getFaqsByPage);
-router.put("/", putFaqValidator, bulkWriteFaqs);
-router.delete("/:id", deleteFaqValidator, deleteFaq);
+router.put("/", verifyAuthToken, putFaqValidator, bulkWriteFaqs);
+router.delete("/:id", verifyAuthToken, deleteFaqValidator, deleteFaq);
 
 export default router;
