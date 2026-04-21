@@ -16,24 +16,25 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { onAuthStateChanged } from "firebase/auth";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-import type { FaqItem, FaqPage } from "@/api/faq";
-
-import { getFaq, putFaqs } from "@/api/faq";
+import { type FaqItem, type FaqPage, getFaq, putFaqs } from "@/api/faq";
+import { ConfirmationNotification } from "@/components/admin-portal/ConfirmationNotification";
 import { DraggableSortablePill } from "@/components/admin-portal/DraggableSortablePill";
 import { FaqCard } from "@/components/admin-portal/FaqCard";
+import { PreviewMode } from "@/components/admin-portal/PreviewMode";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { auth } from "@/firebase/firebase";
 
 const PAGE_OPTIONS: { key: FaqPage; label: string }[] = [
   { key: "donors", label: "Donors" },
-  { key: "members", label: "Members" },
   { key: "clients", label: "Clients" },
+  { key: "members", label: "Members" },
 ];
 
-const PAGES: FaqPage[] = ["donors", "members", "clients"];
+const PAGES: FaqPage[] = ["donors", "clients", "members"];
 
 type FaqWithLocalId = FaqItem & { localId: string };
 type FaqsRecord = Record<FaqPage, FaqWithLocalId[]>;
@@ -248,55 +249,6 @@ export default function FaqsEditor() {
     setActiveDialog(null);
   }
 
-  const notificationOverlay = notification && (
-    <div
-      className={`absolute inset-x-[180px] top-[125px] z-50 px-[20px] py-[10px] bg-[#e1f2df] border border-[#3BB966] rounded-[5px] flex items-center justify-between shadow-[0_3px_6px_rgba(0,0,0,0.15)] transition-opacity duration-[1500ms] ${notificationFading ? "opacity-0" : "opacity-100"}`}
-    >
-      <div className="flex gap-[20px] items-center">
-        <svg viewBox="0 0 20 20" fill="none" className="size-[20px] shrink-0">
-          <circle cx="10" cy="10" r="10" fill="#3BB966" />
-          <path
-            d="M5.5 10.5L8.5 13.5L14.5 7"
-            stroke="white"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-        <span className="font-dm-sans font-medium text-[18px] text-[#1E1E1E] tracking-[-0.36px]">
-          {notification === "published"
-            ? "Successfully Published"
-            : "New FAQ has been added successfully"}
-        </span>
-        {notification === "published" && (
-          <a
-            href={`/${selectedPage}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-dm-sans text-[14px] text-[#1E1E1E] underline cursor-pointer"
-          >
-            View Live Site
-          </a>
-        )}
-      </div>
-      <button
-        type="button"
-        onClick={handleDismissNotification}
-        aria-label="Dismiss notification"
-        className="shrink-0 cursor-pointer text-[#1E1E1E] hover:opacity-70 transition-opacity"
-      >
-        <svg viewBox="0 0 15 15" fill="none" className="size-[15px]">
-          <path
-            d="M1 1L14 14M14 1L1 14"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-          />
-        </svg>
-      </button>
-    </div>
-  );
-
   const publishButton = (
     <button
       type="button"
@@ -324,109 +276,119 @@ export default function FaqsEditor() {
     </button>
   );
 
+  const notificationMessage =
+    notification === "published"
+      ? "Successfully Published"
+      : notification === "added"
+        ? "New FAQ has been added successfully"
+        : null;
+
+  const notificationLink =
+    notification === "published"
+      ? { href: `/${selectedPage}`, label: "View Live Site" }
+      : undefined;
+
   if (loading) return null;
 
   if (isPreview) {
     return (
-      <div className="bg-white min-h-screen">
-        <header className="relative sticky top-0 z-40 bg-white px-[100px] py-[20px]">
-          <button
-            type="button"
-            onClick={() => {
-              setIsPreview(false);
-              setExpandedPreviewId(null);
-            }}
-            className="group flex gap-[10px] items-center cursor-pointer py-[12px] pr-[15px] mt-15"
-          >
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              fill="#1e1e1e"
-              className="size-[32px] shrink-0"
-            >
-              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
-            </svg>
-            <span className="font-rubik font-normal text-[24px] text-[#1E1E1E] transition-transform duration-350 group-hover:translate-x-2">
-              Back to Edit
-            </span>
-          </button>
-          {notificationOverlay}
-        </header>
-
-        <div className="px-[100px] py-[50px] flex flex-col gap-[50px] items-end">
-          <div className="bg-white rounded-[10px] overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.1)] w-full">
-            <div className="bg-[rgba(244,244,244,0.7)] backdrop-blur-sm flex items-center justify-between px-[24px] py-[16px]">
-              <div className="font-dm-sans font-black text-[10px] text-[#172447] tracking-[2px] leading-[1.1] whitespace-pre-line">
+      <PreviewMode
+        onBack={() => {
+          setIsPreview(false);
+          setExpandedPreviewId(null);
+        }}
+        notificationMessage={notificationMessage}
+        notificationLink={notificationLink}
+        notificationFading={notificationFading}
+        onDismissNotification={handleDismissNotification}
+        publishButton={publishButton}
+      >
+        <div className="bg-white rounded-[10px] overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.1)] w-full">
+          <div className="bg-[rgba(244,244,244,0.7)] backdrop-blur-sm flex items-center justify-between px-[24px] py-[16px]">
+            <div className="flex items-center gap-[12px]">
+              <Image
+                src="/imgs/f3-logo.svg"
+                alt="F3 Global Logo"
+                width={44}
+                height={44}
+                className="size-[44px] object-contain"
+              />
+              <span className="font-dm-sans font-black text-[10px] text-[#172447] tracking-[2px] leading-[1.1] whitespace-pre-line">
                 {"FUTURE\nFORWARD\nFOUNDATION"}
-              </div>
-              <div className="flex items-center gap-[8px]">
-                {["Home", "About Us", "Meet the Team"].map((item) => (
-                  <span
-                    key={item}
-                    className="px-[12px] py-[8px] font-dm-sans text-[16px] text-[#5D5D5D]"
-                  >
-                    {item}
-                  </span>
-                ))}
-                <span className="px-[12px] py-[8px] bg-[#E6E6E6] rounded-[99px] font-dm-sans text-[16px] text-[#172447]">
-                  Get Involved ↓
-                </span>
-                <span className="px-[12px] py-[8px] font-dm-sans text-[16px] text-[#5D5D5D]">
-                  Newsletter
-                </span>
-              </div>
-              <div className="border border-[#C7C7C7] rounded-[99px] px-[16px] py-[8px] font-dm-sans font-semibold text-[16px] text-[#012060]">
-                DONATE →
-              </div>
+              </span>
             </div>
-
-            <div className="px-[80px] py-[40px] flex flex-col gap-[32px]">
-              <h2 className="font-dm-sans font-medium text-[39px] text-[#172447] tracking-[-0.78px]">
-                Questions?
-              </h2>
-              <div className="bg-[#F4F4F4] rounded-[10px] p-[16px] flex flex-col gap-[20px]">
-                {faqs.length === 0 && (
-                  <p className="font-dm-sans text-[16px] text-[#5D5D5D] py-[8px]">
-                    No FAQs added yet.
-                  </p>
-                )}
-                {faqs.map((faq, index) => {
-                  const isExpanded = expandedPreviewId === faq.localId;
-                  return (
-                    <div key={faq.localId}>
-                      {index > 0 && <div className="h-px bg-[#E0E0E0] mb-[20px]" />}
-                      <button
-                        type="button"
-                        onClick={() => setExpandedPreviewId(isExpanded ? null : faq.localId)}
-                        className="w-full flex items-center justify-between text-left cursor-pointer"
-                      >
-                        <span className="font-dm-sans font-medium text-[19px] text-[#1E1E1E] tracking-[-0.39px] flex-1 min-w-0 pr-[16px]">
-                          {faq.question}
-                        </span>
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="#1E1E1E"
-                          className={`size-[24px] shrink-0 transition-transform duration-200 ${isExpanded ? "rotate-45" : ""}`}
-                          aria-hidden="true"
-                        >
-                          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-                        </svg>
-                      </button>
-                      {isExpanded && (
-                        <p className="font-dm-sans text-[16px] text-[#5D5D5D] leading-[1.6] mt-[12px]">
-                          {faq.answer}
-                        </p>
-                      )}
-                    </div>
-                  );
-                })}
+            <div className="flex items-center gap-[8px]">
+              {["Home", "About Us", "Meet the Team"].map((item) => (
+                <span
+                  key={item}
+                  className="px-[12px] py-[8px] font-dm-sans text-[16px] text-[#5D5D5D]"
+                >
+                  {item}
+                </span>
+              ))}
+              <span className="px-[12px] py-[8px] bg-[#E6E6E6] rounded-[99px] font-dm-sans text-[16px] text-[#172447]">
+                Get Involved ↓
+              </span>
+              <span className="px-[12px] py-[8px] font-dm-sans text-[16px] text-[#5D5D5D]">
+                Newsletter
+              </span>
+              <div className="border border-[#C7C7C7] rounded-[99px] px-[16px] py-[8px] font-dm-sans font-semibold text-[16px] text-[#012060] flex items-center gap-[8px]">
+                DONATE
+                <Image
+                  src="/imgs/ic_arrowforward.svg"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="size-[20px]"
+                />
               </div>
             </div>
           </div>
 
-          {publishButton}
+          <div className="px-[80px] py-[40px] flex flex-col gap-[32px]">
+            <h2 className="font-dm-sans font-medium text-[39px] text-[#172447] tracking-[-0.78px]">
+              Questions?
+            </h2>
+            <div className="bg-[#F4F4F4] rounded-[10px] p-[16px] flex flex-col gap-[20px]">
+              {faqs.length === 0 && (
+                <p className="font-dm-sans text-[16px] text-[#5D5D5D] py-[8px]">
+                  No FAQs added yet.
+                </p>
+              )}
+              {faqs.map((faq, index) => {
+                const isExpanded = expandedPreviewId === faq.localId;
+                return (
+                  <div key={faq.localId}>
+                    {index > 0 && <div className="h-px bg-[#E0E0E0] mb-[20px]" />}
+                    <button
+                      type="button"
+                      onClick={() => setExpandedPreviewId(isExpanded ? null : faq.localId)}
+                      className="w-full flex items-center justify-between text-left cursor-pointer"
+                    >
+                      <span className="font-dm-sans font-medium text-[19px] text-[#1E1E1E] tracking-[-0.39px] flex-1 min-w-0 pr-[16px]">
+                        {faq.question}
+                      </span>
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="#1E1E1E"
+                        className={`size-[24px] shrink-0 transition-transform duration-200 ${isExpanded ? "rotate-45" : ""}`}
+                        aria-hidden="true"
+                      >
+                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                      </svg>
+                    </button>
+                    {isExpanded && (
+                      <p className="font-dm-sans text-[16px] text-[#5D5D5D] leading-[1.6] mt-[12px]">
+                        {faq.answer}
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
-      </div>
+      </PreviewMode>
     );
   }
 
@@ -454,7 +416,7 @@ export default function FaqsEditor() {
 
         <div className="flex items-center justify-between w-full">
           <h1 className="font-dm-sans font-medium text-[32px] text-[#1E1E1E] tracking-[-0.64px]">
-            Frequently Asked Question
+            Frequently Asked Questions
           </h1>
           <button
             type="button"
@@ -480,7 +442,12 @@ export default function FaqsEditor() {
           Reorder FAQs by dragging, or easily add, edit, or remove questions and answers.
         </p>
 
-        {notificationOverlay}
+        <ConfirmationNotification
+          message={notificationMessage}
+          link={notificationLink}
+          fading={notificationFading}
+          onDismiss={handleDismissNotification}
+        />
       </header>
 
       <div className="flex gap-[100px] px-[100px] py-[50px]">
@@ -501,8 +468,9 @@ export default function FaqsEditor() {
               >
                 {label}
                 {selectedPage === key && (
-                  <svg viewBox="0 0 16 16" fill="#1169B0" className="size-[16px] shrink-0">
-                    <circle cx="8" cy="8" r="4" />
+                  <svg viewBox="0 0 16 16" fill="none" className="size-[16px] shrink-0">
+                    <circle cx="8" cy="8" r="7.5" stroke="#C7C7C7" />
+                    <circle cx="8" cy="8" r="5" fill="#1169B0" />
                   </svg>
                 )}
               </button>
@@ -567,7 +535,7 @@ export default function FaqsEditor() {
                   onChange={(e) => setAddForm((f) => ({ ...f, question: e.target.value }))}
                   placeholder="Add Question"
                   rows={1}
-                  className="bg-[#F4F4F4] border border-[#C7C7C7] rounded-[8px] px-[15px] py-[10px] font-dm-sans text-[16px] text-[#5D5D5D] w-full resize-none overflow-hidden focus:outline-none focus:border-[#1169B0]"
+                  className="bg-[#F4F4F4] border border-[#C7C7C7] rounded-[8px] px-[15px] py-[10px] font-dm-sans text-[16px] text-[#1E1E1E] placeholder:text-[#5D5D5D] w-full resize-none overflow-hidden focus:outline-none focus:border-[#1169B0]"
                 />
               </div>
               <div className="flex flex-col gap-[10px]">
@@ -581,7 +549,7 @@ export default function FaqsEditor() {
                   onChange={(e) => setAddForm((f) => ({ ...f, answer: e.target.value }))}
                   placeholder="Add Answer"
                   rows={1}
-                  className="bg-[#F4F4F4] border border-[#C7C7C7] rounded-[8px] px-[15px] py-[10px] font-dm-sans text-[16px] text-[#5D5D5D] w-full resize-none overflow-hidden focus:outline-none focus:border-[#1169B0]"
+                  className="bg-[#F4F4F4] border border-[#C7C7C7] rounded-[8px] px-[15px] py-[10px] font-dm-sans text-[16px] text-[#1E1E1E] placeholder:text-[#5D5D5D] w-full resize-none overflow-hidden focus:outline-none focus:border-[#1169B0]"
                 />
               </div>
             </div>

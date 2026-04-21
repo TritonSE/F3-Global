@@ -7,6 +7,8 @@ export type FaqItem = {
   order: number;
 };
 
+export type FaqWithLocalId = FaqItem & { localId: string };
+
 export async function getFaq(page: FaqPage): Promise<FaqItem[]> {
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
@@ -26,10 +28,8 @@ export async function getFaq(page: FaqPage): Promise<FaqItem[]> {
 }
 
 export async function putFaqs(page: FaqPage, faqs: FaqItem[]): Promise<void> {
-  const { auth } = await import("@/firebase/firebase");
-
-  const token = await auth.currentUser?.getIdToken();
-  if (!token) throw new Error("Not authenticated");
+  const { getAuthHeaders } = await import("@/api/auth");
+  const authHeaders = await getAuthHeaders();
 
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
@@ -39,10 +39,7 @@ export async function putFaqs(page: FaqPage, faqs: FaqItem[]): Promise<void> {
 
   const res = await fetch(`${backendUrl}/api/faq?page=${page}`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { ...authHeaders, "Content-Type": "application/json" },
     body: JSON.stringify(faqs),
   });
 
