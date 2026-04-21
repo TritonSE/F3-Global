@@ -13,6 +13,28 @@ import { InteractiveWorldMap } from "@/components/InteractiveWorldMap";
 
 countriesInfo.registerLocale(enLocale);
 
+const CSUITE_KEYWORDS = [
+  "ceo",
+  "coo",
+  "cfo",
+  "cto",
+  "cmo",
+  "cio",
+  "cso",
+  "cpo",
+  "co-head",
+  "cohead",
+  "co-founder",
+];
+const DIRECTOR_KEYWORDS = ["director"];
+
+function getMemberTier(position: string): number {
+  const lower = position.toLowerCase();
+  if (CSUITE_KEYWORDS.some((k) => new RegExp(`\\b${k}\\b`).test(lower))) return 0;
+  if (DIRECTOR_KEYWORDS.some((k) => new RegExp(`\\b${k}\\b`).test(lower))) return 1;
+  return 2;
+}
+
 export type Member = {
   _id: string;
   name: string;
@@ -95,7 +117,21 @@ export default function MeetTheTeam() {
     });
   }, [membersByCountry]);
 
-  const countries = Object.keys(membersByCountry).sort((a, b) => a.localeCompare(b));
+  const sortedMembersByCountry = useMemo(() => {
+    const sorted: Record<string, Member[]> = {};
+    for (const country of Object.keys(membersByCountry)) {
+      sorted[country] = [...membersByCountry[country]].sort(
+        (a, b) => getMemberTier(a.memberPosition) - getMemberTier(b.memberPosition),
+      );
+    }
+    return sorted;
+  }, [membersByCountry]);
+
+  const countries = Object.keys(membersByCountry).sort((a, b) => {
+    if (a === "United States of America") return -1;
+    if (b === "United States of America") return 1;
+    return a.localeCompare(b);
+  });
 
   const [colleges, setColleges] = useState<College[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -140,7 +176,7 @@ export default function MeetTheTeam() {
   return (
     <>
       <div className="bg-white overflow-x-hidden">
-        <div className="flex w-full items-center justify-between self-stretch px-[100px] min-h-screen">
+        <div className="flex h-[774px] w-full items-center justify-between px-[100px]">
           <div className="flex flex-col gap-[50px]">
             <h1 className="text-[#1E1E1E] text-[64px] font-ethic font-light leading-[1.1]">
               Meet the Team <br /> Without <span className="italic">Borders</span>
@@ -157,11 +193,11 @@ export default function MeetTheTeam() {
             </div>
           </div>
           <div
-            className="rounded-[10px] overflow-hidden relative flex-shrink-0 ml-[50px] mr-[-40px]"
+            className="rounded-[10px] overflow-hidden relative flex-shrink-0"
             style={{ width: 646, height: 581 }}
           >
             <Image
-              src="/imgs/space.jpg"
+              src="/imgs/space.webp"
               alt="Space View of Earth"
               fill
               className="object-cover object-center bg-cover bg-no-repeat bg-center"
@@ -222,7 +258,7 @@ export default function MeetTheTeam() {
                 key={countryName}
                 id={`members-${code}`}
                 countryName={countryName}
-                members={membersByCountry[countryName]}
+                members={sortedMembersByCountry[countryName]}
               />
             );
           })}

@@ -127,7 +127,7 @@ export default function Login() {
       <div
         className="h-[100vh] relative overflow-hidden flex justify-center items-center"
         style={{
-          backgroundImage: "url('/imgs/login.png')",
+          backgroundImage: "url('/imgs/login.webp')",
           backgroundSize: "100% auto",
           backgroundPosition: "left 30%",
           backgroundRepeat: "no-repeat",

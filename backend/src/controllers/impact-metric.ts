@@ -72,7 +72,7 @@ export const updateImpactMetric: RequestHandler<
     doc.metrics = newMetricsList;
 
     const now = new Date();
-    doc.lastUpdated = `${now.getFullYear()}-${String(now.getMonth() - 1).padStart(2, "0")}`;
+    doc.lastUpdated = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
 
     await doc.save();
     res.status(200).json(doc);

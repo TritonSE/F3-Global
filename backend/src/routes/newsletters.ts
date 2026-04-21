@@ -1,0 +1,32 @@
+import { Router } from "express";
+
+import * as NewsletterController from "../controllers/newsletters";
+import { verifyAuthToken } from "../validators/auth";
+import * as Validators from "../validators/newsletters";
+
+const router = Router();
+
+router.get("/all", NewsletterController.getAllNewsletters);
+
+router.post(
+  "/",
+  verifyAuthToken,
+  Validators.createNewsletter,
+  NewsletterController.createNewsletter,
+);
+
+router.put(
+  "/:id",
+  verifyAuthToken,
+  Validators.updateNewsletter,
+  NewsletterController.updateNewsletter,
+);
+
+router.delete(
+  "/:id",
+  verifyAuthToken,
+  Validators.deleteNewsletter,
+  NewsletterController.deleteNewsletter,
+);
+
+export default router;
