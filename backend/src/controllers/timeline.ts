@@ -28,11 +28,10 @@ export const createTimeline: RequestHandler = async (req, res, next) => {
 
 // PUT api/timeline
 export const updateTimeline: RequestHandler = async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json(validationErrorParser(errors));
-  }
   try {
+    const errors = validationResult(req);
+    validationErrorParser(errors);
+
     type IncomingTimelineItem = {
       _id?: string;
       year: number;

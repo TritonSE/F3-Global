@@ -1,3 +1,5 @@
+import { getAuthHeaders } from "./auth";
+
 export type TimelineItem = {
   _id: string;
   year: number;
@@ -18,9 +20,10 @@ export async function getTimelines(): Promise<TimelineItem[]> {
 
 export async function updateTimeline(items: TimelineItem[]): Promise<TimelineItem[]> {
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const authHeaders = await getAuthHeaders();
   const res = await fetch(`${backendUrl}/api/timeline`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: { ...authHeaders, "Content-Type": "application/json" },
     body: JSON.stringify(items),
   });
   if (!res.ok) throw new Error("Failed to update timeline");

@@ -19,7 +19,7 @@ export default function About() {
     const fetchPrimary = async () => {
       try {
         const data = await getClientHighlights();
-        const primary = data.find((h) => h.order === 1);
+        const primary = data.find((h) => h.order === 0);
         if (primary) {
           setPrimaryHighlight(primary);
         }
@@ -50,8 +50,8 @@ export default function About() {
               Services That Create <br /> <span className="italic">Lasting</span> Impact
             </h1>
             <p className="font-dm-sans text-[20px] font-normal leading-[32px] text-[#5D5D5D] w-[80%]">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua.
+              Partner with F3 Global, providing microloans, guidance, and resources designed to
+              support small business owners and entrepreneurs on their path to long-term success.
             </p>
             <div>
               <Button
