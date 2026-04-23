@@ -12,7 +12,8 @@ const MAX_CHARS = 200;
 
 function getFirebaseFileName(url: string): string {
   const path = decodeURIComponent(new URL(url).pathname);
-  return path.split("/").pop() ?? url;
+  const raw = path.split("/").pop() ?? url;
+  return raw.replace(/^\d+-/, "");
 }
 
 export function TimelineCard({ index, item, onChange }: TimelineCardProps) {
