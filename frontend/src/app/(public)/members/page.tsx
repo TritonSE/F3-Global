@@ -13,7 +13,7 @@ export default async function Members() {
       <div className="flex flex-col bg-white overflow-x-hidden">
         {/* Hero Section */}
         <div className="flex w-full items-center justify-between self-stretch px-[100px] min-h-screen">
-          <div className="flex flex-col gap-[50px]">
+          <div className="flex w-[639px] flex-col items-start gap-[50px]">
             <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
               Become <span className="italic">Part</span> of Our <br /> Team Today!
             </h1>
@@ -28,14 +28,12 @@ export default async function Members() {
               />
             </div>
           </div>
-          <div
-            className="rounded-[10px] overflow-hidden relative flex-shrink-0 flex-grow-0"
-            style={{ width: 646, height: 581 }}
-          >
+          <div className="relative w-[646px] h-[581px] overflow-hidden rounded-[10px] flex-shrink-0">
             <Image
               src="/imgs/members_hero.png"
               alt="Volunteers Working with Children"
               fill
+              sizes="646px"
               className="object-cover object-center"
               priority
             />
