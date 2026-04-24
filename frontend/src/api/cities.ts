@@ -1,3 +1,5 @@
+import { getAuthHeaders } from "@/api/auth";
+
 export type City = string;
 
 export async function getAllCities(): Promise<City[]> {
@@ -14,9 +16,10 @@ export async function getAllCities(): Promise<City[]> {
 
 export async function updateCities(cities: string[]): Promise<City[]> {
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const authHeaders = await getAuthHeaders();
   const res = await fetch(`${backendUrl}/api/cities/`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: { ...authHeaders, "Content-Type": "application/json" },
     body: JSON.stringify({ cities }),
   });
 

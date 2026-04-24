@@ -1,16 +1,17 @@
 import { Router } from "express";
 
 import * as MemberController from "../controllers/member";
+import { verifyAuthToken } from "../validators/auth";
 import * as Validators from "../validators/member";
 
 const router = Router();
 
 router.get("/all", MemberController.getAllMembers);
 
-router.post("/", Validators.createMember, MemberController.createMember);
+router.post("/", verifyAuthToken, Validators.createMember, MemberController.createMember);
 
-router.put("/", Validators.updateMembers, MemberController.updateMembers);
+router.put("/", verifyAuthToken, Validators.updateMembers, MemberController.updateMembers);
 
-router.delete("/:id", Validators.deleteMember, MemberController.deleteMember);
+router.delete("/:id", verifyAuthToken, Validators.deleteMember, MemberController.deleteMember);
 
 export default router;

@@ -94,7 +94,7 @@ export default function Donors() {
           </div>
         </div>
 
-        <div className="absolute flex flex-col px-[5vw] py-[75px] mt-[12vh] items-start gap-[40px]">
+        <div className="absolute flex flex-col px-[100px] py-[75px] mt-[12vh] items-start gap-[40px]">
           <p
             className="text-white text-[64px] leading-[110%]"
             style={{ fontFamily: '"Ethic New", sans-serif' }}

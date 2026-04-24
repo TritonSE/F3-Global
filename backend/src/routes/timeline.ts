@@ -6,6 +6,7 @@ import {
   getTimeline,
   updateTimeline,
 } from "../controllers/timeline";
+import { verifyAuthToken } from "../validators/auth";
 import {
   createTimelineValidator,
   deleteTimelineValidator,
@@ -14,9 +15,9 @@ import {
 
 const router = Router();
 
-router.post("/", createTimelineValidator, createTimeline);
-router.put("/", updateTimelineValidator, updateTimeline);
+router.post("/", verifyAuthToken, createTimelineValidator, createTimeline);
+router.put("/", verifyAuthToken, updateTimelineValidator, updateTimeline);
 router.get("/all", getTimeline);
-router.delete("/:id", deleteTimelineValidator, deleteTimeline);
+router.delete("/:id", verifyAuthToken, deleteTimelineValidator, deleteTimeline);
 
 export default router;
