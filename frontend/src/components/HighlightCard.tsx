@@ -85,7 +85,7 @@ export function HighlightCard({
         className={`relative flex w-full flex-1 flex-col overflow-y-auto rounded-b-[10px] md:rounded-b-[16px] ${
           isActive
             ? "gap-[10px] md:gap-[24px] p-[20px_10px] md:p-[32px_16px]"
-            : "gap-[7.5px] md:gap-[16.5px] p-[25px_7.5px] md:p-[22px_11px]"
+            : "gap-[7.5px] md:gap-[16.5px] p-[15px_7.5px] md:p-[22px_11px]"
         }`}
       >
         <div

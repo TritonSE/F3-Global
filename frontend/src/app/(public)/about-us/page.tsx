@@ -84,6 +84,7 @@ export default function About() {
       </div>
       <ClientCarousel />
       <Highlights />
+      {/* alumni carousel */}
     </div>
   );
 }

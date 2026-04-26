@@ -14,7 +14,7 @@ export function HighlightOverlay({ highlight, onClose }: HighlightOverlayProps) 
       onClick={onClose}
     >
       <div
-        className="relative flex flex-col md:flex-row h-[506px] md:min-h-[612px] w-[342px] md:w-auto items-start justify-start md:gap-[50px] overflow-y-auto scrollbar-hide md:overflow-hidden rounded-[10px] border border-[#c7c7c7] bg-white p-[20px] pb-[30px] md:p-[50px] shadow-[0px_17px_36px_0px_rgba(0,0,0,0.1)]"
+        className="relative flex flex-col md:flex-row h-[506px] md:min-h-[612px] w-[342px] md:w-auto items-start justify-start md:gap-[50px] overflow-y-auto scrollbar-hide md:overflow-hidden rounded-[10px] border border-[#c7c7c7] bg-white p-[20px] md:p-[50px] shadow-[0px_17px_36px_0px_rgba(0,0,0,0.1)]"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -49,6 +49,7 @@ export function HighlightOverlay({ highlight, onClose }: HighlightOverlayProps) 
             />
           </svg>
         </button>
+        <div className="h-[30px] w-full flex-shrink-0 md:hidden" />
       </div>
     </div>
   );
