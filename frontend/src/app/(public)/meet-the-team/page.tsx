@@ -262,6 +262,7 @@ export default function MeetTheTeam() {
               src="/imgs/space.webp"
               alt="Space View of Earth"
               fill
+              sizes="646px"
               className="object-cover object-center bg-cover bg-no-repeat bg-center"
               priority
             />
