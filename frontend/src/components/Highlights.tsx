@@ -175,12 +175,6 @@ export function Highlights() {
       {selectedHighlight && (
         <HighlightOverlay highlight={selectedHighlight} onClose={handleCloseOverlay} />
       )}
-
-      {selectedHighlight && (
-        <div className="md:hidden">
-          <HighlightOverlay highlight={selectedHighlight} onClose={handleCloseOverlay} />
-        </div>
-      )}
     </section>
   );
 }
