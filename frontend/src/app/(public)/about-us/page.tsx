@@ -12,7 +12,7 @@ import {
 export default function About() {
   return (
     <div className="mx-auto flex flex-col justify-center bg-white w-full">
-      <div className="flex h-[774px] px-[100px] justify-between items-center w-full">
+      <div className="flex w-full items-center justify-between self-stretch px-[100px] min-h-screen">
         <div className="flex flex-col items-start gap-[50px] w-[639px]">
           <h1
             className="text-[#1E1E1E] font-ethic-new text-[64px] leading-[70px] font-light pr-[90px]"

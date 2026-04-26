@@ -3,14 +3,18 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
+import type { ReactNode } from "react";
+
 export function DraggableSortablePill({
   id,
   onDelete,
   children,
+  className,
 }: {
   id: string;
   onDelete: (id: string) => void;
-  children: React.ReactNode;
+  children: ReactNode;
+  className?: string;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id,
@@ -26,7 +30,10 @@ export function DraggableSortablePill({
     <div
       ref={setNodeRef}
       style={style}
-      className="bg-white border border-[#C7C7C7] flex gap-[10px] items-center px-[10px] py-[5px] rounded-[10px]"
+      className={
+        className ??
+        "bg-white border border-[#C7C7C7] flex gap-[10px] items-center px-[10px] py-[5px] rounded-[10px]"
+      }
     >
       <button
         type="button"
