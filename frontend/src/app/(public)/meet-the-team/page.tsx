@@ -30,7 +30,6 @@ const DIRECTOR_KEYWORDS = ["director"];
 const DEFAULT_FLAG_URL =
   "https://firebasestorage.googleapis.com/v0/b/f3-global.firebasestorage.app/o/qmarkplaceholder.png?alt=media&token=975956ce-e292-48ab-823f-377e5b0a7928";
 
-
 function getMemberTier(position: string): number {
   const lower = position.toLowerCase();
   if (CSUITE_KEYWORDS.some((k) => new RegExp(`\\b${k}\\b`).test(lower))) return 0;
