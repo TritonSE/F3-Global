@@ -25,14 +25,14 @@ export const TimelineMilestoneBlock = ({
         <>
           <div className="space-y-2 flex-1 text-right">
             <h3
-              className={`font-ethic text-[54px] leading-[1] tracking-[-0.02em] transition-colors duration-500 ${
+              className={`font-ethic text-[54px] leading-[1] tracking-[-0.02em] transition-colors duration-[1500ms] ease-out ${
                 isActive ? "text-black" : "text-[#d0d0d0]"
               }`}
             >
               {year}
             </h3>
             <p
-              className={`font-dm text-[16px] leading-[1.5] transition-colors duration-500 ${
+              className={`font-dm text-[16px] leading-[1.5] transition-colors duration-[1500ms] ease-out ${
                 isActive ? "text-black" : "text-[#c5c5c5]"
               }`}
             >
@@ -45,7 +45,7 @@ export const TimelineMilestoneBlock = ({
               alt={imageAlt}
               fill
               sizes="(max-width: 768px) 227px, 227px"
-              className={`object-cover transition-[filter] duration-500 ${
+              className={`object-cover transition-[filter] duration-[1500ms] ease-out ${
                 isActive ? "grayscale-0" : "grayscale"
               }`}
             />
@@ -59,21 +59,21 @@ export const TimelineMilestoneBlock = ({
               alt={imageAlt}
               fill
               sizes="(max-width: 768px) 227px, 227px"
-              className={`object-cover transition-[filter] duration-500 ${
+              className={`object-cover transition-[filter] duration-[1500ms] ease-out ${
                 isActive ? "grayscale-0" : "grayscale"
               }`}
             />
           </div>
           <div className="space-y-2 flex-1 text-left">
             <h3
-              className={`font-ethic text-[54px] leading-[1] tracking-[-0.02em] transition-colors duration-500 ${
+              className={`font-ethic text-[54px] leading-[1] tracking-[-0.02em] transition-colors duration-[1500ms] ease-out ${
                 isActive ? "text-black" : "text-[#d0d0d0]"
               }`}
             >
               {year}
             </h3>
             <p
-              className={`font-dm text-[16px] leading-[1.5] transition-colors duration-500 ${
+              className={`font-dm text-[16px] leading-[1.5] transition-colors duration-[1500ms] ease-out ${
                 isActive ? "text-black" : "text-[#c5c5c5]"
               }`}
             >

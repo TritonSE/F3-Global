@@ -163,7 +163,7 @@ export const UpdatedTimeline = () => {
 
                     <div
                       ref={index === 0 ? firstDotRef : index === lastIndex ? lastDotRef : undefined}
-                      className={`absolute left-1/2 top-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 rounded-full border-[2px] transition-colors duration-500 md:h-8 md:w-8 ${
+                      className={`absolute left-1/2 top-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 rounded-full border-[2px] transition-colors duration-[1500ms] ease-out md:h-8 md:w-8 ${
                         index === activeIndex
                           ? "border-black bg-black"
                           : "border-[#213363]/70 bg-white"
