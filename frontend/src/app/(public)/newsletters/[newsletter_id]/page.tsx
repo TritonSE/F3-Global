@@ -1,23 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-
+import { useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { getNewsletters, incrementNewsletterViews, type Newsletter } from "@/api/newsletters";
+
+type SharePlatform = "linkedin" | "facebook" | "x" | "email";
 
 export default function NewsletterDetailPage() {
   const router = useRouter();
   const params = useParams();
   const newsletterId = params.newsletter_id as string;
-
+  
   const [newsletter, setNewsletter] = useState<Newsletter | null>(null);
   const [relatedNewsletters, setRelatedNewsletters] = useState<Newsletter[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [shareMenuOpen, setShareMenuOpen] = useState(false);
-  const [copyStatus, setCopyStatus] = useState<string | null>(null);
-  const shareMenuRef = useRef<HTMLDivElement>(null);
+  const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
+  const [pendingShareLink, setPendingShareLink] = useState<string | null>(null);
 
   // Fetch newsletters and increment view count
   useEffect(() => {
@@ -26,28 +27,28 @@ export default function NewsletterDetailPage() {
         setLoading(true);
         const response = await getNewsletters(1);
         const allNewsletters = response.data;
-
+        
         // Find current newsletter
-        const current = allNewsletters.find((n) => n._id === newsletterId);
+        const current = allNewsletters.find(n => n._id === newsletterId);
         if (!current) {
           setError("Newsletter not found");
           setLoading(false);
           return;
         }
-
+        
         setNewsletter(current);
-
+        
         // Get 3 most recent (excluding current)
         const related = allNewsletters
-          .filter((n) => n._id !== newsletterId)
+          .filter(n => n._id !== newsletterId)
           .sort((a, b) => new Date(b.uploadDate).getTime() - new Date(a.uploadDate).getTime())
           .slice(0, 3);
-
+        
         setRelatedNewsletters(related);
 
         // Fire-and-forget view increment (don't block page load)
         void incrementNewsletterViews(newsletterId).catch((e) => {
-          console.error("Failed to increment views:", e);
+        console.error("Failed to increment views:", e);
         });
       } catch (err) {
         console.error("Failed to fetch newsletter:", err);
@@ -60,46 +61,45 @@ export default function NewsletterDetailPage() {
     void fetchNewsletters();
   }, [newsletterId]);
 
-  // Close share menu on outside click
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (shareMenuRef.current && !shareMenuRef.current.contains(event.target as Node)) {
-        setShareMenuOpen(false);
-      }
-    }
-
-    if (shareMenuOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
-    }
-  }, [shareMenuOpen]);
-
-  const handleShare = (platform: string) => {
+  const buildShareLink = (platform: SharePlatform) => {
     const url = typeof window !== "undefined" ? window.location.href : "";
     const text = newsletter?.title || "Check out this article";
 
     switch (platform) {
       case "email":
-        window.open(`mailto:?subject=${encodeURIComponent(text)}&body=${encodeURIComponent(url)}`);
-        break;
+        return `mailto:?subject=${encodeURIComponent(text)}&body=${encodeURIComponent(url)}`;
       case "linkedin":
-        window.open(
-          `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
-        );
-        break;
-      case "twitter":
-        window.open(
-          `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
-        );
-        break;
-      case "copy":
-        void navigator.clipboard
-          .writeText(url)
-          .then(() => setCopyStatus("Link copied to clipboard"))
-          .catch(() => setCopyStatus("Failed to copy link"));
-        break;
+        return `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+      case "facebook":
+        return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+      case "x":
+        return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+      default:
+        return "";
     }
-    setShareMenuOpen(false);
+  };
+
+  const handleShareClick = (platform: SharePlatform) => {
+    const nextShareLink = buildShareLink(platform);
+    setPendingShareLink(nextShareLink);
+    setIsLeaveModalOpen(true);
+  };
+
+  const closeLeaveModal = () => {
+    setPendingShareLink(null);
+    setIsLeaveModalOpen(false);
+  };
+
+  const proceedToShare = () => {
+    if (!pendingShareLink) return;
+
+    if (pendingShareLink.startsWith("mailto:")) {
+      window.location.href = pendingShareLink;
+    } else {
+      window.open(pendingShareLink, "_blank", "noopener,noreferrer");
+    }
+
+    closeLeaveModal();
   };
 
   if (loading) {
@@ -141,17 +141,19 @@ export default function NewsletterDetailPage() {
       <div className="px-[100px] pt-[40px] pb-[12px]">
         <button
           onClick={() => router.push("/newsletters")}
-          className="flex items-center gap-[10px] text-[#1E1E1E] hover:text-[#012060] transition-colors"
+          className="group flex items-center gap-[10px] text-[#1E1E1E] hover:text-[#012060] transition-colors"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="w-6 h-6"
+          >
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
           </svg>
-          <span className="text-sm font-medium">BACK</span>
+          <span className="text-sm font-medium transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-[6px]">
+            BACK
+          </span>
         </button>
       </div>
 
@@ -172,61 +174,53 @@ export default function NewsletterDetailPage() {
             <div className="flex items-center gap-2 text-[16px] font-[400] leading-[24px] text-[#5D5D5D]">
               <span>Posted on {formattedDate}</span>
               <span>•</span>
-              <span>Share</span>
-            </div>
-            {copyStatus && <span className="text-sm text-[#5D5D5D]">{copyStatus}</span>}
-
-            {/* Share Button */}
-            <div className="relative ml-auto" ref={shareMenuRef}>
-              <button
-                onClick={() => setShareMenuOpen(!shareMenuOpen)}
-                className="p-2 hover:bg-[#F4F4F4] rounded-full transition-colors"
-                aria-label="Share"
-              >
-                <svg
-                  className="w-6 h-6 text-[#1E1E1E]"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              <div className="group/share relative inline-flex items-center">
+                <button
+                  type="button"
+                  aria-label="Show share options"
+                  className="inline-flex items-center gap-2 text-[#2F2F2F] no-underline underline-offset-2 group-hover/share:underline group-focus-within/share:underline"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-2l-4 4m0 0l-4-4m4 4V4"
-                  />
-                </svg>
-              </button>
-
-              {/* Share Menu */}
-              {shareMenuOpen && (
-                <div className="absolute right-0 mt-2 w-40 bg-white border border-[#C7C7C7] rounded-lg shadow-lg z-50">
-                  <button
-                    onClick={() => handleShare("email")}
-                    className="w-full text-left px-4 py-3 hover:bg-[#F4F4F4] text-sm text-[#1E1E1E] border-b border-[#E0E0E0]"
-                  >
-                    Email
-                  </button>
-                  <button
-                    onClick={() => handleShare("linkedin")}
-                    className="w-full text-left px-4 py-3 hover:bg-[#F4F4F4] text-sm text-[#1E1E1E] border-b border-[#E0E0E0]"
-                  >
-                    LinkedIn
-                  </button>
-                  <button
-                    onClick={() => handleShare("twitter")}
-                    className="w-full text-left px-4 py-3 hover:bg-[#F4F4F4] text-sm text-[#1E1E1E] border-b border-[#E0E0E0]"
-                  >
-                    Twitter
-                  </button>
-                  <button
-                    onClick={() => handleShare("copy")}
-                    className="w-full text-left px-4 py-3 hover:bg-[#F4F4F4] text-sm text-[#1E1E1E]"
-                  >
-                    Copy Link
-                  </button>
+                  Share
+                  <Image src="/imgs/share.svg" alt="Share" width={24} height={24} />
+                </button>
+                <div className="pointer-events-none absolute left-full top-1/2 ml-2 flex -translate-y-1/2 items-center gap-2 opacity-0 transition-opacity duration-200 group-hover/share:pointer-events-auto group-hover/share:opacity-100 group-focus-within/share:pointer-events-auto group-focus-within/share:opacity-100">
+                  <Image src="/imgs/share.svg" alt="Share options" width={24} height={24} />
+                  <div className="flex items-center gap-3 rounded-full bg-[#F3F3F3] px-4 py-2">
+                    <button
+                      type="button"
+                      aria-label="Share on LinkedIn"
+                      onClick={() => handleShareClick("linkedin")}
+                      className="rounded-full p-1 transition-transform hover:scale-110"
+                    >
+                      <Image src="/imgs/share.svg" alt="LinkedIn" width={24} height={24} />
+                    </button>
+                    <button
+                      type="button"
+                      aria-label="Share on Facebook"
+                      onClick={() => handleShareClick("facebook")}
+                      className="rounded-full p-1 transition-transform hover:scale-110"
+                    >
+                      <Image src="/imgs/share.svg" alt="Facebook" width={24} height={24} />
+                    </button>
+                    <button
+                      type="button"
+                      aria-label="Share on X"
+                      onClick={() => handleShareClick("x")}
+                      className="rounded-full p-1 transition-transform hover:scale-110"
+                    >
+                      <Image src="/imgs/share.svg" alt="X" width={24} height={24} />
+                    </button>
+                    <button
+                      type="button"
+                      aria-label="Share by email"
+                      onClick={() => handleShareClick("email")}
+                      className="rounded-full p-1 transition-transform hover:scale-110"
+                    >
+                      <Image src="/imgs/share.svg" alt="Email" width={24} height={24} />
+                    </button>
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
@@ -248,12 +242,12 @@ export default function NewsletterDetailPage() {
       <div className="px-[200px] pb-[32px]">
         <div className="max-w-[1120px]">
           <div className="mb-8 max-w-4xl">
-            <h3 className="font-dm-sans font-[700] text-[28px] leading-[42px] tracking-[-0.56px] text-[#1E1E1E] mb-4">
-              {newsletter.authorName}
-            </h3>
-            <p className="font-dm-sans text-[16px] font-[400] leading-[24px] text-[#1E1E1E]">
-              {newsletter.blurb}
-            </p>
+          <h3 className="font-dm-sans font-[700] text-[28px] leading-[42px] tracking-[-0.56px] text-[#1E1E1E] mb-4">
+            {newsletter.authorName}
+          </h3>
+          <p className="font-dm-sans text-[16px] font-[400] leading-[24px] text-[#1E1E1E]">
+            {newsletter.blurb}
+          </p>
           </div>
 
           {/* Read Full Article Button */}
@@ -270,7 +264,7 @@ export default function NewsletterDetailPage() {
 
       {/* You May Also Like */}
       {relatedNewsletters.length > 0 && (
-        <div className="px-[100px] pt-[50px] pb-[48px]">
+        <div className="px-[100px] pt-[50px] pb-[48px] border-t border-[#E0E0E0]">
           <h2 className="font-dm-sans font-[700] text-[32px] leading-[150%] tracking-[-0.64px] text-[#1E1E1E] mb-[20px]">
             You May Also Like
           </h2>
@@ -302,6 +296,72 @@ export default function NewsletterDetailPage() {
                 </p>
               </button>
             ))}
+          </div>
+        </div>
+      )}
+
+      {isLeaveModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#172447]/70 px-4"
+          onClick={closeLeaveModal}
+        >
+          <div
+            className="relative w-full max-w-[760px] rounded-[12px] bg-white px-8 pb-8 pt-9 text-center"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              aria-label="Close dialog"
+              onClick={closeLeaveModal}
+              className="absolute right-6 top-6 text-[#1E1E1E] transition-colors hover:text-[#012060]"
+            >
+              <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M6 6l12 12M18 6L6 18"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+
+            <div className="mx-auto mb-8 flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#9CC8EA]">
+              <svg aria-hidden="true" className="h-7 w-7 text-white" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 7v6"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
+                <circle cx="12" cy="17.5" r="1.2" fill="currentColor" />
+              </svg>
+            </div>
+
+            <h2 className="font-dm-sans text-[42px] leading-[56px] font-medium tracking-[-0.8px] text-[#1E2B59]">
+              You are about to leave our website
+            </h2>
+            <p className="mx-auto mt-6 max-w-[640px] font-dm-sans text-[16px] leading-[150%] text-[#5D5D5D]">
+              You selected a link to an external site. F3 Global is not responsible for the third-party
+              website&apos;s availability, content, products or services. Please refer to the external
+              website&apos;s terms, privacy and security policies for details and applicability.
+            </p>
+
+            <div className="mt-8 flex items-center justify-center gap-5">
+              <button
+                type="button"
+                onClick={closeLeaveModal}
+                className="rounded-[99px] border border-[#1E2B59] px-8 py-2 font-dm-sans text-[16px] text-[#1E2B59] transition-colors hover:bg-[#F4F4F4]"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={proceedToShare}
+                className="rounded-[99px] bg-[#1E2B59] px-8 py-2 font-dm-sans text-[16px] font-medium text-white transition-colors hover:bg-[#16224A]"
+              >
+                Proceed
+              </button>
+            </div>
           </div>
         </div>
       )}
