@@ -112,3 +112,21 @@ export const deleteNewsletter: RequestHandler<{ id: string }> = async (req, res,
     next(error);
   }
 };
+
+export const incrementNewsletterViews: RequestHandler<{ id: string }> = async (req, res, next) => {
+  try {
+    const errors = validationResult(req);
+    validationErrorParser(errors);
+
+    const { id } = req.params;
+    const doc = await NewsletterModel.findByIdAndUpdate(id, { $inc: { views: 1 } }, { new: true });
+
+    if (!doc) {
+      return res.status(404).json({ message: "Newsletter not found" });
+    }
+
+    res.status(200).json(doc);
+  } catch (error) {
+    next(error);
+  }
+};

@@ -47,9 +47,14 @@ export default function NewsletterDetailPage() {
         setRelatedNewsletters(related);
 
         // Fire-and-forget view increment (don't block page load)
-        void incrementNewsletterViews(newsletterId).catch((e) => {
-          console.error("Failed to increment views:", e);
-        });
+        const viewCountKey = `newsletter-view-counted-${newsletterId}`;
+        if (typeof window !== "undefined" && window.sessionStorage.getItem(viewCountKey) !== "1") {
+          window.sessionStorage.setItem(viewCountKey, "1");
+
+          void incrementNewsletterViews(newsletterId).catch((e) => {
+            console.error("Failed to increment views:", e);
+          });
+        }
       } catch (err) {
         console.error("Failed to fetch newsletter:", err);
         setError("Failed to load newsletter");
@@ -141,7 +146,7 @@ export default function NewsletterDetailPage() {
       <div className="px-[100px] pt-[40px] pb-[12px]">
         <button
           onClick={() => router.push("/newsletters")}
-          className="group flex items-center gap-[10px] text-[#1E1E1E] hover:text-[#012060] transition-colors"
+          className="group flex items-center gap-[10px] text-[#1E1E1E] transition-colors"
         >
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
             <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
@@ -178,7 +183,7 @@ export default function NewsletterDetailPage() {
                   Share
                   <Image src="/imgs/share.svg" alt="Share" width={24} height={24} />
                 </button>
-                <div className="pointer-events-none absolute left-full top-1/2 ml-2 flex -translate-y-1/2 items-center gap-2 opacity-0 transition-opacity duration-200 group-hover/share:pointer-events-auto group-hover/share:opacity-100 group-focus-within/share:pointer-events-auto group-focus-within/share:opacity-100">
+                <div className="pointer-events-none absolute left-full top-1/2 flex -translate-y-1/2 items-center gap-2 pl-2 opacity-0 transition-opacity duration-200 group-hover/share:pointer-events-auto group-hover/share:opacity-100 group-focus-within/share:pointer-events-auto group-focus-within/share:opacity-100">
                   <Image src="/imgs/share.svg" alt="Share options" width={24} height={24} />
                   <div className="flex items-center gap-3 rounded-full bg-[#F3F3F3] px-4 py-2">
                     <button
@@ -250,7 +255,7 @@ export default function NewsletterDetailPage() {
             href={newsletter.pdfUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-6 py-3 bg-[#012060] text-white rounded-[99px] font-dm-sans font-semibold hover:bg-[#012060]/90 transition-colors"
+            className="inline-block px-6 py-3 bg-[#012060] text-white rounded-[99px] font-dm-sans font-semibold hover:bg-[#1169B0] transition-colors"
           >
             Read Full Article
           </a>
