@@ -168,7 +168,7 @@ export default function NewsletterDetailPage() {
           <div className="mt-[24px] flex items-center gap-6">
             <div className="flex items-center gap-2 text-[16px] font-[400] leading-[24px] text-[#5D5D5D]">
               <span>Posted on {formattedDate}</span>
-              <span>•</span>
+              <Image src="/imgs/Ellipse%202.svg" alt="" aria-hidden="true" width={8} height={8} />
               <div className="group/share relative inline-flex items-center">
                 <button
                   type="button"
@@ -259,7 +259,7 @@ export default function NewsletterDetailPage() {
 
       {/* You May Also Like */}
       {relatedNewsletters.length > 0 && (
-        <div className="px-[100px] pt-[50px] pb-[48px] border-t border-[#E0E0E0]">
+        <div className="px-[100px] pt-[50px] pb-[48px]">
           <h2 className="font-dm-sans font-[700] text-[32px] leading-[150%] tracking-[-0.64px] text-[#1E1E1E] mb-[20px]">
             You May Also Like
           </h2>
