@@ -63,26 +63,33 @@ export function Highlights() {
     return [prevIndex, currentIndex, nextIndex];
   };
 
+  const isFirst = currentIndex === 0;
+  const isLast = currentIndex === highlights.length - 1;
+
+  const offset = isFirst
+    ? 0
+    : isLast
+      ? `calc(100% - 278px - 60px - ${currentIndex * 213}px)`
+      : `calc(50% - 139px - ${currentIndex * 213}px - 30px)`;
+
   return (
-    <section className="relative flex w-full flex-col items-center gap-[20px] md:gap-[50px] border-t border-[#f4f4f4] bg-white py-[50px] px-[30px] md:px-0 box-border">
-      <div className="flex w-full md:px-[100px] items-center justify-start">
+    <section className="relative flex w-full flex-col items-center gap-[20px] md:gap-[50px] border-t border-[#f4f4f4] bg-white py-[50px] md:px-0 box-border overflow-hidden">
+      <div className="flex w-full  px-[30px] md:px-[100px] items-center justify-start">
         <h2 className="font-dm-sans text-[28px] md:text-[48px] font-medium leading-[150%] tracking-[-0.96px] text-[#172447]">
           Client Highlights
         </h2>
       </div>
 
       <div
-        className="md:hidden w-full overflow-hidden pb-[20px] md:pb-0"
+        className="md:hidden w-full pb-[20px] md:pb-0"
         onMouseDown={(e) => handleDragStart(e.clientX)}
         onMouseUp={(e) => handleDragEnd(e.clientX)}
         onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
         onTouchEnd={(e) => handleDragEnd(e.changedTouches[0].clientX)}
       >
         <div
-          className="flex items-center transition-transform duration-300 ease-in-out"
-          style={{
-            transform: `translateX(calc(-${currentIndex * 209}px - ${currentIndex * 4}px))`,
-          }}
+          className="flex items-center transition-transform duration-300 ease-in-out pl-[30px]"
+          style={{ transform: `translateX(${offset})` }}
         >
           {highlights.map((highlight, i) => (
             <div key={highlight._id} className="shrink-0 mr-[4px]">
