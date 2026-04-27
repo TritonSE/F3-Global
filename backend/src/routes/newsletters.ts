@@ -7,6 +7,7 @@ import * as Validators from "../validators/newsletters";
 const router = Router();
 
 router.get("/all", NewsletterController.getAllNewsletters);
+router.get("/:id", NewsletterController.getNewsletterById);
 
 router.post(
   "/",

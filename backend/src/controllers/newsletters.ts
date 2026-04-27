@@ -112,3 +112,18 @@ export const deleteNewsletter: RequestHandler<{ id: string }> = async (req, res,
     next(error);
   }
 };
+
+export const getNewsletterById: RequestHandler<{ id: string }> = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const doc = await NewsletterModel.findById(id);
+
+    if (!doc) {
+      return res.status(404).json({ message: "Newsletter not found" });
+    }
+
+    res.status(200).json(doc);
+  } catch (error) {
+    next(error);
+  }
+};

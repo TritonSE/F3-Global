@@ -121,3 +121,5 @@ export const updateNewsletter = [
 ];
 
 export const deleteNewsletter = [makeIdValidator()];
+
+export const incrementNewsletterViews = [makeIdValidator()];
