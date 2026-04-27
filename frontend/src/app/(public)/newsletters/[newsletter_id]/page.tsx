@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+
 import { getNewsletters, incrementNewsletterViews, type Newsletter } from "@/api/newsletters";
 
 type SharePlatform = "linkedin" | "facebook" | "x" | "email";
@@ -12,7 +12,7 @@ export default function NewsletterDetailPage() {
   const router = useRouter();
   const params = useParams();
   const newsletterId = params.newsletter_id as string;
-  
+
   const [newsletter, setNewsletter] = useState<Newsletter | null>(null);
   const [relatedNewsletters, setRelatedNewsletters] = useState<Newsletter[]>([]);
   const [loading, setLoading] = useState(true);
@@ -27,28 +27,28 @@ export default function NewsletterDetailPage() {
         setLoading(true);
         const response = await getNewsletters(1);
         const allNewsletters = response.data;
-        
+
         // Find current newsletter
-        const current = allNewsletters.find(n => n._id === newsletterId);
+        const current = allNewsletters.find((n) => n._id === newsletterId);
         if (!current) {
           setError("Newsletter not found");
           setLoading(false);
           return;
         }
-        
+
         setNewsletter(current);
-        
+
         // Get 3 most recent (excluding current)
         const related = allNewsletters
-          .filter(n => n._id !== newsletterId)
+          .filter((n) => n._id !== newsletterId)
           .sort((a, b) => new Date(b.uploadDate).getTime() - new Date(a.uploadDate).getTime())
           .slice(0, 3);
-        
+
         setRelatedNewsletters(related);
 
         // Fire-and-forget view increment (don't block page load)
         void incrementNewsletterViews(newsletterId).catch((e) => {
-        console.error("Failed to increment views:", e);
+          console.error("Failed to increment views:", e);
         });
       } catch (err) {
         console.error("Failed to fetch newsletter:", err);
@@ -143,12 +143,7 @@ export default function NewsletterDetailPage() {
           onClick={() => router.push("/newsletters")}
           className="group flex items-center gap-[10px] text-[#1E1E1E] hover:text-[#012060] transition-colors"
         >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="w-6 h-6"
-          >
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
             <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
           </svg>
           <span className="text-sm font-medium transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-[6px]">
@@ -242,12 +237,12 @@ export default function NewsletterDetailPage() {
       <div className="px-[200px] pb-[32px]">
         <div className="max-w-[1120px]">
           <div className="mb-8 max-w-4xl">
-          <h3 className="font-dm-sans font-[700] text-[28px] leading-[42px] tracking-[-0.56px] text-[#1E1E1E] mb-4">
-            {newsletter.authorName}
-          </h3>
-          <p className="font-dm-sans text-[16px] font-[400] leading-[24px] text-[#1E1E1E]">
-            {newsletter.blurb}
-          </p>
+            <h3 className="font-dm-sans font-[700] text-[28px] leading-[42px] tracking-[-0.56px] text-[#1E1E1E] mb-4">
+              {newsletter.authorName}
+            </h3>
+            <p className="font-dm-sans text-[16px] font-[400] leading-[24px] text-[#1E1E1E]">
+              {newsletter.blurb}
+            </p>
           </div>
 
           {/* Read Full Article Button */}
@@ -326,13 +321,13 @@ export default function NewsletterDetailPage() {
             </button>
 
             <div className="mx-auto mb-8 flex h-[50px] w-[50px] items-center justify-center rounded-full bg-[#9CC8EA]">
-              <svg aria-hidden="true" className="h-7 w-7 text-white" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M12 7v6"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                />
+              <svg
+                aria-hidden="true"
+                className="h-7 w-7 text-white"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path d="M12 7v6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
                 <circle cx="12" cy="17.5" r="1.2" fill="currentColor" />
               </svg>
             </div>
@@ -341,9 +336,10 @@ export default function NewsletterDetailPage() {
               You are about to leave our website
             </h2>
             <p className="mx-auto mt-6 max-w-[640px] font-dm-sans text-[16px] leading-[150%] text-[#5D5D5D]">
-              You selected a link to an external site. F3 Global is not responsible for the third-party
-              website&apos;s availability, content, products or services. Please refer to the external
-              website&apos;s terms, privacy and security policies for details and applicability.
+              You selected a link to an external site. F3 Global is not responsible for the
+              third-party website&apos;s availability, content, products or services. Please refer
+              to the external website&apos;s terms, privacy and security policies for details and
+              applicability.
             </p>
 
             <div className="mt-8 flex items-center justify-center gap-5">
