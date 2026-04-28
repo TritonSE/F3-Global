@@ -59,7 +59,9 @@ export const AffiliateCarousel = () => {
         Our Affiliates
       </p>
       <p className="text-[20px] max-w-[1073px]">
-        We're proud to work alongside organizations that share our commitment to economic empowerment and financial inclusion. These partnerships help us extend our reach and deepen our impact.
+        We're proud to work alongside organizations that share our commitment to economic
+        empowerment and financial inclusion. These partnerships help us extend our reach and deepen
+        our impact.
       </p>
       <div
         ref={containerRef}
