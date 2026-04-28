@@ -83,6 +83,15 @@ const makeAuthorNameValidator = (isOptional = false): ValidationChain => {
     .withMessage("authorName cannot be empty");
 };
 
+const makeFeaturedValidator = (): ValidationChain => {
+  return body("featured")
+    .optional()
+    .isBoolean()
+    .withMessage("featured must be a boolean")
+    .bail()
+    .toBoolean();
+};
+
 const makePdfUrlValidator = (isOptional = false): ValidationChain => {
   const validator = body("pdfUrl");
   if (isOptional) {
@@ -108,6 +117,7 @@ export const createNewsletter = [
   makeBlurbValidator(),
   makeAuthorNameValidator(),
   makePdfUrlValidator(),
+  makeFeaturedValidator(),
 ];
 
 export const updateNewsletter = [
@@ -118,6 +128,7 @@ export const updateNewsletter = [
   makeBlurbValidator(true),
   makeAuthorNameValidator(true),
   makePdfUrlValidator(true),
+  makeFeaturedValidator(),
 ];
 
 export const deleteNewsletter = [makeIdValidator()];

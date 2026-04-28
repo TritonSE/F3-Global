@@ -8,6 +8,8 @@ const router = Router();
 
 router.get("/all", NewsletterController.getAllNewsletters);
 
+router.get("/featured", NewsletterController.getFeaturedNewsletter);
+
 router.post(
   "/",
   verifyAuthToken,

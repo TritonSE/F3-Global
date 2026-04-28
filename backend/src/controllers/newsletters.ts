@@ -13,20 +13,44 @@ type NewsletterPayload = {
   blurb: string;
   authorName: string;
   pdfUrl: string;
+  featured?: boolean;
 };
+
+export const getFeaturedNewsletter: RequestHandler = async (req, res, next) => {
+  try {
+    const featured = await NewsletterModel.findOne().sort({ featured: -1, uploadDate: -1 });
+    res.status(200).json(featured);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const SORT_OPTIONS: Record<string, Record<string, 1 | -1>> = {
+  newest: { uploadDate: -1 },
+  oldest: { uploadDate: 1 },
+  mostViewed: { views: -1 },
+  leastViewed: { views: 1 },
+};
+
+const escapeRegex = (input: string): string => input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 export const getAllNewsletters: RequestHandler = async (req, res, next) => {
   try {
     const errors = validationResult(req);
     validationErrorParser(errors);
 
-    // Pagination parameters - default to page 1 and limit 10 if not provided, ideally in the frontend we should have different pages
     const page = Math.max(1, Number.parseInt(req.query.page as string) || 1);
     const limit = Math.max(1, Number.parseInt(req.query.limit as string) || 10);
     const skip = (page - 1) * limit;
 
-    const data = await NewsletterModel.find().skip(skip).limit(limit);
-    const total = await NewsletterModel.countDocuments();
+    const search = (req.query.search as string | undefined)?.trim();
+    const filter = search ? { title: { $regex: escapeRegex(search), $options: "i" } } : {};
+
+    const sortKey = (req.query.sortBy as string | undefined) ?? "newest";
+    const sort = SORT_OPTIONS[sortKey] ?? SORT_OPTIONS.newest;
+
+    const data = await NewsletterModel.find(filter).sort(sort).skip(skip).limit(limit);
+    const total = await NewsletterModel.countDocuments(filter);
 
     res.status(200).json({
       data,
@@ -51,7 +75,7 @@ export const createNewsletter: RequestHandler<
     const errors = validationResult(req);
     validationErrorParser(errors);
 
-    const { title, uploadDate, views, blurb, authorName, pdfUrl } = req.body;
+    const { title, uploadDate, views, blurb, authorName, pdfUrl, featured } = req.body;
     const doc = await NewsletterModel.create({
       title,
       uploadDate,
@@ -59,6 +83,7 @@ export const createNewsletter: RequestHandler<
       blurb,
       authorName,
       pdfUrl,
+      featured,
     });
     res.status(201).json(doc);
   } catch (error) {
