@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Button } from "@/components/button";
 import { ClientCarousel } from "@/components/ClientCarousel";
 import { Highlights } from "@/components/Highlights";
+import { AffiliateCarousel } from "@/components/AffiliateCarousel";
 import {
   TIMELINE_HEADER,
   TIMELINE_INSTRUCTION,
@@ -86,6 +87,7 @@ export default function About() {
       </div>
       <ClientCarousel />
       <Highlights />
+      <AffiliateCarousel />
     </div>
   );
 }
