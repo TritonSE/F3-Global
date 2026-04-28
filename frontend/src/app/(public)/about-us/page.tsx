@@ -1,9 +1,9 @@
 import Image from "next/image";
 
+import { AffiliateCarousel } from "@/components/AffiliateCarousel";
 import { Button } from "@/components/button";
 import { ClientCarousel } from "@/components/ClientCarousel";
 import { Highlights } from "@/components/Highlights";
-import { AffiliateCarousel } from "@/components/AffiliateCarousel";
 import {
   TIMELINE_HEADER,
   TIMELINE_INSTRUCTION,
