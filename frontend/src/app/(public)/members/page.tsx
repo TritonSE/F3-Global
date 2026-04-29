@@ -168,7 +168,7 @@ export default async function Members() {
           <h2 className="self-stretch font-dm-sans text-[28px] leading-[150%] font-medium tracking-[-0.56px] text-[#172447] md:text-[48px] md:tracking-[-0.96px]">
             How You Get Involved
           </h2>
-          <div className="grid grid-cols-[40px_minmax(0,1fr)] gap-x-[30px] md:hidden">
+          <div className="grid grid-cols-[40px_minmax(0,1fr)] gap-x-[35px] pl-[30px] md:hidden">
             {involvementSteps.map((step, index) => (
               <div key={step.title} className="contents">
                 <div className="flex flex-col items-center">
@@ -180,22 +180,22 @@ export default async function Members() {
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="63"
-                        height="131"
-                        viewBox="0 0 63 131"
+                        height="121"
+                        viewBox="0 0 63 121"
                         fill="none"
                         aria-hidden="true"
                       >
-                        <path d="M31.5 0L31.5 115" stroke="#A5D0F2" strokeWidth="4" />
+                        <path d="M31.5 0L31.5 105" stroke="#A5D0F2" strokeWidth="4" />
                         <path
                           fillRule="evenodd"
                           clipRule="evenodd"
-                          d="M16.5188 103.394C17.544 102.369 19.206 102.369 20.2312 103.394L31.5 114.663L42.7688 103.394C43.794 102.369 45.456 102.369 46.4812 103.394C47.5063 104.419 47.5063 106.081 46.4812 107.106L33.3562 120.231C32.331 121.256 30.669 121.256 29.6438 120.231L16.5188 107.106C15.4937 106.081 15.4937 104.419 16.5188 103.394Z"
+                          d="M16.5188 93.3938C17.544 92.3687 19.206 92.3687 20.2312 93.3938L31.5 104.663L42.7688 93.3938C43.794 92.3687 45.456 92.3687 46.4812 93.3938C47.5063 94.419 47.5063 96.081 46.4812 97.1062L33.3562 110.231C32.331 111.256 30.669 111.256 29.6438 110.231L16.5188 97.1062C15.4937 96.081 15.4937 94.419 16.5188 93.3938Z"
                           fill="#A5D0F2"
                         />
                         <path
                           fillRule="evenodd"
                           clipRule="evenodd"
-                          d="M16.5188 113.394C17.544 112.369 19.206 112.369 20.2312 113.394L31.5 124.663L42.7688 113.394C43.794 112.369 45.456 112.369 46.4812 113.394C47.5063 114.419 47.5063 116.081 46.4812 117.106L33.3562 130.231C32.331 131.256 30.669 131.256 29.6438 130.231L16.5188 117.106C15.4937 116.081 15.4937 114.419 16.5188 113.394Z"
+                          d="M16.5188 103.394C17.544 102.369 19.206 102.369 20.2312 103.394L31.5 114.663L42.7688 103.394C43.794 102.369 45.456 102.369 46.4812 103.394C47.5063 104.419 47.5063 106.081 46.4812 107.106L33.3562 120.231C32.331 121.256 30.669 121.256 29.6438 120.231L16.5188 107.106C15.4937 106.081 15.4937 104.419 16.5188 103.394Z"
                           fill="#A5D0F2"
                         />
                       </svg>
@@ -203,7 +203,7 @@ export default async function Members() {
                   ) : null}
                 </div>
                 <div
-                  className={`flex flex-col items-start gap-[8px] ${
+                  className={`mr-[30px] flex flex-col items-start gap-[8px] md:mr-0 ${
                     index < involvementSteps.length - 1 ? "pb-[30px]" : "pb-0"
                   }`}
                 >
