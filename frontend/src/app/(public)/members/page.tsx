@@ -302,45 +302,25 @@ export default async function Members() {
 
             {/* Application text */}
             <div className="flex max-w-[1181px] mx-auto items-start gap-[90px]">
-              <div className="flex w-[243px] flex-col items-start gap-[20px]">
-                <h3 className="text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060]">
-                  Complete the Application Form
-                </h3>
-                <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
-                  Submit a short online application sharing your background, interests, and how
-                  you'd like to be involved with F3.
-                </p>
-              </div>
-
-              <div className="flex w-[243px] flex-col items-start gap-[20px]">
-                <h3 className="text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060] w-[224px]">
-                  Application Review
-                </h3>
-                <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
-                  Our team reviews applications on a rolling basis to ensure alignment with
-                  F3&apos;s mission and values.
-                </p>
-              </div>
-
-              <div className="flex w-[243px] flex-col items-start gap-[20px]">
-                <h3 className="text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060]">
-                  Confirmation &amp; Onboarding
-                </h3>
-                <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
-                  Accepted members receive a confirmation email with next steps, onboarding
-                  resources, and access to the F3 community.
-                </p>
-              </div>
-
-              <div className="flex w-[182px] flex-col items-start gap-[20px]">
-                <h3 className="text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060]">
-                  Get Involved
-                </h3>
-                <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
-                  Once onboarded, members can participate in projects, initiatives, and
-                  collaborative opportunities within F3.
-                </p>
-              </div>
+              {involvementSteps.map((step, index) => (
+                <div
+                  key={step.title}
+                  className={`flex flex-col items-start gap-[20px] ${
+                    index === 3 ? "w-[182px]" : "w-[243px]"
+                  }`}
+                >
+                  <h3
+                    className={`text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#012060] ${
+                      index === 1 ? "w-[224px]" : ""
+                    }`}
+                  >
+                    {step.title}
+                  </h3>
+                  <p className="text-[16px] font-normal leading-[1.5] text-[#5D5D5D]">
+                    {step.description}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
