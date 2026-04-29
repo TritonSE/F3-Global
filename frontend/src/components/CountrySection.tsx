@@ -46,8 +46,7 @@ export const CountrySection: React.FC<CountrySectionProps> = ({ id, countryName,
 
   const flagUrl = useMemo(() => {
     const code = countriesInfo.getAlpha2Code(countryName, "en");
-    if (!code)
-      return "/imgs/qmarkplaceholder.png";
+    if (!code) return "/imgs/qmarkplaceholder.png";
 
     return `https://flagcdn.com/w320/${code.toLowerCase()}.png`;
   }, [countryName]);

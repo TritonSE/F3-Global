@@ -27,8 +27,7 @@ const CSUITE_KEYWORDS = [
   "co-founder",
 ];
 const DIRECTOR_KEYWORDS = ["director"];
-const DEFAULT_FLAG_URL =
-  "/imgs/qmarkplaceholder.png";
+const DEFAULT_FLAG_URL = "/imgs/qmarkplaceholder.png";
 const COUNTRY_DISPLAY_NAME_OVERRIDES: Record<string, string> = {
   "United States of America": "United States",
 };
