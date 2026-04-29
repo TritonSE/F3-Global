@@ -29,6 +29,9 @@ const CSUITE_KEYWORDS = [
 const DIRECTOR_KEYWORDS = ["director"];
 const DEFAULT_FLAG_URL =
   "https://firebasestorage.googleapis.com/v0/b/f3-global.firebasestorage.app/o/qmarkplaceholder.png?alt=media&token=975956ce-e292-48ab-823f-377e5b0a7928";
+const COUNTRY_DISPLAY_NAME_OVERRIDES: Record<string, string> = {
+  "United States of America": "United States",
+};
 
 function getMemberTier(position: string): number {
   const lower = position.toLowerCase();
@@ -93,7 +96,8 @@ export default function MeetTheTeam() {
       (acc, member) => {
         const countryCode = member.country.trim();
 
-        const countryName = countriesInfo.getName(countryCode, "en") || countryCode;
+        const isoCountryName = countriesInfo.getName(countryCode, "en") || countryCode;
+        const countryName = COUNTRY_DISPLAY_NAME_OVERRIDES[isoCountryName] || isoCountryName;
 
         if (!acc[countryName]) {
           acc[countryName] = [];
@@ -128,8 +132,8 @@ export default function MeetTheTeam() {
   }, [membersByCountry]);
 
   const countries = Object.keys(membersByCountry).sort((a, b) => {
-    if (a === "United States of America") return -1;
-    if (b === "United States of America") return 1;
+    if (a === "United States") return -1;
+    if (b === "United States") return 1;
     return a.localeCompare(b);
   });
 
