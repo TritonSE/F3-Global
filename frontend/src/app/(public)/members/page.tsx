@@ -344,8 +344,8 @@ export default async function Members() {
             </div>
           </div>
         </div>
-        {/* <FaqAccordion items={faqItems} /> */}
-        {/* <ContactUs /> */}
+        <FaqAccordion items={faqItems} />
+        <ContactUs />
       </div>
     </>
   );
