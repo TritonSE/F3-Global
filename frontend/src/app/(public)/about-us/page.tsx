@@ -3,11 +3,7 @@ import Image from "next/image";
 import { Button } from "@/components/button";
 import { ClientCarousel } from "@/components/ClientCarousel";
 import { Highlights } from "@/components/Highlights";
-import {
-  TIMELINE_HEADER,
-  TIMELINE_INSTRUCTION,
-  TimelineSection,
-} from "@/components/timeline-section";
+import { TIMELINE_HEADER, UpdatedTimeline } from "@/components/timeline-section";
 
 export default function About() {
   return (
@@ -74,14 +70,9 @@ export default function About() {
               {TIMELINE_HEADER.description}
             </p>
           </div>
-          <div className="hidden md:flex items-center justify-center w-full px-[24px] md:px-0">
-            <p className="font-dm italic text-[14px] md:text-[16px] text-[#5d5d5d] leading-[24px] text-center">
-              {TIMELINE_INSTRUCTION}
-            </p>
-          </div>
         </div>
-        <TimelineSection />
       </div>
+      <UpdatedTimeline />
       <ClientCarousel />
       <Highlights />
       {/* alumni carousel */}
