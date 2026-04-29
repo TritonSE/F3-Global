@@ -28,7 +28,7 @@ const CSUITE_KEYWORDS = [
 ];
 const DIRECTOR_KEYWORDS = ["director"];
 const DEFAULT_FLAG_URL =
-  "https://firebasestorage.googleapis.com/v0/b/f3-global.firebasestorage.app/o/qmarkplaceholder.png?alt=media&token=975956ce-e292-48ab-823f-377e5b0a7928";
+  "/imgs/qmarkplaceholder.png";
 const COUNTRY_DISPLAY_NAME_OVERRIDES: Record<string, string> = {
   "United States of America": "United States",
 };
