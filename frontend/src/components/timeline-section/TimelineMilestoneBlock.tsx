@@ -31,7 +31,7 @@ export const TimelineMilestoneBlock = ({
           {year}
         </h3>
         <p
-          className={`font-dm text-[12px] leading-[16px] pb-[10px] transition-colors duration-[1500ms] ease-out ${
+          className={`font-dm w-[222px] text-[12px] leading-[16px] pb-[10px] transition-colors duration-[1500ms] ease-out ${
             isActive ? "text-black" : "text-[#c5c5c5]"
           }`}
         >
