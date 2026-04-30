@@ -48,12 +48,13 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         onClick={handleClick}
-        className="flex items-center justify-center gap-2.5 rounded-full bg-[#172447] px-5 py-[15px] hover:bg-[#1169B0] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] cursor-pointer"
+        className="flex items-center justify-center gap-2.5 rounded-full bg-[#172447] px-[15px] md:px-[20px] py-[10px] md:py-[15px] hover:bg-[#1169B0] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] cursor-pointer"
         {...props}
       >
         <p
           className={
-            textClassName ?? "text-center font-dm-sans text-base font-semibold leading-6 text-white"
+            textClassName ??
+            "text-center font-dm-sans text-[12px] md:text-base font-semibold leading-6 text-white"
           }
         >
           {text}
