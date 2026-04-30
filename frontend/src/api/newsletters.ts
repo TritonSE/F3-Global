@@ -6,6 +6,7 @@ export type Newsletter = {
   blurb: string;
   authorName: string;
   pdfUrl: string;
+  imageUrl: string;
 };
 
 export type NewslettersResponse = {
@@ -26,11 +27,13 @@ export async function getNewsletters(page = 1): Promise<NewslettersResponse> {
   return data;
 }
 
-export async function incrementNewsletterViews(id: string): Promise<void> {
+export async function incrementNewsletterViews(id: string): Promise<Newsletter> {
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const res = await fetch(`${backendUrl}/api/newsletters/${id}/views`, {
     method: "PATCH",
   });
 
   if (!res.ok) throw new Error("Failed to increment views");
+  const data = (await res.json()) as Newsletter;
+  return data;
 }

@@ -1,7 +1,10 @@
 import { validationResult } from "express-validator";
 
 import NewsletterModel from "../models/newsletters";
-import { deletePdfFromFirebaseStorage } from "../utils/firebaseStorage";
+import {
+  deleteImageFromFirebaseStorage,
+  deletePdfFromFirebaseStorage,
+} from "../utils/firebaseStorage";
 import validationErrorParser from "../utils/validationErrorParser";
 
 import type { RequestHandler } from "express";
@@ -13,6 +16,7 @@ type NewsletterPayload = {
   blurb: string;
   authorName: string;
   pdfUrl: string;
+  imageUrl: string;
 };
 
 export const getAllNewsletters: RequestHandler = async (req, res, next) => {
@@ -25,7 +29,10 @@ export const getAllNewsletters: RequestHandler = async (req, res, next) => {
     const limit = Math.max(1, Number.parseInt(req.query.limit as string) || 10);
     const skip = (page - 1) * limit;
 
-    const data = await NewsletterModel.find().skip(skip).limit(limit);
+    const data = (await NewsletterModel.find().skip(skip).limit(limit)).map((doc) => ({
+      ...doc.toObject(),
+      imageUrl: doc.imageUrl ?? "",
+    }));
     const total = await NewsletterModel.countDocuments();
 
     res.status(200).json({
@@ -51,7 +58,7 @@ export const createNewsletter: RequestHandler<
     const errors = validationResult(req);
     validationErrorParser(errors);
 
-    const { title, uploadDate, views, blurb, authorName, pdfUrl } = req.body;
+    const { title, uploadDate, views, blurb, authorName, pdfUrl, imageUrl } = req.body;
     const doc = await NewsletterModel.create({
       title,
       uploadDate,
@@ -59,6 +66,7 @@ export const createNewsletter: RequestHandler<
       blurb,
       authorName,
       pdfUrl,
+      imageUrl,
     });
     res.status(201).json(doc);
   } catch (error) {
@@ -86,6 +94,14 @@ export const updateNewsletter: RequestHandler<
       await deletePdfFromFirebaseStorage(existingDoc.pdfUrl);
     }
 
+    if (
+      updateData.imageUrl &&
+      existingDoc.imageUrl &&
+      updateData.imageUrl !== existingDoc.imageUrl
+    ) {
+      await deleteImageFromFirebaseStorage(existingDoc.imageUrl);
+    }
+
     const doc = await NewsletterModel.findByIdAndUpdate(id, updateData, { new: true });
     if (!doc) {
       return res.status(404).json({ message: "Newsletter not found" });
@@ -107,6 +123,9 @@ export const deleteNewsletter: RequestHandler<{ id: string }> = async (req, res,
       return res.status(404).json({ message: "Newsletter not found" });
     }
     await deletePdfFromFirebaseStorage(doc.pdfUrl);
+    if (doc.imageUrl) {
+      await deleteImageFromFirebaseStorage(doc.imageUrl);
+    }
     res.status(200).json({ message: "Newsletter deleted successfully" });
   } catch (error) {
     next(error);

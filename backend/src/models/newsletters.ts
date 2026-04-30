@@ -8,6 +8,7 @@ const newsletterSchema = new Schema(
     blurb: { type: String, required: true },
     authorName: { type: String, required: true },
     pdfUrl: { type: String, required: true },
+    imageUrl: { type: String, required: true },
   },
   { collection: "newsletters" },
 );

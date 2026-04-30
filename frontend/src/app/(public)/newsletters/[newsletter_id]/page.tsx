@@ -22,48 +22,63 @@ export default function NewsletterDetailPage() {
 
   // Fetch newsletters and increment view count
   useEffect(() => {
-    const fetchNewsletters = async () => {
-      try {
-        setLoading(true);
-        const response = await getNewsletters(1);
-        const allNewsletters = response.data;
+    let isActive = true;
+    setLoading(true);
 
-        // Find current newsletter
-        const current = allNewsletters.find((n) => n._id === newsletterId);
-        if (!current) {
-          setError("Newsletter not found");
-          setLoading(false);
-          return;
+    const timer = window.setTimeout(() => {
+      void (async () => {
+        try {
+          const response = await getNewsletters(1);
+          const allNewsletters = response.data;
+
+          // Find current newsletter
+          const current = allNewsletters.find((n) => n._id === newsletterId);
+          if (!current) {
+            if (isActive) {
+              setError("Newsletter not found");
+            }
+            return;
+          }
+
+          if (isActive) {
+            setNewsletter(current);
+
+            // Get 3 most recent (excluding current)
+            const related = allNewsletters
+              .filter((n) => n._id !== newsletterId)
+              .sort((a, b) => new Date(b.uploadDate).getTime() - new Date(a.uploadDate).getTime())
+              .slice(0, 3);
+
+            setRelatedNewsletters(related);
+          }
+
+          // Fire-and-forget view increment (don't block page load)
+          void incrementNewsletterViews(newsletterId)
+            .then((updatedNewsletter) => {
+              if (isActive && updatedNewsletter) {
+                setNewsletter(updatedNewsletter);
+              }
+            })
+            .catch((e) => {
+              console.error("Failed to increment views:", e);
+            });
+        } catch (err) {
+          console.error("Failed to fetch newsletter:", err);
+          if (isActive) {
+            setError("Failed to load newsletter");
+          }
+        } finally {
+          if (isActive) {
+            setLoading(false);
+          }
         }
+      })();
+    }, 0);
 
-        setNewsletter(current);
-
-        // Get 3 most recent (excluding current)
-        const related = allNewsletters
-          .filter((n) => n._id !== newsletterId)
-          .sort((a, b) => new Date(b.uploadDate).getTime() - new Date(a.uploadDate).getTime())
-          .slice(0, 3);
-
-        setRelatedNewsletters(related);
-
-        // Fire-and-forget view increment (don't block page load)
-        const viewCountKey = `newsletter-view-counted-${newsletterId}`;
-        if (typeof window !== "undefined" && window.sessionStorage.getItem(viewCountKey) !== "1") {
-          window.sessionStorage.setItem(viewCountKey, "1");
-
-          void incrementNewsletterViews(newsletterId).catch((e) => {
-            console.error("Failed to increment views:", e);
-          });
-        }
-      } catch (err) {
-        console.error("Failed to fetch newsletter:", err);
-        setError("Failed to load newsletter");
-      } finally {
-        setLoading(false);
-      }
+    return () => {
+      isActive = false;
+      window.clearTimeout(timer);
     };
-
-    void fetchNewsletters();
   }, [newsletterId]);
 
   const buildShareLink = (platform: SharePlatform) => {
@@ -277,7 +292,7 @@ export default function NewsletterDetailPage() {
       <div className="px-[200px] pb-[32px]">
         <div className="relative w-full h-96 bg-gray-200 rounded-lg overflow-hidden">
           <Image
-            src="/imgs/newsletter-placeholder.png"
+            src={newsletter.imageUrl || "/imgs/newsletter-placeholder.png"}
             alt={newsletter.title}
             fill
             className="object-cover"
@@ -325,7 +340,7 @@ export default function NewsletterDetailPage() {
               >
                 <div className="relative w-full h-48 bg-gray-300 rounded-lg overflow-hidden mb-4">
                   <Image
-                    src="/imgs/newsletter-placeholder.png"
+                    src={article.imageUrl || "/imgs/newsletter-placeholder.png"}
                     alt={article.title}
                     fill
                     className="object-cover"
