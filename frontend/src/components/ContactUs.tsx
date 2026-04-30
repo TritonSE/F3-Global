@@ -204,15 +204,17 @@ export const ContactUs: React.FC = () => {
                     />
                   </div>
                   {/* full name error message */}
-                  
-                    {fullNameError ? (
-                      <div className="relative left-0 top-[-4px] w-full pointer-events-none h-[8px]">
+
+                  {fullNameError ? (
+                    <div className="relative left-0 top-[-4px] w-full pointer-events-none h-[8px]">
                       <p className="m-0 p-0 font-dm-sans text-[12px] text-[#B93B3B]">
                         {fullNameError}
                       </p>
-                      </div>
-                    ) : <div className="mt-[-10px] md:mt-[8px]"></div>}
-                  
+                    </div>
+                  ) : (
+                    <div className="mt-[-10px] md:mt-[8px]"></div>
+                  )}
+
                   {/* email input */}
                   <div
                     className={`flex w-full items-center gap-[10px] rounded-[10px] px-[20px] py-[10px] md:w-[487px]
@@ -230,16 +232,16 @@ export const ContactUs: React.FC = () => {
                     />
                   </div>
                   {/* email error message */}
-                  
-                    {emailError ? (
-                      <div className="relative left-0 top-[-4px] w-full pointer-events-none h-[8px] mb-[10px] md:mb-0 ">
+
+                  {emailError ? (
+                    <div className="relative left-0 top-[-4px] w-full pointer-events-none h-[8px] mb-[10px] md:mb-0 ">
                       <p className="m-0 p-0 font-dm-sans text-[12px] text-[#B93B3B]">
                         {emailError}
                       </p>
-                      </div>
-                    ) : <div></div>
-                    }
-                  
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
                 </div>
                 <div className="flex flex-col gap-[20px] md:items-end">
                   {/* message input */}

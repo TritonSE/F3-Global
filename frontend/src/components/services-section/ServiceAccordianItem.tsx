@@ -51,9 +51,7 @@ export const ServiceAccordianItem: React.FC<ServiceAccordianItemProps> = ({
         >
           {service.title}
         </span>
-        <span
-          className="mr-0 flex h-6 w-6 items-center justify-center transition-colors duration-300 md:mr-[20px] md:h-8 md:w-8"
-        >
+        <span className="mr-0 flex h-6 w-6 items-center justify-center transition-colors duration-300 md:mr-[20px] md:h-8 md:w-8">
           {isExpanded ? <MinusIcon /> : <PlusIcon />}
         </span>
       </button>

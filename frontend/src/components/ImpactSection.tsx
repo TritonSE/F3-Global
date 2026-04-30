@@ -61,7 +61,6 @@ export const ImpactSection = ({ title = "Our Impact" }: ImpactSectionProps) => {
 
             {idx < orderedMetrics.length - 1 && (
               <>
-                
                 <div className="bg-[#C7C7C7] h-px w-full md:mx-[35px] md:self-center md:block md:h-[196px] md:w-[2px] " />
               </>
             )}

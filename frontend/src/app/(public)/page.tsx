@@ -120,14 +120,19 @@ export default function Home() {
           />
         </div>
         {/* city scrolling */}
-        <div ref={containerRef} className="mt-[30px] flex h-[70px] w-full overflow-hidden md:mt-[67px] md:h-auto">
+        <div
+          ref={containerRef}
+          className="mt-[30px] flex h-[70px] w-full overflow-hidden md:mt-[67px] md:h-auto"
+        >
           <div className="flex animate-marquee whitespace-nowrap">
             {repeated.map((city) => (
               <div key={city.uniqueKey} className="flex items-center">
                 <span className="text-[#5D5D5D] text-[20px] md:text-[32px] leading-[32px] font-ethic font-light italic [font-feature-settings:'dlig'_on]">
                   {city.city}
                 </span>
-                <span className="text-[#5D5D5D] text-[20px] md:text-[32px] leading-[32px] mx-6">•</span>
+                <span className="text-[#5D5D5D] text-[20px] md:text-[32px] leading-[32px] mx-6">
+                  •
+                </span>
               </div>
             ))}
           </div>
