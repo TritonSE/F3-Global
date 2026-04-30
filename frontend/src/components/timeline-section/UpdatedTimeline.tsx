@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { TimelineMilestoneBlock } from "./TimelineMilestoneBlock";
 
-import { getAllTimeline } from "@/api/timeline";
+import { getTimelines } from "@/api/timeline";
 
 type TimelineItem = {
   _id: string;
@@ -31,7 +31,7 @@ export const UpdatedTimeline = () => {
 
     const loadTimeline = async () => {
       try {
-        const items = await getAllTimeline();
+        const items = await getTimelines();
         if (!isMounted) return;
 
         setTimelineItems(items);
