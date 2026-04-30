@@ -183,16 +183,30 @@ export default function NewsletterDetailPage() {
                   Share
                   <Image src="/imgs/share.svg" alt="Share" width={24} height={24} />
                 </button>
-                <div className="pointer-events-none absolute left-full top-1/2 flex -translate-y-1/2 items-center gap-2 pl-2 opacity-0 transition-opacity duration-200 group-hover/share:pointer-events-auto group-hover/share:opacity-100 group-focus-within/share:pointer-events-auto group-focus-within/share:opacity-100">
-                  <Image src="/imgs/share.svg" alt="Share options" width={24} height={24} />
-                  <div className="flex items-center gap-3 rounded-full bg-[#F3F3F3] px-4 py-2">
+                <div className="pointer-events-none absolute left-full top-1/2 flex -translate-y-1/2 items-center gap-0 pl-4 opacity-0 transition-opacity duration-200 group-hover/share:pointer-events-auto group-hover/share:opacity-100 group-focus-within/share:pointer-events-auto group-focus-within/share:opacity-100">
+                  <div className="relative flex items-center gap-3 rounded-full bg-[#F3F3F3] px-4 py-2">
+                    <Image
+                      src="/imgs/triangle.svg"
+                      alt=""
+                      aria-hidden="true"
+                      width={16}
+                      height={16}
+                      className="pointer-events-none absolute left-[-10px] top-1/2 -translate-y-1/2"
+                    />
                     <button
                       type="button"
                       aria-label="Share on LinkedIn"
                       onClick={() => handleShareClick("linkedin")}
                       className="rounded-full p-1 transition-transform hover:scale-110"
                     >
-                      <Image src="/imgs/share.svg" alt="LinkedIn" width={24} height={24} />
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        className="h-6 w-6 text-[#1E1E1E]"
+                        fill="currentColor"
+                      >
+                        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37z" />
+                      </svg>
                     </button>
                     <button
                       type="button"
@@ -200,7 +214,14 @@ export default function NewsletterDetailPage() {
                       onClick={() => handleShareClick("facebook")}
                       className="rounded-full p-1 transition-transform hover:scale-110"
                     >
-                      <Image src="/imgs/share.svg" alt="Facebook" width={24} height={24} />
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        className="h-6 w-6 text-[#1E1E1E]"
+                        fill="currentColor"
+                      >
+                        <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95" />
+                      </svg>
                     </button>
                     <button
                       type="button"
@@ -208,7 +229,26 @@ export default function NewsletterDetailPage() {
                       onClick={() => handleShareClick("x")}
                       className="rounded-full p-1 transition-transform hover:scale-110"
                     >
-                      <Image src="/imgs/share.svg" alt="X" width={24} height={24} />
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 14 14"
+                        className="h-6 w-6 text-[#1E1E1E]"
+                        fill="currentColor"
+                      >
+                        <g fill="none">
+                          <g clipPath="url(#twitterClip)">
+                            <path
+                              d="M11.025.656h2.147L8.482 6.03L14 13.344H9.68L6.294 8.909l-3.87 4.435H.275l5.016-5.75L0 .657h4.43L7.486 4.71zm-.755 11.4h1.19L3.78 1.877H2.504z"
+                              fill="currentColor"
+                            />
+                          </g>
+                          <defs>
+                            <clipPath id="twitterClip">
+                              <path fill="#fff" d="M0 0h14v14H0z" />
+                            </clipPath>
+                          </defs>
+                        </g>
+                      </svg>
                     </button>
                     <button
                       type="button"
@@ -216,7 +256,14 @@ export default function NewsletterDetailPage() {
                       onClick={() => handleShareClick("email")}
                       className="rounded-full p-1 transition-transform hover:scale-110"
                     >
-                      <Image src="/imgs/share.svg" alt="Email" width={24} height={24} />
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        className="h-6 w-6 text-[#1E1E1E]"
+                        fill="currentColor"
+                      >
+                        <path d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zm8-7l8-5V6l-8 5l-8-5v2z" />
+                      </svg>
                     </button>
                   </div>
                 </div>
@@ -284,16 +331,33 @@ export default function NewsletterDetailPage() {
                     className="object-cover"
                   />
                 </div>
+                <div className="flex items-center justify-between text-[12px] font-medium text-[#5D5D5D] mb-2">
+                  <div className="flex items-center gap-2">
+                    <span>
+                      {new Date(article.uploadDate).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </span>
+                    <Image
+                      src="/imgs/Ellipse%202.svg"
+                      alt=""
+                      aria-hidden="true"
+                      width={8}
+                      height={8}
+                      className="text-[#A5D0F2]"
+                      style={{ color: "#A5D0F2" }}
+                    />
+                    <span>Article</span>
+                  </div>
+                  <span>
+                    {article.views} {article.views === 1 ? "view" : "views"}
+                  </span>
+                </div>
                 <h3 className="font-dm-sans font-medium text-[16px] text-[#1E1E1E] line-clamp-2 group-hover:text-[#012060]">
                   {article.title}
                 </h3>
-                <p className="font-dm-sans text-[12px] text-[#5D5D5D] mt-2">
-                  {new Date(article.uploadDate).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </p>
               </button>
             ))}
           </div>
