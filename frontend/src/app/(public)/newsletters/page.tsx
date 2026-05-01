@@ -16,7 +16,7 @@ import { Pagination } from "@/components/newsletters-page/Pagination";
 import { FeaturedSkeleton, GridSkeleton } from "@/components/newsletters-page/Skeletons";
 import { Toast } from "@/components/newsletters-page/Toast";
 
-const PAGE_SIZE = 9;
+const PAGE_SIZE = 6;
 
 export default function NewslettersPage() {
   const [featured, setFeatured] = useState<Newsletter | null>(null);

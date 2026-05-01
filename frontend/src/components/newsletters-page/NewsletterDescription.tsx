@@ -23,7 +23,7 @@ export function NewsletterDescription({ newsletter }: Props) {
               <span className="font-dm-sans font-normal text-[16px] leading-[24px] text-[#5d5d5d] whitespace-nowrap">
                 {formatDate(newsletter.uploadDate)}
               </span>
-              <span className="size-[8px] rounded-full bg-[#5d5d5d] shrink-0" aria-hidden />
+              <span className="size-[8px] rounded-full bg-[#A5D0F2] shrink-0" aria-hidden />
               <span className="font-dm-sans font-normal text-[16px] leading-[24px] text-[#5d5d5d] whitespace-nowrap">
                 Article
               </span>
@@ -49,7 +49,7 @@ export function NewsletterDescription({ newsletter }: Props) {
             Read More
           </span>
           <Image
-            src="/imgs/ic_arrowforward.svg"
+            src="/imgs/arrow_right_alt.svg"
             alt=""
             width={24}
             height={24}

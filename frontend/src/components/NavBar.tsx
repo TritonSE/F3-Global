@@ -108,9 +108,9 @@ function NavLinks({
           </button>
 
           <Link
-            href=""
+            href="/newsletters"
             className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer ${
-              isActive("") ? "bg-[#E6E6E6] text-[#172447]" : ""
+              isActive("/newsletters") ? "bg-[#E6E6E6] text-[#172447]" : ""
             }`}
           >
             Newsletter

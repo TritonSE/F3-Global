@@ -36,7 +36,7 @@ export function NewsletterItem({ newsletter }: Props) {
             <span className="font-dm-sans font-normal text-[12px] leading-[16px] text-[#5d5d5d] whitespace-nowrap">
               {formatDate(newsletter.uploadDate)}
             </span>
-            <span className="size-[8px] rounded-full bg-[#5d5d5d] shrink-0" aria-hidden />
+            <span className="size-[8px] rounded-full bg-[#A5D0F2] shrink-0" aria-hidden />
             <span className="font-dm-sans font-normal text-[12px] leading-[16px] text-[#5d5d5d] whitespace-nowrap">
               Article
             </span>

@@ -66,7 +66,7 @@ export function NewsletterFilter({ search, onSearchChange, sortBy, onSortChange 
             </span>
             <span className="relative size-[32px] shrink-0 flex items-center justify-center">
               <Image
-                src="/imgs/ic_arrowdown.svg"
+                src="/imgs/ic_caretdown.svg"
                 alt=""
                 width={32}
                 height={32}
