@@ -10,6 +10,13 @@ type EmailValidatorType = {
   validate: (email: string) => boolean;
 };
 
+const roleOptions = [
+  { label: "Donor", value: "donor" },
+  { label: "Member", value: "member" },
+  { label: "Client", value: "client" },
+  { label: "Other", value: "other" },
+];
+
 export const ContactUs: React.FC = () => {
   const [formData, setFormData] = useState({
     interestedRole: "",
@@ -128,63 +135,26 @@ export const ContactUs: React.FC = () => {
                   <p className="text-black font-dm-sans text-[16px] font-normal leading-[24px] !font-[400]">
                     I’m interested in becoming... (choose one)
                   </p>
-                  <div className="flex items-center gap-[12px]">
-                    <Button
-                      text="Donor"
-                      className={
-                        formData.interestedRole === "donor"
-                          ? "w-[88px] p-[4px] bg-[#172447] content-center items-center gap-[10px] rounded-[99px]"
-                          : "w-[88px] p-[4px] content-center items-center gap-[10px] rounded-[99px] border transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2] cursor-pointer"
-                      }
-                      textClassName={
-                        formData.interestedRole === "donor"
-                          ? "font-dm-sans text-[14px] text-white !font-[400]"
-                          : "font-dm-sans text-[14px] text-black !font-[400]"
-                      }
-                      onClick={() => handleRoleSelect("donor")}
-                    />
-                    <Button
-                      text="Member"
-                      className={
-                        formData.interestedRole === "member"
-                          ? "w-[88px] p-[4px] bg-[#172447] content-center items-center gap-[10px] rounded-[99px]"
-                          : "w-[88px] p-[4px] content-center items-center gap-[10px] rounded-[99px] border transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2] cursor-pointer"
-                      }
-                      textClassName={
-                        formData.interestedRole === "member"
-                          ? "font-dm-sans text-[14px] text-white !font-[400]"
-                          : "font-dm-sans text-[14px] text-black !font-[400]"
-                      }
-                      onClick={() => handleRoleSelect("member")}
-                    />
-                    <Button
-                      text="Client"
-                      className={
-                        formData.interestedRole === "client"
-                          ? "w-[88px] p-[4px] bg-[#172447] content-center items-center gap-[10px] rounded-[99px]"
-                          : "w-[88px] p-[4px] content-center items-center gap-[10px] rounded-[99px] border transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2] cursor-pointer"
-                      }
-                      textClassName={
-                        formData.interestedRole === "client"
-                          ? "font-dm-sans text-[14px] text-white !font-[400]"
-                          : "font-dm-sans text-[14px] text-black !font-[400]"
-                      }
-                      onClick={() => handleRoleSelect("client")}
-                    />
-                    <Button
-                      text="Other"
-                      className={
-                        formData.interestedRole === "other"
-                          ? "w-[88px] p-[4px] bg-[#172447] content-center items-center gap-[10px] rounded-[99px]"
-                          : "w-[88px] p-[4px] content-center items-center gap-[10px] rounded-[99px] border transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2] cursor-pointer"
-                      }
-                      textClassName={
-                        formData.interestedRole === "other"
-                          ? "font-dm-sans text-[14px] text-white !font-[400]"
-                          : "font-dm-sans text-[14px] text-black !font-[400]"
-                      }
-                      onClick={() => handleRoleSelect("other")}
-                    />
+                  <div className="grid grid-cols-[repeat(3,fit-content(100%))] gap-x-[5px] gap-y-[7px] md:flex md:flex-wrap md:gap-[12px]">
+                    {roleOptions.map((role) => {
+                      const isSelected = formData.interestedRole === role.value;
+
+                      return (
+                        <Button
+                          key={role.value}
+                          text={role.label}
+                          className={`flex cursor-pointer items-center justify-center rounded-[99px] px-[16px] py-[8px] transition-colors duration-450 ease-in-out lg:w-[88px] lg:p-[4px] ${
+                            isSelected
+                              ? "border border-[#172447] bg-[#172447]"
+                              : "border border-[#1E1E1E] bg-white hover:bg-[#A5D0F2]"
+                          }`}
+                          textClassName={`whitespace-nowrap font-dm-sans text-[12px] font-normal leading-[16px] md:text-[14px] md:leading-[20px] ${
+                            isSelected ? "text-white" : "text-black"
+                          }`}
+                          onClick={() => handleRoleSelect(role.value)}
+                        />
+                      );
+                    })}
                   </div>
                   <div
                     className={`flex w-[487px] px-[20px] py-[10px] items-center gap-[10px] rounded-[10px] mt-4 mb-[-1px]
