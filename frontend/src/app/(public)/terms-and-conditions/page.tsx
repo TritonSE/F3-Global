@@ -43,7 +43,7 @@ export default function TermsAndConditions() {
               Delaware. For any questions regarding these Terms, please contact us at{" "}
               <a
                 href="mailto:info.f3global@gmail.com"
-                className="underline decoration-auto underline-offset-auto cursor-pointer"
+                className="underline decoration-solid decoration-auto underline-offset-auto cursor-pointer"
               >
                 info.f3global@gmail.com
               </a>
