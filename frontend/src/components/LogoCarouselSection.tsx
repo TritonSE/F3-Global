@@ -68,9 +68,7 @@ export const LogoCarouselSection = <T extends LogoCarouselItem>({
 
   return (
     <div className="flex flex-col px-[100px] pt-[100px] justify-center items-start">
-      <p className="text-[#172447] text-[48px] mb-[20px] font-medium tracking-[-0.96px]">
-        {title}
-      </p>
+      <p className="text-[#172447] text-[48px] mb-[20px] font-medium tracking-[-0.96px]">{title}</p>
       <p className="text-[20px] max-w-[1073px]">{description}</p>
       <div
         ref={containerRef}
