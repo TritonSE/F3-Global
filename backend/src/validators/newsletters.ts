@@ -132,3 +132,5 @@ export const updateNewsletter = [
 ];
 
 export const deleteNewsletter = [makeIdValidator()];
+
+export const getNewsletterById = [makeIdValidator()];

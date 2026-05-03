@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react";
 
 import {
-  getAllNewsletters,
-  getFeaturedNewsletter,
+  getNewsletters,
   type Newsletter,
   type PaginatedNewsletters,
   type SortBy,
@@ -29,8 +28,8 @@ export default function NewslettersPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getFeaturedNewsletter()
-      .then(setFeatured)
+    getNewsletters({ featured: true, limit: 1 })
+      .then((res) => setFeatured(res.data[0] ?? null))
       .catch(() => setError("Failed to load featured newsletter"))
       .finally(() => setFeaturedLoading(false));
   }, []);
@@ -38,7 +37,7 @@ export default function NewslettersPage() {
   useEffect(() => {
     setListLoading(true);
     const timer = setTimeout(() => {
-      getAllNewsletters({ page: currentPage, limit: PAGE_SIZE, search, sortBy })
+      getNewsletters({ page: currentPage, limit: PAGE_SIZE, search, sortBy })
         .then(setList)
         .catch(() => setError("Failed to load newsletters"))
         .finally(() => setListLoading(false));

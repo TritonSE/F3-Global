@@ -16,15 +16,6 @@ type NewsletterPayload = {
   featured?: boolean;
 };
 
-export const getFeaturedNewsletter: RequestHandler = async (req, res, next) => {
-  try {
-    const featured = await NewsletterModel.findOne().sort({ featured: -1, uploadDate: -1 });
-    res.status(200).json(featured);
-  } catch (error) {
-    next(error);
-  }
-};
-
 const SORT_OPTIONS: Record<string, Record<string, 1 | -1>> = {
   newest: { uploadDate: -1 },
   oldest: { uploadDate: 1 },
@@ -34,7 +25,7 @@ const SORT_OPTIONS: Record<string, Record<string, 1 | -1>> = {
 
 const escapeRegex = (input: string): string => input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-export const getAllNewsletters: RequestHandler = async (req, res, next) => {
+export const getNewsletters: RequestHandler = async (req, res, next) => {
   try {
     const errors = validationResult(req);
     validationErrorParser(errors);
@@ -44,7 +35,11 @@ export const getAllNewsletters: RequestHandler = async (req, res, next) => {
     const skip = (page - 1) * limit;
 
     const search = (req.query.search as string | undefined)?.trim();
-    const filter = search ? { title: { $regex: escapeRegex(search), $options: "i" } } : {};
+    const featuredOnly = req.query.featured === "true";
+
+    const filter: Record<string, unknown> = {};
+    if (search) filter.title = { $regex: escapeRegex(search), $options: "i" };
+    if (featuredOnly) filter.featured = true;
 
     const sortKey = (req.query.sortBy as string | undefined) ?? "newest";
     const sort = SORT_OPTIONS[sortKey] ?? SORT_OPTIONS.newest;
@@ -61,6 +56,21 @@ export const getAllNewsletters: RequestHandler = async (req, res, next) => {
         pages: Math.ceil(total / limit),
       },
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getNewsletterById: RequestHandler<{ id: string }> = async (req, res, next) => {
+  try {
+    const errors = validationResult(req);
+    validationErrorParser(errors);
+
+    const doc = await NewsletterModel.findById(req.params.id);
+    if (!doc) {
+      return res.status(404).json({ message: "Newsletter not found" });
+    }
+    res.status(200).json(doc);
   } catch (error) {
     next(error);
   }

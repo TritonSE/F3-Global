@@ -16,9 +16,7 @@ type Props = {
 export function NewsletterItem({ newsletter }: Props) {
   return (
     <a
-      href={newsletter.pdfUrl}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={`/newsletters/${newsletter._id}`}
       className="flex flex-col gap-[20px] items-center justify-center group cursor-pointer"
     >
       <div className="relative w-full aspect-[415/302] overflow-hidden">
