@@ -54,7 +54,7 @@ export default function AdminPortal() {
       description:
         "Edit the year, description, and image of each of the five slots available in the timeline component that shows F3’s growth.",
       tags: ["About Us"],
-      href: "/interactive-timeline-editor",
+      href: "/timeline-editor",
     },
     {
       name: "Clients Logos",

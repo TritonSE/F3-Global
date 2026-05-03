@@ -5,9 +5,8 @@ import Timeline from "../models/timeline";
 import { deleteImageFromFirebaseStorage } from "../utils/firebaseStorage";
 import validationErrorParser from "../utils/validationErrorParser";
 
-import type { timelineModel } from "../models/timeline";
 import type { RequestHandler } from "express";
-import type { AnyBulkWriteOperation } from "mongoose";
+import type mongoose from "mongoose";
 
 // POST api/timeline
 export const createTimeline: RequestHandler = async (req, res, next) => {
@@ -39,73 +38,39 @@ export const updateTimeline: RequestHandler = async (req, res, next) => {
       description: string;
       imageUrl: string;
     };
+    const incoming = req.body as IncomingTimelineItem[];
+    const existing: (IncomingTimelineItem & { _id: mongoose.Types.ObjectId })[] =
+      await Timeline.find();
+    const incomingIds = incoming.filter((item) => item._id).map((item) => String(item._id));
 
-    const incomingTimeline = req.body as IncomingTimelineItem[];
-    const incomingImageUrls = new Set(incomingTimeline.map((item) => item.imageUrl));
+    // Delete items not in incoming
+    const toDelete = existing.filter((item) => !incomingIds.includes(item._id.toString()));
+    await Timeline.deleteMany({ _id: { $in: toDelete.map((item) => item._id) } });
 
-    const existingTimeline = await Timeline.find();
-    const existingById = new Map(existingTimeline.map((doc) => [doc._id.toString(), doc]));
+    // Delete their images from Firebase
+    await Promise.all(toDelete.map(async (item) => deleteImageFromFirebaseStorage(item.imageUrl)));
 
-    const incomingExistingItems = incomingTimeline.filter(
-      (item): item is IncomingTimelineItem & { _id: string } => Boolean(item._id),
+    // Update existing items
+    await Promise.all(
+      incoming
+        .filter((item) => item._id)
+        .map((item) =>
+          Timeline.findByIdAndUpdate(item._id, {
+            year: item.year,
+            description: item.description,
+            imageUrl: item.imageUrl,
+          }),
+        ),
     );
-    const unknownIds = incomingExistingItems
-      .filter((item) => !existingById.has(item._id))
-      .map((item) => item._id);
 
-    if (unknownIds.length > 0) {
-      throw createHttpError(404, `timeline item not found for _id: ${unknownIds[0]}`);
-    }
-
-    const incomingIds = new Set(incomingExistingItems.map((item) => item._id));
-
-    const imageUrlsToDelete = [
-      ...new Set(
-        existingTimeline
-          .map((item) => item.imageUrl)
-          .filter((imageUrl) => !incomingImageUrls.has(imageUrl)),
-      ),
-    ];
-
-    const ops: AnyBulkWriteOperation<timelineModel>[] = [
-      {
-        deleteMany: {
-          filter: { _id: { $nin: [...incomingIds] } },
-        },
-      },
-    ];
-
-    for (const item of incomingTimeline) {
-      if (item._id) {
-        ops.push({
-          updateOne: {
-            filter: { _id: item._id },
-            update: { year: item.year, description: item.description, imageUrl: item.imageUrl },
-          },
-        });
-      } else {
-        ops.push({
-          insertOne: {
-            document: {
-              year: item.year,
-              description: item.description,
-              imageUrl: item.imageUrl,
-            } as unknown as timelineModel,
-          },
-        });
-      }
-    }
-
-    await Timeline.bulkWrite(ops);
-
-    await Promise.allSettled(
-      imageUrlsToDelete.map(async (imageUrl) => deleteImageFromFirebaseStorage(imageUrl)),
-    );
+    // Create new items
+    const toCreate = incoming.filter((item) => !item._id);
+    if (toCreate.length) await Timeline.insertMany(toCreate);
 
     const updated = await Timeline.find().sort({ year: 1 });
     res.status(200).json(updated);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 

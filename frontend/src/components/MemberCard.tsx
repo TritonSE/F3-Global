@@ -18,8 +18,8 @@ type MemberCardProps = {
 export const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
   return (
     <>
-      <div className="flex flex-col flex-start gap-[30px]">
-        <div className="relative" style={{ width: 250, height: 250 }}>
+      <div className="flex w-full max-w-[127px] flex-col items-start gap-3 md:max-w-none md:gap-[30px]">
+        <div className="relative h-[127px] w-[127px] self-center overflow-hidden rounded-full md:h-[250px] md:w-[250px] md:self-auto">
           <Image
             src={
               !member.headshotUrl || member.headshotUrl === ""
@@ -28,28 +28,34 @@ export const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
             }
             alt={`${member.name} headshot image`}
             fill
-            sizes="250px"
-            className="object-cover object-center bg-cover bg-no-repeat bg-center rounded-[250px] "
+            sizes="(max-width: 767px) 127px, 250px"
+            className="object-cover object-center bg-cover bg-no-repeat bg-center"
             unoptimized
           />
         </div>
-        <div className="flex flex-col items-start gap-[10px] self-stretch">
-          <h1 className="font-dm-sans text-[24px] font-[700] leading-[150%] tracking-[0.48px] self-stretch text-[#172447]">
+        <div className="flex flex-col items-start gap-1 self-stretch md:gap-[10px]">
+          <h1
+            className="self-stretch font-dm-sans text-[18px] font-[700] leading-[150%] tracking-[-0.36px] md:text-[24px] md:tracking-[0.48px]"
+            style={{ color: "var(--F3-Blue, #172447)" }}
+          >
             {member.name}
           </h1>
-          <p className="font-dm-sans text-[16px] font-normal leading-[24px] self-stretch text-[#172447]">
+          <p
+            className="self-stretch font-dm-sans text-[12px] font-normal leading-[16px] md:text-[16px] md:leading-[24px]"
+            style={{ color: "var(--F3-Blue, #172447)" }}
+          >
             {member.memberPosition}
           </p>
           <Link
             href={member.linkedinUrl}
             target="_blank"
-            className="flex items-center gap-[11px] group transition-all duration-300"
+            className="group flex items-center gap-[11px] transition-all duration-300"
           >
-            <div className="relative w-[20px] h-[20px] text-[#1E1E1E] group-hover:text-[#1169B0] transition-colors duration-300">
+            <div className="relative h-3.5 w-3.5 text-[#1E1E1E] transition-colors duration-300 group-hover:text-[#1169B0] md:h-5 md:w-5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
+                width="100%"
+                height="100%"
                 viewBox="0 0 20 20"
                 fill="none"
               >

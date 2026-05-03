@@ -43,8 +43,11 @@ export function HeaderSection({ title, description, onBack, tags }: HeaderSectio
       </div>
       <div className="flex gap-[10px] w-full justify-start">
         {tags.map((tag) => (
-          <div key={tag} className="self-start bg-[#F4F4F4] px-[10px] py-[5px] rounded-[10px]">
-            <span className="font-dm-sans font-semibold text-[12px] text-[#5d5d5d]">{tag}</span>
+          <div
+            key={tag}
+            className="self-start bg-[#F4F4F4] px-[10px] py-[5px] rounded-[10px] text-center leading-[18px]"
+          >
+            <span className="font-dm-sans font-semibold text-[12px] text-[#5d5d5d] ">{tag}</span>
           </div>
         ))}
       </div>
