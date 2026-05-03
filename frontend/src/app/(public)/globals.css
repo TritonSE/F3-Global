@@ -109,3 +109,11 @@ body {
   font-size: 16px;
   color: var(--Text-Black, #1e1e1e);
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

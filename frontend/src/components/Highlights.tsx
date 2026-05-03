@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { getClientHighlights, type HighlightItem } from "@/api/clientHighlights";
 import { HighlightCard } from "@/components/HighlightCard";
@@ -10,6 +10,7 @@ export function Highlights() {
   const [highlights, setHighlights] = useState<HighlightItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedHighlight, setSelectedHighlight] = useState<HighlightItem | null>(null);
+  const dragStartX = useRef<number | null>(null);
 
   useEffect(() => {
     const fetchHighlights = async () => {
@@ -44,6 +45,17 @@ export function Highlights() {
     setSelectedHighlight(null);
   };
 
+  const handleDragStart = (x: number) => {
+    dragStartX.current = x;
+  };
+  const handleDragEnd = (x: number) => {
+    if (dragStartX.current === null) return;
+    const diff = dragStartX.current - x;
+    if (diff > 50) handleNext();
+    else if (diff < -50) handlePrevious();
+    dragStartX.current = null;
+  };
+
   const getVisibleHighlights = () => {
     const prevIndex = currentIndex === 0 ? highlights.length - 1 : currentIndex - 1;
     const nextIndex = currentIndex === highlights.length - 1 ? 0 : currentIndex + 1;
@@ -51,15 +63,48 @@ export function Highlights() {
     return [prevIndex, currentIndex, nextIndex];
   };
 
+  const isFirst = currentIndex === 0;
+  const isLast = currentIndex === highlights.length - 1;
+
+  const offset = isFirst
+    ? 0
+    : isLast
+      ? `calc(100% - 278px - 60px - ${currentIndex * 213}px)`
+      : `calc(50% - 139px - ${currentIndex * 213}px - 30px)`;
+
   return (
-    <section className="relative flex w-full flex-col items-center gap-[50px] border-t border-[#f4f4f4] bg-white py-[50px] box-border">
-      <div className="flex w-full px-[100px] items-center justify-start">
-        <h2 className="font-dm-sans text-[48px] font-medium leading-[150%] tracking-[-0.96px] text-[#172447]">
+    <section className="relative flex w-full flex-col items-center gap-[20px] md:gap-[50px] border-t border-[#f4f4f4] bg-white py-[50px] md:px-0 box-border overflow-hidden">
+      <div className="flex w-full  px-[30px] md:px-[100px] items-center justify-start">
+        <h2 className="font-dm-sans text-[28px] md:text-[48px] font-medium leading-[150%] tracking-[-0.96px] text-[#172447]">
           Client Highlights
         </h2>
       </div>
 
-      <div className="relative flex w-full items-center justify-center gap-[38px]">
+      <div
+        className="md:hidden w-full pb-[20px] md:pb-0"
+        onMouseDown={(e) => handleDragStart(e.clientX)}
+        onMouseUp={(e) => handleDragEnd(e.clientX)}
+        onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
+        onTouchEnd={(e) => handleDragEnd(e.changedTouches[0].clientX)}
+      >
+        <div
+          className="flex items-center transition-transform duration-300 ease-in-out pl-[30px]"
+          style={{ transform: `translateX(${offset})` }}
+        >
+          {highlights.map((highlight, i) => (
+            <div key={highlight._id} className="shrink-0 mr-[4px]">
+              <HighlightCard
+                highlight={highlight}
+                onLearnMore={handleLearnMore}
+                onActivate={() => setCurrentIndex(i)}
+                isActive={i === currentIndex}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="hidden md:relative md:flex w-full items-center justify-center gap-[38px]">
         <button
           className="flex h-[45px] w-[45px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[99px] bg-white p-0 text-[#1e1e1e] transition-all duration-200 ease-in-out hover:bg-[#f4f4f4] active:scale-95"
           onClick={handlePrevious}
@@ -98,10 +143,6 @@ export function Highlights() {
           })}
         </div>
 
-        {selectedHighlight && (
-          <HighlightOverlay highlight={selectedHighlight} onClose={handleCloseOverlay} />
-        )}
-
         <button
           className="flex h-[45px] w-[45px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[99px] bg-white p-0 text-[#1e1e1e] transition-all duration-200 ease-in-out hover:bg-[#f4f4f4] active:scale-95"
           onClick={handleNext}
@@ -129,7 +170,7 @@ export function Highlights() {
         {highlights.map((_, index) => (
           <button
             key={index}
-            className={`h-[5px] w-[125px] rounded-[2px] border-0 p-0 transition-all duration-200 ease-in-out ${
+            className={`h-[2px] md:h-[5px] w-[48px] md:w-[125px] rounded-[2px] border-0 p-0 transition-all duration-200 ease-in-out ${
               index === currentIndex ? "bg-[#012060] opacity-100" : "bg-[#c7c7c7] hover:opacity-50"
             }`}
             onClick={() => setCurrentIndex(index)}
@@ -137,6 +178,10 @@ export function Highlights() {
           />
         ))}
       </div>
+
+      {selectedHighlight && (
+        <HighlightOverlay highlight={selectedHighlight} onClose={handleCloseOverlay} />
+      )}
     </section>
   );
 }
