@@ -50,7 +50,7 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
 
   const handleTabClick = (index: number) => {
     setCurrentIndex(index);
-    // Scroll the card into view on mobile
+
     setTimeout(() => {
       cardRefs.current[index]?.scrollIntoView({
         behavior: "smooth",
@@ -69,7 +69,6 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
       const container = scrollContainerRef.current;
       if (!container || cardRefs.current.length === 0) return;
 
-      // left position we consider 'in view' (accounting for the 30px inset)
       const targetLeft = container.scrollLeft + 30;
 
       let closestIndex = 0;
@@ -154,18 +153,16 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
         </button>
       </div>
 
-      {/* Mobile Snap Scroll Carousel - Hidden on desktop (md:hidden), visible only on mobile */}
+      {/* Mobile Snap Scroll Carousel */}
       <div className="relative w-full md:hidden">
-        {/* Scrollable container with snap-to-element behavior */}
-        {/* Uses overflow-x-auto for horizontal scrolling, snap-x snap-mandatory for snap points */}
-        {/* -mx-[30px] px-[30px] extends the scroll area beyond parent padding to show adjacent cards on both sides */}
+        {/* Scroll container with snap behavior */}
         <div
           ref={scrollContainerRef}
           onScroll={handleScroll}
           className="flex w-full gap-[40px] overflow-x-auto scroll-smooth snap-x snap-mandatory [-webkit-overflow-scrolling:touch] px-[30px]"
           style={{ scrollBehavior: "smooth" }}
         >
-          {/* Individual card - each is 263px wide, snaps to start when scrolling */}
+          {/* Individual card*/}
           {data.map((card, index) => (
             <div
               key={index}
@@ -176,45 +173,48 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
             >
               {/* Card content wrapper */}
               <div className="flex w-[263px] flex-col gap-[20px]">
-                {/* Card image section - 175px tall, rounded corners */}
+                {/* Card image section */}
                 <div className="relative h-[175px] w-[263px] rounded-[8px] overflow-hidden">
                   <Image src={card.imageSrc} alt={card.title} fill className="object-cover" />
                 </div>
 
                 {/* Card text and button section */}
                 <div className="flex w-[263px] flex-col gap-[10px] px-0">
-                  {/* Card header/title - mixed color with emphasized blue text */}
+                  {/* Card header */}
                   <div className="font-dm-sans text-[28px] font-medium leading-[1.5] text-[#1e1e1e] tracking-[-0.02em]">
                     {card.header}
                   </div>
 
-                  {/* Card description text */}
+                  {/* Card description */}
                   <p className="font-dm-sans text-[12px] font-normal leading-[16px] text-[#5d5d5d]">
                     {card.description}
                   </p>
 
-                  {/* Card action buttons */}
+                  {/* Card buttons */}
                   <div className="flex flex-wrap gap-[15px]">
-                    {/* Primary action button (DONATE, CONTACT US, APPLY, etc.) */}
+                    
                     <Button
                       text={card.leftButtonText}
                       onClick_link={card.leftButtonLink}
                       className="flex items-center justify-center rounded-[99px] bg-[#172447] px-[15px] py-[10px] transition-colors duration-300 hover:bg-[#1169B0] [&_p]:text-white [&_p]:font-semibold [&_p]:text-[12px] [&_p]:leading-[1.5]"
                     />
 
-                    {/* Optional "Learn More" link with arrow icon */}
                     {card.rightButtonLink && (
-                      <div className="flex items-center gap-[5px] px-[15px] py-[10px]">
-                        <span className="font-dm-sans text-[12px] font-semibold text-[#1e1e1e]">
-                          Learn More
-                        </span>
-                        <Image
-                          src="/imgs/button_right_arrow.svg"
-                          alt="Arrow"
-                          width={16}
-                          height={16}
-                        />
-                      </div>
+                      <Button
+                        text="Learn More"
+                        onClick_link={card.rightButtonLink}
+                        trailingIcon={
+                          <Image
+                            src="/imgs/button_right_arrow.svg"
+                            alt="Arrow"
+                            width={16}
+                            height={16}
+                            className="transition-transform duration-300 ease-in-out group-hover:translate-x-1"
+                          />
+                        }
+                        className="group flex items-center justify-center gap-[5px] rounded-[99px] border-none bg-white px-[15px] py-[10px] transition-colors duration-300 hover:bg-[#F4F4F4]"
+                        textClassName="font-dm-sans text-[12px] font-semibold text-[#1e1e1e]"
+                      />
                     )}
                   </div>
                 </div>
@@ -224,7 +224,7 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
         </div>
       </div>
 
-      {/* Pagination Dots */}
+      {/* Pagination */}
       <div className="md:mt-5 flex w-full flex-shrink-0 items-center justify-center gap-[5px] md:gap-[10px]">
         {data.map((_, index) => (
           <div
