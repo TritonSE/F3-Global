@@ -3,12 +3,7 @@ import Image from "next/image";
 import { Button } from "@/components/button";
 import { ClientCarousel } from "@/components/ClientCarousel";
 import { Highlights } from "@/components/Highlights";
-import {
-  TIMELINE_HEADER,
-  TIMELINE_INSTRUCTION,
-  TimelineSection,
-  UpdatedTimeline,
-} from "@/components/timeline-section";
+import { TIMELINE_HEADER, UpdatedTimeline } from "@/components/timeline-section";
 
 export default function About() {
   return (

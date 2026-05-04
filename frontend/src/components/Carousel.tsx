@@ -24,6 +24,7 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (data.length < 2) return;
@@ -59,11 +60,45 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
     }, 0);
   };
 
+  const handleScroll = () => {
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+
+    scrollTimeoutRef.current = window.setTimeout(() => {
+      const container = scrollContainerRef.current;
+      if (!container || cardRefs.current.length === 0) return;
+
+      // left position we consider 'in view' (accounting for the 30px inset)
+      const targetLeft = container.scrollLeft + 30;
+
+      let closestIndex = 0;
+      let minDist = Infinity;
+
+      cardRefs.current.forEach((el, idx) => {
+        if (!el) return;
+        const dist = Math.abs(el.offsetLeft - targetLeft);
+        if (dist < minDist) {
+          minDist = dist;
+          closestIndex = idx;
+        }
+      });
+
+      if (closestIndex !== currentIndex) setCurrentIndex(closestIndex);
+    }, 120);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
+  }, []);
+
   const currentCard = data[currentIndex];
 
   return (
     <div
-      className="relative w-full flex h-auto min-h-[607px] flex-col items-center justify-start gap-[25px] bg-white px-[30px] py-[30px] md:gap-[50px] md:px-[100px] md:py-[50px] md:shadow-[0_-12px_24px_rgba(0,0,0,0.00),0_12px_24px_rgba(0,0,0,0.15)]"
+      className="relative w-full flex h-auto min-h-[607px] flex-col items-center justify-start gap-[25px] bg-white px-0 py-[30px] md:gap-[50px] md:px-[100px] md:py-[50px] md:shadow-[0_-12px_24px_rgba(0,0,0,0.00),0_12px_24px_rgba(0,0,0,0.15)]"
       {...props}
     >
       {/* Tab Navigation */}
@@ -78,9 +113,10 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
                 e.preventDefault();
                 handleTabClick(index);
               }}
-              className={`flex cursor-pointer items-center justify-center rounded-[99px] border-none px-3 py-2 font-dm-sans text-[12px] font-semibold leading-[1.5] md:h-[57px] md:px-6 md:text-[18px] md:font-medium md:leading-[150%] md:tracking-[-0.02em] [&_p]:font-dm-sans [&_p]:text-[12px] [&_p]:font-semibold [&_p]:leading-[1.5] md:[&_p]:text-[18px] md:[&_p]:font-medium md:[&_p]:leading-[150%] md:[&_p]:tracking-[-0.02em] [&_p]:text-[#1e1e1e] ${
-                currentIndex === index ? "bg-[#EDEDED]" : "bg-transparent"
+              className={`flex cursor-pointer items-center justify-center rounded-[99px] border-none px-3 py-2 md:h-[57px] md:px-6 ${
+                currentIndex === index ? "bg-[#F4F4F4]" : "bg-transparent"
               }`}
+              textClassName={`font-dm-sans text-[12px] font-semibold leading-[1.5] md:text-[18px] md:font-medium md:leading-[150%] md:tracking-[-0.02em] text-[#1e1e1e]`}
             />
           ))}
         </div>
@@ -125,7 +161,8 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
         {/* -mx-[30px] px-[30px] extends the scroll area beyond parent padding to show adjacent cards on both sides */}
         <div
           ref={scrollContainerRef}
-          className="flex w-full gap-[40px] overflow-x-auto scroll-smooth snap-x snap-mandatory [-webkit-overflow-scrolling:touch] -mx-[30px] px-[30px]"
+          onScroll={handleScroll}
+          className="flex w-full gap-[40px] overflow-x-auto scroll-smooth snap-x snap-mandatory [-webkit-overflow-scrolling:touch] px-[30px]"
           style={{ scrollBehavior: "smooth" }}
         >
           {/* Individual card - each is 263px wide, snaps to start when scrolling */}
@@ -135,10 +172,10 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
               ref={(el) => {
                 cardRefs.current[index] = el;
               }}
-              className="flex w-[263px] flex-shrink-0 snap-start flex-col gap-[20px] items-start justify-start"
+              className="flex w-[263px] flex-shrink-0 snap-start scroll-ml-[30px] flex-col gap-[20px] items-start justify-start"
             >
               {/* Card content wrapper */}
-              <div className="flex w-[263px] flex-col gap-[20px] ml-[30px]">
+              <div className="flex w-[263px] flex-col gap-[20px]">
                 {/* Card image section - 175px tall, rounded corners */}
                 <div className="relative h-[175px] w-[263px] rounded-[8px] overflow-hidden">
                   <Image src={card.imageSrc} alt={card.title} fill className="object-cover" />
