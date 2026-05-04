@@ -9,10 +9,14 @@ type FooterMiniBtnProps = {
 } & React.ComponentProps<"button">;
 
 export const FooterMiniBtn = React.forwardRef<HTMLButtonElement, FooterMiniBtnProps>(
-  ({ text, link, ...props }, ref) => {
+  ({ text, link, className, onClick, ...props }, ref) => {
     const router = useRouter();
 
-    const handleClick = () => {
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      onClick?.(event);
+
+      if (event.defaultPrevented || onClick) return;
+
       if (!link) return;
 
       if (link.startsWith("http")) {
@@ -24,10 +28,11 @@ export const FooterMiniBtn = React.forwardRef<HTMLButtonElement, FooterMiniBtnPr
 
     return (
       <button
+        type="button"
         ref={ref}
         onClick={handleClick}
         {...props}
-        className="hover:text-[#1169B0] cursor-pointer"
+        className={`cursor-pointer hover:text-[#1169B0] ${className ?? ""}`.trim()}
       >
         <p>{text}</p>
       </button>
