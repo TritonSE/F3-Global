@@ -40,9 +40,7 @@ export function NewsletterDescription({ newsletter }: Props) {
           </p>
         </div>
         <a
-          href={newsletter.pdfUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={`/newsletters/${newsletter._id}`}
           className="flex items-center justify-center gap-[10px] py-[12px] pr-[15px] hover:opacity-70 transition-opacity"
         >
           <span className="font-dm-sans font-semibold text-[16px] leading-[1.5] text-[#1e1e1e] whitespace-nowrap">
