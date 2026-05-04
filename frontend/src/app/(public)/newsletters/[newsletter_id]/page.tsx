@@ -247,7 +247,7 @@ export default function NewsletterDetailPage() {
                       <svg
                         aria-hidden="true"
                         viewBox="0 0 14 14"
-                        className="h-6 w-6 text-[#1E1E1E]"
+                        className="h-5 w-5 text-[#1E1E1E]"
                         fill="currentColor"
                       >
                         <g fill="none">
