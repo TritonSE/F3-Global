@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { TimelineMilestoneBlock } from "./TimelineMilestoneBlock";
 
-import { getAllTimeline } from "@/api/timeline";
+import { getTimelines } from "@/api/timeline";
 
 type TimelineItem = {
   _id: string;
@@ -31,7 +31,7 @@ export const UpdatedTimeline = () => {
 
     const loadTimeline = async () => {
       try {
-        const items = await getAllTimeline();
+        const items = await getTimelines();
         if (!isMounted) return;
 
         setTimelineItems(items);
@@ -122,10 +122,17 @@ export const UpdatedTimeline = () => {
 
   return (
     <section className="w-full">
-      <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
-        <div ref={containerRef} className="relative mt-16 lg:mt-20">
+      <div className="mx-auto max-w-[1400px] lg:px-10">
+        <div
+          ref={containerRef}
+          className="relative py-[25px] mb-[50px] md:py-0 md:mb-0 lg:my-[88px]"
+        >
           <div
-            className="absolute left-1/2 hidden w-[2px] -translate-x-1/2 bg-[#213363]/70 md:block"
+            className="absolute hidden w-[2px] bg-[#213363]/70 md:block md:left-1/2 md:-translate-x-1/2 left-[20px]"
+            style={{ top: lineStyle.top, height: lineStyle.height }}
+          />
+          <div
+            className="absolute md:hidden w-[2px] bg-[#213363]/70 left-[39px]"
             style={{ top: lineStyle.top, height: lineStyle.height }}
           />
 
@@ -148,9 +155,23 @@ export const UpdatedTimeline = () => {
                     ref={(el) => {
                       rowRefs.current[index] = el;
                     }}
-                    className="relative grid grid-cols-1 md:grid-cols-[1fr_110px_1fr] lg:grid-cols-[1fr_130px_1fr]"
+                    className="relative grid grid-cols-[60px_1fr] md:grid-cols-[1fr_110px_1fr] lg:grid-cols-[1fr_130px_1fr]"
                   >
-                    <div className={`${isLeft ? "md:col-start-1" : "md:col-start-3"}`}>
+                    {/* mobile */}
+                    <div className="md:hidden col-start-2 pl-[10px]">
+                      <TimelineMilestoneBlock
+                        year={step.year}
+                        description={step.description}
+                        imageSrc={step.imageUrl}
+                        imageAlt={`Timeline ${step.year}`}
+                        align="left"
+                        isActive={activeIndex === index}
+                      />
+                    </div>
+
+                    <div
+                      className={`hidden md:block ${isLeft ? "md:col-start-1" : "md:col-start-3"}`}
+                    >
                       <TimelineMilestoneBlock
                         year={step.year}
                         description={step.description}
@@ -163,7 +184,7 @@ export const UpdatedTimeline = () => {
 
                     <div
                       ref={index === 0 ? firstDotRef : index === lastIndex ? lastDotRef : undefined}
-                      className={`absolute left-1/2 top-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 rounded-full border-[2px] transition-colors duration-[1500ms] ease-out md:h-8 md:w-8 ${
+                      className={`absolute h-[20px] w-[20px] rounded-full border-[2px] transition-colors duration-[1500ms] ease-out md:top-1/2 md:-translate-x-1/2 md:left-1/2 md:-translate-y-1/2 md:h-8 md:w-8 left-[30px] top-[8px] ${
                         index === activeIndex
                           ? "border-black bg-black"
                           : "border-[#213363]/70 bg-white"

@@ -40,8 +40,8 @@ export function HighlightCard({
     <div
       className={`relative flex flex-col items-center justify-center text-left transition-opacity duration-300 ${
         isActive
-          ? "h-[536px] w-[468px] cursor-default rounded-[16px] bg-[#f4f4f4]"
-          : "h-[359px] w-[322px] cursor-pointer rounded-[11px] bg-[#f4f4f4] opacity-60"
+          ? "h-[312px] md:h-[536px] w-[278px] md:w-[468px] cursor-default rounded-[16px] bg-[#f4f4f4]"
+          : "h-[245px] md:h-[359px] w-[209px] md:w-[322px] cursor-pointer rounded-[11px] bg-[#f4f4f4] opacity-60"
       }`}
       role={!isActive ? "button" : undefined}
       tabIndex={!isActive ? 0 : -1}
@@ -51,27 +51,26 @@ export function HighlightCard({
     >
       <div
         className={`relative w-full overflow-hidden ${
-          isActive ? "h-[256px] rounded-t-[16px]" : "h-[176px] rounded-t-[11px]"
+          isActive
+            ? "h-[152px] md:h-[256px] rounded-t-[10px] md:rounded-t-[16px]"
+            : "h-[114px] md:h-[176px] rounded-t-[7px] md:rounded-t-[11px]"
         }`}
       >
         <Image
           src={highlight.imageUrl}
           alt={highlight.quoteText}
           fill
-          className={isActive ? "rounded-t-[16px]" : "rounded-t-[11px]"}
           style={{ objectFit: "cover" }}
         />
         <div
-          className={`pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(56,88,173,0)_52.539%,#172447_107.81%)] ${
-            isActive ? "rounded-t-[16px]" : "rounded-t-[11px]"
-          }`}
+          className={`pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(56,88,173,0)_52.539%,#172447_107.81%)]`}
         />
       </div>
       <div
         className={`absolute flex transform items-center justify-center rounded-full bg-transparent -translate-y-1/2 ${
           isActive
-            ? "right-[26px] top-[256px] h-[60px] w-[60px]"
-            : "right-[18px] top-[176px] h-[41.24px] w-[41.24px]"
+            ? "right-[16px] md:right-[26px] top-[152px] md:top-[256px] h-[35px] md:h-[60px] w-[35px] md:w-[60px]"
+            : "right-[10px] md:right-[18px] top-[114px] md:top-[176px] h-[26px] md:h-[41.24px] w-[26px] md:w-[41.24px]"
         }`}
       >
         <Image
@@ -83,25 +82,31 @@ export function HighlightCard({
         />
       </div>
       <div
-        className={`relative flex w-full flex-1 flex-col overflow-y-auto rounded-b-[16px] ${
-          isActive ? "gap-[24px] p-[32px_16px]" : "gap-[16.5px] p-[22px_11px]"
+        className={`relative flex w-full flex-1 flex-col overflow-y-auto rounded-b-[10px] md:rounded-b-[16px] ${
+          isActive
+            ? "gap-[10px] md:gap-[24px] p-[20px_10px] md:p-[32px_16px]"
+            : "gap-[7.5px] md:gap-[16.5px] p-[15px_7.5px] md:p-[22px_11px]"
         }`}
       >
         <div
           className={`flex w-full min-h-0 flex-col overflow-hidden ${
-            isActive ? "gap-[8px] px-[20px]" : "gap-[5.5px] px-[13.8px]"
+            isActive
+              ? "gap-[4px] md:gap-[8px] px-[12px] md:px-[20px]"
+              : "gap-[3.5px] md:gap-[5.5px] px-[8.9px] md:px-[13.8px]"
           }`}
         >
           <p
-            className={`font-dm-sans font-semibold leading-[150%] text-[#1e1e1e] line-clamp-2 ${
-              isActive ? "text-[20px]" : "text-[16.5px]"
+            className={`font-dm-sans font-semibold leading-[150%] text-[#1e1e1e] line-clamp-2 tracking-[0.24px] ${
+              isActive ? "text-[12px] md:text-[20px]" : "text-[9px] md:text-[16.5px]"
             }`}
           >
             "{highlight.quoteText}"
           </p>
           <p
             className={`font-dm-sans font-normal text-[#5d5d5d] line-clamp-2 ${
-              isActive ? "text-[16px] leading-6" : "text-[11px] leading-[16.5px]"
+              isActive
+                ? "text-[12px] md:text-[16px] leading-[16px] md:leading-6"
+                : "text-[9px] md:text-[11px] leading-[12px] md:leading-[16.5px]"
             }`}
           >
             {highlight.previewText}
@@ -109,21 +114,25 @@ export function HighlightCard({
         </div>
         <button
           className={`inline-flex cursor-pointer items-center bg-transparent p-0 transition-[gap] duration-300 ease-in-out hover:gap-[20px] ${
-            isActive ? "gap-[10px] px-[15px] py-[12px]" : "gap-[6.9px] px-[10.3px] py-[8.3px]"
+            isActive
+              ? "gap-[5px] md:gap-[10px] px-[12px] md:px-[15px] py-[10px] md:py-[12px]"
+              : "gap-[5px] md:gap-[6.9px] px-[10.3px] py-[8.3px]"
           }`}
           type="button"
           onClick={handleLearnMoreClick}
         >
           <span
             className={`font-dm-sans font-semibold leading-[150%] text-[#1e1e1e] ${
-              isActive ? "text-[16px]" : "text-[11px]"
+              isActive ? "text-[12px] md:text-[16px]" : "text-[10px] md:text-[11px]"
             }`}
           >
             Learn More
           </span>
           <svg
             className={`flex-shrink-0 text-[#1e1e1e] ${
-              isActive ? "h-[24px] w-[24px]" : "h-[16.5px] w-[16.5px]"
+              isActive
+                ? "h-[16px] md:h-[24px] w-[16px] md:w-[24px]"
+                : "h-[15px] md:h-[16.5px] w-[15px] md:w-[16.5px]"
             }`}
             width="24"
             height="24"
