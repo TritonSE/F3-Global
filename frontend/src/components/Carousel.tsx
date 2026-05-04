@@ -160,7 +160,7 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
           ref={scrollContainerRef}
           onScroll={handleScroll}
           className="flex w-full gap-[40px] overflow-x-auto scroll-smooth snap-x snap-mandatory [-webkit-overflow-scrolling:touch] px-[30px]"
-          style={{ scrollBehavior: "smooth" }}
+          style={{ scrollBehavior: "smooth", scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {/* Individual card*/}
           {data.map((card, index) => (
