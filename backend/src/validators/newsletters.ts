@@ -83,6 +83,15 @@ const makeAuthorNameValidator = (isOptional = false): ValidationChain => {
     .withMessage("authorName cannot be empty");
 };
 
+const makeFeaturedValidator = (): ValidationChain => {
+  return body("featured")
+    .optional()
+    .isBoolean()
+    .withMessage("featured must be a boolean")
+    .bail()
+    .toBoolean();
+};
+
 const makePdfUrlValidator = (isOptional = false): ValidationChain => {
   const validator = body("pdfUrl");
   if (isOptional) {
@@ -127,6 +136,7 @@ export const createNewsletter = [
   makeAuthorNameValidator(),
   makePdfUrlValidator(),
   makeImageUrlValidator(),
+  makeFeaturedValidator(),
 ];
 
 export const updateNewsletter = [
@@ -138,8 +148,11 @@ export const updateNewsletter = [
   makeAuthorNameValidator(true),
   makePdfUrlValidator(true),
   makeImageUrlValidator(true),
+  makeFeaturedValidator(),
 ];
 
 export const deleteNewsletter = [makeIdValidator()];
+
+export const getNewsletterById = [makeIdValidator()];
 
 export const incrementNewsletterViews = [makeIdValidator()];

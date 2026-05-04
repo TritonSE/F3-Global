@@ -6,7 +6,10 @@ import * as Validators from "../validators/newsletters";
 
 const router = Router();
 
-router.get("/all", NewsletterController.getAllNewsletters);
+router.get("/", NewsletterController.getNewsletters);
+
+router.get("/:id", Validators.getNewsletterById, NewsletterController.getNewsletterById);
+
 router.patch(
   "/:id/views",
   Validators.incrementNewsletterViews,

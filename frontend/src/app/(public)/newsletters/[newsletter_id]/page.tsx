@@ -28,7 +28,7 @@ export default function NewsletterDetailPage() {
     const timer = window.setTimeout(() => {
       void (async () => {
         try {
-          const response = await getNewsletters(1);
+          const response = await getNewsletters({ page: 1, limit: 100 });
           const allNewsletters = response.data;
 
           // Find current newsletter
