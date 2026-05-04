@@ -197,7 +197,7 @@ export const ContactUs: React.FC = () => {
                       className="w-full bg-transparent font-dm-sans text-[14px] leading-[20px] text-[#1E1E1E] outline-none md:text-[16px] md:leading-[24px]"
                       type="text"
                       name="fullName"
-                      placeholder="Full name *"
+                      placeholder="Full Name *"
                       value={formData.fullName}
                       onChange={handleInputChange}
                       required
