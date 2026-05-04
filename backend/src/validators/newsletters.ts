@@ -101,6 +101,24 @@ const makePdfUrlValidator = (isOptional = false): ValidationChain => {
     .withMessage("pdfUrl must be a valid URL");
 };
 
+const makeImageUrlValidator = (isOptional = false): ValidationChain => {
+  const validator = body("imageUrl");
+  if (isOptional) {
+    validator.optional();
+  } else {
+    validator.exists().withMessage("imageUrl is required").bail();
+  }
+  return validator
+    .isString()
+    .withMessage("imageUrl must be a string")
+    .bail()
+    .notEmpty()
+    .withMessage("imageUrl cannot be empty")
+    .bail()
+    .isURL()
+    .withMessage("imageUrl must be a valid URL");
+};
+
 export const createNewsletter = [
   makeTitleValidator(),
   makeUploadDateValidator(),
@@ -108,6 +126,7 @@ export const createNewsletter = [
   makeBlurbValidator(),
   makeAuthorNameValidator(),
   makePdfUrlValidator(),
+  makeImageUrlValidator(),
 ];
 
 export const updateNewsletter = [
@@ -118,6 +137,9 @@ export const updateNewsletter = [
   makeBlurbValidator(true),
   makeAuthorNameValidator(true),
   makePdfUrlValidator(true),
+  makeImageUrlValidator(true),
 ];
 
 export const deleteNewsletter = [makeIdValidator()];
+
+export const incrementNewsletterViews = [makeIdValidator()];
