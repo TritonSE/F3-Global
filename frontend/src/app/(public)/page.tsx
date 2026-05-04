@@ -143,7 +143,7 @@ export default function Home() {
         <h2 className="font-ethic text-[48px] font-light italic leading-[1.5] text-[#172447] md:text-[96px]">
           Mission
         </h2>
-        <p className="w-full font-dm-sans text-[14px] font-normal leading-[20px] text-[#1E1E1E] md:text-[20px] md:leading-[32px]">
+        <p className="w-full font-dm-sans text-[14px] font-normal leading-[20px] text-[#1E1E1E] md:max-w-[870px] md:text-[20px] md:leading-[32px]">
           Microfinancing is transforming lives across continents, empowering{" "}
           <span className="text-[#012060] font-bold">millions</span> with access to essential
           financial services. Join us in our mission to foster{" "}
