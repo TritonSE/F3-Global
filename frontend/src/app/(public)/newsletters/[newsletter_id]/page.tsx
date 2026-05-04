@@ -290,7 +290,7 @@ export default function NewsletterDetailPage() {
 
       {/* Hero Image */}
       <div className="px-[200px] pb-[32px]">
-        <div className="relative w-full h-96 bg-gray-200 rounded-lg overflow-hidden">
+        <div className="relative w-[1112px] h-[464px] bg-gray-200 rounded-lg overflow-hidden">
           <Image
             src={newsletter.imageUrl || "/imgs/newsletter-placeholder.png"}
             alt={newsletter.title}
