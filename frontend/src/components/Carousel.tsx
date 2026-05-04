@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { Button } from "./button";
 import { CarouselCard } from "./CarouselCard";
@@ -22,6 +22,8 @@ type CarouselProps = {
 
 export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     if (data.length < 2) return;
@@ -45,15 +47,28 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length);
   };
 
+  const handleTabClick = (index: number) => {
+    setCurrentIndex(index);
+    // Scroll the card into view on mobile
+    setTimeout(() => {
+      cardRefs.current[index]?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "start",
+      });
+    }, 0);
+  };
+
   const currentCard = data[currentIndex];
 
   return (
     <div
-      className="relative w-full flex h-auto min-h-[607px] flex-col items-center justify-start gap-[50px] bg-white px-[100px] py-[50px] shadow-[0_-12px_24px_rgba(0,0,0,0.00),0_12px_24px_rgba(0,0,0,0.15)]"
+      className="relative w-full flex h-auto min-h-[607px] flex-col items-center justify-start gap-[25px] bg-white px-[30px] py-[30px] md:gap-[50px] md:px-[100px] md:py-[50px] md:shadow-[0_-12px_24px_rgba(0,0,0,0.00),0_12px_24px_rgba(0,0,0,0.15)]"
       {...props}
     >
+      {/* Tab Navigation */}
       <div className="flex w-full flex-shrink-0 flex-row justify-center pb-0">
-        <div className="flex h-[77px] w-auto items-center justify-center rounded-[50px] bg-white px-3 shadow-[0px_17px_36px_0px_rgba(0,0,0,0.1)]">
+        <div className="flex h-auto items-center justify-center rounded-[50px] bg-white px-1 py-1 border md:border-2 border-[#F4F4F4] md:h-[77px] md:px-3 shadow-[0px_17px_36px_0px_rgba(0,0,0,0.1)]">
           {data.map((card, index) => (
             <Button
               key={card.title}
@@ -61,16 +76,18 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
               onClick_link="#"
               onClick={(e) => {
                 e.preventDefault();
-                setCurrentIndex(index);
+                handleTabClick(index);
               }}
-              className={`flex h-[57px] cursor-pointer items-center justify-center rounded-[99px] border-none px-6 font-dm-sans text-[18px] font-medium leading-[150%] tracking-[-0.02em] [&_p]:font-dm-sans [&_p]:text-[18px] [&_p]:font-medium [&_p]:leading-[150%] [&_p]:tracking-[-0.02em] [&_p]:text-[#1e1e1e] ${
+              className={`flex cursor-pointer items-center justify-center rounded-[99px] border-none px-3 py-2 font-dm-sans text-[12px] font-semibold leading-[1.5] md:h-[57px] md:px-6 md:text-[18px] md:font-medium md:leading-[150%] md:tracking-[-0.02em] [&_p]:font-dm-sans [&_p]:text-[12px] [&_p]:font-semibold [&_p]:leading-[1.5] md:[&_p]:text-[18px] md:[&_p]:font-medium md:[&_p]:leading-[150%] md:[&_p]:tracking-[-0.02em] [&_p]:text-[#1e1e1e] ${
                 currentIndex === index ? "bg-[#EDEDED]" : "bg-transparent"
               }`}
             />
           ))}
         </div>
       </div>
-      <div className="relative flex w-full flex-none items-center justify-center lg:min-h-[330px]">
+
+      {/* Desktop Carousel */}
+      <div className="relative hidden w-full flex-none items-center justify-center md:flex md:min-h-[330px]">
         <button
           type="button"
           aria-label="Previous slide"
@@ -100,11 +117,82 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
           <Image src="/imgs/arrow_forward.svg" alt="Right Arrow" width={13.12} height={22.5} />
         </button>
       </div>
-      <div className="mt-5 flex w-full flex-shrink-0 items-center justify-center gap-4">
+
+      {/* Mobile Snap Scroll Carousel - Hidden on desktop (md:hidden), visible only on mobile */}
+      <div className="relative w-full md:hidden">
+        {/* Scrollable container with snap-to-element behavior */}
+        {/* Uses overflow-x-auto for horizontal scrolling, snap-x snap-mandatory for snap points */}
+        {/* -mx-[30px] px-[30px] extends the scroll area beyond parent padding to show adjacent cards on both sides */}
+        <div
+          ref={scrollContainerRef}
+          className="flex w-full gap-[40px] overflow-x-auto scroll-smooth snap-x snap-mandatory [-webkit-overflow-scrolling:touch] -mx-[30px] px-[30px]"
+          style={{ scrollBehavior: "smooth" }}
+        >
+          {/* Individual card - each is 263px wide, snaps to start when scrolling */}
+          {data.map((card, index) => (
+            <div
+              key={index}
+              ref={(el) => {
+                cardRefs.current[index] = el;
+              }}
+              className="flex w-[263px] flex-shrink-0 snap-start flex-col gap-[20px] items-start justify-start"
+            >
+              {/* Card content wrapper */}
+              <div className="flex w-[263px] flex-col gap-[20px] ml-[30px]">
+                {/* Card image section - 175px tall, rounded corners */}
+                <div className="relative h-[175px] w-[263px] rounded-[8px] overflow-hidden">
+                  <Image src={card.imageSrc} alt={card.title} fill className="object-cover" />
+                </div>
+
+                {/* Card text and button section */}
+                <div className="flex w-[263px] flex-col gap-[10px] px-0">
+                  {/* Card header/title - mixed color with emphasized blue text */}
+                  <div className="font-dm-sans text-[28px] font-medium leading-[1.5] text-[#1e1e1e] tracking-[-0.02em]">
+                    {card.header}
+                  </div>
+
+                  {/* Card description text */}
+                  <p className="font-dm-sans text-[12px] font-normal leading-[16px] text-[#5d5d5d]">
+                    {card.description}
+                  </p>
+
+                  {/* Card action buttons */}
+                  <div className="flex flex-wrap gap-[15px]">
+                    {/* Primary action button (DONATE, CONTACT US, APPLY, etc.) */}
+                    <Button
+                      text={card.leftButtonText}
+                      onClick_link={card.leftButtonLink}
+                      className="flex items-center justify-center rounded-[99px] bg-[#172447] px-[15px] py-[10px] transition-colors duration-300 hover:bg-[#1169B0] [&_p]:text-white [&_p]:font-semibold [&_p]:text-[12px] [&_p]:leading-[1.5]"
+                    />
+
+                    {/* Optional "Learn More" link with arrow icon */}
+                    {card.rightButtonLink && (
+                      <div className="flex items-center gap-[5px] px-[15px] py-[10px]">
+                        <span className="font-dm-sans text-[12px] font-semibold text-[#1e1e1e]">
+                          Learn More
+                        </span>
+                        <Image
+                          src="/imgs/button_right_arrow.svg"
+                          alt="Arrow"
+                          width={16}
+                          height={16}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Pagination Dots */}
+      <div className="md:mt-5 flex w-full flex-shrink-0 items-center justify-center gap-[5px] md:gap-[10px]">
         {data.map((_, index) => (
           <div
             key={index}
-            className={`h-[5px] w-[125px] rounded-[2px] transition-colors duration-300 ease-in-out ${
+            className={`h-[2px] md:h-[5px] w-[47px] rounded-[2px] transition-colors duration-300 ease-in-out md:w-[125px] ${
               currentIndex === index ? "bg-[#012060]" : "bg-[#D9D9D9]"
             }`}
           />
