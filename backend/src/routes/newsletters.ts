@@ -10,6 +10,12 @@ router.get("/", NewsletterController.getNewsletters);
 
 router.get("/:id", Validators.getNewsletterById, NewsletterController.getNewsletterById);
 
+router.patch(
+  "/:id/views",
+  Validators.incrementNewsletterViews,
+  NewsletterController.incrementNewsletterViews,
+);
+
 router.post(
   "/",
   verifyAuthToken,

@@ -61,3 +61,12 @@ export async function getNewsletterById(id: string): Promise<Newsletter | null> 
   }
   return (await res.json()) as Newsletter;
 }
+
+export async function incrementNewsletterViews(id: string): Promise<Newsletter> {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const res = await fetch(`${backendUrl}/api/newsletters/${encodeURIComponent(id)}/views`, {
+    method: "PATCH",
+  });
+  if (!res.ok) throw new Error("Failed to increment views");
+  return (await res.json()) as Newsletter;
+}
