@@ -6,6 +6,7 @@ export type Newsletter = {
   blurb: string;
   authorName: string;
   pdfUrl: string;
+  imageUrl?: string;
   featured: boolean;
 };
 

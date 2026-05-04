@@ -21,7 +21,7 @@ export function NewsletterItem({ newsletter }: Props) {
     >
       <div className="relative w-full aspect-[415/302] overflow-hidden">
         <Image
-          src="/imgs/components_placeholder.png"
+          src={newsletter.imageUrl || "/imgs/components_placeholder.png"}
           alt={newsletter.title}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"

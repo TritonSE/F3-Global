@@ -57,7 +57,7 @@ export function NewsletterDescription({ newsletter }: Props) {
       </div>
       <div className="relative w-full lg:w-[646px] aspect-[646/581] lg:shrink-0">
         <Image
-          src="/imgs/components_placeholder.png"
+          src={newsletter.imageUrl || "/imgs/components_placeholder.png"}
           alt={newsletter.title}
           fill
           className="object-cover"
