@@ -43,8 +43,8 @@ export const footerContact = {
   phone: "949.668.3568",
   email: "info@f3-global.org",
   addressHref: "https://maps.app.goo.gl/M1onQnhbgSESpYtU6",
-  addressLines: ["8 The Green STE", "A Dover, DE 19901"],
+  addressLines: ["8 The Green STE A", "Dover, DE 19901"],
 } as const;
 
 export const footerCopyright =
-  "©2025 F3Global. All rights reserved. F3 Global is a 501(c)(3) non-profit organization.";
+  "©2025 F3Global. All rights reserved.\nF3 Global is a 501(c)(3) non-profit organization.";

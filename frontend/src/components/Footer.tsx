@@ -2,8 +2,8 @@
 
 import { usePathname, useRouter } from "next/navigation";
 
-import { FooterDesktop } from "./FooterDesktop";
-import { FooterMobile } from "./FooterMobile";
+import { FooterDesktop } from "./footer/FooterDesktop";
+import { FooterMobile } from "./footer/FooterMobile";
 
 export const Footer = function Footer() {
   const router = useRouter();

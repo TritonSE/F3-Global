@@ -15,7 +15,7 @@ export const FooterMiniBtn = React.forwardRef<HTMLButtonElement, FooterMiniBtnPr
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       onClick?.(event);
 
-      if (event.defaultPrevented || onClick) return;
+      if (event.defaultPrevented) return;
 
       if (!link) return;
 
@@ -32,9 +32,9 @@ export const FooterMiniBtn = React.forwardRef<HTMLButtonElement, FooterMiniBtnPr
         ref={ref}
         onClick={handleClick}
         {...props}
-        className={`cursor-pointer hover:text-[#1169B0] ${className ?? ""}`.trim()}
+        className={`cursor-pointer transition-colors duration-150 text-[#172447] md:hover:text-[#1169B0] active:text-[#1169B0] focus-visible:text-[#1169B0] ${className ?? ""}`.trim()}
       >
-        <p>{text}</p>
+        <p className="text-current">{text}</p>
       </button>
     );
   },
