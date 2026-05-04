@@ -192,7 +192,6 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
 
                   {/* Card buttons */}
                   <div className="flex flex-wrap gap-[15px]">
-                    
                     <Button
                       text={card.leftButtonText}
                       onClick_link={card.leftButtonLink}
