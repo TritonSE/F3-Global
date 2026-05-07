@@ -312,7 +312,7 @@ export default function NewsletterDetailPage() {
 
       {/* Hero Image */}
       <div className="px-[30px] md:px-[200px] pb-[50px] md:pb-[32px]">
-        <div className="relative w-[342px] md:w-[1112px] h-[158px] md:h-[464px] bg-gray-200 rounded-[10px] md:rounded-lg overflow-hidden">
+        <div className="relative w-full md:w-[1112px] h-[158px] md:h-[464px] bg-gray-200 rounded-[10px] md:rounded-lg overflow-hidden">
           <Image
             src={newsletter.imageUrl || "/imgs/newsletter-placeholder.png"}
             alt={newsletter.title}
@@ -324,7 +324,7 @@ export default function NewsletterDetailPage() {
 
       {/* Article Body */}
       <div className="px-[30px] md:px-[200px] pb-[50px] md:pb-[32px]">
-        <div className="max-w-[1120px]">
+        <div className="w-full md:max-w-[1120px]">
           <div className="mb-[20px] md:mb-8 max-w-4xl">
             <h3 className="font-dm-sans font-[700] text-[18px] md:text-[28px] leading-[1.5] md:leading-[42px] tracking-[-0.36px] md:tracking-[-0.56px] text-[#1E1E1E] mb-[20px] md:mb-4">
               {newsletter.authorName}
@@ -360,7 +360,7 @@ export default function NewsletterDetailPage() {
                 onClick={() => router.push(`/newsletters/${article._id}`)}
                 className="group cursor-pointer text-left transition-transform hover:scale-105"
               >
-                <div className="relative w-[342px] md:w-full h-[249px] md:h-48 bg-gray-300 rounded-lg overflow-hidden mb-[20px] md:mb-4">
+                <div className="relative w-full h-[249px] md:h-48 bg-gray-300 rounded-lg overflow-hidden mb-[20px] md:mb-4">
                   <Image
                     src={article.imageUrl || "/imgs/newsletter-placeholder.png"}
                     alt={article.title}
@@ -368,7 +368,7 @@ export default function NewsletterDetailPage() {
                     className="object-cover"
                   />
                 </div>
-                <div className="flex items-center w-[342px] md:w-auto justify-between text-[12px] font-normal md:font-medium text-[#5D5D5D] mb-[10px] md:mb-2">
+                <div className="flex items-center w-full md:w-auto justify-between text-[12px] font-normal md:font-medium text-[#5D5D5D] mb-[10px] md:mb-2">
                   <div className="flex items-center gap-2">
                     <span>
                       {new Date(article.uploadDate).toLocaleDateString("en-US", {
