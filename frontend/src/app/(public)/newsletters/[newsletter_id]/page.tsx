@@ -163,11 +163,29 @@ export default function NewsletterDetailPage() {
           onClick={() => router.push("/newsletters")}
           className="group flex cursor-pointer items-center gap-[10px] text-[#1E1E1E] transition-colors"
         >
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="hidden md:block w-6 h-6"
+          >
             <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
           </svg>
-          <span className="text-sm font-medium transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-[6px]">
-            BACK
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            className="md:hidden"
+          >
+            <path
+              d="M10.7314 20.3313C10.4314 20.6313 10.0245 20.7998 9.6002 20.7998C9.17593 20.7998 8.76904 20.6313 8.469 20.3313L1.269 13.1313C0.969043 12.8313 0.800538 12.4244 0.800538 12.0001C0.800538 11.5759 0.969043 11.169 1.269 10.8689L8.469 3.66895C8.77076 3.3775 9.17492 3.21623 9.59444 3.21987C10.014 3.22352 10.4153 3.39179 10.7119 3.68844C11.0086 3.98509 11.1768 4.38639 11.1805 4.80591C11.1841 5.22542 11.0228 5.62958 10.7314 5.93135L6.4002 10.4001L21.6002 10.4001C22.0245 10.4001 22.4315 10.5687 22.7316 10.8688C23.0316 11.1688 23.2002 11.5758 23.2002 12.0001C23.2002 12.4245 23.0316 12.8315 22.7316 13.1315C22.4315 13.4316 22.0245 13.6001 21.6002 13.6001L6.4002 13.6001L10.7314 18.0689C11.0313 18.369 11.1999 18.7759 11.1999 19.2001C11.1999 19.6244 11.0313 20.0313 10.7314 20.3313Z"
+              fill="#1E1E1E"
+            />
+          </svg>
+          <span className="text-sm font-medium transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-[6px] md:uppercase">
+            Back
           </span>
         </button>
       </div>
@@ -179,7 +197,7 @@ export default function NewsletterDetailPage() {
 
           <h1
             style={{ fontFamily: '"Ethic New", sans-serif' }}
-            className="font-[300] text-[36px] md:text-[64px] leading-[1.1] md:leading-[150%] text-[#172447]"
+            className="font-[300] text-[36px] md:text-[64px] leading-[1.1] md:leading-[150%] text-[#1E1E1E] md:text-[#172447]"
           >
             {newsletter.title}
           </h1>
