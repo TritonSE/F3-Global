@@ -108,7 +108,7 @@ export const ContactUs: React.FC = () => {
 
   return (
     <>
-      <div className="flex w-full flex-col items-center gap-[10px] px-[30px] py-[50px] md:px-0">
+      <div className="relative flex w-full py-[50px] flex-col items-center gap-[10px]">
         <div
           className="relative flex w-full max-w-[1312px] flex-col items-end gap-[20px] rounded-[10px] bg-white px-[30px] py-[30px] md:px-[100px] md:py-[40px]"
           style={{
@@ -280,22 +280,23 @@ export const ContactUs: React.FC = () => {
         </div>
         {showConfirm && (
           <div
-            className={`absolute inset-0 top-250 z-50 flex items-center justify-center transition-opacity duration-450 ${fadeOut ? "opacity-0" : "opacity-100"}`}
+            className={`absolute inset-0 z-50 flex items-center justify-center transition-opacity duration-450 ${fadeOut ? "opacity-0" : "opacity-100"}`}
           >
             <div
-              className="flex flex-col items-center justify-center gap-[20px] rounded-[16px] border border-[#F4F4F4] bg-white px-[32px] py-[40px] md:px-[100px] md:py-[50px]"
-              style={{ boxShadow: "0 4px 20px 0 rgba(0,0,0,0.10" }}
+              className="flex flex-col justify-center items-center gap-[10px] md:gap-[20px] py-[30px] md:py-[50px] px-[30px] md:px-[100px] bg-white rounded-[16px] border border-[#F4F4F4]"
+              style={{ boxShadow: "0 4px 10px 0 rgba(0,0,0,0.10)" }}
             >
               <Image
                 src="/imgs/confirmation_check_icon.svg"
                 alt="Confirmation Check Icon"
                 width={118}
                 height={118}
+                className="size-[60px] md:size-[118px]"
               />
-              <h3 className="font-dm-sans text-[48px] text-[#1E1E1E] font-normal font-xl font-bold mb-2 leading-[-1px]">
+              <h3 className="font-dm-sans text-center text-[24px] md:text-[48px] text-[#1E1E1E] font-medium leading-[1.5] tracking-[-0.48px] md:tracking-[-0.96px]">
                 Thank You!
               </h3>
-              <p className="font-dm-sans text-[20px] text-[#5D5D5D] font-normal leading-[32px]">
+              <p className="w-[202px] md:w-auto text-center font-dm-sans text-[14px] md:text-[20px] text-[#5D5D5D] font-normal leading-[20px] md:leading-[32px] md:whitespace-nowrap">
                 We’ve received your message and will be in touch soon.
               </p>
             </div>
