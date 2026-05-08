@@ -50,7 +50,7 @@ export function HighlightCard({
       aria-pressed={isActive}
     >
       <div
-        className={`relative w-full overflow-hidden ${
+        className={`relative w-full overflow-hidden bg-[#e8e8e8] ${
           isActive
             ? "h-[152px] md:h-[256px] rounded-t-[10px] md:rounded-t-[16px]"
             : "h-[114px] md:h-[176px] rounded-t-[7px] md:rounded-t-[11px]"
@@ -60,7 +60,7 @@ export function HighlightCard({
           src={highlight.imageUrl}
           alt={highlight.quoteText}
           fill
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "contain" }}
         />
         <div
           className={`pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(56,88,173,0)_52.539%,#172447_107.81%)]`}
