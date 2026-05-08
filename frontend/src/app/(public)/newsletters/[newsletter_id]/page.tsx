@@ -414,7 +414,7 @@ export default function NewsletterDetailPage() {
               type="button"
               aria-label="Close dialog"
               onClick={closeLeaveModal}
-              className="absolute right-6 top-6 text-[#1E1E1E] transition-colors hover:text-[#012060]"
+              className="absolute right-[20px] md:right-6 top-[22px] md:top-6 text-[#1E1E1E] transition-colors hover:text-[#012060]"
             >
               <svg aria-hidden="true" className="h-6 w-6" viewBox="0 0 24 24" fill="none">
                 <path
