@@ -9,13 +9,15 @@ export const ServicesSection = () => {
   const [activeID, setActiveID] = useState("Microloans");
 
   return (
-    <section className="w-full py-[50px] px-[100px] bg-white">
-      <h2 className="text-[#172447] font-dm-sans text-5xl font-medium tracking-[-0.96px] leading-[1.5] m-0 mb-[80px]">
+    <section className="w-full bg-white px-[30px] py-[50px] md:px-[100px]">
+      <h2 className="m-0 mb-[20px] font-dm-sans text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#172447] md:mb-[80px] md:text-5xl md:tracking-[-0.96px]">
         Services We Offer
       </h2>
-      <div className="flex flex-col gap-10 max-w-[1400px] mx-auto">
-        <div className="flex justify-between items-start gap-[50px]">
-          <ImageDeck activeID={activeID} />
+      <div className="mx-auto flex max-w-[1400px] flex-col gap-10">
+        <div className="flex items-start justify-between gap-[50px]">
+          <div className="hidden md:block">
+            <ImageDeck activeID={activeID} />
+          </div>
           <ServiceAccordian activeID={activeID} onServiceChange={(id) => setActiveID(id)} />
         </div>
       </div>

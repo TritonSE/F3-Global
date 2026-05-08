@@ -1,7 +1,10 @@
 import { validationResult } from "express-validator";
 
 import NewsletterModel from "../models/newsletters";
-import { deletePdfFromFirebaseStorage } from "../utils/firebaseStorage";
+import {
+  deleteImageFromFirebaseStorage,
+  deletePdfFromFirebaseStorage,
+} from "../utils/firebaseStorage";
 import validationErrorParser from "../utils/validationErrorParser";
 
 import type { RequestHandler } from "express";
@@ -13,20 +16,45 @@ type NewsletterPayload = {
   blurb: string;
   authorName: string;
   pdfUrl: string;
+  imageUrl: string;
+  featured?: boolean;
 };
 
-export const getAllNewsletters: RequestHandler = async (req, res, next) => {
+const SORT_OPTIONS: Record<string, Record<string, 1 | -1>> = {
+  newest: { uploadDate: -1 },
+  oldest: { uploadDate: 1 },
+  mostViewed: { views: -1 },
+  leastViewed: { views: 1 },
+};
+
+const escapeRegex = (input: string): string => input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+export const getNewsletters: RequestHandler = async (req, res, next) => {
   try {
     const errors = validationResult(req);
     validationErrorParser(errors);
 
-    // Pagination parameters - default to page 1 and limit 10 if not provided, ideally in the frontend we should have different pages
     const page = Math.max(1, Number.parseInt(req.query.page as string) || 1);
     const limit = Math.max(1, Number.parseInt(req.query.limit as string) || 10);
     const skip = (page - 1) * limit;
 
-    const data = await NewsletterModel.find().skip(skip).limit(limit);
-    const total = await NewsletterModel.countDocuments();
+    const search = (req.query.search as string | undefined)?.trim();
+    const featuredOnly = req.query.featured === "true";
+
+    const filter: Record<string, unknown> = {};
+    if (search) filter.title = { $regex: escapeRegex(search), $options: "i" };
+    if (featuredOnly) filter.featured = true;
+
+    const sortKey = (req.query.sortBy as string | undefined) ?? "newest";
+    const sort = SORT_OPTIONS[sortKey] ?? SORT_OPTIONS.newest;
+
+    const data = (await NewsletterModel.find(filter).sort(sort).skip(skip).limit(limit)).map(
+      (doc) => ({
+        ...doc.toObject(),
+        imageUrl: doc.imageUrl ?? "",
+      }),
+    );
+    const total = await NewsletterModel.countDocuments(filter);
 
     res.status(200).json({
       data,
@@ -42,6 +70,21 @@ export const getAllNewsletters: RequestHandler = async (req, res, next) => {
   }
 };
 
+export const getNewsletterById: RequestHandler<{ id: string }> = async (req, res, next) => {
+  try {
+    const errors = validationResult(req);
+    validationErrorParser(errors);
+
+    const doc = await NewsletterModel.findById(req.params.id);
+    if (!doc) {
+      return res.status(404).json({ message: "Newsletter not found" });
+    }
+    res.status(200).json(doc);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const createNewsletter: RequestHandler<
   Record<string, any>,
   unknown,
@@ -51,7 +94,7 @@ export const createNewsletter: RequestHandler<
     const errors = validationResult(req);
     validationErrorParser(errors);
 
-    const { title, uploadDate, views, blurb, authorName, pdfUrl } = req.body;
+    const { title, uploadDate, views, blurb, authorName, pdfUrl, imageUrl, featured } = req.body;
     const doc = await NewsletterModel.create({
       title,
       uploadDate,
@@ -59,6 +102,8 @@ export const createNewsletter: RequestHandler<
       blurb,
       authorName,
       pdfUrl,
+      imageUrl,
+      featured,
     });
     res.status(201).json(doc);
   } catch (error) {
@@ -86,6 +131,14 @@ export const updateNewsletter: RequestHandler<
       await deletePdfFromFirebaseStorage(existingDoc.pdfUrl);
     }
 
+    if (
+      updateData.imageUrl &&
+      existingDoc.imageUrl &&
+      updateData.imageUrl !== existingDoc.imageUrl
+    ) {
+      await deleteImageFromFirebaseStorage(existingDoc.imageUrl);
+    }
+
     const doc = await NewsletterModel.findByIdAndUpdate(id, updateData, { new: true });
     if (!doc) {
       return res.status(404).json({ message: "Newsletter not found" });
@@ -107,7 +160,28 @@ export const deleteNewsletter: RequestHandler<{ id: string }> = async (req, res,
       return res.status(404).json({ message: "Newsletter not found" });
     }
     await deletePdfFromFirebaseStorage(doc.pdfUrl);
+    if (doc.imageUrl) {
+      await deleteImageFromFirebaseStorage(doc.imageUrl);
+    }
     res.status(200).json({ message: "Newsletter deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const incrementNewsletterViews: RequestHandler<{ id: string }> = async (req, res, next) => {
+  try {
+    const errors = validationResult(req);
+    validationErrorParser(errors);
+
+    const { id } = req.params;
+    const doc = await NewsletterModel.findByIdAndUpdate(id, { $inc: { views: 1 } }, { new: true });
+
+    if (!doc) {
+      return res.status(404).json({ message: "Newsletter not found" });
+    }
+
+    res.status(200).json(doc);
   } catch (error) {
     next(error);
   }

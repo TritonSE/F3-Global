@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { AffiliateCarousel } from "@/components/AffiliateCarousel";
 import { Button } from "@/components/button";
 import { ClientCarousel } from "@/components/ClientCarousel";
 import { Highlights } from "@/components/Highlights";
@@ -75,7 +76,7 @@ export default function About() {
       <UpdatedTimeline />
       <ClientCarousel />
       <Highlights />
-      {/* alumni carousel */}
+      <AffiliateCarousel />
     </div>
   );
 }
