@@ -108,7 +108,7 @@ export const ContactUs: React.FC = () => {
 
   return (
     <>
-      <div className="flex w-full py-[50px] flex-col items-center gap-[10px]">
+      <div className="relative flex w-full py-[50px] flex-col items-center gap-[10px]">
         <div
           className="relative flex flex-col items-end gap-[20px] w-[1312px] px-[100px] py-[40px] rounded-[10px] bg-white"
           style={{
@@ -266,11 +266,11 @@ export const ContactUs: React.FC = () => {
         </div>
         {showConfirm && (
           <div
-            className={`absolute inset-0 z-50 top-250 flex items-center justify-center transition-opacity duration-450 ${fadeOut ? "opacity-0" : "opacity-100"}`}
+            className={`absolute inset-0 z-50 flex items-center justify-center transition-opacity duration-450 ${fadeOut ? "opacity-0" : "opacity-100"}`}
           >
             <div
               className="flex flex-col justify-center items-center gap-[20px] py-[50px] px-[100px] bg-white rounded-[16px] border border-[#F4F4F4]"
-              style={{ boxShadow: "0 4px 20px 0 rgba(0,0,0,0.10" }}
+              style={{ boxShadow: "0 4px 20px 0 rgba(0,0,0,0.10)" }}
             >
               <Image
                 src="/imgs/confirmation_check_icon.svg"
