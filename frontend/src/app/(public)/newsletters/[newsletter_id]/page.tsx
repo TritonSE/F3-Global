@@ -184,7 +184,7 @@ export default function NewsletterDetailPage() {
               fill="#1E1E1E"
             />
           </svg>
-          <span className="text-sm font-medium transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-[6px] md:uppercase">
+          <span className="text-[16px] md:text-sm font-medium transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-[6px] md:uppercase">
             Back
           </span>
         </button>
