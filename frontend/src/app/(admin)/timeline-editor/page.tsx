@@ -7,6 +7,8 @@ import type { StorageReference } from "firebase/storage";
 
 import { getTimelines, type TimelineItem, updateTimeline } from "@/api/timeline";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
+import { RevertButton } from "@/components/admin-portal/RevertButton";
+import { PublishButton } from "@/components/admin-portal/PublishButton";
 import { TimelineCard } from "@/components/admin-portal/TimelineCard";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { auth } from "@/firebase/firebase";
@@ -123,26 +125,14 @@ export default function TimelineEditorPage() {
       </div>
 
       <div className="flex gap-[25px] items-center justify-end px-[100px] pb-[50px]">
-        <button
-          type="button"
+        <RevertButton
           onClick={() => setShowRevertDialog(true)}
           disabled={!hasChanges || isPublishing}
-          className={`bg-[#F4F4F4] border border-[#C7C7C7] flex items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans text-[16px] transition-colors ${
-            hasChanges && !isPublishing
-              ? "text-[#1E1E1E] cursor-pointer hover:bg-[#ECECEC]"
-              : "text-[#C7C7C7] cursor-not-allowed"
-          }`}
-        >
-          Revert Changes
-        </button>
-        <button
-          type="button"
-          onClick={() => void handlePublish()}
-          disabled={isPublishing}
-          className="bg-[#3bb966] flex gap-[10px] items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans font-semibold text-[16px] text-white cursor-pointer hover:bg-[#309854] transition-colors"
-        >
-          PUBLISH
-        </button>
+        />
+        <PublishButton
+          handleClick={() => void handlePublish()}
+          disabled={!hasChanges || isPublishing}
+        />
       </div>
 
       <ConfirmationDialog

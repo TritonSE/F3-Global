@@ -24,6 +24,8 @@ import type { StorageReference } from "firebase/storage";
 import { AddCardDialog } from "@/components/admin-portal/AddCardDialog";
 import { DraggableCollegeCard } from "@/components/admin-portal/DraggableSortableCard";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
+import { RevertButton } from "@/components/admin-portal/RevertButton";
+import { PublishButton } from "@/components/admin-portal/PublishButton";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { auth } from "@/firebase/firebase";
 import { deleteFromStorageUrl, rollbackUploads, uploadToStorage } from "@/utils/firebaseStorage";
@@ -231,51 +233,14 @@ export function LogoEditorPage({
         </DndContext>
 
         <div className="flex gap-[25px] items-center justify-end mt-[50px]">
-          <button
-            type="button"
+          <RevertButton
             onClick={() => setShowRevertDialog(true)}
             disabled={!hasChanges || isPublishing}
-            className={`bg-[#F4F4F4] border border-[#C7C7C7] flex items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans text-[16px] transition-colors ${
-              hasChanges && !isPublishing
-                ? "text-[#1E1E1E] cursor-pointer hover:bg-[#ECECEC]"
-                : "text-[#C7C7C7] cursor-not-allowed"
-            }`}
-          >
-            Revert Changes
-          </button>
-          <button
-            type="button"
-            onClick={() => void handlePublish()}
-            disabled={isPublishing}
-            className="bg-[#3bb966] flex gap-[10px] items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans font-semibold text-[16px] text-white cursor-pointer hover:bg-[#309854] transition-colors"
-          >
-            PUBLISH
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <mask
-                id="mask0_2696_2016"
-                style={{ maskType: "alpha" }}
-                maskUnits="userSpaceOnUse"
-                x="0"
-                y="0"
-                width="24"
-                height="24"
-              >
-                <rect width="24" height="24" fill="#D9D9D9" />
-              </mask>
-              <g mask="url(#mask0_2696_2016)">
-                <path
-                  d="M11 20V11.85L8.4 14.45L7 13L12 8L17 13L15.6 14.45L13 11.85V20H11ZM4 9V6C4 5.45 4.19583 4.97917 4.5875 4.5875C4.97917 4.19583 5.45 4 6 4H18C18.55 4 19.0208 4.19583 19.4125 4.5875C19.8042 4.97917 20 5.45 20 6V9H18V6H6V9H4Z"
-                  fill="white"
-                />
-              </g>
-            </svg>
-          </button>
+          />
+          <PublishButton
+            handleClick={() => void handlePublish()}
+            disabled={!hasChanges || isPublishing}
+          />
         </div>
       </div>
 
