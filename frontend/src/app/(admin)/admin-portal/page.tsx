@@ -72,7 +72,7 @@ export default function AdminPortal() {
       name: "Affiliation Logos",
       description: "Replace affiliation logos, reorder by dragging, or add/remove logos.",
       tags: ["About Us"],
-      href: "/affiliation-logos-editor",
+      href: "/affiliates-logos-editor",
     },
   ];
 
