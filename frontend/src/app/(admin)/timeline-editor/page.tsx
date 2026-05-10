@@ -7,10 +7,10 @@ import type { StorageReference } from "firebase/storage";
 
 import { getTimelines, type TimelineItem, updateTimeline } from "@/api/timeline";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
+import { PublishButton } from "@/components/admin-portal/PublishButton";
+import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { TimelineCard } from "@/components/admin-portal/TimelineCard";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
-import { RevertButton } from "@/components/admin-portal/RevertButton";
-import { PublishButton } from "@/components/admin-portal/PublishButton";
 import { auth } from "@/firebase/firebase";
 import { deleteFromStorageUrl, rollbackUploads, uploadToStorage } from "@/utils/firebaseStorage";
 
@@ -129,7 +129,10 @@ export default function TimelineEditorPage() {
           onClick={() => setShowRevertDialog(true)}
           disabled={!hasChanges || isPublishing}
         />
-        <PublishButton handleClick={() => void handlePublish()} disabled={isPublishing} />
+        <PublishButton
+          handleClick={() => void handlePublish()}
+          disabled={!hasChanges || isPublishing}
+        />
       </div>
 
       <ConfirmationDialog

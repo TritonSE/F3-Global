@@ -26,9 +26,9 @@ import { getAllClients, updateClients } from "@/api/client";
 import { AddCardDialog } from "@/components/admin-portal/AddCardDialog";
 import { DraggableCollegeCard } from "@/components/admin-portal/DraggableSortableCard";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
-import { ConfirmationDialog } from "@/components/ConfirmationDialog";
-import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { PublishButton } from "@/components/admin-portal/PublishButton";
+import { RevertButton } from "@/components/admin-portal/RevertButton";
+import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { auth } from "@/firebase/firebase";
 import { deleteFromStorageUrl, rollbackUploads, uploadToStorage } from "@/utils/firebaseStorage";
 
@@ -228,7 +228,10 @@ export default function ClientLogosEditorPage() {
             onClick={() => setShowRevertDialog(true)}
             disabled={!hasChanges || isPublishing}
           />
-          <PublishButton handleClick={() => void handlePublish()} disabled={isPublishing} />
+          <PublishButton
+            handleClick={() => void handlePublish()}
+            disabled={!hasChanges || isPublishing}
+          />
         </div>
       </div>
 

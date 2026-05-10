@@ -9,7 +9,7 @@ export function PublishButton({ handleClick, disabled }: PublishButtonProps) {
       type="button"
       onClick={handleClick}
       disabled={disabled}
-      className="bg-[#3bb966] flex gap-[10px] items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans font-semibold text-[16px] text-white cursor-pointer hover:bg-[#309854] transition-colors"
+      className="bg-[#3bb966] flex gap-[10px] items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans font-semibold text-[16px] text-white cursor-pointer hover:bg-[#309854] transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
     >
       PUBLISH
       <svg

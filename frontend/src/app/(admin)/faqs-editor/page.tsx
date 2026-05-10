@@ -25,9 +25,9 @@ import { ConfirmationNotification } from "@/components/admin-portal/Confirmation
 import { DraggableSortablePill } from "@/components/admin-portal/DraggableSortablePill";
 import { FaqCard } from "@/components/admin-portal/FaqCard";
 import { PreviewMode } from "@/components/admin-portal/PreviewMode";
-import { ConfirmationDialog } from "@/components/ConfirmationDialog";
-import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { PublishButton } from "@/components/admin-portal/PublishButton";
+import { RevertButton } from "@/components/admin-portal/RevertButton";
+import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { auth } from "@/firebase/firebase";
 
 const PAGE_OPTIONS: { key: FaqPage; label: string }[] = [
@@ -252,7 +252,10 @@ export default function FaqsEditor() {
   }
 
   const publishButton = (
-    <PublishButton handleClick={() => void handlePublish()} disabled={isPublishing} />
+    <PublishButton
+      handleClick={() => void handlePublish()}
+      disabled={!hasChanges || isPublishing}
+    />
   );
 
   const notificationMessage =

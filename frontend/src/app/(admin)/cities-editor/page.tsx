@@ -22,9 +22,9 @@ import { useEffect, useState } from "react";
 import { getAllCities, updateCities } from "@/api/cities";
 import { DraggableSortablePill } from "@/components/admin-portal/DraggableSortablePill";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
-import { ConfirmationDialog } from "@/components/ConfirmationDialog";
-import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { PublishButton } from "@/components/admin-portal/PublishButton";
+import { RevertButton } from "@/components/admin-portal/RevertButton";
+import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { auth } from "@/firebase/firebase";
 
 type CityItem = { id: string; name: string };
@@ -185,7 +185,10 @@ export default function CitiesEditor() {
               onClick={() => setShowRevertDialog(true)}
               disabled={!hasChanges || isPublishing}
             />
-            <PublishButton handleClick={() => void handlePublish()} disabled={isPublishing} />
+            <PublishButton
+              handleClick={() => void handlePublish()}
+              disabled={!hasChanges || isPublishing}
+            />
           </div>
         </div>
       </div>

@@ -7,9 +7,9 @@ import { useEffect, useState } from "react";
 import type { ImpactMetric } from "@/api/impactMetric";
 
 import { getImpactMetric, updateImpactMetric } from "@/api/impactMetric";
-import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { PublishButton } from "@/components/admin-portal/PublishButton";
 import { RevertButton } from "@/components/admin-portal/RevertButton";
+import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { auth } from "@/firebase/firebase";
 
 const MONTH_ABBREVS = [
@@ -247,7 +247,10 @@ export default function ImpactMetricsEditor() {
               onClick={() => setShowRevertDialog(true)}
               disabled={!hasChanges || isPublishing}
             />
-            <PublishButton handleClick={() => void handlePublish()} disabled={isPublishing} />
+            <PublishButton
+              handleClick={() => void handlePublish()}
+              disabled={!hasChanges || isPublishing}
+            />
           </div>
         </div>
       </div>
