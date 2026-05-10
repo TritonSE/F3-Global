@@ -19,7 +19,9 @@ const ClientsStory: React.FC<ClientStoryProps> = ({ image, description, onShowMo
         <Image src={image} alt="Client highlight" fill className="object-cover rounded-[10px]" />
       </div>
       <div className="flex-1 flex flex-col items-start text-left">
-        <p className="text-gray-700 leading-relaxed mb-6 line-clamp-3 sm:line-clamp-4 lg:line-clamp-none">{description}</p>
+        <p className="text-gray-700 leading-relaxed mb-6 line-clamp-3 sm:line-clamp-4 lg:line-clamp-none">
+          {description}
+        </p>
         <button className="text-lg font-semibold text-gray-900 bg-transparent border-none p-0 cursor-pointer hover:text-gray-600 transition-colors duration-200">
           Show More
         </button>
