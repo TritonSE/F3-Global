@@ -21,7 +21,7 @@ const Background = ({ children, style }: BackgroundProps) => {
       if (!step5Title) return;
 
       const step5Rect = step5Title.getBoundingClientRect();
-      const titleOffset = 200;
+      const titleOffset = 320;
 
       if (step5Rect.top <= titleOffset && !isLocked) {
         const containerRect = containerRef.current!.getBoundingClientRect();
@@ -57,20 +57,20 @@ const Background = ({ children, style }: BackgroundProps) => {
       <div
         style={{
           position: isLocked ? "absolute" : "sticky",
-          top: isLocked ? lockedTop : 0,
+          top: isLocked ? lockedTop : 200,
           height: isLocked ? "auto" : "0",
           zIndex: 10,
         }}
       >
         <div
           ref={titleRef}
-          className="pointer-events-none select-none flex text-white text-center font-['DM_Sans'] text-[48px] font-medium leading-[150%] tracking-[-0.96px] pt-[200px] pl-[100px]"
+          className="pointer-events-none select-none text-left text-white font-['DM_Sans'] text-[48px] font-medium leading-[150%] tracking-[-0.96px] pt-[200px] pl-[100px] whitespace-normal"
+          style={{ maxWidth: "clamp(300px, 30vw, 520px)" }}
         >
           <span>How You Can Help</span>
         </div>
       </div>
 
-      {/* Content */}
       <div className="relative z-20">{children}</div>
     </div>
   );

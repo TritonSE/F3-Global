@@ -41,26 +41,32 @@ const parallaxSections = [
 ];
 
 export default function Parallax() {
-  const totalHeight = `${parallaxSections.length * 100}vh`;
-
   return (
-    <Background style={{ minHeight: totalHeight }}>
-      {parallaxSections.map((section) => (
-        <div
-          key={section.number}
-          id={`step-${section.number}`}
-          className="h-screen flex items-center"
-        >
-          <div className="box-border pr-[17.85%] pl-[43.32%] w-full">
-            <h1 className="text-white font-['Ethic_New'] text-[64px] font-light leading-[110%] pb-[10px]">
-              {section.number}. {section.title1} <i>{section.title2}</i>
-            </h1>
-            <p className="text-white font-['DM_Sans'] text-[24px] font-medium leading-[150%] tracking-[-0.48px]">
-              {section.content}
-            </p>
+    <Background>
+      <div className="mx-auto grid w-full max-w-[1600px] grid-cols-[clamp(240px,22vw,520px)_minmax(0,1fr)] gap-x-[160px] px-6 sm:px-10 lg:px-[100px]">
+        <div className="self-start pt-[200px]" aria-hidden="true" />
+
+        <div className="min-w-0 pt-[367px] pb-[127px]">
+          <div className="flex flex-col gap-[500px]">
+            {parallaxSections.map((section) => (
+              <section
+                key={section.number}
+                id={`step-${section.number}`}
+                className="flex items-center"
+              >
+                <div className="w-full min-w-0 max-w-[780px]">
+                  <h1 className="text-white font-['Ethic_New'] text-[64px] font-light leading-[110%] pb-[10px] break-words">
+                    {section.number}. {section.title1} <i>{section.title2}</i>
+                  </h1>
+                  <p className="text-white font-['DM_Sans'] text-[24px] font-medium leading-[150%] tracking-[-0.48px] break-words">
+                    {section.content}
+                  </p>
+                </div>
+              </section>
+            ))}
           </div>
         </div>
-      ))}
+      </div>
     </Background>
   );
 }
