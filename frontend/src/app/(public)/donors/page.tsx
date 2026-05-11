@@ -69,7 +69,7 @@ export default function Donors() {
       <ImpactSection title="Our Impact" />
       <FaqAccordion items={faqItems} />
       {/* "Start Creating Impact Now" Section */}
-      <div className="w-full h-[767px] flex">
+      <div className="relative w-full h-[767px] flex">
         <div className="w-full h-[767px] flex overflow-hidden bg-[#172447] justify-end">
           <div
             className="relative h-full"
@@ -94,14 +94,23 @@ export default function Donors() {
           </div>
         </div>
 
-        <div className="absolute flex flex-col px-[100px] py-[75px] mt-[12vh] items-start gap-[40px]">
+        <div
+          className="absolute left-0 top-0 bottom-0 flex w-fit flex-col px-[100px] py-[75px] items-start gap-[40px]"
+          style={{
+            paddingTop: "12vh",
+            backgroundImage:
+              "linear-gradient(to right, #172447 0%, rgba(23, 36, 71, 0.9) 12%, rgba(23, 36, 71, 0) 75%)",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "100% 100%",
+          }}
+        >
           <p
             className="text-white text-[64px] leading-[110%]"
             style={{ fontFamily: '"Ethic New", sans-serif' }}
           >
             Start Creating <br /> Impact <i>Now.</i>
           </p>
-          <p className="w-[530px] text-white text-[20px]">
+          <p className="w-full max-w-[530px] text-white text-[20px]">
             Your $100 can launch a business, create jobs, and transform a family's future. See
             exactly where your donation goes and the lives you're changing.
           </p>
