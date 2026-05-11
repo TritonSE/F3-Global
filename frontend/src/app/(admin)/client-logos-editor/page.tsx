@@ -225,7 +225,7 @@ export default function ClientLogosEditorPage() {
 
         <div className="flex gap-[25px] items-center justify-end mt-[50px]">
           <RevertButton
-            onClick={() => setShowRevertDialog(true)}
+            handleClick={() => setShowRevertDialog(true)}
             disabled={!hasChanges || isPublishing}
           />
           <PublishButton

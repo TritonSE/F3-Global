@@ -182,7 +182,7 @@ export default function CitiesEditor() {
 
           <div className="flex gap-[25px] items-center justify-end">
             <RevertButton
-              onClick={() => setShowRevertDialog(true)}
+              handleClick={() => setShowRevertDialog(true)}
               disabled={!hasChanges || isPublishing}
             />
             <PublishButton

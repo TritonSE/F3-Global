@@ -126,7 +126,7 @@ export default function TimelineEditorPage() {
 
       <div className="flex gap-[25px] items-center justify-end px-[100px] pb-[50px]">
         <RevertButton
-          onClick={() => setShowRevertDialog(true)}
+          handleClick={() => setShowRevertDialog(true)}
           disabled={!hasChanges || isPublishing}
         />
         <PublishButton
