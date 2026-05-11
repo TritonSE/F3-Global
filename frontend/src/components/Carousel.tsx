@@ -205,10 +205,10 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
           handleMobileDragMove(e.clientX, e.clientY);
         }}
         onPointerUp={(e) => {
+          handleMobileDragEnd(e.clientX, e.clientY);
           if (e.currentTarget.hasPointerCapture(e.pointerId)) {
             e.currentTarget.releasePointerCapture(e.pointerId);
           }
-          handleMobileDragEnd(e.clientX, e.clientY);
         }}
         onPointerCancel={resetMobileDrag}
         onLostPointerCapture={resetMobileDrag}
