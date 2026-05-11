@@ -33,15 +33,15 @@ export default function Donors() {
   return (
     <div className="mx-auto flex flex-col justify-center items-center bg-white w-full">
       {/* Donors Hero */}
-      <div className="flex w-full items-center justify-between self-stretch px-[100px] py-[150px] min-h-screen">
-        <div className="flex w-[639px] flex-col items-start gap-[50px]">
+      <div className="flex w-full min-h-[632px] flex-col-reverse items-center gap-[40px] self-stretch px-[30px] pb-[20px] pt-[50px] md:min-h-screen md:flex-row md:justify-between md:gap-0 md:px-[100px] md:py-[150px]">
+        <div className="flex w-full flex-col items-center gap-[20px] md:w-[639px] md:items-start md:gap-[50px]">
           <h1
-            className="text-[#172447] text-[64px] leading-[110%]"
+            className="text-center text-[36px] leading-[110%] text-[#1E1E1E] md:text-left md:text-[64px] md:text-[#172447]"
             style={{ fontFamily: '"Ethic New", sans-serif' }}
           >
             Turn $100 into a <br /> <i>Thriving</i> Business
           </h1>
-          <p className="text-[#5D5D5D] text-[20px] leading-[160%]">
+          <p className="w-[279px] text-center text-[14px] leading-[20px] text-[#5D5D5D] md:w-auto md:text-left md:text-[20px] md:leading-[160%]">
             Your donation gives entrepreneurs the capital they need but can't access through
             traditional banking. Watch as your gift launches businesses, creates jobs, and
             strengthens families across the globe.
@@ -51,12 +51,12 @@ export default function Donors() {
             onClick_link="https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390"
           />
         </div>
-        <div className="relative w-[646px] h-[581px] overflow-hidden rounded-[10px] flex-shrink-0">
+        <div className="relative h-[264px] w-full flex-shrink-0 overflow-hidden rounded-[10px] md:h-[581px] md:w-[646px]">
           <Image
             src="/imgs/donorHero.webp"
             alt="donor hero img"
             fill
-            sizes="646px"
+            sizes="(min-width: 768px) 646px, calc(100vw - 60px)"
             className="object-cover object-center"
           />
         </div>
