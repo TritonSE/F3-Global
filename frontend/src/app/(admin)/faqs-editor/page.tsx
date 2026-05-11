@@ -25,6 +25,8 @@ import { ConfirmationNotification } from "@/components/admin-portal/Confirmation
 import { DraggableSortablePill } from "@/components/admin-portal/DraggableSortablePill";
 import { FaqCard } from "@/components/admin-portal/FaqCard";
 import { PreviewMode } from "@/components/admin-portal/PreviewMode";
+import { PublishButton } from "@/components/admin-portal/PublishButton";
+import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { auth } from "@/firebase/firebase";
 
@@ -250,30 +252,10 @@ export default function FaqsEditor() {
   }
 
   const publishButton = (
-    <button
-      type="button"
-      onClick={() => void handlePublish()}
+    <PublishButton
+      handleClick={() => void handlePublish()}
       disabled={!hasChanges || isPublishing}
-      className="bg-[#3BB966] flex gap-[10px] items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans font-semibold text-[16px] text-white hover:bg-[#309854] transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
-    >
-      PUBLISH
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 20 20"
-        fill="none"
-      >
-        <path
-          d="M9 19.9C7.73333 19.7667 6.55417 19.4208 5.4625 18.8625C4.37083 18.3042 3.42083 17.5792 2.6125 16.6875C1.80417 15.7958 1.16667 14.775 0.7 13.625C0.233333 12.475 0 11.25 0 9.95C0 8.43333 0.304167 7.03333 0.9125 5.75C1.52083 4.46667 2.35 3.36667 3.4 2.45H1V0.45H7V6.45H5V3.725C4.08333 4.45833 3.35417 5.3625 2.8125 6.4375C2.27083 7.5125 2 8.68333 2 9.95C2 12 2.67083 13.7708 4.0125 15.2625C5.35417 16.7542 7.01667 17.625 9 17.875V19.9Z M13 19.45V13.45H15V16.175C15.9167 15.425 16.6458 14.5167 17.1875 13.45C17.7292 12.3833 18 11.2167 18 9.95C18 7.9 17.3292 6.12917 15.9875 4.6375C14.6458 3.14583 12.9833 2.275 11 2.025V0C13.5333 0.25 15.6667 1.31667 17.4 3.2C19.1333 5.08333 20 7.33333 20 9.95C20 11.4667 19.6958 12.8667 19.0875 14.15C18.4792 15.4333 17.65 16.5333 16.6 17.45H19V19.45H13Z"
-          fill="white"
-        />
-        <path
-          d="M8.575 14.55L4.35 10.3L5.75 8.9L8.575 11.725L14.25 6.05L15.65 7.475L8.575 14.55Z"
-          fill="white"
-        />
-      </svg>
-    </button>
+    />
   );
 
   const notificationMessage =
@@ -556,14 +538,10 @@ export default function FaqsEditor() {
           </div>
 
           <div className="flex gap-[10px] items-center justify-end">
-            <button
-              type="button"
-              disabled={!hasChanges}
-              onClick={() => setActiveDialog("revert")}
-              className="bg-[#F4F4F4] border border-[#C7C7C7] px-[20px] py-[10px] rounded-[99px] font-dm-sans font-normal text-[16px] transition-colors disabled:text-[#C7C7C7] disabled:cursor-not-allowed enabled:text-[#1E1E1E] enabled:hover:border-[#5D5D5D] enabled:cursor-pointer"
-            >
-              Revert Changes
-            </button>
+            <RevertButton
+              handleClick={() => setActiveDialog("revert")}
+              disabled={!hasChanges || isPublishing}
+            />
             {publishButton}
           </div>
         </div>
