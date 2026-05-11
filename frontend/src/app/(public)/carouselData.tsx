@@ -71,11 +71,6 @@ export const WaysToGiveCarouselData = [
         Sustain <strong className="text-[#012060]">Growth</strong> with Monthly Support.
       </span>
     ),
-    mobileHeader: (
-      <span>
-        Sustain <strong className="text-[#012060]">Growth,</strong> with Monthly Support.
-      </span>
-    ),
     description:
       "Become a sustained force for change with a monthly gift that creates lasting impact. Just $25 per month funds three microloans per year, while $50 supports six entrepreneurs on their journey to financial independence. Your recurring donation provides predictable funding that allows us to plan confidently and reach more entrepreneurs who need capital now.\n\nAs a monthly donor, you'll receive regular updates showing exactly how your continued support is transforming lives across the globe. Join our community of committed supporters who understand that sustainable change comes from sustained giving. Cancel anytime, but your ongoing impact will be felt for years to come.",
     mobileDescription:
