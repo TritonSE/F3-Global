@@ -1,7 +1,6 @@
 "use client";
 
 import { ConfirmationNotification } from "@/components/admin-portal/ConfirmationNotification";
-import { not } from "firebase/firestore/pipelines";
 
 export function PreviewMode({
   onBack,
