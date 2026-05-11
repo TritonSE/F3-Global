@@ -3,7 +3,7 @@ type HeaderSectionProps = {
   tags: string[];
   description: string;
   onBack: () => void;
-  onPreview: () => void;
+  onPreview?: () => void;
 };
 
 export function HeaderSection({ title, tags, description, onBack, onPreview }: HeaderSectionProps) {

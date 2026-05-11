@@ -39,11 +39,11 @@ export function PreviewMode({
             Back to Edit
           </span>
         </button>
-        {notificationMessage && onDismissNotification && notificationFading && (
+        {notificationMessage && onDismissNotification && (
           <ConfirmationNotification
             message={notificationMessage}
             link={notificationLink}
-            fading={notificationFading}
+            fading={notificationFading ?? false}
             onDismiss={onDismissNotification}
           />
         )}
