@@ -24,12 +24,12 @@ function NavLinks({
 }) {
   return (
     <>
-      <div className="flex w-full max-w-[1512px] mx-auto justify-between items-center px-[30px] pt-[10px] leading-none">
-        <div className="flex items-center gap-[12px] w-[274.5px] h-[55px] flex-shrink-0">
+      <div className="flex w-full max-w-[1512px] mx-auto justify-between items-center px-[30px] py-[20px] lg:px-[30px] lg:pt-[30px] lg:pb-[20px] leading-none gap-[20px] lg:gap-0">
+        <div className="flex items-center lg:w-[274.5px] h-[55px] flex-shrink-0">
           <Link
             href="/"
             onClick={onLogoClick}
-            className="flex items-center gap-[12px] h-[55px] cursor-pointer"
+            className="flex items-center lg:gap-[12px] gap-0 h-[55px] cursor-pointer"
           >
             <div className="flex h-[55px] w-[55px] flex-shrink-0 items-center justify-center">
               <Image
@@ -40,7 +40,7 @@ function NavLinks({
                 className="block w-[55px] h-[55px] object-contain"
               />
             </div>
-            <div className="flex flex-col justify-center h-full">
+            <div className="flex flex-col justify-center items-center h-full hidden lg:inline">
               <span className="text-[#172447] text-[12px] font-[900] leading-[110%] tracking-[2.64px] font-dm">
                 <span className="block">FUTURE</span>
                 <span className="block">FORWARD</span>
@@ -49,11 +49,11 @@ function NavLinks({
             </div>
           </Link>
         </div>
-
-        <div className="flex items-center gap-[5px] px-[10px] py-[15px]">
+        <div className="max-w-[12px]"></div>
+        <div className="flex items-center gap-0 lg:gap-[10px] flex-nowrap">
           <Link
             href="/"
-            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer ${
+            className={`flex px-[10px] py-[8px] lg:px-[15px] lg:py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[16px] lg:text-[20px] font-normal leading-[24px] lg:leading-[32px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer whitespace-nowrap ${
               isActive("/") ? "bg-[#E6E6E6] text-[#172447]" : ""
             }`}
           >
@@ -61,25 +61,27 @@ function NavLinks({
           </Link>
           <Link
             href="/about-us"
-            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer ${
+            className={`flex px-[10px] py-[8px] lg:px-[15px] lg:py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[16px] lg:text-[20px] font-normal leading-[24px] lg:leading-[32px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer whitespace-nowrap ${
               isActive("/about-us") ? "bg-[#E6E6E6] text-[#172447]" : ""
             }`}
           >
-            About Us
+            <span className="lg:hidden">About</span>
+            <span className="hidden lg:inline">About Us</span>
           </Link>
           <Link
             href="/meet-the-team"
-            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer ${
+            className={`flex px-[10px] py-[8px] lg:px-[15px] lg:py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[16px] lg:text-[20px] font-normal leading-[24px] lg:leading-[32px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer whitespace-nowrap ${
               isActive("/meet-the-team") ? "bg-[#E6E6E6] text-[#172447]" : ""
             }`}
           >
-            Meet the Team
+            <span className="lg:hidden">Team</span>
+            <span className="hidden lg:inline">Meet the Team</span>
           </Link>
 
           <button
             ref={buttonRef}
             onClick={onToggleDropdown}
-            className={`get-involved-btn flex items-center gap-[10px] px-[15px] py-[10px] text-[20px] font-[400] text-[#5D5D5D] leading-[32px] tracking-[-0.48px] font-dm rounded-full hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer ${
+            className={`get-involved-btn flex w-auto items-center gap-[5px] px-[10px] py-[8px] lg:px-[15px] lg:py-[10px] text-[16px] lg:text-[20px] font-normal text-[#5D5D5D] leading-[24px] lg:leading-[32px] font-dm rounded-full hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer whitespace-nowrap ${
               isDropdownOpen ||
               isClosing ||
               isActive("/donors") ||
@@ -95,13 +97,14 @@ function NavLinks({
             //       : "#5D5D5D",
             // }}
           >
-            Get Involved
+            <span className="lg:hidden">Involvement</span>
+            <span className="hidden lg:inline">Get Involved</span>
             <Image
               src="/imgs/ic_arrowdown.svg"
               alt="Dropdown Arrow"
-              width={24}
-              height={24}
-              className={`transition-transform duration-300 ease-in-out ${
+              width={16}
+              height={16}
+              className={`transition-transform duration-300 ease-in-out lg:w-[24px] lg:h-[24px] w-[16px] h-[16px] ${
                 isClosing ? "spin-180-right" : isDropdownOpen ? "spin-180-left" : "rotate-0"
               }`}
             />
@@ -109,34 +112,35 @@ function NavLinks({
 
           <Link
             href="/newsletters"
-            className={`flex px-[15px] py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[20px] font-[400] leading-[32px] tracking-[-0.48px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer ${
+            className={`flex px-[10px] py-[8px] lg:px-[15px] lg:py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[16px] lg:text-[20px] font-normal leading-[24px] lg:leading-[32px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer whitespace-nowrap ${
               isActive("/newsletters") ? "bg-[#E6E6E6] text-[#172447]" : ""
             }`}
           >
-            Newsletter
+            <span className="lg:hidden">News</span>
+            <span className="hidden lg:inline">Newsletter</span>
           </Link>
 
           <Link
             href="https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex px-[20px] py-[10px] justify-center items-center gap-[10px] rounded-full border border-[#C7C7C7] bg-[#FFF] text-[#172447] text-[20px] font-[600] leading-[36px] font-dm hover:bg-[#172447] hover:border-[#172447] hover:text-[#FFF] transition-all duration-300 ease-in-out group cursor-pointer"
+            className="flex ml-[20px] lg:ml-0 px-[20px] py-[10px] justify-center items-center gap-[5px] lg:gap-[10px] rounded-full border border-[#C7C7C7] bg-[#FFF] text-[#012060] text-[16px] lg:text-[20px] font-semibold leading-[24px] lg:leading-[30px] font-dm hover:bg-[#172447] hover:border-[#172447] hover:text-[#FFF] transition-all duration-300 ease-in-out group cursor-pointer whitespace-nowrap flex-shrink-0"
           >
             DONATE
-            <div className="w-[36px] h-[36px] flex items-center justify-center">
+            <div className="w-[24px] h-[24px] lg:w-[36px] lg:h-[36px] flex items-center justify-center flex-shrink-0">
               <Image
                 src="/imgs/ic_arrowforward_blue.svg"
                 alt="Redirect Arrow"
-                width={36}
-                height={36}
-                className="group-hover:hidden"
+                width={24}
+                height={24}
+                className="group-hover:hidden w-full h-full"
               />
               <Image
                 src="/imgs/ic_arrowforward_white.svg"
                 alt="Redirect Arrow"
-                width={36}
-                height={36}
-                className="hidden group-hover:block"
+                width={24}
+                height={24}
+                className="hidden group-hover:block w-full h-full"
               />
             </div>
           </Link>
