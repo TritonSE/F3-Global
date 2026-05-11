@@ -19,7 +19,6 @@ type CarouselData = {
   description: string;
   mobileDescription?: string;
   leftButtonText: string;
-  mobileLeftButtonText?: string;
   leftButtonLink: string;
   rightButtonLink?: string;
   imageSrc: string;
@@ -242,7 +241,7 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
 
                   <div className="flex flex-wrap gap-[15px]">
                     <Button
-                      text={card.mobileLeftButtonText ?? card.leftButtonText}
+                      text={card.leftButtonText}
                       onClick_link={card.leftButtonLink}
                       className="flex items-center justify-center rounded-[99px] bg-[#172447] px-[15px] py-[10px] transition-colors duration-300 hover:bg-[#1169B0] [&_p]:text-white [&_p]:font-semibold [&_p]:text-[12px] [&_p]:leading-[1.5]"
                     />
