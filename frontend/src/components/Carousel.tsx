@@ -6,11 +6,20 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button } from "./button";
 import { CarouselCard } from "./CarouselCard";
 
+const MOBILE_CARD_WIDTH = 263;
+const MOBILE_CARD_GAP = 40;
+const MOBILE_SLIDE_STEP = MOBILE_CARD_WIDTH + MOBILE_CARD_GAP;
+const MOBILE_DRAG_THRESHOLD = 50;
+
 type CarouselData = {
   title: string;
+  mobileTitle?: string;
   header: React.ReactNode;
+  mobileHeader?: React.ReactNode;
   description: string;
+  mobileDescription?: string;
   leftButtonText: string;
+  mobileLeftButtonText?: string;
   leftButtonLink: string;
   rightButtonLink?: string;
   imageSrc: string;
@@ -22,9 +31,10 @@ type CarouselProps = {
 
 export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const scrollTimeoutRef = useRef<number | null>(null);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartX = useRef<number | null>(null);
+  const dragStartY = useRef<number | null>(null);
 
   useEffect(() => {
     if (data.length < 2) return;
@@ -48,50 +58,67 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length);
   };
 
-  const handleTabClick = (index: number) => {
-    setCurrentIndex(index);
+  const getBoundedMobileDragOffset = (offset: number) => {
+    const maxIndex = Math.max(data.length - 1, 0);
 
-    setTimeout(() => {
-      cardRefs.current[index]?.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "start",
-      });
-    }, 0);
+    if (currentIndex === 0 && offset > 0) return 0;
+    if (currentIndex === maxIndex && offset < 0) return 0;
+
+    return Math.max(-MOBILE_SLIDE_STEP, Math.min(MOBILE_SLIDE_STEP, offset));
   };
 
-  const handleScroll = () => {
-    if (scrollTimeoutRef.current) {
-      clearTimeout(scrollTimeoutRef.current);
+  const resetMobileDrag = () => {
+    dragStartX.current = null;
+    dragStartY.current = null;
+    setIsDragging(false);
+    setDragOffset(0);
+  };
+
+  const handleMobileDragStart = (clientX: number, clientY: number) => {
+    dragStartX.current = clientX;
+    dragStartY.current = clientY;
+    setIsDragging(true);
+    setDragOffset(0);
+  };
+
+  const handleMobileDragMove = (clientX: number, clientY: number) => {
+    if (dragStartX.current === null || dragStartY.current === null) return;
+
+    const deltaX = clientX - dragStartX.current;
+    const deltaY = clientY - dragStartY.current;
+
+    if (Math.abs(deltaY) > Math.abs(deltaX)) {
+      setDragOffset(0);
+      return;
     }
 
-    scrollTimeoutRef.current = window.setTimeout(() => {
-      const container = scrollContainerRef.current;
-      if (!container || cardRefs.current.length === 0) return;
-
-      const targetLeft = container.scrollLeft + 30;
-
-      let closestIndex = 0;
-      let minDist = Infinity;
-
-      cardRefs.current.forEach((el, idx) => {
-        if (!el) return;
-        const dist = Math.abs(el.offsetLeft - targetLeft);
-        if (dist < minDist) {
-          minDist = dist;
-          closestIndex = idx;
-        }
-      });
-
-      if (closestIndex !== currentIndex) setCurrentIndex(closestIndex);
-    }, 120);
+    setDragOffset(getBoundedMobileDragOffset(deltaX));
   };
 
-  useEffect(() => {
-    return () => {
-      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
-    };
-  }, []);
+  const handleMobileDragEnd = (clientX: number, clientY: number) => {
+    if (dragStartX.current === null || dragStartY.current === null) return;
+
+    const deltaX = dragStartX.current - clientX;
+    const deltaY = dragStartY.current - clientY;
+
+    dragStartX.current = null;
+    dragStartY.current = null;
+    setIsDragging(false);
+    setDragOffset(0);
+
+    if (Math.abs(deltaX) < MOBILE_DRAG_THRESHOLD || Math.abs(deltaX) < Math.abs(deltaY)) return;
+
+    setCurrentIndex((prevIndex) => {
+      const maxIndex = Math.max(data.length - 1, 0);
+      if (deltaX > 0) return Math.min(prevIndex + 1, maxIndex);
+      return Math.max(prevIndex - 1, 0);
+    });
+  };
+
+  const handleTabClick = (index: number) => {
+    resetMobileDrag();
+    setCurrentIndex(index);
+  };
 
   const currentCard = data[currentIndex];
 
@@ -104,19 +131,32 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
       <div className="flex w-full flex-shrink-0 flex-row justify-center pb-0">
         <div className="flex h-auto items-center justify-center rounded-[50px] bg-white px-1 py-1 border md:border-2 border-[#F4F4F4] md:h-[77px] md:px-3 shadow-[0px_17px_36px_0px_rgba(0,0,0,0.1)]">
           {data.map((card, index) => (
-            <Button
-              key={card.title}
-              text={card.title}
-              onClick_link="#"
-              onClick={(e) => {
-                e.preventDefault();
-                handleTabClick(index);
-              }}
-              className={`flex cursor-pointer items-center justify-center rounded-[99px] border-none px-3 py-2 md:h-[57px] md:px-6 ${
-                currentIndex === index ? "bg-[#F4F4F4]" : "bg-transparent"
-              }`}
-              textClassName={`font-dm-sans text-[12px] font-semibold leading-[1.5] md:text-[18px] md:font-medium md:leading-[150%] md:tracking-[-0.02em] text-[#1e1e1e]`}
-            />
+            <React.Fragment key={card.title}>
+              <Button
+                text={card.mobileTitle ?? card.title}
+                onClick_link="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleTabClick(index);
+                }}
+                className={`flex cursor-pointer items-center justify-center rounded-[99px] border-none px-3 py-2 md:hidden ${
+                  currentIndex === index ? "bg-[#F4F4F4]" : "bg-transparent"
+                }`}
+                textClassName="font-dm-sans text-[12px] font-semibold leading-[1.5] text-[#1e1e1e]"
+              />
+              <Button
+                text={card.title}
+                onClick_link="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleTabClick(index);
+                }}
+                className={`hidden cursor-pointer items-center justify-center rounded-[99px] border-none px-3 py-2 md:flex md:h-[57px] md:px-6 ${
+                  currentIndex === index ? "bg-[#F4F4F4]" : "bg-transparent"
+                }`}
+                textClassName="font-dm-sans text-[18px] font-medium leading-[150%] tracking-[-0.02em] text-[#1e1e1e]"
+              />
+            </React.Fragment>
           ))}
         </div>
       </div>
@@ -153,47 +193,56 @@ export const Carousel: React.FC<CarouselProps> = ({ data, ...props }) => {
         </button>
       </div>
 
-      {/* Mobile Snap Scroll Carousel */}
-      <div className="relative w-full md:hidden">
-        {/* Scroll container with snap behavior */}
+      {/* Mobile Snap Carousel */}
+      <div
+        className="relative w-full overflow-hidden touch-pan-y md:hidden"
+        onPointerDown={(e) => {
+          if (e.button !== 0) return;
+          e.currentTarget.setPointerCapture(e.pointerId);
+          handleMobileDragStart(e.clientX, e.clientY);
+        }}
+        onPointerMove={(e) => {
+          handleMobileDragMove(e.clientX, e.clientY);
+        }}
+        onPointerUp={(e) => {
+          if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+            e.currentTarget.releasePointerCapture(e.pointerId);
+          }
+          handleMobileDragEnd(e.clientX, e.clientY);
+        }}
+        onPointerCancel={resetMobileDrag}
+        onLostPointerCapture={resetMobileDrag}
+      >
         <div
-          ref={scrollContainerRef}
-          onScroll={handleScroll}
-          className="flex w-full gap-[40px] overflow-x-auto scroll-smooth snap-x snap-mandatory [-webkit-overflow-scrolling:touch] px-[30px]"
-          style={{ scrollBehavior: "smooth", scrollbarWidth: "none", msOverflowStyle: "none" }}
+          className={`flex gap-[40px] pl-[30px] ${
+            isDragging ? "" : "transition-transform duration-300 ease-out"
+          }`}
+          style={{
+            transform: `translateX(${-(currentIndex * MOBILE_SLIDE_STEP) + dragOffset}px)`,
+          }}
         >
-          {/* Individual card*/}
           {data.map((card, index) => (
             <div
               key={index}
-              ref={(el) => {
-                cardRefs.current[index] = el;
-              }}
-              className="flex w-[263px] flex-shrink-0 snap-start scroll-ml-[30px] flex-col gap-[20px] items-start justify-start"
+              className="flex w-[263px] flex-shrink-0 flex-col gap-[20px] items-start justify-start"
             >
-              {/* Card content wrapper */}
               <div className="flex w-[263px] flex-col gap-[20px]">
-                {/* Card image section */}
                 <div className="relative h-[175px] w-[263px] rounded-[8px] overflow-hidden">
                   <Image src={card.imageSrc} alt={card.title} fill className="object-cover" />
                 </div>
 
-                {/* Card text and button section */}
                 <div className="flex w-[263px] flex-col gap-[10px] px-0">
-                  {/* Card header */}
                   <div className="font-dm-sans text-[28px] font-medium leading-[1.5] text-[#1e1e1e] tracking-[-0.02em]">
-                    {card.header}
+                    {card.mobileHeader ?? card.header}
                   </div>
 
-                  {/* Card description */}
                   <p className="font-dm-sans text-[12px] font-normal leading-[16px] text-[#5d5d5d]">
-                    {card.description}
+                    {card.mobileDescription ?? card.description}
                   </p>
 
-                  {/* Card buttons */}
                   <div className="flex flex-wrap gap-[15px]">
                     <Button
-                      text={card.leftButtonText}
+                      text={card.mobileLeftButtonText ?? card.leftButtonText}
                       onClick_link={card.leftButtonLink}
                       className="flex items-center justify-center rounded-[99px] bg-[#172447] px-[15px] py-[10px] transition-colors duration-300 hover:bg-[#1169B0] [&_p]:text-white [&_p]:font-semibold [&_p]:text-[12px] [&_p]:leading-[1.5]"
                     />
