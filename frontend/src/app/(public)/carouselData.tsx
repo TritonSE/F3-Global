@@ -3,7 +3,7 @@ export const DonorsClientsMembersCarouselData = [
     title: "DONORS",
     header: (
       <span>
-        Turn Donations Into <strong className="text-[#012060]">Opportunity.</strong>
+        Turn Donations into <strong className="text-[#012060]">Opportunity.</strong>
       </span>
     ),
     description:
@@ -31,7 +31,7 @@ export const DonorsClientsMembersCarouselData = [
     title: "MEMBERS",
     header: (
       <span>
-        Turn Your Passion Into <strong className="text-[#012060]">Purpose.</strong>
+        Turn Your Passion into <strong className="text-[#012060]">Purpose.</strong>
       </span>
     ),
     description:
@@ -48,12 +48,12 @@ export const WaysToGiveCarouselData = [
     title: "ONE TIME",
     header: (
       <span>
-        Fund real <strong className="text-[#012060]">entrepreneurs</strong> with one gift.
+        Fund Real <strong className="text-[#012060]">Entrepreneurs</strong> with One Gift.
       </span>
     ),
     mobileHeader: (
       <span>
-        Fund real <strong className="text-[#012060]">entrepreneurs.</strong>
+        Fund Real <strong className="text-[#012060]">Entrepreneurs.</strong>
       </span>
     ),
     description:
@@ -68,12 +68,12 @@ export const WaysToGiveCarouselData = [
     title: "MONTHLY",
     header: (
       <span>
-        Sustain <strong className="text-[#012060]">growth</strong> with monthly support.
+        Sustain <strong className="text-[#012060]">Growth</strong> with Monthly Support.
       </span>
     ),
     mobileHeader: (
       <span>
-        Sustain <strong className="text-[#012060]">growth,</strong> with monthly support.
+        Sustain <strong className="text-[#012060]">Growth,</strong> with Monthly Support.
       </span>
     ),
     description:
@@ -89,7 +89,7 @@ export const WaysToGiveCarouselData = [
     mobileTitle: "LEGACY",
     header: (
       <span>
-        Leave a <strong className="text-[#012060]">legacy</strong> of opportunity.
+        Leave a <strong className="text-[#012060]">Legacy</strong> of Opportunity.
       </span>
     ),
     description:
@@ -104,7 +104,7 @@ export const WaysToGiveCarouselData = [
     title: "CORPORATE",
     header: (
       <span>
-        <strong className="text-[#012060]">Multiply</strong> impact through employer matching.
+        <strong className="text-[#012060]">Multiply</strong> Impact through Employer Matching.
       </span>
     ),
     mobileHeader: (
