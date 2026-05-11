@@ -20,13 +20,13 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import type { StorageReference } from "firebase/storage";
+import Image from "next/image";
 
 import { AddCardDialog } from "@/components/admin-portal/AddCardDialog";
 import { DraggableCollegeCard } from "@/components/admin-portal/DraggableSortableCard";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
-import Image from "next/image";
-import { LogoCarouselOnly } from "@/components/LogoCarouselSection";
 import { PreviewMode } from "./PreviewMode";
+import { LogoCarouselOnly } from "@/components/LogoCarouselSection";
 import { PublishButton } from "@/components/admin-portal/PublishButton";
 import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
