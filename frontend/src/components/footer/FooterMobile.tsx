@@ -21,31 +21,35 @@ export function FooterMobile({ onContactClick, onTermsClick }: FooterMobileProps
       <div className="grid grid-cols-2 gap-x-10 gap-y-6 pb-6">
         <div className="flex flex-col items-start gap-[14px]">
           <h3 className="text-[16px] font-semibold text-[#172447]">Services</h3>
-          <FooterMiniBtn text="Donors" link="/donors" className="text-left text-[14px] leading-6" />
+          <FooterMiniBtn 
+            text="Donors"
+            link="/donors"
+            className="text-left text-[12px] leading-6"
+          />
           <FooterMiniBtn
             text="Clients"
             link="/clients"
-            className="text-left text-[14px] leading-6"
+            className="text-left text-[12px] leading-6"
           />
           <FooterMiniBtn
             text="Members"
             link="/members"
-            className="text-left text-[14px] leading-6"
+            className="text-left text-[12px] leading-6"
           />
           <FooterMiniBtn
             text="What We Do"
             link="/about-us"
-            className="text-left text-[14px] leading-6"
+            className="text-left text-[12px] leading-6"
           />
           <FooterMiniBtn
             text="Contact"
             onClick={onContactClick}
-            className="text-left text-[14px] leading-6"
+            className="text-left text-[12px] leading-6"
           />
           <FooterMiniBtn
             text="Member Application"
             link="https://my-apply.vercel.app/org/f3-global-foundation"
-            className="text-left text-[14px] leading-6"
+            className="text-left text-[12px] leading-6"
           />
         </div>
 
@@ -54,24 +58,24 @@ export function FooterMobile({ onContactClick, onTermsClick }: FooterMobileProps
           <FooterMiniBtn
             text="About"
             link="/about-us"
-            className="text-left text-[14px] leading-6"
+            className="text-left text-[12px] leading-6"
           />
-          <FooterMiniBtn text="News" className="text-left text-[14px] leading-6" />
-          <FooterMiniBtn text="Events" className="text-left text-[14px] leading-6" />
+          <FooterMiniBtn text="News" className="text-left text-[12px] leading-6" />
+          <FooterMiniBtn text="Events" className="text-left text-[12px] leading-6" />
           <FooterMiniBtn
             text="Meet The Team"
             link="/meet-the-team"
-            className="text-left text-[14px] leading-6"
+            className="text-left text-[12px] leading-6"
           />
           <FooterMiniBtn
             text="Privacy Policy"
             link="/privacy-policy"
-            className="text-left text-[14px] leading-6"
+            className="text-left text-[12px] leading-6"
           />
           <FooterMiniBtn
             text="Terms & Conditions"
             onClick={onTermsClick}
-            className="text-left text-[14px] leading-6"
+            className="text-left text-[12px] leading-6"
           />
         </div>
       </div>
