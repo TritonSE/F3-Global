@@ -33,7 +33,7 @@ export default function Donors() {
   return (
     <div className="mx-auto flex flex-col justify-center items-center bg-white w-full">
       {/* Donors Hero */}
-      <div className="flex w-full min-h-[632px] flex-col-reverse items-center gap-[40px] self-stretch px-[30px] pb-[20px] pt-[50px] md:min-h-screen md:flex-row md:justify-between md:gap-0 md:px-[100px] md:py-[150px]">
+      <div className="flex w-full min-h-[632px] flex-col-reverse items-center gap-[40px] self-stretch px-[30px] pb-[40px] pt-[50px] md:min-h-screen md:flex-row md:justify-between md:gap-0 md:px-[100px] md:py-[150px]">
         <div className="flex w-full flex-col items-center gap-[20px] md:w-[639px] md:items-start md:gap-[50px]">
           <h1
             className="text-center text-[36px] leading-[110%] text-[#1E1E1E] md:text-left md:text-[64px] md:text-[#172447]"
@@ -67,7 +67,7 @@ export default function Donors() {
         <Carousel data={WaysToGiveCarouselData} />
       </div>
       <ImpactSection title="Our Impact" />
-      <FaqAccordion items={faqItems} />
+      {/* <FaqAccordion items={faqItems} /> */}
       {/* "Start Creating Impact Now" Section */}
       <div className="w-full h-[767px] flex">
         <div className="w-full h-[767px] flex overflow-hidden bg-[#172447] justify-end">
@@ -94,7 +94,7 @@ export default function Donors() {
           </div>
         </div>
 
-        <div className="absolute flex flex-col px-[100px] py-[75px] mt-[12vh] items-start gap-[40px]">
+        {/* <div className="absolute flex flex-col px-[100px] py-[75px] mt-[12vh] items-start gap-[40px]">
           <p
             className="text-white text-[64px] leading-[110%]"
             style={{ fontFamily: '"Ethic New", sans-serif' }}
@@ -119,7 +119,7 @@ export default function Donors() {
               className="transition-all duration-450 group-hover:brightness-0 group-hover:invert"
             />
           </a>
-        </div>
+        </div> */}
       </div>
       <div id="contact">
         <ContactUs />
