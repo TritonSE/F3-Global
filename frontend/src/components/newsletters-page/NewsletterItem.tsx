@@ -43,7 +43,7 @@ export function NewsletterItem({ newsletter }: Props) {
             {newsletter.views} {newsletter.views === 1 ? "view" : "views"}
           </span>
         </div>
-        <h3 className="font-dm-sans font-normal text-[24px] leading-[32px] text-[#1e1e1e] w-full line-clamp-3 group-hover:underline">
+        <h3 className="font-dm-sans font-normal text-[16px] leading-[24px] md:text-[24px] md:leading-[32px] text-[#1e1e1e] w-full line-clamp-3 group-hover:underline">
           {newsletter.title}
         </h3>
       </div>
