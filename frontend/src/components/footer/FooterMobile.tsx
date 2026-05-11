@@ -21,11 +21,7 @@ export function FooterMobile({ onContactClick, onTermsClick }: FooterMobileProps
       <div className="grid grid-cols-2 gap-x-10 gap-y-6 pb-6">
         <div className="flex flex-col items-start gap-[14px]">
           <h3 className="text-[16px] font-semibold text-[#172447]">Services</h3>
-          <FooterMiniBtn 
-            text="Donors"
-            link="/donors"
-            className="text-left text-[12px] leading-6"
-          />
+          <FooterMiniBtn text="Donors" link="/donors" className="text-left text-[12px] leading-6" />
           <FooterMiniBtn
             text="Clients"
             link="/clients"
