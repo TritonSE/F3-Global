@@ -539,7 +539,7 @@ export default function FaqsEditor() {
 
           <div className="flex gap-[10px] items-center justify-end">
             <RevertButton
-              onClick={() => setActiveDialog("revert")}
+              handleClick={() => setActiveDialog("revert")}
               disabled={!hasChanges || isPublishing}
             />
             {publishButton}

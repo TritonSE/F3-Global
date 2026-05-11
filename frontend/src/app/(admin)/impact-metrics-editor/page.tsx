@@ -244,7 +244,7 @@ export default function ImpactMetricsEditor() {
 
           <div className="flex gap-[25px] items-center justify-end">
             <RevertButton
-              onClick={() => setShowRevertDialog(true)}
+              handleClick={() => setShowRevertDialog(true)}
               disabled={!hasChanges || isPublishing}
             />
             <PublishButton
