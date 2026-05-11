@@ -1,13 +1,12 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 
 type BackgroundProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
-  style?: React.CSSProperties;
 };
 
-const Background = ({ children, className = "", style }: BackgroundProps) => {
+const Background = ({ children, className = "" }: BackgroundProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const [isLocked, setIsLocked] = useState(false);
@@ -48,9 +47,6 @@ const Background = ({ children, className = "", style }: BackgroundProps) => {
     <div
       ref={containerRef}
       className={`relative w-full md:bg-[linear-gradient(0deg,rgba(0,0,0,0.60)_0%,rgba(0,0,0,0.60)_100%),url('/imgs/donors.webp')] md:bg-cover md:bg-center md:bg-fixed md:bg-no-repeat ${className}`}
-      style={{
-        ...style,
-      }}
     >
       <div className="pointer-events-none sticky top-0 z-0 -mb-[100vh] h-screen bg-[linear-gradient(0deg,rgba(0,0,0,0.60)_0%,rgba(0,0,0,0.60)_100%),url('/imgs/donors.webp')] bg-no-repeat [background-position:54%_top] [background-size:auto_100%] md:hidden" />
       <div
