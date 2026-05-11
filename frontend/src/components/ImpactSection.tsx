@@ -67,7 +67,7 @@ export const ImpactSection = ({ title = "Our Impact" }: ImpactSectionProps) => {
           </Fragment>
         ))}
       </div>
-      <p className="mt-4 self-start text-[#5D5D5D] font-dm-sans text-[12px] font-bold leading-[1.5] uppercase hidden md:block md:text-[16px]">
+      <p className="md:mt-4 self-start text-[#5D5D5D] font-dm-sans text-[10px] md:text-[16px]font-bold leading-[1.5] uppercase ">
         *Data from {formattedDate}
       </p>
     </div>
