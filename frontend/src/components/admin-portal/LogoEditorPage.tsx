@@ -24,6 +24,9 @@ import type { StorageReference } from "firebase/storage";
 import { AddCardDialog } from "@/components/admin-portal/AddCardDialog";
 import { DraggableCollegeCard } from "@/components/admin-portal/DraggableSortableCard";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
+import Image from "next/image";
+import { LogoCarouselOnly } from "@/components/LogoCarouselSection";
+import { PreviewMode } from "./PreviewMode";
 import { PublishButton } from "@/components/admin-portal/PublishButton";
 import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
@@ -62,6 +65,7 @@ export function LogoEditorPage({
   const [showRevertDialog, setShowRevertDialog] = useState(false);
   const [showBackDialog, setShowBackDialog] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [isPreview, setIsPreview] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -147,6 +151,7 @@ export function LogoEditorPage({
     } catch (error) {
       console.error("Critical Publish Error:", error);
       await rollbackUploads(newlyUploadedRefs);
+    } finally {
       setIsPublishing(false);
     }
   }
@@ -181,7 +186,71 @@ export function LogoEditorPage({
     });
   }
 
+  const publishButton = (
+    <PublishButton
+      handleClick={() => void handlePublish()}
+      disabled={!hasChanges || isPublishing}
+    />
+  );
+
   if (loading) return null;
+
+  if (isPreview) {
+    return (
+      <PreviewMode
+        onBack={() => {
+          setIsPreview(false);
+        }}
+        publishButton={publishButton}
+      >
+        <div className="bg-white rounded-[10px] overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.1)] w-full">
+          <div className="bg-[rgba(244,244,244,0.7)] backdrop-blur-sm flex items-center justify-between px-[24px] py-[16px]">
+            <div className="flex items-center gap-[12px]">
+              <Image
+                src="/imgs/f3-logo.svg"
+                alt="F3 Global Logo"
+                width={44}
+                height={44}
+                className="size-[44px] object-contain"
+              />
+              <span className="font-dm-sans font-black text-[10px] text-[#172447] tracking-[2px] leading-[1.1] whitespace-pre-line">
+                {"FUTURE\nFORWARD\nFOUNDATION"}
+              </span>
+            </div>
+            <div className="flex items-center gap-[8px]">
+              {["Home", "About Us", "Meet the Team"].map((item) => (
+                <span
+                  key={item}
+                  className="px-[12px] py-[8px] font-dm-sans text-[16px] text-[#5D5D5D]"
+                >
+                  {item}
+                </span>
+              ))}
+              <span className="px-[12px] py-[8px] bg-[#E6E6E6] rounded-[99px] font-dm-sans text-[16px] text-[#172447]">
+                Get Involved ↓
+              </span>
+              <span className="px-[12px] py-[8px] font-dm-sans text-[16px] text-[#5D5D5D]">
+                Newsletter
+              </span>
+              <div className="border border-[#C7C7C7] rounded-[99px] px-[16px] py-[8px] font-dm-sans font-semibold text-[16px] text-[#012060] flex items-center gap-[8px]">
+                DONATE
+                <Image
+                  src="/imgs/ic_arrowforward.svg"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="size-[20px]"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="px-[80px] py-[190px]">
+            <LogoCarouselOnly items={items.map((item, i) => ({ ...item, order: i }))} />
+          </div>
+        </div>
+      </PreviewMode>
+    );
+  }
 
   return (
     <div className="bg-white min-h-screen">
@@ -190,6 +259,7 @@ export function LogoEditorPage({
         tags={tags}
         description={description}
         onBack={() => (hasChanges ? setShowBackDialog(true) : router.push(backPath))}
+        onPreview={() => setIsPreview(true)}
       />
 
       <div className="px-[100px] py-[50px]">
