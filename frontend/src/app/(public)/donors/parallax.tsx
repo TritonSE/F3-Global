@@ -57,8 +57,11 @@ export default function Parallax() {
           }`}
         >
           <div className="box-border w-full px-[30px] md:px-0 md:pr-[17.85%] md:pl-[43.32%]">
-            <h1 className="text-white font-['Ethic_New'] text-[48px] md:text-[64px] font-light leading-[110%] pb-[10px]">
-              {section.number}. {section.title1} <i>{section.title2}</i>
+            <h1 className="flex items-baseline gap-[0.25em] pb-[10px] font-['Ethic_New'] text-[48px] leading-[110%] font-light text-white md:text-[64px]">
+              <span className="shrink-0">{section.number}.</span>
+              <span className="min-w-0 flex-1">
+                {section.title1} <i>{section.title2}</i>
+              </span>
             </h1>
             <p className="text-white font-['DM_Sans'] text-[16px] md:text-[24px] font-medium leading-[150%] tracking-[-0.48px]">
               {section.content}
