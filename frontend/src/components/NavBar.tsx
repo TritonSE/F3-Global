@@ -635,7 +635,6 @@ export default function NavBar() {
               transform: translateY(-15px);
             }
           }
-
         `}</style>
       </div>
     </>
