@@ -41,9 +41,7 @@ export const FaqAccordion: React.FC<FaqAccordionProps> = ({
 
   return (
     <div className={`w-full bg-white overflow-x-hidden border-t border-[#f4f4f4] ${className}`}>
-      <div
-        className="relative flex w-full flex-col items-start gap-[40px] px-[30px] py-[50px] shadow-[0px_19px_21.5px_rgba(0,0,0,0.1)] md:px-[100px] md:shadow-[10px_6px_60px_0_rgba(1,32,96,0.20)]"
-      >
+      <div className="relative flex w-full flex-col items-start gap-[40px] px-[30px] py-[50px] shadow-[0px_19px_21.5px_rgba(0,0,0,0.1)] md:px-[100px] md:shadow-[10px_6px_60px_0_rgba(1,32,96,0.20)]">
         <div className="flex items-center relative w-full">
           <h2 className="font-dm text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#172447] md:text-[48px] md:tracking-[-0.96px]">
             Questions?
