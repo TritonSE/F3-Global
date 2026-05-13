@@ -109,9 +109,7 @@ export const ContactUs: React.FC = () => {
   return (
     <>
       <div className="relative flex w-full flex-col items-center gap-[10px] px-[30px] py-[50px] md:px-0">
-        <div
-          className="relative flex w-full max-w-[1312px] flex-col items-end gap-[20px] rounded-[10px] bg-white px-[30px] py-[30px] shadow-[2.721px_1.633px_6.803px_rgba(1,32,96,0.2)] md:px-[100px] md:py-[40px] md:shadow-[10px_6px_60px_0_rgba(1,32,96,0.20)]"
-        >
+        <div className="relative flex w-full max-w-[1312px] flex-col items-end gap-[20px] rounded-[10px] bg-white px-[30px] py-[30px] shadow-[2.721px_1.633px_6.803px_rgba(1,32,96,0.2)] md:px-[100px] md:py-[40px] md:shadow-[10px_6px_60px_0_rgba(1,32,96,0.20)]">
           <div className="flex w-full flex-col items-start gap-[20px] self-stretch md:gap-[30px]">
             <h2 className="self-stretch mb-[-8px] font-ethic text-[48px] text-black md:mb-[-24px] md:text-[80px]">
               Contact Us
