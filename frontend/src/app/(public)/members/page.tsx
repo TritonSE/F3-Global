@@ -66,7 +66,7 @@ export default async function Members() {
         </div>
         {/* Mission Epic */}
         <div className="relative flex w-full flex-col items-center gap-[50px] overflow-hidden border-t border-[#F4F4F4] px-[30px] pt-[50px] pb-[0px] md:flex-row md:items-center md:justify-start md:gap-[72px] md:px-[100px] md:py-[50px]">
-          <div className="relative order-2 shrink-0 self-start overflow-visible [--collage-width:min(785px,54vw)] ml-[-30px] w-[var(--collage-width)] h-[calc(var(--collage-width)*703/785)] md:order-1 md:ml-[-100px] md:flex-none md:self-center">
+          <div className="relative order-2 shrink-0 self-start overflow-visible [--collage-width:min(785px,54vw)] ml-[-30px] w-[var(--collage-width)] h-[calc(var(--collage-width)*703/785)] md:order-1 md:ml-[-115px] md:flex-none md:self-center">
             <div
               className="relative origin-top-left overflow-visible"
               style={{
