@@ -33,10 +33,10 @@ export default function Donors() {
   return (
     <div className="mx-auto flex flex-col justify-center items-center bg-white w-full">
       {/* Donors Hero */}
-      <div className="flex w-full min-h-[632px] flex-col-reverse items-center gap-[40px] self-stretch px-[30px] pb-[40px] pt-[50px] md:min-h-screen md:flex-row md:justify-between md:gap-0 md:px-[100px] md:py-[150px]">
+      <div className="flex w-full min-h-[632px] flex-col-reverse items-center gap-[40px] self-stretch px-[30px] pb-[100px] pt-[50px] md:min-h-screen md:flex-row md:justify-between md:gap-0 md:px-[100px] md:py-[150px]">
         <div className="flex w-full flex-col items-center gap-[20px] md:w-[639px] md:items-start md:gap-[50px]">
           <h1
-            className="text-center text-[36px] leading-[110%] text-[#1E1E1E] md:text-left md:text-[64px] md:text-[#172447]"
+            className="text-center text-[36px] font-light leading-[110%] text-[#1E1E1E] md:text-left md:text-[64px] md:text-[#172447]"
             style={{ fontFamily: '"Ethic New", sans-serif' }}
           >
             Turn $100 into a <br /> <i>Thriving</i> Business
@@ -119,7 +119,7 @@ export default function Donors() {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center justify-center text-[#012060] bg-white px-[15px] py-[10px] gap-[5px] rounded-[99px] font-dm-sans font-semibold text-[14px] leading-[150%] transition-colors duration-450 ease-in-out cursor-pointer hover:bg-[#172447] hover:text-white md:px-[20px] md:gap-[10px] md:text-[20px]"
+            className="group inline-flex items-center justify-center gap-[5px] rounded-[99px] border border-[#C7C7C7] bg-white px-[15px] py-[10px] font-dm-sans text-[14px] leading-[150%] font-semibold text-[#012060] transition-colors duration-450 ease-in-out cursor-pointer hover:border-[#172447] hover:bg-[#172447] hover:text-white md:gap-[10px] md:px-[20px] md:text-[20px]"
             href="https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390"
           >
             DONATE{" "}
