@@ -6,7 +6,7 @@ type HeaderSectionProps = {
   onPreview?: () => void;
 };
 
-export function HeaderSection({ title, description, onBack, tags }: HeaderSectionProps) {
+export function HeaderSection({ title, tags, description, onBack, onPreview }: HeaderSectionProps) {
   return (
     <header className="border-b border-[#C7C7C7] flex flex-col gap-[10px] items-start justify-center px-[100px] py-[50px]">
       <button
@@ -32,7 +32,7 @@ export function HeaderSection({ title, description, onBack, tags }: HeaderSectio
         </h1>
         <button
           type="button"
-          disabled
+          onClick={onPreview}
           className="bg-[#012060] flex gap-[10px] items-center justify-center px-[20px] py-[10px] rounded-[99px] cursor-pointer"
         >
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="white" className="size-[32px]">

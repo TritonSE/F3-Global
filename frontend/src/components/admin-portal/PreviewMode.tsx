@@ -12,10 +12,10 @@ export function PreviewMode({
   children,
 }: {
   onBack: () => void;
-  notificationMessage: string | null;
+  notificationMessage?: string | null;
   notificationLink?: { href: string; label: string };
-  notificationFading: boolean;
-  onDismissNotification: () => void;
+  notificationFading?: boolean;
+  onDismissNotification?: () => void;
   publishButton: React.ReactNode;
   children: React.ReactNode;
 }) {
@@ -39,12 +39,14 @@ export function PreviewMode({
             Back to Edit
           </span>
         </button>
-        <ConfirmationNotification
-          message={notificationMessage}
-          link={notificationLink}
-          fading={notificationFading}
-          onDismiss={onDismissNotification}
-        />
+        {notificationMessage && onDismissNotification && (
+          <ConfirmationNotification
+            message={notificationMessage}
+            link={notificationLink}
+            fading={notificationFading ?? false}
+            onDismiss={onDismissNotification}
+          />
+        )}
       </header>
 
       <div className="px-[100px] py-[50px] flex flex-col gap-[50px] items-end">
