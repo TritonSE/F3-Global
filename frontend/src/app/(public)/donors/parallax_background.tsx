@@ -1,12 +1,12 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 
 type BackgroundProps = {
-  children: React.ReactNode;
-  style?: React.CSSProperties;
+  children: ReactNode;
+  className?: string;
 };
 
-const Background = ({ children, style }: BackgroundProps) => {
+const Background = ({ children, className = "" }: BackgroundProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const [isLocked, setIsLocked] = useState(false);
@@ -46,15 +46,11 @@ const Background = ({ children, style }: BackgroundProps) => {
   return (
     <div
       ref={containerRef}
-      className="relative w-full bg-cover bg-no-repeat bg-center"
-      style={{
-        backgroundImage:
-          "linear-gradient(0deg, rgba(0, 0, 0, 0.60) 0%, rgba(0, 0, 0, 0.60) 100%), url('/imgs/donors.webp')",
-        backgroundAttachment: "fixed",
-        ...style,
-      }}
+      className={`relative w-full md:bg-[linear-gradient(0deg,rgba(0,0,0,0.60)_0%,rgba(0,0,0,0.60)_100%),url('/imgs/donors.webp')] md:bg-cover md:bg-center md:bg-fixed md:bg-no-repeat ${className}`}
     >
+      <div className="pointer-events-none sticky top-0 z-0 -mb-[100vh] h-screen bg-[linear-gradient(0deg,rgba(0,0,0,0.60)_0%,rgba(0,0,0,0.60)_100%),url('/imgs/donors.webp')] bg-no-repeat [background-position:54%_top] [background-size:auto_100%] md:hidden" />
       <div
+        className="hidden md:block"
         style={{
           position: isLocked ? "absolute" : "sticky",
           top: isLocked ? lockedTop : 0,
@@ -64,7 +60,7 @@ const Background = ({ children, style }: BackgroundProps) => {
       >
         <div
           ref={titleRef}
-          className="pointer-events-none select-none flex text-white text-center font-['DM_Sans'] text-[48px] font-medium leading-[150%] tracking-[-0.96px] pt-[200px] pl-[100px]"
+          className="pointer-events-none select-none flex text-white text-center font-dm-sans text-[48px] font-medium leading-[150%] tracking-[-0.96px] pt-[200px] pl-[100px]"
         >
           <span>How You Can Help</span>
         </div>
