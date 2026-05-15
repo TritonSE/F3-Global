@@ -7,10 +7,13 @@ import type { StorageReference } from "firebase/storage";
 
 import { getTimelines, type TimelineItem, updateTimeline } from "@/api/timeline";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
+import { PreviewMode } from "@/components/admin-portal/PreviewMode";
+import { PreviewNavBar } from "@/components/admin-portal/PreviewNavBar";
 import { PublishButton } from "@/components/admin-portal/PublishButton";
 import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { TimelineCard } from "@/components/admin-portal/TimelineCard";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
+import { TimelineDisplay } from "@/components/timeline-section/TimelineDisplay";
 import { auth } from "@/firebase/firebase";
 import { deleteFromStorageUrl, rollbackUploads, uploadToStorage } from "@/utils/firebaseStorage";
 
@@ -22,6 +25,7 @@ export default function TimelineEditorPage() {
   const [timelines, setTimelines] = useState<TimelineItem[]>([]);
   const [showRevertDialog, setShowRevertDialog] = useState(false);
   const [showBackDialog, setShowBackDialog] = useState(false);
+  const [isPreview, setIsPreview] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -85,7 +89,7 @@ export default function TimelineEditorPage() {
               newlyUploadedRefs,
             );
           }
-          const { newImage, ...rest } = item;
+          const { newImage: _newImage, ...rest } = item;
           return { ...rest, imageUrl: url };
         }),
       );
@@ -107,7 +111,25 @@ export default function TimelineEditorPage() {
     }
   }
 
+  const publishButton = (
+    <PublishButton
+      handleClick={() => void handlePublish()}
+      disabled={!hasChanges || isPublishing}
+    />
+  );
+
   if (loading) return null;
+
+  if (isPreview) {
+    return (
+      <PreviewMode onBack={() => setIsPreview(false)} publishButton={publishButton}>
+        <div className="bg-white rounded-[10px] overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.1)] w-full">
+          <PreviewNavBar />
+          <TimelineDisplay items={timelines.map(({ newImage: _newImage, ...rest }) => rest)} />
+        </div>
+      </PreviewMode>
+    );
+  }
 
   return (
     <div className="bg-white min-h-screen">
@@ -116,6 +138,7 @@ export default function TimelineEditorPage() {
         tags={["ABOUT US"]}
         description="Edit timeline information including year, description and photo."
         onBack={() => (hasChanges ? setShowBackDialog(true) : router.push("/admin-portal"))}
+        onPreview={() => setIsPreview(true)}
       />
 
       <div className="flex flex-col px-[100px] py-[50px] justify-center items-center gap-[50px]">
@@ -129,10 +152,7 @@ export default function TimelineEditorPage() {
           handleClick={() => setShowRevertDialog(true)}
           disabled={!hasChanges || isPublishing}
         />
-        <PublishButton
-          handleClick={() => void handlePublish()}
-          disabled={!hasChanges || isPublishing}
-        />
+        {publishButton}
       </div>
 
       <ConfirmationDialog
