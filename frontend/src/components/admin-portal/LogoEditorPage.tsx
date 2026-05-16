@@ -18,8 +18,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { PreviewMode } from "./PreviewMode";
-import { PreviewNavBar } from "./PreviewNavBar";
+import { PreviewMode } from "./preview-components/PreviewMode";
+import { PreviewNavBar } from "./preview-components/PreviewNavBar";
 
 import type { StorageReference } from "firebase/storage";
 
