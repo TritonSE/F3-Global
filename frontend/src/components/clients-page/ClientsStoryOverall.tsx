@@ -33,8 +33,8 @@ const ClientsStoryOverall: React.FC<ClientStoryProps> = ({ image, description, f
 
   return (
     <div className="w-full">
-      <div className="py-[50px] px-[100px]">
-        <h1 className="text-[48px] font-[500] leading-[150%] tracking-[-0.96px] font-['DM Sans'] text-[var(--F3-Blue,#172447)] mb-[80px]">
+      <div className="px-4 py-[50px] sm:px-6 lg:px-[100px]">
+        <h1 className="mb-[80px] text-[48px] font-[500] leading-[150%] tracking-[-0.96px] font-['DM Sans'] text-[var(--F3-Blue,#172447)]">
           Real Impact, Real Stories
         </h1>
         <div

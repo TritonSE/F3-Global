@@ -13,17 +13,11 @@ const ClientsStoryExpanded: React.FC<ClientStoryProps> = ({ image, fullText, onS
   return (
     <div
       onClick={onShowLess}
-      className="flex flex-col justify-center items-center gap-5 rounded-[10px] bg-white shadow-[0_4px_10px_rgba(0,0,0,0.25)] w-[1147px] mb-[50px] mt-5 mx-auto p-[50px] cursor-pointer"
+      className="mx-auto mb-[50px] mt-5 flex w-full max-w-[1147px] cursor-pointer flex-col items-center justify-center gap-5 rounded-[10px] bg-white px-4 py-6 shadow-[0_4px_10px_rgba(0,0,0,0.25)] sm:px-6 lg:px-[50px] lg:py-[50px]"
     >
       {/* Image Section */}
-      <div className="rounded-[10px] bg-gray-300 w-full">
-        <Image
-          src={image}
-          alt="Client highlight"
-          width={1046}
-          height={437}
-          className="w-[1046px] h-[437px] rounded-[10px] object-cover"
-        />
+      <div className="relative h-[240px] w-full overflow-hidden rounded-[10px] bg-gray-300 sm:h-[320px] lg:h-[437px]">
+        <Image src={image} alt="Client highlight" fill className="rounded-[10px] object-cover" />
       </div>
 
       {/* Content Section */}
