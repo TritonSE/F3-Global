@@ -12,6 +12,7 @@ export default function ClientLogosEditorPage() {
       storageFolder="clients"
       fetchItems={getAllClients}
       publishItems={async (items) => updateClients(items).then(() => {})}
+      page="About Us"
     />
   );
 }
