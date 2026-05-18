@@ -11,18 +11,21 @@ export default function About() {
     <div className="mx-auto flex flex-col justify-center bg-white w-full">
       {/* Hero */}
       <div className="flex flex-col md:flex-row w-full items-center justify-between self-stretch px-[30px] md:px-[100px] py-[60px] pt-[100px] md:min-h-screen gap-[40px] md:gap-0">
-        <div className="relative w-full md:w-[646px] h-[280px] md:h-[581px] overflow-hidden rounded-[10px] flex-shrink-0 order-first md:order-last">
-          <Image
-            src="/imgs/about-us.webp"
-            alt="About us image"
-            fill
-            sizes="(max-width: 768px) 100vw, 646px"
-            className="object-cover object-center"
-          />
+        <div className="w-full md:basis-1/2 order-first md:order-last flex justify-center md:justify-end">
+          <div className="w-full max-w-[646px] overflow-hidden rounded-[10px]">
+            <Image
+              src="/imgs/about-us.webp"
+              alt="About us image"
+              width={646}
+              height={581}
+              sizes="(max-width: 768px) 100vw, 646px"
+              className="w-full h-auto object-cover object-center"
+            />
+          </div>
         </div>
-        <div className="flex flex-col items-center md:items-start gap-[20px] md:gap-[50px] w-full md:w-[639px]">
+        <div className="flex flex-col items-center md:items-start gap-[20px] md:gap-[50px] w-full md:basis-1/2 md:max-w-[646px]">
           <h1
-            className="text-[#1E1E1E] font-ethic-new text-[36px] md:text-[64px] font-light md:pr-[90px"
+            className="text-[#1E1E1E] font-ethic-new text-[36px] md:text-[64px] font-light md:pr-[90px]"
             style={{ fontFamily: '"Ethic New"', fontWeight: 300, lineHeight: "1.1" }}
           >
             From Vision to <br /> Global <i>Impact</i>
