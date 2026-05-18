@@ -12,6 +12,7 @@ export default function AffiliateLogosEditorPage() {
       storageFolder="affiliates"
       fetchItems={getAllAffiliates}
       publishItems={async (items) => updateAffiliates(items).then(() => {})}
+      page="About Us"
     />
   );
 }

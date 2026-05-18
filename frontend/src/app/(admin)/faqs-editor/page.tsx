@@ -286,7 +286,7 @@ export default function FaqsEditor() {
         publishButton={publishButton}
       >
         <div className="bg-white rounded-[10px] overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.1)] w-full">
-          <PreviewNavBar />
+          <PreviewNavBar activeItem="Get Involved" />
           <div className="px-[80px] py-[40px] flex flex-col gap-[32px]">
             <h2 className="font-dm-sans font-medium text-[39px] text-[#172447] tracking-[-0.78px]">
               Questions?

@@ -1,6 +1,12 @@
 import Image from "next/image";
 
-export function PreviewNavBar() {
+type NavItem = "Home" | "About Us" | "Meet the Team" | "Get Involved" | "Newsletter";
+
+type PreviewNavBarProps = {
+  activeItem: NavItem;
+};
+
+export function PreviewNavBar({ activeItem }: PreviewNavBarProps) {
   return (
     <div className="bg-[rgba(244,244,244,0.7)] backdrop-blur-sm flex items-center justify-between px-[24px] py-[16px]">
       <div className="flex items-center gap-[12px]">
@@ -17,14 +23,31 @@ export function PreviewNavBar() {
       </div>
       <div className="flex items-center gap-[8px]">
         {["Home", "About Us", "Meet the Team"].map((item) => (
-          <span key={item} className="px-[12px] py-[8px] font-dm-sans text-[16px] text-[#5D5D5D]">
+          <span
+            key={item}
+            className={`px-[12px] py-[8px] font-dm-sans text-[16px] ${
+              activeItem === item ? "bg-[#E6E6E6] text-[#172447] rounded-[99px]" : "text-[#5D5D5D]"
+            }`}
+          >
             {item}
           </span>
         ))}
-        <span className="px-[12px] py-[8px] bg-[#E6E6E6] rounded-[99px] font-dm-sans text-[16px] text-[#172447]">
+        <span
+          className={`px-[12px] py-[8px] font-dm-sans text-[16px] ${
+            activeItem === "Get Involved"
+              ? "bg-[#E6E6E6] text-[#172447] rounded-[99px]"
+              : "text-[#5D5D5D]"
+          }`}
+        >
           Get Involved ↓
         </span>
-        <span className="px-[12px] py-[8px] font-dm-sans text-[16px] text-[#5D5D5D]">
+        <span
+          className={`px-[12px] py-[8px] font-dm-sans text-[16px] ${
+            activeItem === "Newsletter"
+              ? "bg-[#E6E6E6] text-[#172447] rounded-[99px]"
+              : "text-[#5D5D5D]"
+          }`}
+        >
           Newsletter
         </span>
         <div className="border border-[#C7C7C7] rounded-[99px] px-[16px] py-[8px] font-dm-sans font-semibold text-[16px] text-[#012060] flex items-center gap-[8px]">

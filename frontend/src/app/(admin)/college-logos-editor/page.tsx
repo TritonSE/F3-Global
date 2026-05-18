@@ -12,6 +12,7 @@ export default function CollegeLogosEditorPage() {
       storageFolder="colleges"
       fetchItems={getAllColleges}
       publishItems={async (items) => updateColleges(items).then(() => {})}
+      page="Meet the Team"
     />
   );
 }

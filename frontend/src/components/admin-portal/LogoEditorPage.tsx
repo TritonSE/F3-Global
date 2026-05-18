@@ -45,6 +45,7 @@ type LogoEditorPageProps = {
   fetchItems: () => Promise<BaseItem[]>;
   publishItems: (items: BaseItem[]) => Promise<void>;
   backPath?: string;
+  page: "Home" | "About Us" | "Meet the Team";
 };
 
 export function LogoEditorPage({
@@ -56,6 +57,7 @@ export function LogoEditorPage({
   fetchItems,
   publishItems,
   backPath = "/admin-portal",
+  page,
 }: LogoEditorPageProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -204,7 +206,7 @@ export function LogoEditorPage({
         publishButton={publishButton}
       >
         <div className="bg-white rounded-[10px] overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.1)] w-full">
-          <PreviewNavBar />
+          <PreviewNavBar activeItem={page} />
           <div className="px-[80px] py-[190px]">
             <LogoCarouselOnly items={items.map((item, i) => ({ ...item, order: i }))} />
           </div>

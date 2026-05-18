@@ -124,7 +124,7 @@ export default function TimelineEditorPage() {
     return (
       <PreviewMode onBack={() => setIsPreview(false)} publishButton={publishButton}>
         <div className="bg-white rounded-[10px] overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.1)] w-full">
-          <PreviewNavBar />
+          <PreviewNavBar activeItem="About Us" />
           <TimelineDisplay items={timelines.map(({ newImage: _newImage, ...rest }) => rest)} />
         </div>
       </PreviewMode>

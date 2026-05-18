@@ -34,14 +34,14 @@ export function ConfirmationDialog({
           <button
             type="button"
             onClick={onClose}
-            className="bg-[#F4F4F4] border border-[#C7C7C7] flex items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans text-[16px] text-[#1E1E1E] hover:bg-[#ECECEC] transition-colors"
+            className="bg-[#F4F4F4] border border-[#C7C7C7] flex items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans text-[16px] text-[#1E1E1E] hover:bg-[#ECECEC] transition-colors cursor-pointer"
           >
             {cancelLabel}
           </button>
           <button
             type="button"
             onClick={onConfirm}
-            className="bg-[#B93B3B] flex items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans font-semibold text-[16px] text-white hover:bg-[#A03030] transition-colors"
+            className="bg-[#B93B3B] flex items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans font-semibold text-[16px] text-white hover:bg-[#A03030] transition-colors cursor-pointer"
           >
             {confirmLabel}
           </button>
