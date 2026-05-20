@@ -151,11 +151,13 @@ function MobileNavBar({
   isOpen,
   onToggle,
   onLinkClick,
+  containerRef,
 }: {
   isActive: (href: string) => boolean;
   isOpen: boolean;
   onToggle: () => void;
   onLinkClick: () => void;
+  containerRef: React.RefObject<HTMLDivElement | null>;
 }) {
   const mobileLinks: { href: string; label: string }[] = [
     { href: "/", label: "Home" },
@@ -168,7 +170,10 @@ function MobileNavBar({
   ];
 
   return (
-    <div className="md:hidden flex flex-col w-full max-w-[412px] px-[30px] py-[15px] box-border">
+    <div
+      ref={containerRef}
+      className="md:hidden flex flex-col w-full max-w-[412px] px-[30px] py-[15px] box-border"
+    >
       <div className="flex items-center justify-between w-full">
         <Link
           href="/"
@@ -459,7 +464,26 @@ export default function NavBar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   //const [isBlinking, setIsBlinking] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const mobileNavRef = useRef<HTMLDivElement>(null);
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const handlePointerDown = (event: MouseEvent | TouchEvent) => {
+      const target = event.target as Node | null;
+      if (mobileNavRef.current && target && !mobileNavRef.current.contains(target)) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("touchstart", handlePointerDown);
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("touchstart", handlePointerDown);
+    };
+  }, [isMobileMenuOpen]);
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
@@ -565,6 +589,7 @@ export default function NavBar() {
             onLinkClick={() => {
               setIsMobileMenuOpen(false);
             }}
+            containerRef={mobileNavRef}
           />
         </nav>
 
