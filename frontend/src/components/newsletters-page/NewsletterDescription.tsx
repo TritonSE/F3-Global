@@ -55,7 +55,7 @@ export function NewsletterDescription({ newsletter }: Props) {
           />
         </a>
       </div>
-      <div className="relative w-full aspect-[342/158] md:w-[646px] md:aspect-[646/581] md:shrink-0">
+      <div className="relative w-full aspect-[342/158] md:w-[646px] md:aspect-[646/581] md:shrink-0 rounded-[10px] overflow-hidden">
         <Image
           src={newsletter.imageUrl || "/imgs/components_placeholder.png"}
           alt={newsletter.title}

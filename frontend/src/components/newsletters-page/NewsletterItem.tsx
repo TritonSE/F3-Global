@@ -19,7 +19,7 @@ export function NewsletterItem({ newsletter }: Props) {
       href={`/newsletters/${newsletter._id}`}
       className="flex flex-col gap-[20px] items-center justify-center group cursor-pointer"
     >
-      <div className="relative w-full aspect-[415/302] overflow-hidden">
+      <div className="relative w-full aspect-[415/302] overflow-hidden rounded-[10px]">
         <Image
           src={newsletter.imageUrl || "/imgs/components_placeholder.png"}
           alt={newsletter.title}

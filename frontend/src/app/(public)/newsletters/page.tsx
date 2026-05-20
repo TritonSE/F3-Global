@@ -63,7 +63,7 @@ export default function NewslettersPage() {
         <NewsletterDescription newsletter={featured} />
       ) : null}
 
-      <section className="flex flex-col gap-[30px] md:gap-[50px] items-start pt-[30px] md:pt-[50px] pb-[50px] md:pb-[100px] w-full">
+      <section className="flex flex-col gap-[20px] md:gap-[50px] items-start pt-[30px] md:pt-[50px] pb-[50px] md:pb-[100px] w-full">
         <NewsletterFilter
           search={search}
           onSearchChange={handleSearchChange}
