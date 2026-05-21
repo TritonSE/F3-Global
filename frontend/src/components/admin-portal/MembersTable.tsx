@@ -24,7 +24,7 @@ const COLUMN_TEMPLATE =
 const HEAD_CLASS = "text-[#1E1E1E] text-[14px] font-semibold uppercase";
 
 function countryName(code: string): string {
-  return countriesInfo.getName(code, "en") || code;
+  return countriesInfo.getName(code, "en", { select: "alias" }) || code;
 }
 
 function fileNameFromUrl(url: string): string {
@@ -177,7 +177,10 @@ export function MembersTable({
             />
           }
         />
-        <HeaderCell label="Position" />
+        <HeaderCell
+          icon={<img src="/imgs/members-editor/positions.png" alt="" width={20} height={20} />}
+          label="Position"
+        />
         <HeaderCell icon={<IconMail />} label="Email" />
         <HeaderCell icon={<IconLinkedin />} label="LinkedIn" />
         <HeaderCell
