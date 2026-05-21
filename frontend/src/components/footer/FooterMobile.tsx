@@ -20,7 +20,7 @@ export function FooterMobile({ onContactClick, onTermsClick }: FooterMobileProps
     <footer className="w-full overflow-hidden rounded-b-[44px] bg-[#f4f4f4] px-[30px] pb-[50px] pt-[50px] shadow-[0_18px_30px_rgba(0,0,0,0.12)]">
       <div className="grid grid-cols-2 gap-x-10 gap-y-6 pb-6">
         <div className="flex flex-col items-start gap-[14px]">
-          <h3 className="text-[16px] font-semibold text-[#172447]">Services</h3>
+          <h3 className="text-[12px] font-semibold text-[#172447]">Services</h3>
           <FooterMiniBtn text="Donors" link="/donors" className="text-left text-[12px] leading-6" />
           <FooterMiniBtn
             text="Clients"
@@ -50,7 +50,7 @@ export function FooterMobile({ onContactClick, onTermsClick }: FooterMobileProps
         </div>
 
         <div className="flex flex-col items-start gap-[14px]">
-          <h3 className="text-[16px] font-semibold text-[#172447]">Company</h3>
+          <h3 className="text-[12px] font-semibold text-[#172447]">Company</h3>
           <FooterMiniBtn
             text="About"
             link="/about-us"
@@ -79,15 +79,15 @@ export function FooterMobile({ onContactClick, onTermsClick }: FooterMobileProps
       <div className="h-px w-full bg-[#d6d6d6]" />
 
       <div className="mt-6 flex flex-col items-start gap-[15px]">
-        <p className="text-[14px]">{footerContact.phone}</p>
+        <p className="text-[12px]">{footerContact.phone}</p>
         <a
-          className="text-[14px] underline-offset-2 decoration-[7%] decoration-solid hover:underline"
+          className="text-[12px] underline-offset-2 decoration-[7%] decoration-solid hover:underline"
           href={`mailto:${footerContact.email}`}
         >
           {footerContact.email}
         </a>
         <a
-          className="text-[14px] underline-offset-2 decoration-[7%] decoration-solid hover:underline"
+          className="text-[12px] underline-offset-2 decoration-[7%] decoration-solid hover:underline"
           href={footerContact.addressHref}
           target="_blank"
           rel="noopener noreferrer"
