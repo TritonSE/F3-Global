@@ -2,6 +2,7 @@
 
 import countriesInfo from "i18n-iso-countries";
 import enLocale from "i18n-iso-countries/langs/en.json";
+import Image from "next/image";
 import { useState } from "react";
 
 import {
@@ -178,7 +179,9 @@ export function MembersTable({
           }
         />
         <HeaderCell
-          icon={<img src="/imgs/members-editor/positions.png" alt="" width={20} height={20} />}
+          icon={
+            <Image src="/imgs/members-editor/positions.png" alt="" width={20} height={20} />
+          }
           label="Position"
         />
         <HeaderCell icon={<IconMail />} label="Email" />
