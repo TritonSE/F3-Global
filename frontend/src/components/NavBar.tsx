@@ -24,7 +24,7 @@ function NavLinks({
 }) {
   return (
     <>
-      <div className="flex w-full max-w-[1512px] mx-auto justify-between items-center px-[30px] pt-[10px] leading-none">
+      <div className="hidden md:flex w-full max-w-[1512px] mx-auto justify-between items-center px-[30px] pt-[10px] leading-none">
         <div className="flex items-center gap-[12px] w-[274.5px] h-[55px] flex-shrink-0">
           <Link
             href="/"
@@ -143,6 +143,174 @@ function NavLinks({
         </div>
       </div>
     </>
+  );
+}
+
+function MobileNavBar({
+  isActive,
+  isOpen,
+  onToggle,
+  onLinkClick,
+  containerRef,
+}: {
+  isActive: (href: string) => boolean;
+  isOpen: boolean;
+  onToggle: () => void;
+  onLinkClick: () => void;
+  containerRef: React.RefObject<HTMLDivElement | null>;
+}) {
+  const mobileLinks: { href: string; label: string }[] = [
+    { href: "/", label: "Home" },
+    { href: "/about-us", label: "About Us" },
+    { href: "/meet-the-team", label: "Meet The Team" },
+    { href: "/donors", label: "Donors" },
+    { href: "/members", label: "Members" },
+    { href: "/clients", label: "Clients" },
+    { href: "/newsletters", label: "Newsletters" },
+  ];
+
+  return (
+    <div
+      ref={containerRef}
+      className="md:hidden flex flex-col w-full max-w-[412px] px-[30px] py-[15px] box-border"
+    >
+      <div className="flex items-center justify-between w-full">
+        <Link
+          href="/"
+          onClick={onLinkClick}
+          className="relative z-10 flex items-center h-[30px] w-[30px] flex-shrink-0"
+          aria-label="F3 Global home"
+        >
+          <Image
+            src="/imgs/f3-logo.svg"
+            alt="F3 Global Logo"
+            width={30}
+            height={30}
+            className="block w-[30px] h-[30px] object-contain"
+          />
+        </Link>
+
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isOpen}
+          className="relative z-10 flex items-center justify-center w-[30px] h-[30px] text-[#172447] cursor-pointer"
+        >
+          <span
+            className="absolute inset-0 flex items-center justify-center"
+            style={{
+              opacity: isOpen ? 0 : 1,
+              transition: "opacity 0.3s linear",
+            }}
+            aria-hidden="true"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3 5.5H17M3 10H17M3 14.5H17"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+            </svg>
+          </span>
+          <span
+            className="absolute inset-0 flex items-center justify-center"
+            style={{
+              opacity: isOpen ? 1 : 0,
+              transition: "opacity 0.3s linear",
+            }}
+            aria-hidden="true"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4.5 4.5L15.5 15.5M15.5 4.5L4.5 15.5"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <div
+        className="w-full"
+        style={{
+          transform: "translateY(-30px)",
+          marginBottom: isOpen ? "-30px" : "0px",
+          transition: "margin-bottom 0.3s cubic-bezier(0.45, 0, 0.55, 1)",
+        }}
+      >
+        <div
+          className="grid w-full"
+          style={{
+            gridTemplateRows: isOpen ? "1fr" : "0fr",
+            transition: "grid-template-rows 0.3s cubic-bezier(0.45, 0, 0.55, 1)",
+          }}
+          aria-hidden={!isOpen}
+        >
+          <div className="overflow-hidden">
+            <div
+              className="flex flex-col gap-[15px] items-end w-full"
+              style={{
+                opacity: isOpen ? 1 : 0,
+                transition: "opacity 0.2s linear",
+              }}
+            >
+              <div className="flex flex-col gap-[10px] items-center w-full">
+                <p className="text-[10px] font-[700] leading-[1.5] text-[#C7C7C7] text-center font-dm">
+                  PAGES
+                </p>
+                {mobileLinks.map(({ href, label }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    onClick={onLinkClick}
+                    tabIndex={isOpen ? 0 : -1}
+                    className={`text-[14px] leading-[20px] font-[400] font-dm text-center ${
+                      isActive(href) ? "text-[#172447] font-[600]" : "text-black"
+                    }`}
+                  >
+                    {label}
+                  </Link>
+                ))}
+              </div>
+
+              <Link
+                href="https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onLinkClick}
+                tabIndex={isOpen ? 0 : -1}
+                className="flex items-center justify-center gap-[10px] w-full px-[20px] py-[7px] rounded-full bg-[#172447] border border-[#172447] text-white text-[14px] font-[600] leading-[1.5] font-dm"
+              >
+                DONATE
+                <Image
+                  src="/imgs/ic_arrowforward_white.svg"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="w-[20px] h-[20px]"
+                />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -293,11 +461,33 @@ export default function NavBar() {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   //const [isBlinking, setIsBlinking] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const mobileNavRef = useRef<HTMLDivElement>(null);
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const handlePointerDown = (event: MouseEvent | TouchEvent) => {
+      const target = event.target as Node | null;
+      if (mobileNavRef.current && target && !mobileNavRef.current.contains(target)) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("touchstart", handlePointerDown);
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("touchstart", handlePointerDown);
+    };
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+
     if (!isDropdownOpen) {
       return;
     }
@@ -321,8 +511,6 @@ export default function NavBar() {
   }, [pathname]);
 
   if (pathname === "/login") return null;
-
-  const navHeight = 97;
 
   const handleToggleDropdown = () => {
     if (isDropdownOpen) {
@@ -364,13 +552,25 @@ export default function NavBar() {
   };
 
   const wrapperClass =
-    "fixed top-0 left-0 right-0 z-50 w-full font-dm bg-[rgba(244,244,244,0.70)] backdrop-blur-[10.85px] shadow-[0_301px_84px_0_rgba(0,0,0,0.00),0_12px_26px_0_rgba(0,0,0,0.10)]";
+    "fixed top-0 left-0 right-0 z-50 w-full font-dm shadow-[0_301px_84px_0_rgba(0,0,0,0.00),0_12px_26px_0_rgba(0,0,0,0.10)]";
 
   return (
     <>
-      <div aria-hidden="true" style={{ height: navHeight }} />
+      <div aria-hidden="true" className="h-[60px] md:h-[97px] w-full" />
       <div className={wrapperClass}>
-        <nav className="flex justify-between items-center">
+        <div
+          className="md:hidden absolute inset-0 -z-20 bg-[#ececec] pointer-events-none"
+          style={{
+            opacity: isMobileMenuOpen ? 1 : 0,
+            transition: "opacity 0.2s linear",
+          }}
+          aria-hidden="true"
+        />
+        <div
+          className="absolute inset-0 -z-10 bg-[rgba(236,236,236,0.70)] backdrop-blur-[10.85px] pointer-events-none"
+          aria-hidden="true"
+        />
+        <nav className="w-full flex justify-between items-center">
           <NavLinks
             isActive={isActive}
             isDropdownOpen={isDropdownOpen}
@@ -380,11 +580,22 @@ export default function NavBar() {
             buttonRef={buttonRef}
             //isBlinking={isBlinking}
           />
+          <MobileNavBar
+            isActive={isActive}
+            isOpen={isMobileMenuOpen}
+            onToggle={() => {
+              setIsMobileMenuOpen((v) => !v);
+            }}
+            onLinkClick={() => {
+              setIsMobileMenuOpen(false);
+            }}
+            containerRef={mobileNavRef}
+          />
         </nav>
 
         {isDropdownOpen && (
           <div
-            className="origin-top"
+            className="hidden md:block origin-top"
             style={{
               animation: isClosing
                 ? "slideUp 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards"
