@@ -19,7 +19,7 @@ const buildPageList = (current: number, total: number): (number | "ellipsis")[] 
 };
 
 const ChevronLeft = () => (
-  <svg viewBox="0 0 32 32" fill="none" className="size-[32px]" aria-hidden>
+  <svg viewBox="0 0 32 32" fill="none" className="size-[20px] md:size-[32px]" aria-hidden>
     <path
       d="M19 8L11 16L19 24"
       stroke="#1e1e1e"
@@ -31,7 +31,7 @@ const ChevronLeft = () => (
 );
 
 const ChevronRight = () => (
-  <svg viewBox="0 0 32 32" fill="none" className="size-[32px]" aria-hidden>
+  <svg viewBox="0 0 32 32" fill="none" className="size-[20px] md:size-[32px]" aria-hidden>
     <path
       d="M13 8L21 16L13 24"
       stroke="#1e1e1e"
@@ -43,7 +43,7 @@ const ChevronRight = () => (
 );
 
 const ChevronDoubleLeft = () => (
-  <svg viewBox="0 0 32 32" fill="none" className="size-[32px]" aria-hidden>
+  <svg viewBox="0 0 32 32" fill="none" className="size-[20px] md:size-[32px]" aria-hidden>
     <path
       d="M22 8L14 16L22 24M16 8L8 16L16 24"
       stroke="#1e1e1e"
@@ -55,7 +55,7 @@ const ChevronDoubleLeft = () => (
 );
 
 const ChevronDoubleRight = () => (
-  <svg viewBox="0 0 32 32" fill="none" className="size-[32px]" aria-hidden>
+  <svg viewBox="0 0 32 32" fill="none" className="size-[20px] md:size-[32px]" aria-hidden>
     <path
       d="M10 8L18 16L10 24M16 8L24 16L16 24"
       stroke="#1e1e1e"
@@ -75,7 +75,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Props) {
   return (
     <nav
       style={{ fontFamily: "'Rubik', sans-serif" }}
-      className="flex gap-[20px] items-center justify-center"
+      className="flex gap-[10px] md:gap-[20px] items-center justify-center"
       aria-label="Pagination"
     >
       <button
@@ -83,7 +83,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Props) {
         onClick={() => onPageChange(1)}
         disabled={!canPrev}
         aria-label="First page"
-        className="size-[32px] flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer hover:opacity-70 transition-opacity"
+        className="size-[20px] md:size-[32px] flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer hover:opacity-70 transition-opacity"
       >
         <ChevronDoubleLeft />
       </button>
@@ -92,16 +92,16 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Props) {
         onClick={() => onPageChange(currentPage - 1)}
         disabled={!canPrev}
         aria-label="Previous page"
-        className="size-[32px] flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer hover:opacity-70 transition-opacity"
+        className="size-[20px] md:size-[32px] flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer hover:opacity-70 transition-opacity"
       >
         <ChevronLeft />
       </button>
-      <ul className="flex gap-[10px] items-center">
+      <ul className="flex gap-[5px] md:gap-[10px] items-center">
         {pages.map((p, i) =>
           p === "ellipsis" ? (
             <li
               key={`e-${String(i)}`}
-              className="size-[29px] flex items-center justify-center font-normal text-[16px] leading-[24px] text-[#5d5d5d]"
+              className="size-[29px] flex items-center justify-center font-normal text-[12px] leading-[16px] md:text-[16px] md:leading-[24px] text-[#5d5d5d]"
               aria-hidden
             >
               ...
@@ -113,7 +113,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Props) {
                 onClick={() => onPageChange(p)}
                 aria-label={`Page ${String(p)}`}
                 aria-current={p === currentPage ? "page" : undefined}
-                className={`size-[29px] flex items-center justify-center rounded-[99px] font-normal text-[16px] leading-[24px] cursor-pointer transition-colors ${
+                className={`size-[29px] flex items-center justify-center rounded-[99px] font-normal text-[12px] leading-[16px] md:text-[16px] md:leading-[24px] cursor-pointer transition-colors ${
                   p === currentPage
                     ? "bg-[#f4f4f4] text-[#1e1e1e]"
                     : "text-[#5d5d5d] hover:bg-[#f4f4f4]"
@@ -130,7 +130,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Props) {
         onClick={() => onPageChange(currentPage + 1)}
         disabled={!canNext}
         aria-label="Next page"
-        className="size-[32px] flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer hover:opacity-70 transition-opacity"
+        className="size-[20px] md:size-[32px] flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer hover:opacity-70 transition-opacity"
       >
         <ChevronRight />
       </button>
@@ -139,7 +139,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Props) {
         onClick={() => onPageChange(totalPages)}
         disabled={!canNext}
         aria-label="Last page"
-        className="size-[32px] flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer hover:opacity-70 transition-opacity"
+        className="size-[20px] md:size-[32px] flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer hover:opacity-70 transition-opacity"
       >
         <ChevronDoubleRight />
       </button>
