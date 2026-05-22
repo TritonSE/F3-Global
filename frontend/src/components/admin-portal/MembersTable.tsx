@@ -179,9 +179,7 @@ export function MembersTable({
           }
         />
         <HeaderCell
-          icon={
-            <Image src="/imgs/members-editor/positions.png" alt="" width={20} height={20} />
-          }
+          icon={<Image src="/imgs/members-editor/positions.png" alt="" width={20} height={20} />}
           label="Position"
         />
         <HeaderCell icon={<IconMail />} label="Email" />
