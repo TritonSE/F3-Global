@@ -238,7 +238,7 @@ export default function MeetTheTeam() {
     <>
       <div className="bg-white overflow-x-hidden">
         <div className="flex w-full flex-col items-center gap-[20px] px-[30px] pt-[50px] text-center md:h-[774px] md:flex-row md:items-center md:justify-between md:px-[100px] md:py-0 md:text-left">
-          <div className="order-2 flex max-w-[580px] flex-col items-center gap-[20px] md:order-1 md:items-start md:gap-[50px]">
+          <div className="order-2 flex w-full max-w-[580px] flex-col items-center gap-[20px] md:order-1 md:items-start md:gap-[50px] md:basis-1/2 md:max-w-[580px]">
             <h1 className="font-ethic text-4xl leading-tight font-light text-[#1E1E1E] mt-[20px] md:text-[64px] md:leading-[1.1]">
               Meet the Team <br /> Without <span className="italic">Borders</span>
             </h1>
@@ -259,15 +259,18 @@ export default function MeetTheTeam() {
               />
             </div>
           </div>
-          <div className="order-1 relative aspect-[646/581] w-full overflow-hidden rounded-[10px] md:order-2 md:w-[646px] md:flex-shrink-0">
-            <Image
-              src="/imgs/space.webp"
-              alt="Space View of Earth"
-              fill
-              sizes="646px"
-              className="object-cover object-center bg-cover bg-no-repeat bg-center"
-              priority
-            />
+          <div className="w-full md:basis-1/2 order-1 md:order-2 flex justify-center md:justify-end">
+            <div className="w-full max-w-[646px] overflow-hidden rounded-[10px]">
+              <Image
+                src="/imgs/space.webp"
+                alt="Space View of Earth"
+                width={646}
+                height={581}
+                sizes="646px"
+                className="w-full h-auto object-cover object-center"
+                priority
+              />
+            </div>
           </div>
         </div>
         <div
