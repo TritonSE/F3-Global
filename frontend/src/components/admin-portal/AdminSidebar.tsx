@@ -115,20 +115,20 @@ function SignOutIcon({ color = "currentColor" }: IconProps) {
   );
 }
 
+const navItems: { id: string; label: string; icon: (props: IconProps) => React.JSX.Element }[] = [
+  { id: "home", label: "Home", icon: HomeIcon },
+  { id: "about-us", label: "About Us", icon: GlobeIcon },
+  { id: "meet-the-team", label: "Meet the Team", icon: TeamIcon },
+  { id: "donate", label: "Donate", icon: HeartIcon },
+  { id: "members", label: "Members", icon: MembersIcon },
+  { id: "clients", label: "Clients", icon: ClientsIcon },
+  { id: "newsletter", label: "Newsletter", icon: NewsletterIcon },
+];
+
 export function AdminSidebar() {
   const router = useRouter();
-  const [activeSection, setActiveSection] = useState("home");
   const [user, setUser] = useState<User | null>(null);
-
-  const navItems: { id: string; label: string; icon: (props: IconProps) => React.JSX.Element }[] = [
-    { id: "home", label: "Home", icon: HomeIcon },
-    { id: "about-us", label: "About Us", icon: GlobeIcon },
-    { id: "meet-the-team", label: "Meet the Team", icon: TeamIcon },
-    { id: "donate", label: "Donate", icon: HeartIcon },
-    { id: "members", label: "Members", icon: MembersIcon },
-    { id: "clients", label: "Clients", icon: ClientsIcon },
-    { id: "newsletter", label: "Newsletter", icon: NewsletterIcon },
-  ];
+  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
@@ -137,29 +137,8 @@ export function AdminSidebar() {
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible.length > 0) {
-          setActiveSection(visible[0].target.id);
-        }
-      },
-      { rootMargin: "-10% 0px -50% 0px", threshold: 0 },
-    );
-
-    const sectionIds = navItems.map((item) => item.id);
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
   const handleNavClick = (id: string) => {
+    setActiveSection(id);
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
