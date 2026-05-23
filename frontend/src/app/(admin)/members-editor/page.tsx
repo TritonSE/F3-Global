@@ -31,7 +31,7 @@ const PAGE_SIZE = 6;
 
 function TableSkeleton() {
   return (
-    <div className="w-full rounded-[10px] border border-[#C7C7C7] overflow-hidden">
+    <div className="w-full rounded-[16px] border border-[#C7C7C7] overflow-hidden">
       <div className="h-[58px] bg-[#F4F4F4]" />
       {Array.from({ length: PAGE_SIZE }).map((_, i) => (
         <div key={i} className="border-t border-[#C7C7C7] px-[25px] py-[20px]">
@@ -163,7 +163,7 @@ export default function TeamMembersEditorPage() {
       onClick={() => setIsAdding(true)}
       className="flex items-center justify-center gap-[10px] rounded-[99px] bg-[#1169B0] px-[20px] py-[10px] cursor-pointer"
     >
-      <IconAdd />
+      <IconAdd className="size-[32px]" />
       <span className="font-dm-sans text-[16px] font-semibold text-white">ADD TEAM MEMBER</span>
     </button>
   );

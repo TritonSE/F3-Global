@@ -22,7 +22,7 @@ countriesInfo.registerLocale(enLocale);
 const COLUMN_TEMPLATE =
   "minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.2fr) minmax(0,1.3fr) minmax(0,1fr) 48px";
 
-const HEAD_CLASS = "text-[#1E1E1E] text-[14px] font-semibold uppercase";
+const HEAD_CLASS = "text-[#1E1E1E] text-[16px] font-semibold uppercase";
 
 function countryName(code: string): string {
   return countriesInfo.getName(code, "en", { select: "alias" }) || code;
@@ -52,7 +52,7 @@ function HeaderCell({
   return (
     <div
       className={`flex items-center ${HEAD_CLASS} ${
-        spread ? "justify-between pr-[20px]" : "gap-[8px]"
+        spread ? "justify-between pr-[32px]" : "gap-[8px]"
       }`}
     >
       <span className="flex items-center gap-[8px]">
@@ -82,7 +82,7 @@ function LocationFilter({
     }`;
 
   return (
-    <div className="relative ml-[16px]">
+    <div className="relative ml-[28px]">
       <button
         type="button"
         aria-label="Filter by location"
@@ -147,7 +147,7 @@ export function MembersTable({
   onDelete,
 }: MembersTableProps) {
   return (
-    <div className="w-full rounded-[10px] border border-[#C7C7C7] overflow-hidden">
+    <div className="w-full rounded-[16px] border border-[#C7C7C7] overflow-hidden">
       <div
         className="grid items-center bg-[#F4F4F4] px-[25px] py-[18px]"
         style={{ gridTemplateColumns: COLUMN_TEMPLATE }}
@@ -211,21 +211,21 @@ export function MembersTable({
         <div
           key={member._id}
           onClick={() => onRowClick?.(member)}
-          className="grid items-center px-[25px] py-[20px] border-t border-[#C7C7C7] bg-white cursor-pointer hover:bg-[#FAFAFA] transition-colors"
+          className="grid items-center min-h-[80px] px-[25px] py-[20px] border-t border-[#C7C7C7] bg-white cursor-pointer hover:bg-[#FAFAFA] transition-colors"
           style={{ gridTemplateColumns: COLUMN_TEMPLATE }}
         >
-          <span className="text-[16px] text-[#1E1E1E] truncate pr-[10px]">{member.name}</span>
-          <span className="text-[16px] text-[#1E1E1E] truncate pr-[10px]">
+          <span className="text-[16px] text-[#1E1E1E] truncate pr-[24px]">{member.name}</span>
+          <span className="text-[16px] text-[#1E1E1E] truncate pr-[24px]">
             {countryName(member.country)}
           </span>
-          <span className="text-[16px] text-[#1E1E1E] truncate pr-[10px]">
+          <span className="text-[16px] text-[#1E1E1E] truncate pr-[24px]">
             {member.memberPosition}
           </span>
-          <span className="text-[16px] text-[#1E1E1E] truncate pr-[10px]">{member.email}</span>
-          <span className="text-[16px] text-[#1E1E1E] truncate pr-[10px]">
+          <span className="text-[16px] text-[#1E1E1E] truncate pr-[24px]">{member.email}</span>
+          <span className="text-[16px] text-[#1E1E1E] truncate pr-[24px]">
             {member.linkedinUrl}
           </span>
-          <span className="flex items-center gap-[8px] text-[16px] text-[#1E1E1E] truncate pr-[10px]">
+          <span className="flex items-center gap-[8px] text-[16px] text-[#1E1E1E] truncate pr-[24px]">
             <IconFile className="size-[24px] shrink-0" />
             <span className="truncate">{fileNameFromUrl(member.headshotUrl)}</span>
           </span>
