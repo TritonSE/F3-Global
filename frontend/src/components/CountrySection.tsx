@@ -1,7 +1,7 @@
 import countriesInfo from "i18n-iso-countries";
 import enLocale from "i18n-iso-countries/langs/en.json";
 import Image from "next/image";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { MemberCard } from "./MemberCard";
 
@@ -17,6 +17,58 @@ type CountrySectionProps = {
 
 export const CountrySection: React.FC<CountrySectionProps> = ({ id, countryName, members }) => {
   const memberCount = members.length;
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [containerWidth, setContainerWidth] = useState<number>(0);
+  const [membersPerRow, setMembersPerRow] = useState<number>(0);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const updateMeasurements = () => {
+      // use clientWidth so padding is accounted for (available inner width)
+      setContainerWidth(el.clientWidth);
+
+      // Find all visible member-card elements and measure their rects
+      const children = Array.from(el.querySelectorAll(".member-card")).filter(
+        (c) => (c as HTMLElement).offsetParent !== null,
+      ) as HTMLElement[];
+
+      if (children.length === 0) {
+        setMembersPerRow(0);
+        return;
+      }
+
+      const rects = children.map((c) => c.getBoundingClientRect());
+
+      // Group items by row by comparing their top positions (allow small tolerance)
+      const rows: DOMRect[][] = [];
+      rects.forEach((r) => {
+        const found = rows.find((row) => Math.abs(row[0].top - r.top) < 12);
+        if (found) found.push(r);
+        else rows.push([r]);
+      });
+
+      // Compute grid columns based on available inner width: floor((width - 150) / 250)
+      const width = el.clientWidth;
+      const computedCols = Math.max(1, Math.floor((width - 150) / 250));
+      // cap to a maximum of 4 columns and not more than members available
+      const cols = Math.min(4, computedCols);
+      setMembersPerRow(cols);
+    };
+
+    const ro = new ResizeObserver(() => updateMeasurements());
+    ro.observe(el);
+    // also observe a single child for changes
+    const firstChild = el.querySelector(".member-card");
+    if (firstChild) ro.observe(firstChild);
+
+    // initial
+    updateMeasurements();
+
+    return () => ro.disconnect();
+  }, [members]);
 
   const mobileCountryNameLines = useMemo(() => {
     if (countryName.length <= 14 || !countryName.includes(" ")) return null;
@@ -112,7 +164,15 @@ export const CountrySection: React.FC<CountrySectionProps> = ({ id, countryName,
             </div>
           </div>
           <div className="flex flex-col items-start gap-[25px] self-stretch">
-            <div className="flex flex-wrap items-start justify-center gap-x-[30px] gap-y-8 self-stretch px-0 md:grid md:grid-cols-4 md:justify-items-start md:gap-[70px] md:px-[50px]">
+            <div
+              ref={containerRef}
+              className="flex flex-wrap items-start justify-center gap-x-[30px] gap-y-8 self-stretch px-0 md:grid md:justify-items-start md:gap-[70px] md:px-[50px]"
+              style={
+                membersPerRow
+                  ? { gridTemplateColumns: `repeat(${membersPerRow}, minmax(0, 1fr))` }
+                  : undefined
+              }
+            >
               {members.map((member) => (
                 <MemberCard key={member._id} member={member} />
               ))}
