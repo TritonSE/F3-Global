@@ -4,6 +4,7 @@ import type { Document, Types } from "mongoose";
 
 type HighlightItem = {
   _id?: string | Types.ObjectId;
+  clientName: string;
   quoteText: string;
   previewText: string;
   imageUrl: string;
@@ -17,6 +18,7 @@ export type HighlightItemModel = {
 
 const HighlightItemSchema = new Schema<HighlightItem>(
   {
+    clientName: { type: String, required: true },
     quoteText: { type: String, required: true },
     previewText: { type: String, required: true },
     imageUrl: { type: String, required: true },

@@ -22,10 +22,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { getAllCities, updateCities } from "@/api/cities";
 import { DraggableSortablePill } from "@/components/admin-portal/DraggableSortablePill";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
-import { PublishButton } from "@/components/admin-portal/PublishButton";
-import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { PreviewMode } from "@/components/admin-portal/preview-components/PreviewMode";
 import { PreviewNavBar } from "@/components/admin-portal/preview-components/PreviewNavBar";
+import { PublishButton } from "@/components/admin-portal/PublishButton";
+import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { auth } from "@/firebase/firebase";
 
@@ -196,7 +196,7 @@ export default function CitiesEditor() {
           ref={containerRef}
           className="bg-white rounded-[10px] overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.1)] w-full"
         >
-          <PreviewNavBar activeItem="Get Involved" />
+          <PreviewNavBar activeItem="Home" />
 
           <div className="h-[350px] flex items-center justify-center relative w-full overflow-hidden px-[24px]">
             <div className="flex animate-marquee whitespace-nowrap">
