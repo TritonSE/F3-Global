@@ -1,6 +1,7 @@
 "use client";
 
 import { onAuthStateChanged } from "firebase/auth";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -12,6 +13,8 @@ import {
 } from "@/api/newsletters";
 import { AdminSidebar } from "@/components/admin-portal/AdminSidebar";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
+import { PreviewMode } from "@/components/admin-portal/preview-components/PreviewMode";
+import { PreviewNavBar } from "@/components/admin-portal/preview-components/PreviewNavBar";
 import { auth } from "@/firebase/firebase";
 
 const PAGE_SIZE = 5;
@@ -274,6 +277,16 @@ function fileNameFromUrl(value?: string) {
   return decoded.split("/").pop() || decoded || "image";
 }
 
+function formatPreviewDate(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleDateString("en-US", {
+    month: "long",
+    day: "2-digit",
+    year: "numeric",
+  });
+}
+
 function cellClass(extra = "", featured = false) {
   return `flex h-[56px] min-w-0 items-center px-[14px] py-[10px] font-dm-sans text-[14px] leading-[20px] text-[#1E1E1E] ${
     featured ? "bg-[#EEF8FF]" : "bg-white"
@@ -344,6 +357,224 @@ function NewsletterRow({ newsletter, featured }: { newsletter: Newsletter; featu
   );
 }
 
+function PreviewArticleMeta({
+  newsletter,
+  compact = false,
+}: {
+  newsletter: Newsletter;
+  compact?: boolean;
+}) {
+  const textClass = compact
+    ? "text-[12px] leading-[16px]"
+    : "text-[14px] leading-[20px] md:text-[16px] md:leading-[24px]";
+
+  return (
+    <div className="flex w-full items-center justify-between gap-[12px]">
+      <div className="flex min-w-0 items-center gap-[8px]">
+        <span className={`font-dm-sans font-normal text-[#5D5D5D] whitespace-nowrap ${textClass}`}>
+          {formatPreviewDate(newsletter.uploadDate)}
+        </span>
+        <span className="size-[8px] rounded-full bg-[#A5D0F2] shrink-0" aria-hidden />
+        <span className={`font-dm-sans font-normal text-[#5D5D5D] whitespace-nowrap ${textClass}`}>
+          Article
+        </span>
+      </div>
+      <span className={`font-dm-sans font-normal text-[#5D5D5D] whitespace-nowrap ${textClass}`}>
+        {newsletter.views} {newsletter.views === 1 ? "view" : "views"}
+      </span>
+    </div>
+  );
+}
+
+function NewsletterHomePreview({
+  newsletters,
+  onSelectArticle,
+}: {
+  newsletters: Newsletter[];
+  onSelectArticle: (newsletter: Newsletter) => void;
+}) {
+  const featured = newsletters.find((newsletter) => newsletter.featured) ?? newsletters[0] ?? null;
+  const articles = newsletters.filter((newsletter) => newsletter._id !== featured?._id).slice(0, 6);
+
+  if (!featured) {
+    return (
+      <div className="flex h-[360px] items-center justify-center font-dm-sans text-[16px] text-[#5D5D5D]">
+        No newsletter articles found.
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex h-[560px] flex-col overflow-y-auto bg-white">
+      <section className="flex min-h-[430px] items-center justify-between gap-[50px] px-[80px] py-[50px]">
+        <div className="flex w-[520px] shrink-0 flex-col items-start gap-[34px]">
+          <div className="flex w-full flex-col gap-[16px]">
+            <PreviewArticleMeta newsletter={featured} compact />
+            <h1 className="font-ethic text-[52px] font-light leading-[1.1] text-[#1E1E1E]">
+              {featured.title}
+            </h1>
+            <p className="line-clamp-4 w-full font-dm-sans text-[14px] leading-[20px] text-[#5D5D5D]">
+              {featured.blurb}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => onSelectArticle(featured)}
+            className="flex cursor-pointer items-center gap-[8px] py-[10px] pr-[12px] font-dm-sans text-[14px] font-semibold text-[#1E1E1E] hover:opacity-70"
+          >
+            Read More
+            <Image src="/imgs/arrow_right_alt.svg" alt="" width={20} height={20} />
+          </button>
+        </div>
+        <button
+          type="button"
+          onClick={() => onSelectArticle(featured)}
+          className="relative h-[315px] flex-1 cursor-pointer overflow-hidden rounded-[10px] bg-[#F4F4F4]"
+        >
+          <Image
+            src={featured.imageUrl || "/imgs/components_placeholder.png"}
+            alt={featured.title}
+            fill
+            className="object-cover"
+            sizes="620px"
+          />
+        </button>
+      </section>
+
+      <section className="flex flex-col gap-[40px] px-[80px] pb-[60px] pt-[40px]">
+        <div className="flex items-center justify-between">
+          <div className="flex w-[421px] items-center gap-[8px] rounded-[99px] border border-[#C7C7C7] px-[20px] py-[10px]">
+            <SearchIcon />
+            <span className="font-rubik text-[16px] leading-[24px] text-[#5D5D5D]">
+              Search by keyword...
+            </span>
+          </div>
+          <div className="flex items-center gap-[10px] font-dm-sans text-[16px] text-[#5D5D5D]">
+            <span>Sort by:</span>
+            <span className="rounded-[99px] border border-[#C7C7C7] px-[20px] py-[10px] text-[#1E1E1E]">
+              Most Recent
+            </span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 gap-x-[24px] gap-y-[40px]">
+          {articles.map((newsletter) => (
+            <button
+              key={newsletter._id}
+              type="button"
+              onClick={() => onSelectArticle(newsletter)}
+              className="group flex cursor-pointer flex-col gap-[18px] text-left"
+            >
+              <div className="relative aspect-[415/302] w-full overflow-hidden rounded-[10px] bg-[#F4F4F4]">
+                <Image
+                  src={newsletter.imageUrl || "/imgs/components_placeholder.png"}
+                  alt={newsletter.title}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                  sizes="330px"
+                />
+              </div>
+              <div className="flex flex-col gap-[10px]">
+                <PreviewArticleMeta newsletter={newsletter} compact />
+                <h3 className="line-clamp-3 font-dm-sans text-[20px] leading-[28px] text-[#1E1E1E] group-hover:underline">
+                  {newsletter.title}
+                </h3>
+              </div>
+            </button>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function ShareIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className="size-[22px]" aria-hidden="true">
+      <path
+        d="M18 8a3 3 0 1 0-2.82-4H15a3 3 0 0 0 .18 1L8.9 8.63a3 3 0 1 0 0 6.74L15.18 19A3 3 0 1 0 16 17.27l-6.28-3.63a3.1 3.1 0 0 0 0-3.28L16 6.73A2.99 2.99 0 0 0 18 8Z"
+        fill="#1E1E1E"
+      />
+    </svg>
+  );
+}
+
+function NewsletterArticlePreview({
+  newsletter,
+  onBackToList,
+}: {
+  newsletter: Newsletter;
+  onBackToList: () => void;
+}) {
+  const formattedDate = formatPreviewDate(newsletter.uploadDate);
+
+  return (
+    <div className="flex h-[560px] flex-col overflow-y-auto bg-white pb-[50px]">
+      <div className="px-[80px] pb-[12px] pt-[32px]">
+        <button
+          type="button"
+          onClick={onBackToList}
+          className="group flex cursor-pointer items-center gap-[10px] py-[8px] pr-[15px] text-[#1E1E1E]"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" className="size-[24px]" aria-hidden="true">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+          </svg>
+          <span className="font-rubik text-[16px] transition-transform duration-200 group-hover:translate-x-[6px]">
+            Back
+          </span>
+        </button>
+      </div>
+
+      <section className="flex flex-col gap-[22px] px-[135px] pb-[34px] pt-[12px]">
+        <div className="flex flex-col">
+          <span className="font-rubik text-[14px] leading-[20px] text-[#5D5D5D]">Article</span>
+          <h1 className="font-ethic text-[52px] font-light leading-[1.35] text-[#172447]">
+            {newsletter.title}
+          </h1>
+        </div>
+        <div className="flex items-center gap-[8px] font-dm-sans text-[14px] leading-[20px] text-[#5D5D5D]">
+          <span>Posted on {formattedDate}</span>
+          <span className="size-[8px] rounded-full bg-[#A5D0F2]" aria-hidden />
+          <button
+            type="button"
+            className="flex cursor-pointer items-center gap-[8px] text-[#1E1E1E] hover:underline"
+          >
+            Share
+            <ShareIcon />
+          </button>
+        </div>
+      </section>
+
+      <div className="px-[135px] pb-[36px]">
+        <div className="relative h-[300px] w-full overflow-hidden rounded-[10px] bg-[#F4F4F4]">
+          <Image
+            src={newsletter.imageUrl || "/imgs/components_placeholder.png"}
+            alt={newsletter.title}
+            fill
+            className="object-cover"
+            sizes="900px"
+          />
+        </div>
+      </div>
+
+      <section className="flex flex-col gap-[18px] px-[135px]">
+        <h2 className="font-dm-sans text-[28px] font-bold leading-[1.5] tracking-[-0.56px] text-[#1E1E1E]">
+          Summary
+        </h2>
+        <p className="font-dm-sans text-[16px] leading-[24px] text-[#1E1E1E]">{newsletter.blurb}</p>
+        <a
+          href={newsletter.pdfUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-[8px] w-fit rounded-[99px] bg-[#172447] px-[20px] py-[12px] font-dm-sans text-[14px] font-semibold text-white hover:bg-[#1169B0]"
+        >
+          READ FULL ARTICLE
+        </a>
+      </section>
+    </div>
+  );
+}
+
 export default function NewsletterArticlesEditor() {
   const router = useRouter();
   const [authLoading, setAuthLoading] = useState(true);
@@ -357,6 +588,8 @@ export default function NewsletterArticlesEditor() {
     direction: "none",
     nextDirection: "desc",
   });
+  const [isPreview, setIsPreview] = useState(false);
+  const [previewNewsletterId, setPreviewNewsletterId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -410,8 +643,41 @@ export default function NewsletterArticlesEditor() {
   const totalPages = list?.pagination.pages ?? 1;
   const canPrev = currentPage > 1;
   const canNext = currentPage < totalPages;
+  const previewNewsletter =
+    sortedNewsletters.find((newsletter) => newsletter._id === previewNewsletterId) ?? null;
 
   if (authLoading) return null;
+
+  if (isPreview) {
+    return (
+      <PreviewMode
+        onBack={() => {
+          setIsPreview(false);
+          setPreviewNewsletterId(null);
+        }}
+        publishButton={<></>}
+      >
+        <div className="w-full overflow-hidden rounded-[10px] bg-white shadow-[0_15px_35px_rgba(0,0,0,0.1)]">
+          <PreviewNavBar activeItem="Newsletter" />
+          {listLoading ? (
+            <div className="flex h-[560px] items-center justify-center font-dm-sans text-[16px] text-[#5D5D5D]">
+              Loading newsletter preview...
+            </div>
+          ) : previewNewsletter ? (
+            <NewsletterArticlePreview
+              newsletter={previewNewsletter}
+              onBackToList={() => setPreviewNewsletterId(null)}
+            />
+          ) : (
+            <NewsletterHomePreview
+              newsletters={sortedNewsletters}
+              onSelectArticle={(newsletter) => setPreviewNewsletterId(newsletter._id)}
+            />
+          )}
+        </div>
+      </PreviewMode>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -433,7 +699,10 @@ export default function NewsletterArticlesEditor() {
               </button>
               <button
                 type="button"
-                onClick={() => router.push("/newsletters")}
+                onClick={() => {
+                  setPreviewNewsletterId(null);
+                  setIsPreview(true);
+                }}
                 className="flex cursor-pointer items-center justify-center gap-[10px] rounded-[99px] bg-[#012060] px-[20px] py-[10px] font-dm-sans text-[16px] font-semibold text-white"
               >
                 PREVIEW
