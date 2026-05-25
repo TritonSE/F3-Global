@@ -65,21 +65,17 @@ export default async function Members() {
           </div>
         </div>
         {/* Mission Epic */}
-        <div className="relative flex w-full flex-col items-center gap-[50px] overflow-hidden border-t border-[#F4F4F4] px-[30px] pt-[50px] pb-[0px] md:flex-row md:items-center md:justify-start md:gap-[72px] md:px-[100px] md:py-[50px]">
-          <div className="relative order-2 h-[330px] w-[340px] overflow-visible md:static md:order-1 md:h-auto md:w-auto md:max-w-none md:shrink-0 md:self-center md:ml-[-115px] md:[--collage-width:min(785px,54vw)]">
+        <div className="relative flex w-full flex-col items-center gap-[50px] overflow-hidden border-t border-[#F4F4F4] px-[30px] pt-[50px] pb-[0px] md:flex-row md:items-center md:justify-start md:gap-[165px] md:px-[100px] md:py-[50px]">
+          <div className="relative order-2 flex h-[330px] w-[340px] max-w-full flex-col overflow-visible md:order-1 md:ml-[-115px] md:w-[var(--collage-width)] md:h-[calc(var(--collage-width)*703/785)] md:[--collage-width:min(785px,54vw)] md:flex-none md:self-center">
             <div
-              className="relative origin-top-left overflow-visible h-[330px] w-[340px] md:h-[703px] md:w-[785px]"
+              className="relative origin-top-left overflow-visible"
               style={{
+                width: "785px",
+                height: "703px",
+                transform: "scale(calc(var(--collage-width) / 785px))",
                 transformOrigin: "top left",
               }}
             >
-              <style>{`
-                @media (min-width: 768px) {
-                  .mission-inner-wrapper {
-                    transform: scale(calc(var(--collage-width) / 785px));
-                  }
-                }
-              `}</style>
               <div
                 className="mission-inner-wrapper absolute inset-0 origin-top-left"
                 style={{ transformOrigin: "top left" }}
