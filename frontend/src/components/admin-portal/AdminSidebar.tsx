@@ -1,8 +1,12 @@
 "use client";
 
 import { onAuthStateChanged, signOut, type User } from "firebase/auth";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+
+import { ConfirmationDialog } from "../ConfirmationDialog";
+
+import { useAdmin } from "./AdminContext";
 
 import { auth } from "@/firebase/firebase";
 
@@ -115,20 +119,26 @@ function SignOutIcon({ color = "currentColor" }: IconProps) {
   );
 }
 
-export function AdminSidebar({ activeItem }: { activeItem?: string }) {
-  const router = useRouter();
-  const [activeSection, setActiveSection] = useState(activeItem ?? "home");
-  const [user, setUser] = useState<User | null>(null);
+const navItems: { id: string; label: string; icon: (props: IconProps) => React.JSX.Element }[] = [
+  { id: "home", label: "Home", icon: HomeIcon },
+  { id: "about-us", label: "About Us", icon: GlobeIcon },
+  { id: "meet-the-team", label: "Meet the Team", icon: TeamIcon },
+  { id: "donate", label: "Donate", icon: HeartIcon },
+  { id: "members", label: "Members", icon: MembersIcon },
+  { id: "clients", label: "Clients", icon: ClientsIcon },
+  { id: "newsletter", label: "Newsletter", icon: NewsletterIcon },
+];
 
-  const navItems: { id: string; label: string; icon: (props: IconProps) => React.JSX.Element }[] = [
-    { id: "home", label: "Home", icon: HomeIcon },
-    { id: "about-us", label: "About Us", icon: GlobeIcon },
-    { id: "meet-the-team", label: "Meet the Team", icon: TeamIcon },
-    { id: "donate", label: "Donate", icon: HeartIcon },
-    { id: "members", label: "Members", icon: MembersIcon },
-    { id: "clients", label: "Clients", icon: ClientsIcon },
-    { id: "newsletter", label: "Newsletter", icon: NewsletterIcon },
-  ];
+export function AdminSidebar() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const [user, setUser] = useState<User | null>(null);
+  const [activeSection, setActiveSection] = useState("home");
+  const [pendingSection, setPendingSection] = useState<string | null>(null);
+  const [showLeaveDialog, setShowLeaveDialog] = useState(false);
+
+  const isOnHomepage = pathname === "/admin-portal";
+  const { hasChanges } = useAdmin();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
@@ -137,36 +147,32 @@ export function AdminSidebar({ activeItem }: { activeItem?: string }) {
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    if (activeItem) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible.length > 0) {
-          setActiveSection(visible[0].target.id);
-        }
-      },
-      { rootMargin: "-10% 0px -50% 0px", threshold: 0 },
-    );
-
-    const sectionIds = navItems.map((item) => item.id);
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, [activeItem]);
-
   const handleNavClick = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+    if (isOnHomepage) {
+      setActiveSection(id);
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    } else if (hasChanges) {
+      setPendingSection(id);
+      setShowLeaveDialog(true);
     } else {
-      router.push(`/admin-portal#${id}`);
+      router.push(`/admin-portal`);
+      sessionStorage.setItem("scrollToSection", id);
     }
+  };
+
+  const handleConfirmLeave = () => {
+    setShowLeaveDialog(false);
+    if (pendingSection) {
+      router.push(`/admin-portal`);
+      sessionStorage.setItem("scrollToSection", pendingSection);
+      setPendingSection(null);
+    }
+  };
+
+  const handleCancelLeave = () => {
+    setShowLeaveDialog(false);
+    setPendingSection(null);
   };
 
   const handleSignOut = async () => {
@@ -174,221 +180,246 @@ export function AdminSidebar({ activeItem }: { activeItem?: string }) {
     router.push("/login");
   };
 
-  return (
-    <nav
-      style={{
-        position: "fixed",
-        left: 0,
-        top: 0,
-        zIndex: 50,
-        width: 203,
-        height: "100vh",
-        overflow: "hidden",
-        backgroundColor: "#172447",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      {/* Branding */}
-      <div
-        style={{
-          paddingLeft: 20,
-          paddingTop: 45,
-          width: 103,
-        }}
-      >
-        <p
-          style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: 12,
-            fontWeight: 900,
-            lineHeight: 1.1,
-            letterSpacing: "2.64px",
-            color: "white",
-            margin: 0,
-          }}
-        >
-          FUTURE
-        </p>
-        <p
-          style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: 12,
-            fontWeight: 900,
-            lineHeight: 1.1,
-            letterSpacing: "2.64px",
-            color: "white",
-            margin: 0,
-          }}
-        >
-          FORWARD
-        </p>
-        <p
-          style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: 12,
-            fontWeight: 900,
-            lineHeight: 1.1,
-            letterSpacing: "2.64px",
-            color: "white",
-            margin: 0,
-          }}
-        >
-          FOUNDATION
-        </p>
-      </div>
+  useEffect(() => {
+    if (isOnHomepage) {
+      const section = sessionStorage.getItem("scrollToSection");
+      if (section) {
+        sessionStorage.removeItem("scrollToSection");
+        setActiveSection(section);
+        setTimeout(() => {
+          const el = document.getElementById(section);
+          if (el) el.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+  }, [isOnHomepage]);
 
-      {/* Nav Items */}
-      <div
+  return (
+    <>
+      <nav
         style={{
-          marginTop: 25,
+          position: "fixed",
+          left: 0,
+          top: 0,
+          zIndex: 50,
           width: 203,
+          height: "100vh",
+          overflow: "hidden",
+          backgroundColor: "#172447",
           display: "flex",
           flexDirection: "column",
-          gap: 19,
         }}
       >
-        {navItems.map((item) => {
-          const isActive = activeSection === item.id;
-          return (
-            <div
-              key={item.id}
-              onClick={() => handleNavClick(item.id)}
-              style={{
-                position: "relative",
-                height: 35,
-                width: "100%",
-                overflow: "hidden",
-                cursor: "pointer",
-              }}
-            >
-              {/* Active indicator bar */}
+        {/* Branding */}
+        <div
+          style={{
+            paddingLeft: 20,
+            paddingTop: 45,
+            width: 103,
+          }}
+        >
+          <p
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 12,
+              fontWeight: 900,
+              lineHeight: 1.1,
+              letterSpacing: "2.64px",
+              color: "white",
+              margin: 0,
+            }}
+          >
+            FUTURE
+          </p>
+          <p
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 12,
+              fontWeight: 900,
+              lineHeight: 1.1,
+              letterSpacing: "2.64px",
+              color: "white",
+              margin: 0,
+            }}
+          >
+            FORWARD
+          </p>
+          <p
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 12,
+              fontWeight: 900,
+              lineHeight: 1.1,
+              letterSpacing: "2.64px",
+              color: "white",
+              margin: 0,
+            }}
+          >
+            FOUNDATION
+          </p>
+        </div>
+
+        {/* Nav Items */}
+        <div
+          style={{
+            marginTop: 25,
+            width: 203,
+            display: "flex",
+            flexDirection: "column",
+            gap: 19,
+          }}
+        >
+          {navItems.map((item) => {
+            const isActive = activeSection === item.id;
+            return (
               <div
+                key={item.id}
+                onClick={() => handleNavClick(item.id)}
                 style={{
-                  position: "absolute",
-                  left: 0,
-                  top: 0,
+                  position: "relative",
                   height: 35,
-                  width: 4,
-                  borderTopRightRadius: 10,
-                  borderBottomRightRadius: 10,
-                  backgroundColor: isActive ? "#1169B0" : "transparent",
-                  transition: "background-color 0.2s",
-                }}
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  left: 24,
-                  top: 5,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 16,
+                  width: "100%",
+                  overflow: "hidden",
+                  cursor: "pointer",
                 }}
               >
-                <item.icon color={isActive ? "white" : "#C7C7C7"} />
+                {/* Active indicator bar */}
+                <div
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    top: 0,
+                    height: 35,
+                    width: 4,
+                    borderTopRightRadius: 10,
+                    borderBottomRightRadius: 10,
+                    backgroundColor: isActive ? "#1169B0" : "transparent",
+                    transition: "background-color 0.2s",
+                  }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    left: 24,
+                    top: 5,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 16,
+                  }}
+                >
+                  <item.icon color={isActive ? "white" : "#C7C7C7"} />
+                  <span
+                    style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 16,
+                      fontWeight: 400,
+                      lineHeight: "24px",
+                      color: isActive ? "white" : "#C7C7C7",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {item.label}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Bottom group: Profile + Sign Out */}
+        <div
+          style={{
+            marginTop: "auto",
+            paddingLeft: 13,
+            paddingBottom: 40,
+            width: 178,
+            display: "flex",
+            flexDirection: "column",
+            gap: 30,
+          }}
+        >
+          {/* Profile */}
+          <div
+            style={{
+              padding: 10,
+              borderRadius: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <AvatarIcon color="#F4F4F4" />
+              <div style={{ display: "flex", flexDirection: "column", width: 96, gap: 4 }}>
                 <span
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 16,
-                    fontWeight: 400,
-                    lineHeight: "24px",
-                    color: isActive ? "white" : "#C7C7C7",
-                    whiteSpace: "nowrap",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    lineHeight: 1.5,
+                    color: "white",
+                    height: 13,
+                    display: "flex",
+                    alignItems: "center",
                   }}
                 >
-                  {item.label}
+                  {user?.displayName || "Admin"}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 10,
+                    fontWeight: 400,
+                    lineHeight: "16px",
+                    color: "white",
+                    height: 13,
+                    display: "flex",
+                    alignItems: "center",
+                    textDecoration: "underline",
+                  }}
+                >
+                  {user?.email || ""}
                 </span>
               </div>
             </div>
-          );
-        })}
-      </div>
-
-      {/* Bottom group: Profile + Sign Out */}
-      <div
-        style={{
-          marginTop: "auto",
-          paddingLeft: 13,
-          paddingBottom: 40,
-          width: 178,
-          display: "flex",
-          flexDirection: "column",
-          gap: 30,
-        }}
-      >
-        {/* Profile */}
-        <div
-          style={{
-            padding: 10,
-            borderRadius: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <AvatarIcon color="#F4F4F4" />
-            <div style={{ display: "flex", flexDirection: "column", width: 96, gap: 4 }}>
-              <span
-                style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 14,
-                  fontWeight: 600,
-                  lineHeight: 1.5,
-                  color: "white",
-                  height: 13,
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                {user?.displayName || "Admin"}
-              </span>
-              <span
-                style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 10,
-                  fontWeight: 400,
-                  lineHeight: "16px",
-                  color: "white",
-                  height: 13,
-                  display: "flex",
-                  alignItems: "center",
-                  textDecoration: "underline",
-                }}
-              >
-                {user?.email || ""}
-              </span>
-            </div>
           </div>
-        </div>
 
-        {/* Sign Out */}
-        <div
-          onClick={() => void handleSignOut()}
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 5,
-            cursor: "pointer",
-          }}
-        >
-          <SignOutIcon color="white" />
-          <span
+          {/* Sign Out */}
+          <div
+            onClick={() => void handleSignOut()}
             style={{
-              fontFamily: "'Rubik', sans-serif",
-              fontSize: 14,
-              fontWeight: 400,
-              lineHeight: "20px",
-              color: "white",
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 5,
+              cursor: "pointer",
             }}
           >
-            Sign out
-          </span>
+            <SignOutIcon color="white" />
+            <span
+              style={{
+                fontFamily: "'Rubik', sans-serif",
+                fontSize: 14,
+                fontWeight: 400,
+                lineHeight: "20px",
+                color: "white",
+              }}
+            >
+              Sign out
+            </span>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+      <ConfirmationDialog
+        open={showLeaveDialog}
+        onClose={handleCancelLeave}
+        title="Are You Sure?"
+        body="Are you sure you want to go back? Your changes will not be saved. This action cannot be undone."
+        cancelLabel="Cancel"
+        confirmLabel="YES, GO BACK"
+        onConfirm={handleConfirmLeave}
+      />
+    </>
   );
 }
