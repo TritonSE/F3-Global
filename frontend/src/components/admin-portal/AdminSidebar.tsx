@@ -115,10 +115,10 @@ function SignOutIcon({ color = "currentColor" }: IconProps) {
   );
 }
 
-export function AdminSidebar() {
+export function AdminSidebar({ activeItem }: { activeItem?: string }) {
   const router = useRouter();
   const pathname = usePathname();
-  const [activeSection, setActiveSection] = useState("home");
+  const [activeSection, setActiveSection] = useState(activeItem ?? "home");
   const [user, setUser] = useState<User | null>(null);
 
   const navItems: { id: string; label: string; icon: (props: IconProps) => React.JSX.Element }[] = [
@@ -144,6 +144,7 @@ export function AdminSidebar() {
   }, []);
 
   useEffect(() => {
+    if (activeItem) return;
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
@@ -163,12 +164,14 @@ export function AdminSidebar() {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [activeItem]);
 
   const handleNavClick = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      router.push(`/admin-portal#${id}`);
     }
   };
 

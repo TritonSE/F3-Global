@@ -17,7 +17,7 @@ export function ConfirmationNotification({
 
   return (
     <div
-      className={`absolute inset-x-[180px] top-[125px] z-50 px-[20px] py-[10px] bg-[#e1f2df] border border-[#3BB966] rounded-[5px] flex items-center justify-between shadow-[0_3px_6px_rgba(0,0,0,0.15)] transition-opacity duration-[1500ms] ${fading ? "opacity-0" : "opacity-100"}`}
+      className={`fixed left-[383px] right-[40px] top-[40px] z-50 px-[20px] py-[10px] bg-[#e1f2df] border border-[#3BB966] rounded-[5px] flex items-center justify-between shadow-[0_3px_6px_rgba(0,0,0,0.15)] transition-opacity duration-[1500ms] ${fading ? "opacity-0" : "opacity-100"}`}
     >
       <div className="flex gap-[20px] items-center">
         <svg viewBox="0 0 20 20" fill="none" className="size-[20px] shrink-0">

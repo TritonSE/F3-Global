@@ -10,6 +10,7 @@ import type { Types } from "mongoose";
 // Type definitions for request body
 type HighlightRequestItem = {
   _id?: string | Types.ObjectId;
+  clientName: string;
   quoteText: string;
   previewText: string;
   imageUrl: string;
@@ -65,6 +66,7 @@ export const UpdateHighlights: RequestHandler<
         // Updating existing highlight
         return {
           _id: highlight._id,
+          clientName: highlight.clientName,
           quoteText: highlight.quoteText,
           previewText: highlight.previewText,
           imageUrl: highlight.imageUrl,
@@ -74,6 +76,7 @@ export const UpdateHighlights: RequestHandler<
       } else {
         // Creating new highlight
         return {
+          clientName: highlight.clientName,
           quoteText: highlight.quoteText,
           previewText: highlight.previewText,
           imageUrl: highlight.imageUrl,

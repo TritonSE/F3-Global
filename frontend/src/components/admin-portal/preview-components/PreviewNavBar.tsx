@@ -50,7 +50,7 @@ export function PreviewNavBar({ activeItem }: PreviewNavBarProps) {
         >
           Newsletter
         </span>
-        <div className="border border-[#C7C7C7] rounded-[99px] px-[16px] py-[8px] font-dm-sans font-semibold text-[16px] text-[#012060] flex items-center gap-[8px]">
+        <div className="bg-white border border-[#C7C7C7] rounded-[99px] px-[16px] py-[8px] font-dm-sans font-semibold text-[16px] text-[#012060] flex items-center gap-[8px]">
           DONATE
           <Image
             src="/imgs/ic_arrowforward.svg"

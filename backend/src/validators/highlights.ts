@@ -14,6 +14,7 @@ function UpdateStringValidation(order: number, fieldname: string) {
 
 function makeHighlightValidator(order: number) {
   return [
+    UpdateStringValidation(order, "clientName"),
     UpdateStringValidation(order, "quoteText"),
     UpdateStringValidation(order, "previewText"),
     UpdateStringValidation(order, "imageUrl")
