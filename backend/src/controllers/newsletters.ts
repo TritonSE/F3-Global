@@ -21,10 +21,17 @@ type NewsletterPayload = {
 };
 
 const SORT_OPTIONS: Record<string, Record<string, 1 | -1>> = {
+  none: {},
   newest: { uploadDate: -1 },
   oldest: { uploadDate: 1 },
   mostViewed: { views: -1 },
   leastViewed: { views: 1 },
+  titleAsc: { title: 1 },
+  titleDesc: { title: -1 },
+  dateAsc: { uploadDate: 1 },
+  dateDesc: { uploadDate: -1 },
+  viewsAsc: { views: 1 },
+  viewsDesc: { views: -1 },
 };
 
 const escapeRegex = (input: string): string => input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

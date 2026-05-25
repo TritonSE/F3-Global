@@ -10,7 +10,18 @@ export type Newsletter = {
   featured: boolean;
 };
 
-export type SortBy = "newest" | "oldest" | "mostViewed" | "leastViewed";
+export type SortBy =
+  | "none"
+  | "newest"
+  | "oldest"
+  | "mostViewed"
+  | "leastViewed"
+  | "titleAsc"
+  | "titleDesc"
+  | "dateAsc"
+  | "dateDesc"
+  | "viewsAsc"
+  | "viewsDesc";
 
 export type PaginatedNewsletters = {
   data: Newsletter[];

@@ -4,7 +4,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
-import { getNewsletters, type Newsletter, type PaginatedNewsletters } from "@/api/newsletters";
+import {
+  getNewsletters,
+  type Newsletter,
+  type PaginatedNewsletters,
+  type SortBy,
+} from "@/api/newsletters";
 import { AdminSidebar } from "@/components/admin-portal/AdminSidebar";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
 import { auth } from "@/firebase/firebase";
@@ -12,6 +17,46 @@ import { auth } from "@/firebase/firebase";
 const PAGE_SIZE = 5;
 const NEWSLETTER_TABLE_GRID =
   "grid w-full grid-cols-[minmax(0,1.68fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(44px,0.42fr)]";
+const SORT_ACTIVE_COLOR = "#1169B0";
+const SORT_INACTIVE_COLOR = "#1E1E1E";
+
+type NewsletterSortColumn = "title" | "date" | "views";
+type NewsletterSortDirection = "desc" | "none" | "asc";
+type NewsletterTableSort = {
+  column: NewsletterSortColumn;
+  direction: NewsletterSortDirection;
+  nextDirection: Exclude<NewsletterSortDirection, "none">;
+};
+
+function getNextSort(
+  current: NewsletterTableSort,
+  column: NewsletterSortColumn,
+): NewsletterTableSort {
+  if (current.column !== column) {
+    return { column, direction: "desc", nextDirection: "asc" };
+  }
+
+  if (current.direction === "none") {
+    return {
+      column,
+      direction: current.nextDirection,
+      nextDirection: current.nextDirection === "desc" ? "asc" : "desc",
+    };
+  }
+
+  return {
+    column,
+    direction: "none",
+    nextDirection: current.direction === "desc" ? "asc" : "desc",
+  };
+}
+
+function sortToApiSort(sort: NewsletterTableSort): SortBy | undefined {
+  if (sort.direction === "none") return "none";
+
+  const key = `${sort.column}${sort.direction === "asc" ? "Asc" : "Desc"}`;
+  return key as SortBy;
+}
 
 function SearchIcon() {
   return (
@@ -48,11 +93,26 @@ function EyeIcon({
   );
 }
 
-function SortIcon() {
+function SortIcon({ direction }: { direction: NewsletterSortDirection | null }) {
+  const upColor = direction === "asc" ? SORT_ACTIVE_COLOR : SORT_INACTIVE_COLOR;
+  const downColor = direction === "desc" ? SORT_ACTIVE_COLOR : SORT_INACTIVE_COLOR;
+
   return (
     <svg viewBox="0 0 20 20" fill="none" className="size-[20px] shrink-0" aria-hidden="true">
-      <path d="M6 3v14M6 3 3 6M6 3l3 3" stroke="#1E1E1E" strokeWidth="1.5" />
-      <path d="M14 17V3m0 14 3-3m-3 3-3-3" stroke="#1E1E1E" strokeWidth="1.5" />
+      <path
+        d="M6 3v14M6 3 3 6M6 3l3 3"
+        stroke={upColor}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M14 17V3m0 14 3-3m-3 3-3-3"
+        stroke={downColor}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -223,20 +283,34 @@ function cellClass(extra = "", featured = false) {
 function HeaderCell({
   icon,
   label,
-  sortable,
+  sortDirection,
+  onSort,
 }: {
   icon: React.ReactNode;
   label: string;
-  sortable?: boolean;
+  sortDirection?: NewsletterSortDirection | null;
+  onSort?: () => void;
 }) {
+  const ariaSort =
+    sortDirection === "asc" ? "ascending" : sortDirection === "desc" ? "descending" : "none";
+
   return (
-    <div className="flex h-[56px] min-w-0 items-center gap-[8px] bg-[#F4F4F4] px-[14px] py-[10px] font-dm-sans text-[14px] font-bold uppercase leading-[20px] text-[#1E1E1E]">
+    <div
+      role="columnheader"
+      aria-sort={onSort ? ariaSort : undefined}
+      className="flex h-[56px] min-w-0 items-center gap-[8px] bg-[#F4F4F4] px-[14px] py-[10px] font-dm-sans text-[14px] font-bold uppercase leading-[20px] text-[#1E1E1E]"
+    >
       {icon}
       <span className="min-w-0 truncate">{label}</span>
-      {sortable && (
-        <span className="ml-auto flex shrink-0 items-center justify-center">
-          <SortIcon />
-        </span>
+      {onSort && (
+        <button
+          type="button"
+          onClick={onSort}
+          className="ml-auto flex shrink-0 cursor-pointer items-center justify-center"
+          aria-label={`Sort ${label}`}
+        >
+          <SortIcon direction={sortDirection ?? null} />
+        </button>
       )}
     </div>
   );
@@ -278,6 +352,11 @@ export default function NewsletterArticlesEditor() {
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [tableSort, setTableSort] = useState<NewsletterTableSort>({
+    column: "date",
+    direction: "none",
+    nextDirection: "desc",
+  });
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -294,14 +373,19 @@ export default function NewsletterArticlesEditor() {
   useEffect(() => {
     if (authLoading) return;
     setListLoading(true);
-    getNewsletters({ page: currentPage, limit: PAGE_SIZE, search, sortBy: "newest" })
+    getNewsletters({
+      page: currentPage,
+      limit: PAGE_SIZE,
+      search,
+      sortBy: sortToApiSort(tableSort),
+    })
       .then((response) => {
         setList(response);
         setError(null);
       })
       .catch(() => setError("Failed to load newsletter articles."))
       .finally(() => setListLoading(false));
-  }, [authLoading, currentPage, search]);
+  }, [authLoading, currentPage, search, tableSort]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -315,9 +399,18 @@ export default function NewsletterArticlesEditor() {
   const sortedNewsletters = useMemo(() => {
     return [...(list?.data ?? [])].sort((a, b) => {
       if (a.featured !== b.featured) return a.featured ? -1 : 1;
-      return new Date(b.uploadDate).getTime() - new Date(a.uploadDate).getTime();
+      return 0;
     });
   }, [list]);
+
+  function handleSort(column: NewsletterSortColumn) {
+    setCurrentPage(1);
+    setTableSort((current) => getNextSort(current, column));
+  }
+
+  function getSortDirection(column: NewsletterSortColumn): NewsletterSortDirection | null {
+    return tableSort.column === column ? tableSort.direction : null;
+  }
 
   const totalPages = list?.pagination.pages ?? 1;
   const canPrev = currentPage > 1;
@@ -375,13 +468,24 @@ export default function NewsletterArticlesEditor() {
 
           <div className="w-full overflow-hidden rounded-[16px] border border-[#C7C7C7]">
             <div className={`${NEWSLETTER_TABLE_GRID} overflow-hidden rounded-t-[16px]`}>
-              <HeaderCell icon={<TextIcon />} label="Title" sortable />
+              <HeaderCell
+                icon={<TextIcon />}
+                label="Title"
+                sortDirection={getSortDirection("title")}
+                onSort={() => handleSort("title")}
+              />
               <HeaderCell icon={<BookIcon />} label="Text" />
-              <HeaderCell icon={<CalendarIcon />} label="Date" sortable />
+              <HeaderCell
+                icon={<CalendarIcon />}
+                label="Date"
+                sortDirection={getSortDirection("date")}
+                onSort={() => handleSort("date")}
+              />
               <HeaderCell
                 icon={<EyeIcon color="#1169B0" className="size-[20px] shrink-0" />}
                 label="Views"
-                sortable
+                sortDirection={getSortDirection("views")}
+                onSort={() => handleSort("views")}
               />
               <HeaderCell icon={<ToggleIcon />} label="Feature" />
               <HeaderCell icon={<LinkIcon />} label="Link" />

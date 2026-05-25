@@ -1,7 +1,7 @@
 "use client";
 
 import { onAuthStateChanged, signOut, type User } from "firebase/auth";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 import { auth } from "@/firebase/firebase";
@@ -117,6 +117,7 @@ function SignOutIcon({ color = "currentColor" }: IconProps) {
 
 export function AdminSidebar() {
   const router = useRouter();
+  const pathname = usePathname();
   const [activeSection, setActiveSection] = useState("home");
   const [user, setUser] = useState<User | null>(null);
 
@@ -129,6 +130,11 @@ export function AdminSidebar() {
     { id: "clients", label: "Clients", icon: ClientsIcon },
     { id: "newsletter", label: "Newsletter", icon: NewsletterIcon },
   ];
+
+  const routeActiveSection =
+    pathname === "/newsletter-editor" || pathname.startsWith("/newsletter-editor/")
+      ? "newsletter"
+      : null;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
@@ -246,7 +252,7 @@ export function AdminSidebar() {
         }}
       >
         {navItems.map((item) => {
-          const isActive = activeSection === item.id;
+          const isActive = (routeActiveSection ?? activeSection) === item.id;
           return (
             <div
               key={item.id}
