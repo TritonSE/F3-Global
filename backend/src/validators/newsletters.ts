@@ -68,21 +68,6 @@ const makeBlurbValidator = (isOptional = false): ValidationChain => {
     .withMessage("blurb cannot be empty");
 };
 
-const makeAuthorNameValidator = (isOptional = false): ValidationChain => {
-  const validator = body("authorName");
-  if (isOptional) {
-    validator.optional();
-  } else {
-    validator.exists().withMessage("authorName is required").bail();
-  }
-  return validator
-    .isString()
-    .withMessage("authorName must be a string")
-    .bail()
-    .notEmpty()
-    .withMessage("authorName cannot be empty");
-};
-
 const makeFeaturedValidator = (): ValidationChain => {
   return body("featured")
     .optional()
@@ -133,7 +118,6 @@ export const createNewsletter = [
   makeUploadDateValidator(),
   makeViewsValidator(),
   makeBlurbValidator(),
-  makeAuthorNameValidator(),
   makePdfUrlValidator(),
   makeImageUrlValidator(),
   makeFeaturedValidator(),
@@ -145,7 +129,6 @@ export const updateNewsletter = [
   makeUploadDateValidator(true),
   makeViewsValidator(true),
   makeBlurbValidator(true),
-  makeAuthorNameValidator(true),
   makePdfUrlValidator(true),
   makeImageUrlValidator(true),
   makeFeaturedValidator(),

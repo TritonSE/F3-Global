@@ -14,7 +14,6 @@ type NewsletterPayload = {
   uploadDate: Date;
   views: number;
   blurb: string;
-  authorName: string;
   pdfUrl: string;
   imageUrl: string;
   featured?: boolean;
@@ -51,12 +50,7 @@ export const getNewsletters: RequestHandler = async (req, res, next) => {
     const filter: Record<string, unknown> = {};
     if (search) {
       const searchRegex = { $regex: escapeRegex(search), $options: "i" };
-      filter.$or = [
-        { title: searchRegex },
-        { blurb: searchRegex },
-        { authorName: searchRegex },
-        { pdfUrl: searchRegex },
-      ];
+      filter.$or = [{ title: searchRegex }, { blurb: searchRegex }, { pdfUrl: searchRegex }];
     }
     if (featuredOnly) filter.featured = true;
 
@@ -110,7 +104,7 @@ export const createNewsletter: RequestHandler<
     const errors = validationResult(req);
     validationErrorParser(errors);
 
-    const { title, uploadDate, views, blurb, authorName, pdfUrl, imageUrl, featured } = req.body;
+    const { title, uploadDate, views, blurb, pdfUrl, imageUrl, featured } = req.body;
 
     if (featured === true) {
       await NewsletterModel.updateMany({ featured: true }, { $set: { featured: false } });
@@ -121,7 +115,6 @@ export const createNewsletter: RequestHandler<
       uploadDate,
       views,
       blurb,
-      authorName,
       pdfUrl,
       imageUrl,
       featured,

@@ -4,7 +4,6 @@ export type Newsletter = {
   uploadDate: string;
   views: number;
   blurb: string;
-  authorName: string;
   pdfUrl: string;
   imageUrl?: string;
   featured: boolean;
