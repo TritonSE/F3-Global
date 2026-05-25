@@ -18,6 +18,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { useAdmin } from "./AdminContext";
 import { PreviewMode } from "./preview-components/PreviewMode";
 import { PreviewNavBar } from "./preview-components/PreviewNavBar";
 
@@ -68,6 +69,7 @@ export function LogoEditorPage({
   const [showBackDialog, setShowBackDialog] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [isPreview, setIsPreview] = useState(false);
+  const { setHasChanges } = useAdmin();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -171,6 +173,14 @@ export function LogoEditorPage({
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [hasChanges]);
+
+  useEffect(() => {
+    setHasChanges(hasChanges);
+  }, [hasChanges]);
+
+  useEffect(() => {
+    return () => setHasChanges(false);
+  }, []);
 
   const sensors = useSensors(
     useSensor(PointerSensor),

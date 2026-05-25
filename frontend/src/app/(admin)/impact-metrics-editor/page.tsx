@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import type { ImpactMetric } from "@/api/impactMetric";
 
 import { getImpactMetric, updateImpactMetric } from "@/api/impactMetric";
+import { useAdmin } from "@/components/admin-portal/AdminContext";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
 import { PreviewMode } from "@/components/admin-portal/preview-components/PreviewMode";
 import { PreviewNavBar } from "@/components/admin-portal/preview-components/PreviewNavBar";
@@ -51,6 +52,7 @@ export default function ImpactMetricsEditor() {
   const [showRevertDialog, setShowRevertDialog] = useState(false);
   const [showBackDialog, setShowBackDialog] = useState(false);
   const [isPreview, setIsPreview] = useState(false);
+  const { setHasChanges } = useAdmin();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -118,6 +120,13 @@ export default function ImpactMetricsEditor() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [hasChanges]);
 
+  useEffect(() => {
+    setHasChanges(hasChanges);
+  }, [hasChanges]);
+
+  useEffect(() => {
+    return () => setHasChanges(false);
+  }, []);
   const publishButton = (
     <PublishButton
       handleClick={() => void handlePublish()}

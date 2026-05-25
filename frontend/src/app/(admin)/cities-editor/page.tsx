@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { getAllCities, updateCities } from "@/api/cities";
+import { useAdmin } from "@/components/admin-portal/AdminContext";
 import { DraggableSortablePill } from "@/components/admin-portal/DraggableSortablePill";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
 import { PreviewMode } from "@/components/admin-portal/preview-components/PreviewMode";
@@ -42,6 +43,7 @@ export default function CitiesEditor() {
   const [addInput, setAddInput] = useState("");
   const [showRevertDialog, setShowRevertDialog] = useState(false);
   const [showBackDialog, setShowBackDialog] = useState(false);
+  const { setHasChanges } = useAdmin();
   const [isPreview, setIsPreview] = useState(false);
   const [notification, setNotification] = useState<"published" | null>(null);
   const [notificationFading, setNotificationFading] = useState(false);
@@ -128,6 +130,14 @@ export default function CitiesEditor() {
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [hasChanges]);
+
+  useEffect(() => {
+    setHasChanges(hasChanges);
+  }, [hasChanges]);
+
+  useEffect(() => {
+    return () => setHasChanges(false);
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
