@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import type { ImpactMetric } from "@/api/impactMetric";
 
 import { getImpactMetric, updateImpactMetric } from "@/api/impactMetric";
+import { useAdmin } from "@/components/admin-portal/AdminContext";
 import { PublishButton } from "@/components/admin-portal/PublishButton";
 import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
@@ -46,6 +47,7 @@ export default function ImpactMetricsEditor() {
   const [lastUpdated, setLastUpdated] = useState("");
   const [showRevertDialog, setShowRevertDialog] = useState(false);
   const [showBackDialog, setShowBackDialog] = useState(false);
+  const { setHasChanges } = useAdmin();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -112,6 +114,14 @@ export default function ImpactMetricsEditor() {
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [hasChanges]);
+
+  useEffect(() => {
+    setHasChanges(hasChanges);
+  }, [hasChanges]);
+
+  useEffect(() => {
+    return () => setHasChanges(false);
+  }, []);
 
   if (loading) return null;
 

@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { getAllCities, updateCities } from "@/api/cities";
+import { useAdmin } from "@/components/admin-portal/AdminContext";
 import { DraggableSortablePill } from "@/components/admin-portal/DraggableSortablePill";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
 import { PublishButton } from "@/components/admin-portal/PublishButton";
@@ -38,6 +39,7 @@ export default function CitiesEditor() {
   const [addInput, setAddInput] = useState("");
   const [showRevertDialog, setShowRevertDialog] = useState(false);
   const [showBackDialog, setShowBackDialog] = useState(false);
+  const { setHasChanges } = useAdmin();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -118,6 +120,14 @@ export default function CitiesEditor() {
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [hasChanges]);
+
+  useEffect(() => {
+    setHasChanges(hasChanges);
+  }, [hasChanges]);
+
+  useEffect(() => {
+    return () => setHasChanges(false);
+  }, []);
 
   if (loading) return null;
 
