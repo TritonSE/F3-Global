@@ -42,7 +42,15 @@ export const getNewsletters: RequestHandler = async (req, res, next) => {
     const featuredOnly = req.query.featured === "true";
 
     const filter: Record<string, unknown> = {};
-    if (search) filter.title = { $regex: escapeRegex(search), $options: "i" };
+    if (search) {
+      const searchRegex = { $regex: escapeRegex(search), $options: "i" };
+      filter.$or = [
+        { title: searchRegex },
+        { blurb: searchRegex },
+        { authorName: searchRegex },
+        { pdfUrl: searchRegex },
+      ];
+    }
     if (featuredOnly) filter.featured = true;
 
     const sortKey = (req.query.sortBy as string | undefined) ?? "newest";
