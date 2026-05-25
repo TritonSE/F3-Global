@@ -170,9 +170,14 @@ export default function TeamMembersEditorPage() {
 
   if (isPreview) {
     return (
-      <PreviewMode onBack={() => setIsPreview(false)} publishButton={null}>
-        <MembersPreview members={members} />
-      </PreviewMode>
+      <div className="min-h-screen bg-white">
+        <AdminSidebar activeItem="meet-the-team" />
+        <div className="ml-[203px]">
+          <PreviewMode onBack={() => setIsPreview(false)} publishButton={null}>
+            <MembersPreview members={members} />
+          </PreviewMode>
+        </div>
+      </div>
     );
   }
 

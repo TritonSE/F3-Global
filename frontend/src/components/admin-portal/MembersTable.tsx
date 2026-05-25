@@ -149,7 +149,7 @@ export function MembersTable({
   return (
     <div className="w-full rounded-[16px] border border-[#C7C7C7] overflow-hidden">
       <div
-        className="grid items-center bg-[#F4F4F4] px-[25px] py-[18px]"
+        className="grid items-center min-h-[80px] bg-[#F4F4F4] px-[25px] py-[20px]"
         style={{ gridTemplateColumns: COLUMN_TEMPLATE }}
       >
         <HeaderCell
