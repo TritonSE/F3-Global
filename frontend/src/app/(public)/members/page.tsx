@@ -66,52 +66,61 @@ export default async function Members() {
         </div>
         {/* Mission Epic */}
         <div className="relative flex w-full flex-col items-center gap-[50px] overflow-hidden border-t border-[#F4F4F4] px-[30px] pt-[50px] pb-[0px] md:flex-row md:items-center md:justify-start md:gap-[72px] md:px-[100px] md:py-[50px]">
-          <div className="relative order-2 shrink-0 self-start overflow-visible [--collage-width:min(785px,54vw)] ml-[-30px] w-[var(--collage-width)] h-[calc(var(--collage-width)*703/785)] md:order-1 md:ml-[-115px] md:flex-none md:self-center">
+          <div className="relative order-2 h-[330px] w-[340px] overflow-visible md:static md:order-1 md:h-auto md:w-auto md:max-w-none md:shrink-0 md:self-center md:ml-[-115px] md:[--collage-width:min(785px,54vw)]">
             <div
-              className="relative origin-top-left overflow-visible"
+              className="relative origin-top-left overflow-visible h-[330px] w-[340px] md:h-[703px] md:w-[785px]"
               style={{
-                width: "785px",
-                height: "703px",
-                transform: "scale(calc(var(--collage-width) / 785px))",
                 transformOrigin: "top left",
               }}
             >
-              <div className="absolute left-[75px] top-[0px] z-10 h-[82px] w-[123px] flex-shrink-0 flex-grow-0 overflow-hidden rounded-[16px] md:left-[80px] md:top-[40px] md:ml-8 md:h-[193px] md:w-[291px]">
-                <Image
-                  src="/imgs/members_mission_1.webp"
-                  alt="People Working Together"
-                  fill
-                  className="object-cover object-center"
-                  priority
-                />
-              </div>
-              <div className="absolute left-[0px] top-[45px] z-0 h-[207px] w-[270px] flex-shrink-0 flex-grow-0 overflow-hidden rounded-[16px] bg-[#172447] md:top-[145px] md:h-[491px] md:w-[643px]">
-                <Image
-                  src="/imgs/members_mission_4.jpg"
-                  alt="People Walking at Sunset"
-                  fill
-                  className="object-cover object-center"
-                  priority
-                />
-                <div className="absolute inset-0 rounded-[16px] bg-[#172447] opacity-100 mix-blend-color pointer-events-none" />
-              </div>
-              <div className="absolute left-[220px] top-[65px] z-20 m-0 h-[151px] w-[120px] flex-shrink-0 flex-grow-0 overflow-hidden rounded-[16px] p-0 md:left-[500px] md:right-auto md:top-[200px] md:h-[358px] md:w-[285px]">
-                <Image
-                  src="/imgs/members_mission_2.jpg"
-                  alt="Pen and Notebook on Table"
-                  fill
-                  className="object-cover object-center"
-                  priority
-                />
-              </div>
-              <div className="absolute bottom-0 left-[165px] top-[195px] z-10 m-0 h-[73px] w-[81px] overflow-hidden rounded-[16px] p-0 md:bottom-auto md:left-[360px] md:top-[530px] md:h-[173px] md:w-[192px]">
-                <Image
-                  src="/imgs/members_mission_3.jpg"
-                  alt="Pen and Napkin on Table"
-                  fill
-                  className="object-cover object-center"
-                  priority
-                />
+              <style>{`
+                @media (min-width: 768px) {
+                  .mission-inner-wrapper {
+                    transform: scale(calc(var(--collage-width) / 785px));
+                  }
+                }
+              `}</style>
+              <div
+                className="mission-inner-wrapper absolute inset-0 origin-top-left"
+                style={{ transformOrigin: "top left" }}
+              >
+                <div className="absolute left-[75px] top-[0px] z-10 h-[82px] w-[123px] flex-shrink-0 flex-grow-0 overflow-hidden rounded-[16px] md:left-[80px] md:top-[40px] md:ml-8 md:h-[193px] md:w-[291px]">
+                  <Image
+                    src="/imgs/members_mission_1.webp"
+                    alt="People Working Together"
+                    fill
+                    className="object-cover object-center"
+                    priority
+                  />
+                </div>
+                <div className="absolute left-[0px] top-[45px] z-0 h-[207px] w-[270px] flex-shrink-0 flex-grow-0 overflow-hidden rounded-[16px] bg-[#172447] md:top-[145px] md:h-[491px] md:w-[643px]">
+                  <Image
+                    src="/imgs/members_mission_4.jpg"
+                    alt="People Walking at Sunset"
+                    fill
+                    className="object-cover object-center"
+                    priority
+                  />
+                  <div className="absolute inset-0 rounded-[16px] bg-[#172447] opacity-100 mix-blend-color pointer-events-none" />
+                </div>
+                <div className="absolute left-[220px] top-[65px] z-20 m-0 h-[151px] w-[120px] flex-shrink-0 flex-grow-0 overflow-hidden rounded-[16px] p-0 md:left-[500px] md:right-auto md:top-[200px] md:h-[358px] md:w-[285px]">
+                  <Image
+                    src="/imgs/members_mission_2.jpg"
+                    alt="Pen and Notebook on Table"
+                    fill
+                    className="object-cover object-center"
+                    priority
+                  />
+                </div>
+                <div className="absolute bottom-0 left-[165px] top-[195px] z-10 m-0 h-[73px] w-[81px] overflow-hidden rounded-[16px] p-0 md:bottom-auto md:left-[360px] md:top-[530px] md:h-[173px] md:w-[192px]">
+                  <Image
+                    src="/imgs/members_mission_3.jpg"
+                    alt="Pen and Napkin on Table"
+                    fill
+                    className="object-cover object-center"
+                    priority
+                  />
+                </div>
               </div>
             </div>
           </div>
