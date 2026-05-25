@@ -42,7 +42,6 @@ export const getNewsletters: RequestHandler = async (req, res, next) => {
 
     const page = Math.max(1, Number.parseInt(req.query.page as string) || 1);
     const limit = Math.max(1, Number.parseInt(req.query.limit as string) || 10);
-    const skip = (page - 1) * limit;
 
     const search = (req.query.search as string | undefined)?.trim();
     const featuredOnly = req.query.featured === "true";
@@ -56,15 +55,42 @@ export const getNewsletters: RequestHandler = async (req, res, next) => {
 
     const sortKey = (req.query.sortBy as string | undefined) ?? "none";
     const selectedSort = SORT_OPTIONS[sortKey] ?? SORT_OPTIONS.none;
-    const sort = { featured: -1 as const, ...selectedSort };
 
-    const data = (await NewsletterModel.find(filter).sort(sort).skip(skip).limit(limit)).map(
-      (doc) => ({
+    if (featuredOnly) {
+      const skip = (page - 1) * limit;
+      const data = (
+        await NewsletterModel.find(filter).sort(selectedSort).skip(skip).limit(limit)
+      ).map((doc) => ({
         ...doc.toObject(),
         imageUrl: doc.imageUrl ?? "",
-      }),
-    );
-    const total = await NewsletterModel.countDocuments(filter);
+      }));
+      const total = await NewsletterModel.countDocuments(filter);
+
+      return res.status(200).json({
+        data,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: Math.ceil(total / limit),
+        },
+      });
+    }
+
+    const featuredDoc = await NewsletterModel.findOne({ ...filter, featured: true });
+    const nonFeaturedFilter = { ...filter, featured: { $ne: true } };
+    const nonFeaturedLimit = featuredDoc ? Math.max(1, limit - 1) : limit;
+    const skip = (page - 1) * nonFeaturedLimit;
+
+    const nonFeaturedDocs = await NewsletterModel.find(nonFeaturedFilter)
+      .sort(selectedSort)
+      .skip(skip)
+      .limit(nonFeaturedLimit);
+    const total = await NewsletterModel.countDocuments(nonFeaturedFilter);
+    const data = [...(featuredDoc ? [featuredDoc] : []), ...nonFeaturedDocs].map((doc) => ({
+      ...doc.toObject(),
+      imageUrl: doc.imageUrl ?? "",
+    }));
 
     res.status(200).json({
       data,
@@ -72,7 +98,7 @@ export const getNewsletters: RequestHandler = async (req, res, next) => {
         page,
         limit,
         total,
-        pages: Math.ceil(total / limit),
+        pages: Math.ceil(total / nonFeaturedLimit),
       },
     });
   } catch (error) {
