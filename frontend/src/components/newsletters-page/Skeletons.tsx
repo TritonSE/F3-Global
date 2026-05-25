@@ -1,16 +1,16 @@
 export function FeaturedSkeleton() {
   return (
-    <section className="flex flex-col lg:flex-row items-center justify-between gap-[40px] lg:gap-[50px] px-[24px] lg:px-[100px] py-[60px] lg:h-[774px] lg:py-0 animate-pulse">
-      <div className="flex flex-col gap-[30px] lg:gap-[50px] items-start w-full lg:w-[639px] lg:shrink-0">
+    <section className="flex flex-col-reverse md:flex-row items-center justify-between gap-[40px] md:gap-[50px] px-[30px] md:px-[100px] pt-[50px] pb-[20px] md:py-0 md:h-[774px] animate-pulse">
+      <div className="flex flex-col gap-[20px] md:gap-[50px] items-start w-full md:w-[639px] md:shrink-0">
         <div className="flex flex-col gap-[20px] items-start w-full">
-          <div className="h-[24px] w-[260px] bg-[#f4f4f4] rounded" />
-          <div className="h-[64px] w-full bg-[#f4f4f4] rounded" />
-          <div className="h-[64px] w-3/4 bg-[#f4f4f4] rounded" />
-          <div className="h-[120px] w-full lg:w-[611px] bg-[#f4f4f4] rounded" />
+          <div className="h-[20px] md:h-[24px] w-[200px] md:w-[260px] bg-[#f4f4f4] rounded" />
+          <div className="h-[40px] md:h-[64px] w-full bg-[#f4f4f4] rounded" />
+          <div className="h-[40px] md:h-[64px] w-3/4 bg-[#f4f4f4] rounded" />
+          <div className="h-[60px] md:h-[120px] w-full md:w-[611px] bg-[#f4f4f4] rounded" />
         </div>
-        <div className="h-[24px] w-[140px] bg-[#f4f4f4] rounded" />
+        <div className="hidden md:block h-[24px] w-[140px] bg-[#f4f4f4] rounded" />
       </div>
-      <div className="w-full lg:w-[646px] aspect-[646/581] bg-[#f4f4f4] lg:shrink-0" />
+      <div className="w-full aspect-[342/158] md:w-[646px] md:aspect-[646/581] bg-[#f4f4f4] md:shrink-0" />
     </section>
   );
 }
@@ -21,8 +21,8 @@ export function ItemSkeleton() {
       <div className="w-full aspect-[415/302] bg-[#f4f4f4]" />
       <div className="flex flex-col gap-[10px] items-start w-full">
         <div className="h-[16px] w-[200px] bg-[#f4f4f4] rounded" />
-        <div className="h-[32px] w-full bg-[#f4f4f4] rounded" />
-        <div className="h-[32px] w-2/3 bg-[#f4f4f4] rounded" />
+        <div className="h-[24px] md:h-[32px] w-full bg-[#f4f4f4] rounded" />
+        <div className="h-[24px] md:h-[32px] w-2/3 bg-[#f4f4f4] rounded" />
       </div>
     </div>
   );
@@ -30,7 +30,7 @@ export function ItemSkeleton() {
 
 export function GridSkeleton({ count = 9 }: { count?: number }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[24px] gap-y-[50px] w-full">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-x-[24px] gap-y-[30px] md:gap-y-[50px] w-full">
       {Array.from({ length: count }).map((_, i) => (
         <ItemSkeleton key={i} />
       ))}

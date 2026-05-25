@@ -108,13 +108,8 @@ export const ContactUs: React.FC = () => {
 
   return (
     <>
-      <div className="relative flex w-full py-[50px] flex-col items-center gap-[10px]">
-        <div
-          className="relative flex w-full max-w-[1312px] flex-col items-end gap-[20px] rounded-[10px] bg-white px-[30px] py-[30px] md:px-[100px] md:py-[40px]"
-          style={{
-            boxShadow: "10px 6px 60px 0 rgba(1, 32, 96, 0.20)",
-          }}
-        >
+      <div className="relative flex w-full flex-col items-center gap-[10px] px-[30px] py-[50px] md:px-0">
+        <div className="relative flex w-full max-w-[1312px] flex-col items-end gap-[20px] rounded-[10px] bg-white px-[30px] py-[30px] shadow-[2.721px_1.633px_6.803px_rgba(1,32,96,0.2)] md:px-[100px] md:py-[40px] md:shadow-[10px_6px_60px_0_rgba(1,32,96,0.20)]">
           <div className="flex w-full flex-col items-start gap-[20px] self-stretch md:gap-[30px]">
             <h2 className="self-stretch mb-[-8px] font-ethic text-[48px] text-black md:mb-[-24px] md:text-[80px]">
               Contact Us
@@ -189,12 +184,12 @@ export const ContactUs: React.FC = () => {
                   </div>
                   {/* full name input */}
                   <div
-                    className={`mt-[10px] flex w-full items-center gap-[10px] rounded-[10px] px-[20px] py-[10px] md:w-[487px]
+                    className={`mt-[10px] flex w-full items-center gap-[10px] rounded-[10px] px-[15px] py-[10px] md:w-[487px] md:px-[20px]
                       ${fullNameError ? "mb-[-2px] border border-[#B93B3B] bg-[#FFDEDE]" : "bg-[#F4F4F4]"}
                     `}
                   >
                     <input
-                      className="w-full bg-transparent font-dm-sans text-[14px] leading-[20px] text-[#1E1E1E] outline-none md:text-[16px] md:leading-[24px]"
+                      className="w-full bg-transparent font-dm-sans text-[12px] leading-[16px] text-[#1E1E1E] outline-none md:text-[16px] md:leading-[24px]"
                       type="text"
                       name="fullName"
                       placeholder="Full Name *"
@@ -217,12 +212,12 @@ export const ContactUs: React.FC = () => {
 
                   {/* email input */}
                   <div
-                    className={`flex w-full items-center gap-[10px] rounded-[10px] px-[20px] py-[10px] md:w-[487px]
+                    className={`flex w-full items-center gap-[10px] rounded-[10px] px-[15px] py-[10px] md:w-[487px] md:px-[20px]
                       ${emailError ? "border border-[#B93B3B] bg-[#FFDEDE]" : "bg-[#F4F4F4]"}
                     `}
                   >
                     <input
-                      className="w-full bg-transparent font-dm-sans text-[14px] leading-[20px] text-[#1E1E1E] outline-none md:text-[16px] md:leading-[24px]"
+                      className="w-full bg-transparent font-dm-sans text-[12px] leading-[16px] text-[#1E1E1E] outline-none md:text-[16px] md:leading-[24px]"
                       type="email"
                       name="email"
                       placeholder="Email *"
@@ -246,12 +241,12 @@ export const ContactUs: React.FC = () => {
                 <div className="flex flex-col gap-[20px] md:items-end">
                   {/* message input */}
                   <div
-                    className={`flex h-[208px] w-full items-start gap-[10px] rounded-[10px] px-[20px] py-[14px] md:w-[605px]
+                    className={`flex h-[208px] w-full items-start gap-[10px] rounded-[10px] px-[15px] py-[10px] md:w-[605px] md:px-[20px] md:py-[14px]
                       ${messageError ? "border border-[#B93B3B] bg-[#FFDEDE]" : "bg-[#F4F4F4]"}
                     `}
                   >
                     <textarea
-                      className="h-full w-full resize-none bg-transparent font-dm-sans text-[14px] leading-[20px] text-[#1E1E1E] outline-none md:text-[16px] md:leading-[24px]"
+                      className="h-full w-full resize-none bg-transparent font-dm-sans text-[12px] leading-[16px] text-[#1E1E1E] outline-none md:text-[16px] md:leading-[24px]"
                       name="message"
                       placeholder="Message *"
                       value={formData.message}

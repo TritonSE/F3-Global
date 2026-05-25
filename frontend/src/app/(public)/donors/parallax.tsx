@@ -42,31 +42,33 @@ const parallaxSections = [
 
 export default function Parallax() {
   return (
-    <Background>
-      <div className="mx-auto grid w-full max-w-[1600px] grid-cols-[clamp(240px,22vw,520px)_minmax(0,1fr)] gap-x-[160px] px-6 sm:px-10 lg:px-[100px]">
-        <div className="self-start pt-[200px]" aria-hidden="true" />
-
-        <div className="min-w-0 pt-[367px] pb-[127px]">
-          <div className="flex flex-col gap-[500px]">
-            {parallaxSections.map((section) => (
-              <section
-                key={section.number}
-                id={`step-${section.number}`}
-                className="flex items-center"
-              >
-                <div className="w-full min-w-0 max-w-[780px]">
-                  <h1 className="text-white font-['Ethic_New'] text-[64px] font-light leading-[110%] pb-[10px] break-words">
-                    {section.number}. {section.title1} <i>{section.title2}</i>
-                  </h1>
-                  <p className="text-white font-['DM_Sans'] text-[24px] font-medium leading-[150%] tracking-[-0.48px] break-words">
-                    {section.content}
-                  </p>
-                </div>
-              </section>
-            ))}
+    <Background className="md:min-h-[500vh]">
+      <div className="px-[30px] pb-[150px] pt-[50px] md:hidden">
+        <h2 className="font-dm-sans text-[28px] font-medium leading-[150%] tracking-[-0.56px] text-white">
+          How You Can Help
+        </h2>
+      </div>
+      {parallaxSections.map((section, index) => (
+        <div
+          key={section.number}
+          id={`step-${section.number}`}
+          className={`flex items-start md:h-screen md:items-center ${
+            index < parallaxSections.length - 1 ? "pb-[250px] md:pb-0" : "pb-[62px] md:pb-0"
+          }`}
+        >
+          <div className="box-border w-full px-[30px] md:px-0 md:pr-[17.85%] md:pl-[43.32%]">
+            <h1 className="flex items-baseline gap-[0.25em] pb-[10px] font-['Ethic_New'] text-[48px] leading-[110%] font-light text-white md:text-[64px]">
+              <span className="shrink-0">{section.number}.</span>
+              <span className="min-w-0 flex-1">
+                {section.title1} <i>{section.title2}</i>
+              </span>
+            </h1>
+            <p className="text-white font-['DM_Sans'] text-[16px] md:text-[24px] font-medium leading-[150%] tracking-[-0.48px]">
+              {section.content}
+            </p>
           </div>
         </div>
-      </div>
+      ))}
     </Background>
   );
 }

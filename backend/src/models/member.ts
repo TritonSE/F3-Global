@@ -5,6 +5,7 @@ import type { Document } from "mongoose";
 export type MemberModel = {
   name: string;
   country: string;
+  email: string;
   memberPosition: string;
   linkedinUrl: string;
   headshotUrl: string;
@@ -13,6 +14,7 @@ export type MemberModel = {
 const MemberSchema = new Schema<MemberModel>({
   name: { type: String, required: true },
   country: { type: String, required: true },
+  email: { type: String, required: true },
   memberPosition: { type: String, required: true },
   linkedinUrl: { type: String, required: true },
   headshotUrl: { type: String, required: false },

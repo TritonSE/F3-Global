@@ -41,39 +41,34 @@ export const FaqAccordion: React.FC<FaqAccordionProps> = ({
 
   return (
     <div className={`w-full bg-white overflow-x-hidden border-t border-[#f4f4f4] ${className}`}>
-      <div
-        className="flex w-full flex-col gap-[40px] items-start py-[50px] px-[100px] relative"
-        style={{
-          boxShadow: "10px 6px 60px 0 rgba(1, 32, 96, 0.20)",
-        }}
-      >
+      <div className="relative flex w-full flex-col items-start gap-[40px] px-[30px] py-[50px] shadow-[0px_19px_21.5px_rgba(0,0,0,0.1)] md:px-[100px] md:shadow-[10px_6px_60px_0_rgba(1,32,96,0.20)]">
         <div className="flex items-center relative w-full">
-          <h2 className="text-[#172447] font-dm text-[48px] font-medium leading-[1.5] tracking-[-0.96px]">
+          <h2 className="font-dm text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#172447] md:text-[48px] md:tracking-[-0.96px]">
             Questions?
           </h2>
         </div>
 
-        <div className="bg-[#f4f4f4] flex flex-col items-start px-[20px] rounded-[10px] w-full">
+        <div
+          className="flex w-full flex-col items-start rounded-[10px] bg-[#f4f4f4] p-[20px] md:py-0"
+          style={{ "--faq-border-color": borderColor } as React.CSSProperties}
+        >
           {items.map((item, index) => (
             <div
               key={index}
-              className="w-full"
-              style={{
-                borderBottom: index < items.length - 1 ? `2px solid ${borderColor}` : "none",
-              }}
+              className="w-full border-b border-[var(--faq-border-color)] pb-[25px] pt-[25px] first:pt-0 last:border-b-0 last:pb-0 md:border-b-2 md:py-0"
             >
               <button
                 onClick={() => toggleItem(index)}
-                className="flex items-center justify-between py-[20px] w-full hover:opacity-80 transition-opacity cursor-pointer"
+                className="flex w-full cursor-pointer items-start justify-between transition-opacity hover:opacity-80 md:items-center md:py-[20px]"
               >
                 <p
-                  className={`font-dm text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-left flex-1 transition-colors ${
+                  className={`font-dm flex-1 text-left text-[18px] font-medium leading-[1.5] tracking-[-0.36px] transition-colors md:text-[28px] md:tracking-[-0.56px] ${
                     open[index] ? "text-[#012060]" : "text-[#1e1e1e]"
                   }`}
                 >
                   {item.question}
                 </p>
-                <div className="relative shrink-0 h-[42px] w-[42px] ml-4 flex items-center justify-center">
+                <div className="relative ml-[10px] flex h-[27px] w-[27px] shrink-0 items-center justify-center md:ml-4 md:h-[42px] md:w-[42px]">
                   <Image
                     src="/imgs/remove.svg"
                     alt="Collapse"
@@ -102,9 +97,9 @@ export const FaqAccordion: React.FC<FaqAccordionProps> = ({
                   transition: "max-height 0.3s ease-in-out",
                   overflow: "hidden",
                 }}
-                className="text-[#5D5D5D] font-dm text-[16px] leading-[1.5]"
+                className="font-dm text-[12px] leading-[16px] text-[#5D5D5D] md:text-[16px] md:leading-[1.5]"
               >
-                <div className="pb-[20px]">{item.answer}</div>
+                <div className="pt-[15px] md:pt-0 md:pb-[20px]">{item.answer}</div>
               </div>
             </div>
           ))}

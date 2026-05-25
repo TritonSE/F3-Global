@@ -10,7 +10,7 @@ router.get("/all", MemberController.getAllMembers);
 
 router.post("/", verifyAuthToken, Validators.createMember, MemberController.createMember);
 
-router.put("/", verifyAuthToken, Validators.updateMembers, MemberController.updateMembers);
+router.put("/:id", verifyAuthToken, Validators.updateMember, MemberController.updateMember);
 
 router.delete("/:id", verifyAuthToken, Validators.deleteMember, MemberController.deleteMember);
 
