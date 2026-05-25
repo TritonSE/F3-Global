@@ -10,6 +10,7 @@ import type { ReactNode } from "react";
 
 import {
   createNewsletter,
+  deleteNewsletter,
   getNewsletters,
   type Newsletter,
   type NewsletterPayload,
@@ -23,6 +24,7 @@ import { ConfirmationNotification } from "@/components/admin-portal/Confirmation
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
 import { PreviewMode } from "@/components/admin-portal/preview-components/PreviewMode";
 import { PreviewNavBar } from "@/components/admin-portal/preview-components/PreviewNavBar";
+import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { auth } from "@/firebase/firebase";
 import { rollbackUploads, uploadToStorage } from "@/utils/firebaseStorage";
 
@@ -342,15 +344,23 @@ function NewsletterRow({
   newsletter,
   featured,
   onEdit,
+  onDelete,
 }: {
   newsletter: Newsletter;
   featured: boolean;
   onEdit: () => void;
+  onDelete: () => void;
 }) {
   return (
-    <button
-      type="button"
+    <div
+      role="button"
+      tabIndex={0}
       onClick={onEdit}
+      onKeyDown={(event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        onEdit();
+      }}
       className={`${NEWSLETTER_TABLE_GRID} w-full cursor-pointer border-b border-[#C7C7C7] text-left transition-opacity hover:opacity-90`}
     >
       <div className={cellClass("font-medium", featured)}>
@@ -370,11 +380,19 @@ function NewsletterRow({
         <span className="truncate">{fileNameFromUrl(newsletter.imageUrl)}</span>
       </div>
       <div className={cellClass("justify-center", featured)}>
-        <span aria-hidden="true">
+        <button
+          type="button"
+          aria-label={`Delete ${newsletter.title}`}
+          onClick={(event) => {
+            event.stopPropagation();
+            onDelete();
+          }}
+          className="cursor-pointer text-[#5D5D5D] hover:text-[#B93B3B]"
+        >
           <TrashIcon />
-        </span>
+        </button>
       </div>
-    </button>
+    </div>
   );
 }
 
@@ -611,6 +629,7 @@ export default function NewsletterArticlesEditor() {
   });
   const [articleEditorOpen, setArticleEditorOpen] = useState(false);
   const [editingArticle, setEditingArticle] = useState<Newsletter | null>(null);
+  const [pendingDeleteArticle, setPendingDeleteArticle] = useState<Newsletter | null>(null);
   const [articleSaving, setArticleSaving] = useState(false);
   const [toast, setToast] = useState<ReactNode | null>(null);
   const [toastFading, setToastFading] = useState(false);
@@ -761,6 +780,32 @@ export default function NewsletterArticlesEditor() {
     }
   }
 
+  async function handleConfirmDeleteArticle() {
+    if (!pendingDeleteArticle) return;
+    setArticleSaving(true);
+
+    try {
+      await deleteNewsletter(pendingDeleteArticle._id);
+      await refreshNewsletters();
+      showToast(
+        <>
+          <strong className="font-bold">{pendingDeleteArticle.title}</strong> article has been
+          deleted successfully.
+        </>,
+      );
+      if (editingArticle?._id === pendingDeleteArticle._id) {
+        setArticleEditorOpen(false);
+        setEditingArticle(null);
+      }
+      setPendingDeleteArticle(null);
+    } catch (deleteError) {
+      console.error("Failed to delete newsletter article:", deleteError);
+      setError("Failed to delete newsletter article.");
+    } finally {
+      setArticleSaving(false);
+    }
+  }
+
   if (authLoading) return null;
 
   if (isPreview) {
@@ -903,6 +948,7 @@ export default function NewsletterArticlesEditor() {
                     setEditingArticle(newsletter);
                     setArticleEditorOpen(true);
                   }}
+                  onDelete={() => setPendingDeleteArticle(newsletter)}
                 />
               ))
             )}
@@ -976,6 +1022,20 @@ export default function NewsletterArticlesEditor() {
           }}
         />
       )}
+      <ConfirmationDialog
+        open={pendingDeleteArticle !== null}
+        onClose={() => {
+          if (articleSaving) return;
+          setPendingDeleteArticle(null);
+        }}
+        title="Delete Article?"
+        body="Are you sure you want to delete this newsletter article? This action cannot be undone."
+        cancelLabel="Cancel"
+        confirmLabel={articleSaving ? "DELETING..." : "YES, DELETE"}
+        onConfirm={() => {
+          void handleConfirmDeleteArticle();
+        }}
+      />
     </div>
   );
 }
