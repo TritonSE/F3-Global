@@ -11,6 +11,10 @@ const Background = ({ children, className = "" }: BackgroundProps) => {
   const titleRef = useRef<HTMLDivElement>(null);
   const [isLocked, setIsLocked] = useState(false);
   const [lockedTop, setLockedTop] = useState(0);
+  const desktopLayoutVars = {
+    "--donors-title-width": "clamp(300px, 32vw, 460px)",
+    "--donors-column-gap": "160px",
+  } as React.CSSProperties;
 
   useEffect(() => {
     const step5Element = document.getElementById("step-5");
@@ -46,6 +50,7 @@ const Background = ({ children, className = "" }: BackgroundProps) => {
   return (
     <div
       ref={containerRef}
+      style={desktopLayoutVars}
       className={`relative w-full md:bg-[linear-gradient(0deg,rgba(0,0,0,0.60)_0%,rgba(0,0,0,0.60)_100%),url('/imgs/donors.webp')] md:bg-cover md:bg-center md:bg-fixed md:bg-no-repeat ${className}`}
     >
       <div className="pointer-events-none sticky top-0 z-0 -mb-[100vh] h-screen bg-[linear-gradient(0deg,rgba(0,0,0,0.60)_0%,rgba(0,0,0,0.60)_100%),url('/imgs/donors.webp')] bg-no-repeat [background-position:54%_top] [background-size:auto_100%] md:hidden" />
@@ -60,13 +65,17 @@ const Background = ({ children, className = "" }: BackgroundProps) => {
       >
         <div
           ref={titleRef}
-          className="pointer-events-none select-none flex text-white text-center font-dm-sans text-[48px] font-medium leading-[150%] tracking-[-0.96px] pt-[200px] pl-[100px]"
+          className="pointer-events-none select-none flex pl-[100px] pt-[200px] text-white font-dm-sans text-[48px] font-medium leading-[150%] tracking-[-0.96px]"
         >
-          <span>How You Can Help</span>
+          <span className="block whitespace-normal" style={{ width: "var(--donors-title-width)" }}>
+            How You Can Help
+          </span>
         </div>
       </div>
 
-      <div className="relative z-20">{children}</div>
+      <div className="relative z-20 md:pl-[calc(100px+var(--donors-title-width)+var(--donors-column-gap))] md:pr-[100px]">
+        {children}
+      </div>
     </div>
   );
 };
