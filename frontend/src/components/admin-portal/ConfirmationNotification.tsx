@@ -1,12 +1,14 @@
 "use client";
 
+import type { ReactNode } from "react";
+
 export function ConfirmationNotification({
   message,
   link,
   fading,
   onDismiss,
 }: {
-  message: string | null;
+  message: ReactNode | null;
   link?: { href: string; label: string };
   fading: boolean;
   onDismiss: () => void;

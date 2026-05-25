@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import type { StorageReference } from "firebase/storage";
+import type { ReactNode } from "react";
 
 import {
   createNewsletter,
@@ -611,7 +612,7 @@ export default function NewsletterArticlesEditor() {
   const [articleEditorOpen, setArticleEditorOpen] = useState(false);
   const [editingArticle, setEditingArticle] = useState<Newsletter | null>(null);
   const [articleSaving, setArticleSaving] = useState(false);
-  const [toast, setToast] = useState<string | null>(null);
+  const [toast, setToast] = useState<ReactNode | null>(null);
   const [toastFading, setToastFading] = useState(false);
   const [isPreview, setIsPreview] = useState(false);
   const [previewNewsletterId, setPreviewNewsletterId] = useState<string | null>(null);
@@ -671,7 +672,7 @@ export default function NewsletterArticlesEditor() {
   const previewNewsletter =
     sortedNewsletters.find((newsletter) => newsletter._id === previewNewsletterId) ?? null;
 
-  function showToast(message: string) {
+  function showToast(message: ReactNode) {
     setToast(message);
     setToastFading(false);
     setTimeout(() => setToastFading(true), 3000);
@@ -729,14 +730,24 @@ export default function NewsletterArticlesEditor() {
       };
 
       if (editingArticle) {
-        await updateNewsletter(editingArticle._id, payload);
+        const saved = await updateNewsletter(editingArticle._id, payload);
         await refreshNewsletters();
-        showToast("Newsletter article has been updated successfully.");
+        showToast(
+          <>
+            <strong className="font-bold">{saved.title}</strong> article has been edited
+            successfully.
+          </>,
+        );
       } else {
-        await createNewsletter(payload);
+        const saved = await createNewsletter(payload);
         setCurrentPage(1);
         await refreshNewsletters(1);
-        showToast("Newsletter article has been added successfully.");
+        showToast(
+          <>
+            <strong className="font-bold">{saved.title}</strong> article has been added
+            successfully.
+          </>,
+        );
       }
 
       setArticleEditorOpen(false);
