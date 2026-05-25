@@ -17,12 +17,14 @@ import {
 } from "@dnd-kit/sortable";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { getAllCities, updateCities } from "@/api/cities";
 import { useAdmin } from "@/components/admin-portal/AdminContext";
 import { DraggableSortablePill } from "@/components/admin-portal/DraggableSortablePill";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
+import { PreviewMode } from "@/components/admin-portal/preview-components/PreviewMode";
+import { PreviewNavBar } from "@/components/admin-portal/preview-components/PreviewNavBar";
 import { PublishButton } from "@/components/admin-portal/PublishButton";
 import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
@@ -32,6 +34,8 @@ type CityItem = { id: string; name: string };
 
 export default function CitiesEditor() {
   const router = useRouter();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(1200);
   const [loading, setLoading] = useState(true);
   const [isPublishing, setIsPublishing] = useState(false);
   const [originalCities, setOriginalCities] = useState<string[]>([]);
@@ -39,6 +43,9 @@ export default function CitiesEditor() {
   const [addInput, setAddInput] = useState("");
   const [showRevertDialog, setShowRevertDialog] = useState(false);
   const [showBackDialog, setShowBackDialog] = useState(false);
+  const [isPreview, setIsPreview] = useState(false);
+  const [notification, setNotification] = useState<"published" | null>(null);
+  const [notificationFading, setNotificationFading] = useState(false);
   const { setHasChanges } = useAdmin();
 
   useEffect(() => {
@@ -87,7 +94,10 @@ export default function CitiesEditor() {
     setIsPublishing(true);
     try {
       await updateCities(cities.map((c) => c.name));
-      router.push("/admin-portal");
+      setNotification("published");
+      setTimeout(() => {
+        router.push("/admin-portal");
+      }, 1000);
     } catch (error) {
       console.error("Failed to publish cities:", error);
       setIsPublishing(false);
@@ -122,6 +132,56 @@ export default function CitiesEditor() {
   }, [hasChanges]);
 
   useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new ResizeObserver(([entry]) => {
+      setContainerWidth(entry.contentRect.width);
+    });
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!notification) {
+      setNotificationFading(false);
+      return;
+    }
+    setNotificationFading(false);
+    const fadeId = setTimeout(() => setNotificationFading(true), 5000);
+    const hideId = setTimeout(() => setNotification(null), 6500);
+    return () => {
+      clearTimeout(fadeId);
+      clearTimeout(hideId);
+    };
+  }, [notification]);
+
+  function handleDismissNotification() {
+    if (notificationFading) return;
+    setNotificationFading(true);
+    setTimeout(() => setNotification(null), 1500);
+  }
+
+  const repeated = useMemo(() => {
+    if (cities.length === 0) return [];
+    const cityNames = cities.map((c) => c.name);
+    const singleSetWidth = cityNames.length * 180;
+    const rawCopies = Math.ceil((containerWidth * 2) / singleSetWidth);
+    const copies = Math.max(4, rawCopies % 2 === 0 ? rawCopies : rawCopies + 1);
+    return Array.from({ length: copies }, (_, copyIndex) =>
+      cityNames.map((city) => ({
+        city,
+        uniqueKey: `${city}-copy${copyIndex}`,
+      })),
+    ).flat();
+  }, [containerWidth, cities]);
+
+  const publishButton = (
+    <PublishButton
+      handleClick={() => void handlePublish()}
+      disabled={!hasChanges || isPublishing}
+    />
+  );
+
+  useEffect(() => {
     setHasChanges(hasChanges);
   }, [hasChanges]);
 
@@ -131,6 +191,42 @@ export default function CitiesEditor() {
 
   if (loading) return null;
 
+  if (isPreview) {
+    return (
+      <PreviewMode
+        onBack={() => {
+          setIsPreview(false);
+        }}
+        notificationMessage={notification === "published" ? "Successfully Published" : null}
+        notificationFading={notificationFading}
+        onDismissNotification={handleDismissNotification}
+        publishButton={publishButton}
+      >
+        <div
+          ref={containerRef}
+          className="bg-white rounded-[10px] overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.1)] w-full"
+        >
+          <PreviewNavBar activeItem="Home" />
+
+          <div className="h-[350px] flex items-center justify-center relative w-full overflow-hidden px-[24px]">
+            <div className="flex animate-marquee whitespace-nowrap">
+              {repeated.map((city) => (
+                <div key={city.uniqueKey} className="flex items-center">
+                  <span className="text-[#5D5D5D] text-[25.86px] leading-[25.862px] font-ethic font-light italic [font-feature-settings:'dlig'_on]">
+                    {city.city}
+                  </span>
+                  <span className="text-[#5D5D5D] text-[21.013px] leading-[25.862px] mx-[8.082px]">
+                    •
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </PreviewMode>
+    );
+  }
+
   return (
     <div className="bg-white min-h-screen">
       <HeaderSection
@@ -138,6 +234,7 @@ export default function CitiesEditor() {
         tags={["HOME"]}
         description="Edit city names by clicking into the text box, reorder by dragging, or add/delete cities."
         onBack={() => (hasChanges ? setShowBackDialog(true) : router.push("/admin-portal"))}
+        onPreview={() => setIsPreview(true)}
       />
 
       <div className="flex flex-col items-center px-[100px] py-[50px]">
