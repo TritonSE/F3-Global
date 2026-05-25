@@ -14,7 +14,6 @@ import {
   type MemberPayload,
   updateMember,
 } from "@/api/members";
-import { AdminSidebar } from "@/components/admin-portal/AdminSidebar";
 import { ConfirmationNotification } from "@/components/admin-portal/ConfirmationNotification";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
 import { type MemberFormData, MemberFormModal } from "@/components/admin-portal/MemberFormModal";
@@ -171,20 +170,16 @@ export default function TeamMembersEditorPage() {
   if (isPreview) {
     return (
       <div className="min-h-screen bg-white">
-        <AdminSidebar activeItem="meet-the-team" />
-        <div className="ml-[203px]">
-          <PreviewMode onBack={() => setIsPreview(false)} publishButton={null}>
-            <MembersPreview members={members} />
-          </PreviewMode>
-        </div>
+        <PreviewMode onBack={() => setIsPreview(false)} publishButton={null}>
+          <MembersPreview members={members} />
+        </PreviewMode>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-white">
-      <AdminSidebar activeItem="meet-the-team" />
-      <div className="relative ml-[203px] flex flex-col">
+      <div className="relative flex flex-col">
         {toast && (
           <ConfirmationNotification
             message={toast}

@@ -3,7 +3,6 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { AdminSidebar } from "@/components/admin-portal/AdminSidebar";
 import { Section } from "@/components/admin-portal/Section";
 import { auth } from "@/firebase/firebase";
 
@@ -153,8 +152,7 @@ export default function AdminPortal() {
 
   return (
     <div className="flex">
-      <AdminSidebar />
-      <div className="ml-[203px] flex flex-1 flex-col items-start gap-[40px] p-[50px]">
+      <div className="flex flex-1 flex-col items-start gap-[40px] p-[50px]">
         <div className="flex gap-[10px] -mb-[10px]">
           <p className="text-[#1E1E1E] text-[32px] font-bold -tracking-[0.64px]">Welcome,</p>
           <p className="text-[#172447] text-[32px] font-bold -tracking-[0.64px]">F3 Global!</p>
