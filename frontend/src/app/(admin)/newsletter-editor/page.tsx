@@ -396,12 +396,7 @@ export default function NewsletterArticlesEditor() {
     return () => clearTimeout(timer);
   }, [searchInput]);
 
-  const sortedNewsletters = useMemo(() => {
-    return [...(list?.data ?? [])].sort((a, b) => {
-      if (a.featured !== b.featured) return a.featured ? -1 : 1;
-      return 0;
-    });
-  }, [list]);
+  const sortedNewsletters = list?.data ?? [];
 
   function handleSort(column: NewsletterSortColumn) {
     setCurrentPage(1);

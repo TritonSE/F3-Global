@@ -14,4 +14,9 @@ const newsletterSchema = new Schema(
   { collection: "newsletters" },
 );
 
+newsletterSchema.index(
+  { featured: 1 },
+  { unique: true, partialFilterExpression: { featured: true } },
+);
+
 export default model("Newsletter", newsletterSchema);

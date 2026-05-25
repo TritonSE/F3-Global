@@ -60,8 +60,9 @@ export const getNewsletters: RequestHandler = async (req, res, next) => {
     }
     if (featuredOnly) filter.featured = true;
 
-    const sortKey = (req.query.sortBy as string | undefined) ?? "newest";
-    const sort = SORT_OPTIONS[sortKey] ?? SORT_OPTIONS.newest;
+    const sortKey = (req.query.sortBy as string | undefined) ?? "none";
+    const selectedSort = SORT_OPTIONS[sortKey] ?? SORT_OPTIONS.none;
+    const sort = { featured: -1 as const, ...selectedSort };
 
     const data = (await NewsletterModel.find(filter).sort(sort).skip(skip).limit(limit)).map(
       (doc) => ({
@@ -110,6 +111,11 @@ export const createNewsletter: RequestHandler<
     validationErrorParser(errors);
 
     const { title, uploadDate, views, blurb, authorName, pdfUrl, imageUrl, featured } = req.body;
+
+    if (featured === true) {
+      await NewsletterModel.updateMany({ featured: true }, { $set: { featured: false } });
+    }
+
     const doc = await NewsletterModel.create({
       title,
       uploadDate,
@@ -140,6 +146,13 @@ export const updateNewsletter: RequestHandler<
     const existingDoc = await NewsletterModel.findById(id);
     if (!existingDoc) {
       return res.status(404).json({ message: "Newsletter not found" });
+    }
+
+    if (updateData.featured === true) {
+      await NewsletterModel.updateMany(
+        { _id: { $ne: id }, featured: true },
+        { $set: { featured: false } },
+      );
     }
 
     if (updateData.pdfUrl && updateData.pdfUrl !== existingDoc.pdfUrl) {
