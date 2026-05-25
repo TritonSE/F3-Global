@@ -138,6 +138,8 @@ export default function CitiesEditor() {
   useEffect(() => {
     return () => setHasChanges(false);
   }, []);
+
+  useEffect(() => {
     if (!containerRef.current) return;
     const observer = new ResizeObserver(([entry]) => {
       setContainerWidth(entry.contentRect.width);
