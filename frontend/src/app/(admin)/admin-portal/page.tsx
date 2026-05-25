@@ -87,7 +87,7 @@ export default function AdminPortal() {
       description:
         "Add or remove current F3 team members, or edit information including member locations, image, and contact links.",
       tags: ["Meet the Team"],
-      href: "/team-members-editor",
+      href: "/members-editor",
     },
   ];
 
