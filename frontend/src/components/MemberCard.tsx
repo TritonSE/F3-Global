@@ -18,7 +18,7 @@ type MemberCardProps = {
 export const MemberCard: React.FC<MemberCardProps> = ({ member }) => {
   return (
     <>
-      <div className="flex w-full max-w-[127px] flex-col items-start gap-3 md:max-w-none md:gap-[30px]">
+      <div className="member-card flex w-full max-w-[127px] flex-col items-start gap-3 md:max-w-none md:gap-[30px]">
         <div className="relative h-[127px] w-[127px] self-center overflow-hidden rounded-full md:h-[250px] md:w-[250px] md:self-auto">
           <Image
             src={
