@@ -5,17 +5,25 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import type { StorageReference } from "firebase/storage";
+
 import {
+  createNewsletter,
   getNewsletters,
   type Newsletter,
+  type NewsletterPayload,
   type PaginatedNewsletters,
   type SortBy,
+  updateNewsletter,
 } from "@/api/newsletters";
+import { AddEditArticle, type ArticleFormValues } from "@/components/admin-portal/AddEditArticle";
 import { AdminSidebar } from "@/components/admin-portal/AdminSidebar";
+import { ConfirmationNotification } from "@/components/admin-portal/ConfirmationNotification";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
 import { PreviewMode } from "@/components/admin-portal/preview-components/PreviewMode";
 import { PreviewNavBar } from "@/components/admin-portal/preview-components/PreviewNavBar";
 import { auth } from "@/firebase/firebase";
+import { rollbackUploads, uploadToStorage } from "@/utils/firebaseStorage";
 
 const PAGE_SIZE = 5;
 const NEWSLETTER_TABLE_GRID =
@@ -329,9 +337,21 @@ function HeaderCell({
   );
 }
 
-function NewsletterRow({ newsletter, featured }: { newsletter: Newsletter; featured: boolean }) {
+function NewsletterRow({
+  newsletter,
+  featured,
+  onEdit,
+}: {
+  newsletter: Newsletter;
+  featured: boolean;
+  onEdit: () => void;
+}) {
   return (
-    <div className={`${NEWSLETTER_TABLE_GRID} border-b border-[#C7C7C7]`}>
+    <button
+      type="button"
+      onClick={onEdit}
+      className={`${NEWSLETTER_TABLE_GRID} w-full cursor-pointer border-b border-[#C7C7C7] text-left transition-opacity hover:opacity-90`}
+    >
       <div className={cellClass("font-medium", featured)}>
         <span className="truncate">{newsletter.title}</span>
       </div>
@@ -349,11 +369,11 @@ function NewsletterRow({ newsletter, featured }: { newsletter: Newsletter; featu
         <span className="truncate">{fileNameFromUrl(newsletter.imageUrl)}</span>
       </div>
       <div className={cellClass("justify-center", featured)}>
-        <button type="button" aria-label={`Delete ${newsletter.title}`} className="cursor-pointer">
+        <span aria-hidden="true">
           <TrashIcon />
-        </button>
+        </span>
       </div>
-    </div>
+    </button>
   );
 }
 
@@ -588,6 +608,11 @@ export default function NewsletterArticlesEditor() {
     direction: "none",
     nextDirection: "desc",
   });
+  const [articleEditorOpen, setArticleEditorOpen] = useState(false);
+  const [editingArticle, setEditingArticle] = useState<Newsletter | null>(null);
+  const [articleSaving, setArticleSaving] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+  const [toastFading, setToastFading] = useState(false);
   const [isPreview, setIsPreview] = useState(false);
   const [previewNewsletterId, setPreviewNewsletterId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -646,6 +671,85 @@ export default function NewsletterArticlesEditor() {
   const previewNewsletter =
     sortedNewsletters.find((newsletter) => newsletter._id === previewNewsletterId) ?? null;
 
+  function showToast(message: string) {
+    setToast(message);
+    setToastFading(false);
+    setTimeout(() => setToastFading(true), 3000);
+    setTimeout(() => setToast(null), 4500);
+  }
+
+  function closeArticleEditor() {
+    if (articleSaving) return;
+    setArticleEditorOpen(false);
+    setEditingArticle(null);
+  }
+
+  async function refreshNewsletters(page = currentPage) {
+    const response = await getNewsletters({
+      page,
+      limit: PAGE_SIZE,
+      search,
+      sortBy: sortToApiSort(tableSort),
+    });
+    setList(response);
+    setError(null);
+  }
+
+  async function handleSubmitArticle(values: ArticleFormValues) {
+    setArticleSaving(true);
+    const uploadedRefs: StorageReference[] = [];
+
+    try {
+      let imageUrl = values.imageUrl;
+      if (values.newImage) {
+        imageUrl = await uploadToStorage(
+          values.newImage,
+          `newsletters/images/${Date.now()}-${values.newImage.name}`,
+          uploadedRefs,
+        );
+      }
+
+      let pdfUrl = values.pdfUrl;
+      if (values.newPdf) {
+        pdfUrl = await uploadToStorage(
+          values.newPdf,
+          `newsletters/pdfs/${Date.now()}-${values.newPdf.name}`,
+          uploadedRefs,
+        );
+      }
+
+      const payload: NewsletterPayload = {
+        title: values.title,
+        uploadDate: values.uploadDate,
+        views: values.views,
+        blurb: values.blurb,
+        pdfUrl,
+        imageUrl,
+        featured: values.featured,
+      };
+
+      if (editingArticle) {
+        await updateNewsletter(editingArticle._id, payload);
+        await refreshNewsletters();
+        showToast("Newsletter article has been updated successfully.");
+      } else {
+        await createNewsletter(payload);
+        setCurrentPage(1);
+        await refreshNewsletters(1);
+        showToast("Newsletter article has been added successfully.");
+      }
+
+      setArticleEditorOpen(false);
+      setEditingArticle(null);
+    } catch (submitError) {
+      console.error("Failed to save newsletter article:", submitError);
+      await rollbackUploads(uploadedRefs);
+      setError("Failed to save newsletter article.");
+    } finally {
+      setArticleSaving(false);
+    }
+  }
+
   if (authLoading) return null;
 
   if (isPreview) {
@@ -692,6 +796,10 @@ export default function NewsletterArticlesEditor() {
             <div className="flex items-center gap-[14px]">
               <button
                 type="button"
+                onClick={() => {
+                  setEditingArticle(null);
+                  setArticleEditorOpen(true);
+                }}
                 className="flex cursor-pointer items-center justify-center gap-[10px] rounded-[99px] bg-[#1169B0] px-[20px] py-[10px] font-dm-sans text-[16px] font-semibold text-white"
               >
                 <PlusIcon />
@@ -710,6 +818,11 @@ export default function NewsletterArticlesEditor() {
               </button>
             </div>
           }
+        />
+        <ConfirmationNotification
+          message={toast}
+          fading={toastFading}
+          onDismiss={() => setToast(null)}
         />
 
         <section className="flex flex-col gap-[20px] px-[50px] py-[50px] xl:px-[100px]">
@@ -775,6 +888,10 @@ export default function NewsletterArticlesEditor() {
                   key={newsletter._id}
                   newsletter={newsletter}
                   featured={newsletter.featured}
+                  onEdit={() => {
+                    setEditingArticle(newsletter);
+                    setArticleEditorOpen(true);
+                  }}
                 />
               ))
             )}
@@ -837,6 +954,17 @@ export default function NewsletterArticlesEditor() {
           )}
         </section>
       </main>
+
+      {articleEditorOpen && (
+        <AddEditArticle
+          article={editingArticle}
+          saving={articleSaving}
+          onCancel={closeArticleEditor}
+          onSubmit={(values) => {
+            void handleSubmitArticle(values);
+          }}
+        />
+      )}
     </div>
   );
 }

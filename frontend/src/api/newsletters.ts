@@ -1,3 +1,5 @@
+import { getAuthHeaders } from "./auth";
+
 export type Newsletter = {
   _id: string;
   title: string;
@@ -8,6 +10,8 @@ export type Newsletter = {
   imageUrl?: string;
   featured: boolean;
 };
+
+export type NewsletterPayload = Omit<Newsletter, "_id">;
 
 export type SortBy =
   | "none"
@@ -78,5 +82,32 @@ export async function incrementNewsletterViews(id: string): Promise<Newsletter> 
     method: "PATCH",
   });
   if (!res.ok) throw new Error("Failed to increment views");
+  return (await res.json()) as Newsletter;
+}
+
+export async function createNewsletter(payload: NewsletterPayload): Promise<Newsletter> {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const authHeaders = await getAuthHeaders();
+  const res = await fetch(`${backendUrl}/api/newsletters`, {
+    method: "POST",
+    headers: { ...authHeaders, "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error("Failed to create newsletter");
+  return (await res.json()) as Newsletter;
+}
+
+export async function updateNewsletter(
+  id: string,
+  payload: Partial<NewsletterPayload>,
+): Promise<Newsletter> {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const authHeaders = await getAuthHeaders();
+  const res = await fetch(`${backendUrl}/api/newsletters/${encodeURIComponent(id)}`, {
+    method: "PUT",
+    headers: { ...authHeaders, "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error("Failed to update newsletter");
   return (await res.json()) as Newsletter;
 }
