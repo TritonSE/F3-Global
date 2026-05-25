@@ -26,12 +26,10 @@ import { deleteFromStorageUrl, rollbackUploads, uploadToStorage } from "@/utils/
 
 function ClientPill({
   highlight,
-  isPrimary,
   isSelected,
   onClick,
 }: {
   highlight: HighlightItem;
-  isPrimary: boolean;
   isSelected: boolean;
   onClick: () => void;
 }) {
@@ -52,11 +50,11 @@ function ClientPill({
       </span>
       <span className="shrink-0 ml-[10px] flex items-center justify-center">
         <span
-          className={`size-[16px] rounded-full border-[1.5px] flex items-center justify-center ${
-            isPrimary ? "border-[#1169B0]" : "border-[#C7C7C7]"
+          className={`size-[16px] rounded-full border-[1.5px] flex items-center justify-center transition-colors ${
+            isSelected ? "border-[#1169B0]" : "border-[#C7C7C7]"
           }`}
         >
-          {isPrimary && <span className="size-[8px] rounded-full bg-[#1169B0]" />}
+          {isSelected && <span className="size-[8px] rounded-full bg-[#1169B0]" />}
         </span>
       </span>
     </button>
@@ -270,7 +268,6 @@ export default function ClientHighlightsEditor() {
                 {primary && primary._id ? (
                   <ClientPill
                     highlight={primary}
-                    isPrimary
                     isSelected={selectedId === primary._id}
                     onClick={() => setSelectedId(primary._id ?? null)}
                   />
@@ -304,7 +301,6 @@ export default function ClientHighlightsEditor() {
                       <ClientPill
                         key={h._id}
                         highlight={h}
-                        isPrimary={false}
                         isSelected={selectedId === h._id}
                         onClick={() => setSelectedId(h._id ?? null)}
                       />
