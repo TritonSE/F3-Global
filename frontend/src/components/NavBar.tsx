@@ -24,12 +24,12 @@ function NavLinks({
 }) {
   return (
     <>
-      <div className="flex w-full max-w-[1512px] mx-auto justify-between items-center px-[30px] py-[20px] lg:px-[30px] lg:pt-[30px] lg:pb-[20px] leading-none gap-[20px] lg:gap-0">
-        <div className="flex items-center lg:min-w-[190px] h-[55px] flex-shrink-0">
+      <div className="flex w-full max-w-[1512px] mx-auto justify-between items-center px-[30px] py-[20px] min-[1115px]:px-[30px] min-[1115px]:pt-[30px] min-[1115px]:pb-[20px] leading-none gap-[20px] min-[1115px]:gap-0">
+        <div className="flex items-center min-[1115px]:min-w-[190px] h-[55px] flex-shrink-0">
           <Link
             href="/"
             onClick={onLogoClick}
-            className="flex items-center lg:gap-[12px] gap-0 h-[55px] cursor-pointer"
+            className="flex items-center min-[1115px]:gap-[12px] gap-0 h-[55px] cursor-pointer"
           >
             <div className="flex h-[55px] w-[55px] flex-shrink-0 items-center justify-center">
               <Image
@@ -40,7 +40,7 @@ function NavLinks({
                 className="block w-[55px] h-[55px] object-contain"
               />
             </div>
-            <div className="flex flex-col justify-center items-center h-full hidden lg:flex">
+            <div className="flex flex-col justify-center items-center h-full hidden min-[1115px]:flex">
               <span className="text-[#172447] text-[12px] font-[900] leading-[110%] tracking-[2.64px] font-dm">
                 <span className="block">FUTURE</span>
                 <span className="block">FORWARD</span>
@@ -49,10 +49,10 @@ function NavLinks({
             </div>
           </Link>
         </div>
-        <div className="flex items-center gap-0 lg:gap-[10px] flex-nowrap">
+        <div className="flex items-center gap-0 min-[1115px]:gap-[10px] flex-nowrap">
           <Link
             href="/"
-            className={`flex px-[10px] py-[8px] lg:px-[15px] lg:py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[16px] lg:text-[20px] font-normal leading-[24px] lg:leading-[32px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer whitespace-nowrap ${
+            className={`flex px-[10px] py-[8px] min-[1115px]:px-[15px] min-[1115px]:py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[16px] min-[1115px]:text-[20px] font-normal leading-[24px] min-[1115px]:leading-[32px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer whitespace-nowrap ${
               isActive("/") ? "bg-[#E6E6E6] text-[#172447]" : ""
             }`}
           >
@@ -60,27 +60,27 @@ function NavLinks({
           </Link>
           <Link
             href="/about-us"
-            className={`flex px-[10px] py-[8px] lg:px-[15px] lg:py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[16px] lg:text-[20px] font-normal leading-[24px] lg:leading-[32px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer whitespace-nowrap ${
+            className={`flex px-[10px] py-[8px] min-[1115px]:px-[15px] min-[1115px]:py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[16px] min-[1115px]:text-[20px] font-normal leading-[24px] min-[1115px]:leading-[32px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer whitespace-nowrap ${
               isActive("/about-us") ? "bg-[#E6E6E6] text-[#172447]" : ""
             }`}
           >
-            <span className="lg:hidden">About</span>
-            <span className="hidden lg:inline">About Us</span>
+            <span className="min-[1115px]:hidden">About</span>
+            <span className="hidden min-[1115px]:inline">About Us</span>
           </Link>
           <Link
             href="/meet-the-team"
-            className={`flex px-[10px] py-[8px] lg:px-[15px] lg:py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[16px] lg:text-[20px] font-normal leading-[24px] lg:leading-[32px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer whitespace-nowrap ${
+            className={`flex px-[10px] py-[8px] min-[1115px]:px-[15px] min-[1115px]:py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[16px] min-[1115px]:text-[20px] font-normal leading-[24px] min-[1115px]:leading-[32px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer whitespace-nowrap ${
               isActive("/meet-the-team") ? "bg-[#E6E6E6] text-[#172447]" : ""
             }`}
           >
-            <span className="lg:hidden">Team</span>
-            <span className="hidden lg:inline">Meet the Team</span>
+            <span className="min-[1115px]:hidden">Team</span>
+            <span className="hidden min-[1115px]:inline">Meet the Team</span>
           </Link>
 
           <button
             ref={buttonRef}
             onClick={onToggleDropdown}
-            className={`get-involved-btn flex w-auto items-center gap-[5px] px-[10px] py-[8px] lg:px-[15px] lg:py-[10px] text-[16px] lg:text-[20px] font-normal text-[#5D5D5D] leading-[24px] lg:leading-[32px] font-dm rounded-full hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer whitespace-nowrap flex-shrink-0 ${
+            className={`get-involved-btn flex w-auto items-center gap-[5px] px-[10px] py-[8px] min-[1115px]:px-[15px] min-[1115px]:py-[10px] text-[16px] min-[1115px]:text-[20px] font-normal text-[#5D5D5D] leading-[24px] min-[1115px]:leading-[32px] font-dm rounded-full hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer whitespace-nowrap flex-shrink-0 ${
               isDropdownOpen ||
               isClosing ||
               isActive("/donors") ||
@@ -96,14 +96,14 @@ function NavLinks({
             //       : "#5D5D5D",
             // }}
           >
-            <span className="lg:hidden">Involvement</span>
-            <span className="hidden lg:inline">Get Involved</span>
+            <span className="min-[1115px]:hidden">Involvement</span>
+            <span className="hidden min-[1115px]:inline">Get Involved</span>
             <Image
               src="/imgs/ic_arrowdown.svg"
               alt="Dropdown Arrow"
               width={16}
               height={16}
-              className={`transition-transform duration-300 ease-in-out lg:w-[24px] lg:h-[24px] w-[16px] h-[16px] ${
+              className={`transition-transform duration-300 ease-in-out min-[1115px]:w-[24px] min-[1115px]:h-[24px] w-[16px] h-[16px] ${
                 isClosing ? "spin-180-right" : isDropdownOpen ? "spin-180-left" : "rotate-0"
               }`}
             />
@@ -111,22 +111,22 @@ function NavLinks({
 
           <Link
             href="/newsletters"
-            className={`flex px-[10px] py-[8px] lg:px-[15px] lg:py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[16px] lg:text-[20px] font-normal leading-[24px] lg:leading-[32px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer whitespace-nowrap ${
+            className={`flex px-[10px] py-[8px] min-[1115px]:px-[15px] min-[1115px]:py-[10px] justify-center items-center gap-[10px] rounded-full text-[#5D5D5D] text-[16px] min-[1115px]:text-[20px] font-normal leading-[24px] min-[1115px]:leading-[32px] font-dm hover:bg-[#E6E6E6] transition-all duration-300 ease-in-out cursor-pointer whitespace-nowrap ${
               isActive("/newsletters") ? "bg-[#E6E6E6] text-[#172447]" : ""
             }`}
           >
-            <span className="lg:hidden">News</span>
-            <span className="hidden lg:inline">Newsletter</span>
+            <span className="min-[1115px]:hidden">News</span>
+            <span className="hidden min-[1115px]:inline">Newsletter</span>
           </Link>
 
           <Link
             href="https://www.zeffy.com/en-US/donation-form/donate-to-make-a-difference-7390"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex ml-[20px] lg:ml-0 px-[20px] py-[10px] justify-center items-center gap-[5px] lg:gap-[10px] rounded-full border border-[#C7C7C7] bg-[#FFF] text-[#012060] text-[16px] lg:text-[20px] font-semibold leading-[24px] lg:leading-[30px] font-dm hover:bg-[#172447] hover:border-[#172447] hover:text-[#FFF] transition-all duration-300 ease-in-out group cursor-pointer whitespace-nowrap flex-shrink-0"
+            className="flex ml-[20px] min-[1115px]:ml-0 px-[20px] py-[10px] justify-center items-center gap-[5px] min-[1115px]:gap-[10px] rounded-full border border-[#C7C7C7] bg-[#FFF] text-[#012060] text-[16px] min-[1115px]:text-[20px] font-semibold leading-[24px] min-[1115px]:leading-[30px] font-dm hover:bg-[#172447] hover:border-[#172447] hover:text-[#FFF] transition-all duration-300 ease-in-out group cursor-pointer whitespace-nowrap flex-shrink-0"
           >
             DONATE
-            <div className="w-[24px] h-[24px] lg:w-[36px] lg:h-[36px] flex items-center justify-center flex-shrink-0">
+            <div className="w-[24px] h-[24px] min-[1115px]:w-[36px] min-[1115px]:h-[36px] flex items-center justify-center flex-shrink-0">
               <Image
                 src="/imgs/ic_arrowforward_blue.svg"
                 alt="Redirect Arrow"
@@ -165,23 +165,23 @@ function DropdownCard({
   return (
     <Link
       href={href}
-      className="group flex w-[226px] h-[268px] lg:w-[400px] lg:h-[411px] flex-col items-stretch pt-[32px] pb-[25px] gap-[15px] lg:gap-[35px] lg:gap-[30px] rounded-[10px] border-2 border-[#C7C7C7] bg-white hover:bg-[#172447] hover:border-[#172447] transition-all duration-300 ease-in-out"
+      className="group flex w-[226px] h-[268px] min-[1115px]:w-[400px] min-[1115px]:h-[411px] flex-col items-stretch pt-[32px] pb-[25px] gap-[15px] min-[1115px]:gap-[35px] min-[1115px]:gap-[30px] rounded-[10px] border-2 border-[#C7C7C7] bg-white hover:bg-[#172447] hover:border-[#172447] transition-all duration-300 ease-in-out"
     >
       <div className="flex flex-col items-start gap-[12px] self-stretch">
-        <h3 className="px-[19px] lg:px-[29px] text-[18px] lg:text-[24px] font-dm font-[500] leading-[27px] lg:leading-[36px] tracking-[-0.36px] lg:tracking-[-0.48px] text-[#1E1E1E] group-hover:text-white transition-all duration-300 ease-in-out">
+        <h3 className="px-[19px] min-[1115px]:px-[29px] text-[18px] min-[1115px]:text-[24px] font-dm font-[500] leading-[27px] min-[1115px]:leading-[36px] tracking-[-0.36px] min-[1115px]:tracking-[-0.48px] text-[#1E1E1E] group-hover:text-white transition-all duration-300 ease-in-out">
           {title}
         </h3>
-        <p className="px-[19px] lg:px-[29px] text-[14px] lg:text-[16px] font-dm font-[400] leading-[20px] lg:leading-[24px] text-[#1E1E1E] group-hover:text-white transition-all duration-300 ease-in-out">
+        <p className="px-[19px] min-[1115px]:px-[29px] text-[14px] min-[1115px]:text-[16px] font-dm font-[400] leading-[20px] min-[1115px]:leading-[24px] text-[#1E1E1E] group-hover:text-white transition-all duration-300 ease-in-out">
           {description}
         </p>
       </div>
       <div className="flex flex-col justify-end items-center gap-[20px] flex-1 self-stretch">
-        <div className="flex flex-1 self-stretch px-[20px] lg:px-[29px] hidden lg:flex">
+        <div className="flex flex-1 self-stretch px-[20px] min-[1115px]:px-[29px] hidden min-[1115px]:flex">
           <div className="relative w-full h-full overflow-hidden rounded-[8px]">
             <Image src={imageSrc} alt={imageAlt} fill className="object-cover" />
           </div>
         </div>
-        <div className="px-[19px] lg:px-[29px] self-stretch">
+        <div className="px-[19px] min-[1115px]:px-[29px] self-stretch">
           <div className="relative h-[12px] w-[344px]">
             <svg
               width="34"
@@ -211,7 +211,7 @@ function DropdownCard({
 function DropdownContent() {
   return (
     <div className="px-[30px] py-[30px] max-w-[1512px] mx-auto">
-      <div className="flex justify-center gap-[10] lg:gap-[50px]">
+      <div className="flex justify-center gap-[10] min-[1115px]:gap-[50px]">
         <DropdownCard
           href="/donors"
           title="Donors"
