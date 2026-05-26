@@ -6,6 +6,7 @@ export function ConfirmationDialog({
   cancelLabel,
   confirmLabel,
   onConfirm,
+  confirmLoading = false,
 }: {
   open: boolean;
   onClose: () => void;
@@ -14,13 +15,14 @@ export function ConfirmationDialog({
   cancelLabel: string;
   confirmLabel: string;
   onConfirm: () => void;
+  confirmLoading?: boolean;
 }) {
   if (!open) return null;
 
   return (
     <div
       className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-      onClick={onClose}
+      onClick={confirmLoading ? undefined : onClose}
     >
       <div
         className="bg-white border border-[#C7C7C7] flex flex-col gap-[25px] p-[25px] rounded-[10px] w-[450px]"
@@ -34,14 +36,16 @@ export function ConfirmationDialog({
           <button
             type="button"
             onClick={onClose}
-            className="bg-[#F4F4F4] border border-[#C7C7C7] flex items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans text-[16px] text-[#1E1E1E] hover:bg-[#ECECEC] transition-colors"
+            disabled={confirmLoading}
+            className="bg-[#F4F4F4] border border-[#C7C7C7] flex items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans text-[16px] text-[#1E1E1E] hover:bg-[#ECECEC] transition-colors cursor-pointer disabled:cursor-default disabled:opacity-50 disabled:hover:bg-[#F4F4F4]"
           >
             {cancelLabel}
           </button>
           <button
             type="button"
             onClick={onConfirm}
-            className="bg-[#B93B3B] flex items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans font-semibold text-[16px] text-white hover:bg-[#A03030] transition-colors"
+            disabled={confirmLoading}
+            className="bg-[#B93B3B] flex items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans font-semibold text-[16px] text-white transition-colors cursor-pointer hover:bg-[#A03030] disabled:cursor-default disabled:opacity-70 disabled:hover:bg-[#B93B3B]"
           >
             {confirmLabel}
           </button>

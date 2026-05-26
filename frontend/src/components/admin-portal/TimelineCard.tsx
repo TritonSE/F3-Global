@@ -30,9 +30,11 @@ export function TimelineCard({ index, item, onChange }: TimelineCardProps) {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) onChange(item._id, { newImage: file });
+    if (file) {
+      const previewUrl = URL.createObjectURL(file);
+      onChange(item._id, { newImage: file, imageUrl: previewUrl });
+    }
   };
-
   const handleRemoveImage = () => {
     onChange(item._id, { newImage: undefined, imageUrl: "" });
     if (fileInputRef.current) fileInputRef.current.value = "";

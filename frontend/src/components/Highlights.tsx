@@ -6,13 +6,21 @@ import { getClientHighlights, type HighlightItem } from "@/api/clientHighlights"
 import { HighlightCard } from "@/components/HighlightCard";
 import { HighlightOverlay } from "@/components/HighlightOverlay";
 
-export function Highlights() {
-  const [highlights, setHighlights] = useState<HighlightItem[]>([]);
+export function Highlights({
+  highlights: providedHighlights,
+}: { highlights?: HighlightItem[] } = {}) {
+  const [highlights, setHighlights] = useState<HighlightItem[]>(
+    providedHighlights ? [...providedHighlights].sort((a, b) => a.order - b.order) : [],
+  );
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedHighlight, setSelectedHighlight] = useState<HighlightItem | null>(null);
   const dragStartX = useRef<number | null>(null);
 
   useEffect(() => {
+    if (providedHighlights) {
+      setHighlights([...providedHighlights].sort((a, b) => a.order - b.order));
+      return;
+    }
     const fetchHighlights = async () => {
       try {
         const data = await getClientHighlights();
@@ -23,7 +31,7 @@ export function Highlights() {
     };
 
     void fetchHighlights();
-  }, []);
+  }, [providedHighlights]);
 
   if (highlights.length === 0) {
     return null;

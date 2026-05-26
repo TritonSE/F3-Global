@@ -63,7 +63,7 @@ export default function NewslettersPage() {
         <NewsletterDescription newsletter={featured} />
       ) : null}
 
-      <section className="flex flex-col gap-[50px] items-start pt-[50px] pb-[100px] w-full">
+      <section className="flex flex-col gap-[20px] md:gap-[50px] items-start pt-[30px] md:pt-[50px] pb-[50px] md:pb-[100px] w-full">
         <NewsletterFilter
           search={search}
           onSearchChange={handleSearchChange}
@@ -71,11 +71,18 @@ export default function NewslettersPage() {
           onSortChange={handleSortChange}
         />
 
-        <div className="flex flex-col gap-[50px] items-center justify-center px-[24px] lg:px-[100px] w-full">
+        <div className="flex flex-col gap-[30px] md:gap-[50px] items-center justify-center px-[30px] md:px-[100px] w-full">
+          {!listLoading && search && list && (
+            <p className="md:hidden font-dm-sans text-[14px] leading-[20px] text-[#1e1e1e] text-center w-full">
+              {list.pagination.total} {list.pagination.total === 1 ? "result" : "results"} for{" "}
+              <span className="font-semibold">‘{search}’</span>
+            </p>
+          )}
+
           {listLoading ? (
             <GridSkeleton count={PAGE_SIZE} />
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[24px] gap-y-[50px] w-full">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-[24px] gap-y-[30px] md:gap-y-[50px] w-full">
               {list?.data.map((n) => (
                 <NewsletterItem key={n._id} newsletter={n} />
               ))}

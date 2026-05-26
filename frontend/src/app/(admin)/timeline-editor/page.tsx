@@ -6,9 +6,15 @@ import { useEffect, useState } from "react";
 import type { StorageReference } from "firebase/storage";
 
 import { getTimelines, type TimelineItem, updateTimeline } from "@/api/timeline";
+import { useAdmin } from "@/components/admin-portal/AdminContext";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
+import { PreviewMode } from "@/components/admin-portal/preview-components/PreviewMode";
+import { PreviewNavBar } from "@/components/admin-portal/preview-components/PreviewNavBar";
+import { PublishButton } from "@/components/admin-portal/PublishButton";
+import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { TimelineCard } from "@/components/admin-portal/TimelineCard";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
+import { TimelineDisplay } from "@/components/timeline-section/TimelineDisplay";
 import { auth } from "@/firebase/firebase";
 import { deleteFromStorageUrl, rollbackUploads, uploadToStorage } from "@/utils/firebaseStorage";
 
@@ -20,6 +26,8 @@ export default function TimelineEditorPage() {
   const [timelines, setTimelines] = useState<TimelineItem[]>([]);
   const [showRevertDialog, setShowRevertDialog] = useState(false);
   const [showBackDialog, setShowBackDialog] = useState(false);
+  const [isPreview, setIsPreview] = useState(false);
+  const { setHasChanges } = useAdmin();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -60,6 +68,14 @@ export default function TimelineEditorPage() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [hasChanges]);
 
+  useEffect(() => {
+    setHasChanges(hasChanges);
+  }, [hasChanges]);
+
+  useEffect(() => {
+    return () => setHasChanges(false);
+  }, []);
+
   function handleChange(id: string, updated: Partial<TimelineItem>) {
     setTimelines((prev) => prev.map((t) => (t._id === id ? { ...t, ...updated } : t)));
   }
@@ -83,7 +99,7 @@ export default function TimelineEditorPage() {
               newlyUploadedRefs,
             );
           }
-          const { newImage, ...rest } = item;
+          const { newImage: _newImage, ...rest } = item;
           return { ...rest, imageUrl: url };
         }),
       );
@@ -105,7 +121,25 @@ export default function TimelineEditorPage() {
     }
   }
 
+  const publishButton = (
+    <PublishButton
+      handleClick={() => void handlePublish()}
+      disabled={!hasChanges || isPublishing}
+    />
+  );
+
   if (loading) return null;
+
+  if (isPreview) {
+    return (
+      <PreviewMode onBack={() => setIsPreview(false)} publishButton={publishButton}>
+        <div className="bg-white rounded-[10px] overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.1)] w-full">
+          <PreviewNavBar activeItem="About Us" />
+          <TimelineDisplay items={timelines.map(({ newImage: _newImage, ...rest }) => rest)} />
+        </div>
+      </PreviewMode>
+    );
+  }
 
   return (
     <div className="bg-white min-h-screen">
@@ -114,6 +148,7 @@ export default function TimelineEditorPage() {
         tags={["ABOUT US"]}
         description="Edit timeline information including year, description and photo."
         onBack={() => (hasChanges ? setShowBackDialog(true) : router.push("/admin-portal"))}
+        onPreview={() => setIsPreview(true)}
       />
 
       <div className="flex flex-col px-[100px] py-[50px] justify-center items-center gap-[50px]">
@@ -123,26 +158,11 @@ export default function TimelineEditorPage() {
       </div>
 
       <div className="flex gap-[25px] items-center justify-end px-[100px] pb-[50px]">
-        <button
-          type="button"
-          onClick={() => setShowRevertDialog(true)}
+        <RevertButton
+          handleClick={() => setShowRevertDialog(true)}
           disabled={!hasChanges || isPublishing}
-          className={`bg-[#F4F4F4] border border-[#C7C7C7] flex items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans text-[16px] transition-colors ${
-            hasChanges && !isPublishing
-              ? "text-[#1E1E1E] cursor-pointer hover:bg-[#ECECEC]"
-              : "text-[#C7C7C7] cursor-not-allowed"
-          }`}
-        >
-          Revert Changes
-        </button>
-        <button
-          type="button"
-          onClick={() => void handlePublish()}
-          disabled={isPublishing}
-          className="bg-[#3bb966] flex gap-[10px] items-center justify-center px-[20px] py-[10px] rounded-[99px] font-dm-sans font-semibold text-[16px] text-white cursor-pointer hover:bg-[#309854] transition-colors"
-        >
-          PUBLISH
-        </button>
+        />
+        {publishButton}
       </div>
 
       <ConfirmationDialog

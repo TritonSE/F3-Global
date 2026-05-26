@@ -44,9 +44,9 @@ export function HighlightOverlay({ highlight, onClose }: HighlightOverlayProps) 
 
         {/* Text panel — 46% of content area preserves the ~53:47 image:text ratio; caps at 488px on large screens */}
         <div className="flex w-[302px] flex-shrink-0 flex-col gap-[10px] scrollbar-hide min-[993px]:w-[46%] min-[993px]:max-w-[488px] min-[993px]:gap-[16px]">
-          {highlight.name && (
+          {highlight.clientName && (
             <h3 className="m-0 font-dm-sans text-[20px] min-[993px]:text-[28px] font-bold leading-[150%] tracking-[-0.56px] text-[#1e1e1e]">
-              {highlight.name}
+              {highlight.clientName}
             </h3>
           )}
           <p className="font-dm-sans text-[12px] min-[993px]:text-[16px] font-normal leading-[16px] min-[993px]:leading-6 text-[#1e1e1e] whitespace-pre-wrap">

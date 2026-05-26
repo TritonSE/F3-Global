@@ -19,7 +19,7 @@ export function NewsletterItem({ newsletter }: Props) {
       href={`/newsletters/${newsletter._id}`}
       className="flex flex-col gap-[20px] items-center justify-center group cursor-pointer"
     >
-      <div className="relative w-full aspect-[415/302] overflow-hidden">
+      <div className="relative w-full aspect-[415/302] overflow-hidden rounded-[10px]">
         <Image
           src={newsletter.imageUrl || "/imgs/components_placeholder.png"}
           alt={newsletter.title}
@@ -43,7 +43,7 @@ export function NewsletterItem({ newsletter }: Props) {
             {newsletter.views} {newsletter.views === 1 ? "view" : "views"}
           </span>
         </div>
-        <h3 className="font-dm-sans font-normal text-[24px] leading-[32px] text-[#1e1e1e] w-full line-clamp-3 group-hover:underline">
+        <h3 className="font-dm-sans font-normal text-[16px] leading-[24px] md:text-[24px] md:leading-[32px] text-[#1e1e1e] w-full line-clamp-3 group-hover:underline">
           {newsletter.title}
         </h3>
       </div>

@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 
+import { AdminProvider } from "@/components/admin-portal/AdminContext";
+import { AdminSidebar } from "@/components/admin-portal/AdminSidebar";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -29,7 +32,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <AdminProvider>
+          <AdminSidebar />
+          <div className="ml-[203px]">{children}</div>
+        </AdminProvider>
+      </body>
     </html>
   );
 }

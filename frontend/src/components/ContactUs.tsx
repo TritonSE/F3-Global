@@ -109,12 +109,7 @@ export const ContactUs: React.FC = () => {
   return (
     <>
       <div className="flex w-full flex-col items-center gap-[10px] px-[30px] py-[50px] min-[1312px]:px-0">
-        <div
-          className="relative flex w-full max-w-[1312px] flex-col items-end gap-[20px] rounded-[10px] bg-white px-[30px] py-[30px] min-[1312px]:px-[100px] min-[1312px]:py-[40px]"
-          style={{
-            boxShadow: "10px 6px 60px 0 rgba(1, 32, 96, 0.20)",
-          }}
-        >
+        <div className="relative flex w-full max-w-[1312px] flex-col items-end gap-[20px] rounded-[10px] bg-white px-[30px] py-[30px] shadow-[2.721px_1.633px_6.803px_rgba(1,32,96,0.2)] min-[1312px]:px-[100px] min-[1312px]:py-[40px] min-[1312px]:shadow-[10px_6px_60px_0_rgba(1,32,96,0.20)]">
           <div className="flex w-full flex-col items-start gap-[20px] self-stretch min-[1312px]:gap-[30px]">
             <h2 className="self-stretch mb-[-8px] font-ethic text-[48px] text-black min-[1312px]:mb-[-24px] min-[1312px]:text-[80px]">
               Contact Us
@@ -189,7 +184,7 @@ export const ContactUs: React.FC = () => {
                   </div>
                   {/* full name input */}
                   <div
-                    className={`mt-[10px] flex w-full items-center gap-[10px] rounded-[10px] px-[20px] py-[10px] min-[1312px]:w-[487px]
+                    className={`mt-[10px] flex w-full items-center gap-[10px] rounded-[10px] px-[15px] py-[10px] min-[1312px]:w-[487px] min-[1312px]:px-[20px]
                       ${fullNameError ? "mb-[-2px] border border-[#B93B3B] bg-[#FFDEDE]" : "bg-[#F4F4F4]"}
                     `}
                   >
@@ -217,7 +212,7 @@ export const ContactUs: React.FC = () => {
 
                   {/* email input */}
                   <div
-                    className={`flex w-full items-center gap-[10px] rounded-[10px] px-[20px] py-[10px] min-[1312px]:w-[487px]
+                    className={`flex w-full items-center gap-[10px] rounded-[10px] px-[15px] py-[10px] min-[1312px]:w-[487px] min-[1312px]:px-[20px]
                       ${emailError ? "border border-[#B93B3B] bg-[#FFDEDE]" : "bg-[#F4F4F4]"}
                     `}
                   >
@@ -246,7 +241,7 @@ export const ContactUs: React.FC = () => {
                 <div className="flex flex-col gap-[20px] min-[1312px]:items-end">
                   {/* message input */}
                   <div
-                    className={`flex h-[208px] w-full items-start gap-[10px] rounded-[10px] px-[20px] py-[14px] min-[1312px]:w-[605px]
+                    className={`flex h-[208px] w-full items-start gap-[10px] rounded-[10px] px-[15px] py-[10px] min-[1312px]:w-[605px] min-[1312px]:px-[20px] min-[1312px]:py-[14px]
                       ${messageError ? "border border-[#B93B3B] bg-[#FFDEDE]" : "bg-[#F4F4F4]"}
                     `}
                   >
@@ -280,22 +275,23 @@ export const ContactUs: React.FC = () => {
         </div>
         {showConfirm && (
           <div
-            className={`absolute inset-0 top-250 z-50 flex items-center justify-center transition-opacity duration-450 ${fadeOut ? "opacity-0" : "opacity-100"}`}
+            className={`absolute inset-0 z-50 flex items-center justify-center transition-opacity duration-450 ${fadeOut ? "opacity-0" : "opacity-100"}`}
           >
             <div
-              className="flex flex-col items-center justify-center gap-[20px] rounded-[16px] border border-[#F4F4F4] bg-white px-[32px] py-[40px] min-[1312px]:px-[100px] min-[1312px]:py-[50px]"
-              style={{ boxShadow: "0 4px 20px 0 rgba(0,0,0,0.10" }}
+              className="flex flex-col items-center justify-center gap-[10px] min-[1312px]:gap-[20px] rounded-[16px] border border-[#F4F4F4] bg-white py-[30px] px-[30px] min-[1312px]:py-[50px] min-[1312px]:px-[100px]"
+              style={{ boxShadow: "0 4px 10px 0 rgba(0,0,0,0.10)" }}
             >
               <Image
                 src="/imgs/confirmation_check_icon.svg"
                 alt="Confirmation Check Icon"
                 width={118}
                 height={118}
+                className="size-[60px] md:size-[118px]"
               />
-              <h3 className="font-dm-sans text-[48px] text-[#1E1E1E] font-normal font-xl font-bold mb-2 leading-[-1px]">
+              <h3 className="font-dm-sans text-center text-[24px] md:text-[48px] text-[#1E1E1E] font-medium leading-[1.5] tracking-[-0.48px] md:tracking-[-0.96px]">
                 Thank You!
               </h3>
-              <p className="font-dm-sans text-[20px] text-[#5D5D5D] font-normal leading-[32px]">
+              <p className="w-[202px] md:w-auto text-center font-dm-sans text-[14px] md:text-[20px] text-[#5D5D5D] font-normal leading-[20px] md:leading-[32px] md:whitespace-nowrap">
                 We’ve received your message and will be in touch soon.
               </p>
             </div>

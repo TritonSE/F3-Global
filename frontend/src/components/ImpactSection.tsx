@@ -3,41 +3,46 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 
 import { getImpactMetric, type ImpactMetric } from "@/api/impactMetric";
 
+type ImpactData = {
+  metrics: ImpactMetric[];
+  lastUpdated: string;
+};
+
 type ImpactSectionProps = {
   title?: string;
+  data?: ImpactData;
 };
 
 function formatDate(dateStr: string) {
   const [yearStr, monthStr] = dateStr.split("-");
   const year = Number(yearStr);
   const month = Number(monthStr) - 1;
-
   return new Date(year, month).toLocaleDateString("en-US", { month: "short", year: "numeric" });
 }
 
-export const ImpactSection = ({ title = "Our Impact" }: ImpactSectionProps) => {
-  const [impactMetrics, setImpactMetrics] = useState<ImpactMetric[]>([]);
-  const [lastUpdated, setLastUpdated] = useState<string>("");
+export const ImpactSection = ({ title = "Our Impact", data }: ImpactSectionProps) => {
+  const [fetchedData, setFetchedData] = useState<ImpactData | null>(null);
 
   useEffect(() => {
+    if (data) return; // skip fetch if data is passed in
     const fetchImpactMetrics = async () => {
       try {
-        const data = await getImpactMetric();
-        setImpactMetrics(data.metrics);
-        setLastUpdated(data.lastUpdated);
+        const result = await getImpactMetric();
+        setFetchedData({ metrics: result.metrics, lastUpdated: result.lastUpdated });
       } catch (error) {
         console.error(error);
       }
     };
-
     void fetchImpactMetrics();
-  }, []);
+  }, [data]);
+
+  const activeData = data ?? fetchedData;
 
   const orderedMetrics = useMemo(() => {
-    return [...impactMetrics].sort((a, b) => a.order - b.order);
-  }, [impactMetrics]);
+    return [...(activeData?.metrics ?? [])].sort((a, b) => a.order - b.order);
+  }, [activeData]);
 
-  const formattedDate = formatDate(lastUpdated);
+  const formattedDate = activeData?.lastUpdated ? formatDate(activeData.lastUpdated) : "";
 
   return (
     <div className="relative z-20 w-full flex flex-col items-start gap-[20px] border-t border-[#F4F4F4] bg-white px-[30px] py-[50px] shadow-[0px_19px_43px_0px_rgba(0,0,0,0.1)] md:gap-6 md:px-[100px] md:py-[50px] shadow-[inset_0_-12px_10px_rgba(0,0,0,0.02)]">
@@ -58,18 +63,17 @@ export const ImpactSection = ({ title = "Our Impact" }: ImpactSectionProps) => {
                 {metric.description}
               </p>
             </div>
-
             {idx < orderedMetrics.length - 1 && (
-              <>
-                <div className="bg-[#C7C7C7] h-px w-full md:mx-[35px] md:self-center md:block md:h-[196px] md:w-[2px] " />
-              </>
+              <div className="bg-[#C7C7C7] h-px w-full md:mx-[35px] md:self-center md:block md:h-[196px] md:w-[2px]" />
             )}
           </Fragment>
         ))}
       </div>
-      <p className="mt-4 self-start text-[#5D5D5D] font-dm-sans text-[12px] font-bold leading-[1.5] uppercase md:text-[16px]">
-        *Data from {formattedDate}
-      </p>
+      {formattedDate && (
+        <p className="mt-4 self-start text-[#5D5D5D] font-dm-sans text-[12px] font-bold leading-[1.5] uppercase md:text-[16px]">
+          *Data from {formattedDate}
+        </p>
+      )}
     </div>
   );
 };

@@ -44,12 +44,12 @@ export default function About() {
   return (
     <>
       <div className="bg-white overflow-x-hidden">
-        <div className="flex w-full items-center justify-between self-stretch px-[100px] min-h-screen">
-          <div className="flex w-[639px] flex-col items-start gap-[50px]">
-            <h1 className="text-[#172447] text-[64px] font-ethic font-light leading-[1.1]">
+        <div className="flex w-full flex-col-reverse lg:flex-row items-center justify-between self-stretch px-6 sm:px-10 lg:px-[100px] py-12 lg:py-0 lg:min-h-screen gap-10 lg:gap-0">
+          <div className="flex w-full lg:w-[639px] flex-col items-center lg:items-start gap-6 lg:gap-[50px] text-center lg:text-left">
+            <h1 className="text-[#172447] text-[40px] sm:text-[52px] lg:text-[64px] font-ethic font-light leading-[1.1]">
               Services That Create <br /> <span className="italic">Lasting</span> Impact
             </h1>
-            <p className="font-dm-sans text-[20px] font-normal leading-[32px] text-[#5D5D5D] w-[80%]">
+            <p className="font-dm-sans text-base sm:text-lg lg:text-[20px] font-normal leading-[1.6] text-[#5D5D5D] w-full lg:w-[80%]">
               Partner with F3 Global, providing microloans, guidance, and resources designed to
               support small business owners and entrepreneurs on their path to long-term success.
             </p>
@@ -65,18 +65,21 @@ export default function About() {
               />
             </div>
           </div>
-          <div className="relative w-[646px] h-[581px] overflow-hidden rounded-[10px] flex-shrink-0">
+
+          <div className="relative w-full lg:w-[646px] h-[260px] sm:h-[380px] lg:h-[581px] overflow-hidden rounded-[10px] flex-shrink-0">
             <Image
               src="/imgs/clients/computer-lab.webp"
               alt="Modern computer lab"
               fill
-              sizes="646px"
-              className="object-cover object-center bg-cover bg-no-repeat bg-center"
+              sizes="(max-width: 1024px) 100vw, 646px"
+              className="object-cover object-center"
               priority
             />
           </div>
         </div>
+
         <ServicesSection />
+
         {primaryHighlight && (
           <ClientStoryOverall
             image={primaryHighlight.imageUrl}
@@ -84,7 +87,9 @@ export default function About() {
             fullText={primaryHighlight.fullText}
           />
         )}
+
         <FaqAccordion items={faqItems} />
+
         <div id="contact">
           <ContactUs />
         </div>
