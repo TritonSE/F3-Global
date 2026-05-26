@@ -6,13 +6,13 @@ import { ServiceAccordianItem } from "./ServiceAccordianItem";
 import { DEFAULT_SERVICES } from "./types";
 
 type ServiceAccordianProps = {
-  activeID: string; //The expanded Item's String
+  activeID: string;
   onServiceChange: (id: string) => void;
 };
 
 export const ServiceAccordian = ({ activeID, onServiceChange }: ServiceAccordianProps) => {
   return (
-    <div className="w-full shrink-0 md:w-[647px]">
+    <div className="w-full min-w-0 md:max-w-[647px]">
       <div className="flex flex-col">
         {DEFAULT_SERVICES.map((service_offered) => (
           <ServiceAccordianItem
