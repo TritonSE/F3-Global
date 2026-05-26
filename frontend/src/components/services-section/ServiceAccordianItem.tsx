@@ -41,17 +41,17 @@ export const ServiceAccordianItem: React.FC<ServiceAccordianItemProps> = ({
   return (
     <div className="border-b border-[#c7c7c7] last:border-b-0">
       <button
-        className="flex w-full items-center justify-between border-none bg-transparent py-[20px] min-[1023px]:py-[18px] cursor-pointer"
+        className="flex w-full items-center justify-between border-none bg-transparent py-[20px] md:py-[18px] cursor-pointer"
         onClick={onClick}
       >
         <span
-          className={`pl-[0px] font-dm-sans text-[18px] font-medium tracking-[-0.36px] transition-colors duration-300 min-[1023px]:pl-[20px] min-[1023px]:text-[28px] min-[1023px]:tracking-[-0.56px] ${
+          className={`pl-[0px] text-left font-dm-sans text-[18px] font-medium tracking-[-0.36px] transition-colors duration-300 md:pl-[20px] md:text-[28px] md:tracking-[-0.56px] ${
             isExpanded ? "text-[#012060]" : "text-[#5d5d5d]"
           }`}
         >
           {service.title}
         </span>
-        <span className="mr-0 flex h-6 w-6 items-center justify-center transition-colors duration-300 min-[1023px]:mr-[20px] min-[1023px]:h-8 min-[1023px]:w-8">
+        <span className="mr-0 flex h-6 w-6 items-center justify-center transition-colors duration-300 md:mr-[20px] md:h-8 md:w-8">
           {isExpanded ? <MinusIcon /> : <PlusIcon />}
         </span>
       </button>
@@ -61,7 +61,7 @@ export const ServiceAccordianItem: React.FC<ServiceAccordianItemProps> = ({
           isExpanded ? "max-h-[300px]" : "max-h-0"
         }`}
       >
-        <p className="m-0 pb-5 pl-0 pr-[20px] font-dm-sans text-[12px] leading-[16px] text-[#5d5d5d] min-[1023px]:pl-[20px] min-[1023px]:text-base min-[1023px]:leading-6">
+        <p className="m-0 pb-5 pl-0 pr-[20px] font-dm-sans text-[12px] leading-[16px] text-[#5d5d5d] md:pl-[20px] md:text-base md:leading-6">
           {service.description}
         </p>
       </div>
