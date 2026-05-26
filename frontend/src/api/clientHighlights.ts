@@ -1,5 +1,6 @@
 export type HighlightItem = {
   _id?: string;
+  name?: string;
   quoteText: string;
   previewText: string;
   imageUrl: string;
