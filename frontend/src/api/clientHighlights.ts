@@ -2,7 +2,7 @@ import { getAuthHeaders } from "./auth";
 
 export type HighlightItem = {
   _id?: string;
-  clientName?: string;
+  clientName: string;
   quoteText: string;
   previewText: string;
   imageUrl: string;
