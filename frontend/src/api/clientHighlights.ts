@@ -11,10 +11,6 @@ export type HighlightItem = {
   newImage?: File;
 };
 
-type HighlightItemModel = {
-  highlights: HighlightItem[];
-};
-
 export async function getClientHighlights(): Promise<HighlightItem[]> {
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const result = await fetch(`${backendUrl}/api/client-highlights`);
@@ -23,9 +19,9 @@ export async function getClientHighlights(): Promise<HighlightItem[]> {
     throw new Error("Failed to fetch client highlights");
   }
 
-  const data = (await result.json()) as HighlightItemModel;
+  const data = (await result.json()) as HighlightItem[];
 
-  return data.highlights;
+  return data;
 }
 
 export async function updateClientHighlights(
@@ -39,6 +35,6 @@ export async function updateClientHighlights(
     body: JSON.stringify({ highlights }),
   });
   if (!res.ok) throw new Error("Failed to update client highlights");
-  const data = (await res.json()) as HighlightItemModel;
-  return data.highlights;
+  const data = (await res.json()) as HighlightItem[];
+  return data;
 }
