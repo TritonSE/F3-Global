@@ -146,7 +146,7 @@ export default function AdminPortal() {
       description:
         "Add or remove newsletter articles, or edit information including the newsletter external PDF link and summary. Track how many views each article has. By default, articles appear sorted by date of upload, and the Featured article is always sticky to the top.",
       tags: ["Newsletter"],
-      href: "/newsletter-articles-editor",
+      href: "/newsletter-editor",
     },
   ];
 

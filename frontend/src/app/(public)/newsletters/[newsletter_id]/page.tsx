@@ -326,9 +326,6 @@ export default function NewsletterDetailPage() {
       <div className="px-[30px] md:px-[200px] pb-[50px] md:pb-[32px]">
         <div className="w-full md:max-w-[1120px]">
           <div className="mb-[20px] md:mb-8 max-w-4xl">
-            <h3 className="font-dm-sans font-[700] text-[18px] md:text-[28px] leading-[1.5] md:leading-[42px] tracking-[-0.36px] md:tracking-[-0.56px] text-[#1E1E1E] mb-[20px] md:mb-4">
-              {newsletter.authorName}
-            </h3>
             <p className="font-dm-sans text-[12px] md:text-[16px] font-[400] leading-[16px] md:leading-[24px] text-[#1E1E1E]">
               {newsletter.blurb}
             </p>

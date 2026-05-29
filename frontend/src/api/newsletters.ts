@@ -1,16 +1,30 @@
+import { getAuthHeaders } from "./auth";
+
 export type Newsletter = {
   _id: string;
   title: string;
   uploadDate: string;
   views: number;
   blurb: string;
-  authorName: string;
   pdfUrl: string;
   imageUrl?: string;
   featured: boolean;
 };
 
-export type SortBy = "newest" | "oldest" | "mostViewed" | "leastViewed";
+export type NewsletterPayload = Omit<Newsletter, "_id">;
+
+export type SortBy =
+  | "none"
+  | "newest"
+  | "oldest"
+  | "mostViewed"
+  | "leastViewed"
+  | "titleAsc"
+  | "titleDesc"
+  | "dateAsc"
+  | "dateDesc"
+  | "viewsAsc"
+  | "viewsDesc";
 
 export type PaginatedNewsletters = {
   data: Newsletter[];
@@ -69,4 +83,41 @@ export async function incrementNewsletterViews(id: string): Promise<Newsletter> 
   });
   if (!res.ok) throw new Error("Failed to increment views");
   return (await res.json()) as Newsletter;
+}
+
+export async function createNewsletter(payload: NewsletterPayload): Promise<Newsletter> {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const authHeaders = await getAuthHeaders();
+  const res = await fetch(`${backendUrl}/api/newsletters`, {
+    method: "POST",
+    headers: { ...authHeaders, "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error("Failed to create newsletter");
+  return (await res.json()) as Newsletter;
+}
+
+export async function updateNewsletter(
+  id: string,
+  payload: Partial<NewsletterPayload>,
+): Promise<Newsletter> {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const authHeaders = await getAuthHeaders();
+  const res = await fetch(`${backendUrl}/api/newsletters/${encodeURIComponent(id)}`, {
+    method: "PUT",
+    headers: { ...authHeaders, "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error("Failed to update newsletter");
+  return (await res.json()) as Newsletter;
+}
+
+export async function deleteNewsletter(id: string): Promise<void> {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const authHeaders = await getAuthHeaders();
+  const res = await fetch(`${backendUrl}/api/newsletters/${encodeURIComponent(id)}`, {
+    method: "DELETE",
+    headers: authHeaders,
+  });
+  if (!res.ok) throw new Error("Failed to delete newsletter");
 }
