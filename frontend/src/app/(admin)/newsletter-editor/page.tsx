@@ -249,7 +249,7 @@ function PagerArrow({
       aria-label={label}
       disabled={disabled}
       onClick={onClick}
-      className="flex size-[32px] items-center justify-center text-[#1E1E1E] transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
+      className="flex size-[32px] cursor-pointer items-center justify-center text-[#1E1E1E] transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
     >
       <svg viewBox="0 0 24 24" fill="none" className="size-[24px] shrink-0" aria-hidden="true">
         <path d={path} stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -842,7 +842,7 @@ export default function NewsletterArticlesEditor() {
   return (
     <div className="min-h-screen bg-white">
       <AdminSidebar />
-      <main className="ml-[203px] min-h-screen">
+      <main className="min-h-screen">
         <HeaderSection
           title="Edit Newsletter Articles"
           tags={["NEWSLETTER"]}
@@ -856,7 +856,7 @@ export default function NewsletterArticlesEditor() {
                   setEditingArticle(null);
                   setArticleEditorOpen(true);
                 }}
-                className="flex cursor-pointer items-center justify-center gap-[10px] rounded-[99px] bg-[#1169B0] px-[20px] py-[10px] font-dm-sans text-[16px] font-semibold text-white"
+                className="flex h-[52px] cursor-pointer items-center justify-center gap-[10px] rounded-[99px] bg-[#1169B0] px-[20px] py-[10px] font-dm-sans text-[16px] font-semibold text-white"
               >
                 <PlusIcon />
                 ADD NEW ARTICLE
@@ -867,7 +867,7 @@ export default function NewsletterArticlesEditor() {
                   setPreviewNewsletterId(null);
                   setIsPreview(true);
                 }}
-                className="flex cursor-pointer items-center justify-center gap-[10px] rounded-[99px] bg-[#012060] px-[20px] py-[10px] font-dm-sans text-[16px] font-semibold text-white"
+                className="flex h-[52px] cursor-pointer items-center justify-center gap-[10px] rounded-[99px] bg-[#012060] px-[20px] py-[10px] font-dm-sans text-[16px] font-semibold text-white"
               >
                 PREVIEW
                 <EyeIcon />
