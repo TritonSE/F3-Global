@@ -121,7 +121,7 @@ export function Highlights({
           1338px = 45 + 38 + 322 + 30 + 468 + 30 + 322 + 38 + 45 (arrows + gaps + cards).
         */}
         <button
-          className="flex h-[45px] w-[45px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[99px] bg-white p-0 text-[#1e1e1e] transition-all duration-200 ease-in-out hover:bg-[#f4f4f4] active:scale-95 z-10 md:absolute md:left-[20px] md:top-1/2 md:-translate-y-1/2 min-[1338px]:relative min-[1338px]:left-auto min-[1338px]:top-auto min-[1338px]:translate-y-0"
+          className="flex h-[45px] w-[45px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[99px] bg-white p-0 text-[#1e1e1e] transition-all duration-200 ease-in-out hover:bg-[#f4f4f4] active:scale-95 z-10 absolute left-[20px] min-[1338px]:relative min-[1338px]:left-auto"
           onClick={handlePrevious}
           aria-label="Previous highlight"
         >
@@ -159,7 +159,7 @@ export function Highlights({
         </div>
 
         <button
-          className="flex h-[45px] w-[45px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[99px] bg-white p-0 text-[#1e1e1e] transition-all duration-200 ease-in-out hover:bg-[#f4f4f4] active:scale-95 z-10 md:absolute md:right-[20px] md:top-1/2 md:-translate-y-1/2 min-[1338px]:relative min-[1338px]:right-auto min-[1338px]:top-auto min-[1338px]:translate-y-0"
+          className="flex h-[45px] w-[45px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[99px] bg-white p-0 text-[#1e1e1e] transition-all duration-200 ease-in-out hover:bg-[#f4f4f4] active:scale-95 z-10 absolute right-[20px] min-[1338px]:relative min-[1338px]:right-auto"
           onClick={handleNext}
           aria-label="Next highlight"
         >
