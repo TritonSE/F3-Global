@@ -1,4 +1,4 @@
-import { getAuthHeaders } from "@/api/auth";
+import { get, put } from "./requests";
 
 export type ImpactMetric = {
   _id: string;
@@ -15,31 +15,10 @@ export type ImpactMetricResponse = {
 };
 
 export async function getImpactMetric(): Promise<ImpactMetricResponse> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const res = await fetch(`${backendUrl}/api/impact-metrics`);
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch all impact metrics");
-  }
-
-  const data = (await res.json()) as ImpactMetricResponse;
-
-  return data;
+  const res = await get("/api/impact-metrics");
+  return (await res.json()) as ImpactMetricResponse;
 }
 
 export async function updateImpactMetric(metrics: ImpactMetric[]): Promise<void> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const authHeaders = await getAuthHeaders();
-  const res = await fetch(`${backendUrl}/api/impact-metrics`, {
-    method: "PUT",
-    headers: {
-      ...authHeaders,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ metrics }),
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to update impact metrics");
-  }
+  await put("/api/impact-metrics/", { metrics });
 }

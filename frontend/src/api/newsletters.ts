@@ -1,4 +1,4 @@
-import { getAuthHeaders } from "./auth";
+import { del, get, patch, post, put } from "./requests";
 
 export type Newsletter = {
   _id: string;
@@ -47,7 +47,6 @@ export type GetNewslettersParams = {
 export async function getNewsletters(
   params: GetNewslettersParams = {},
 ): Promise<PaginatedNewsletters> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const query = new URLSearchParams();
   if (params.page !== undefined) query.set("page", String(params.page));
   if (params.limit !== undefined) query.set("limit", String(params.limit));
@@ -56,44 +55,29 @@ export async function getNewsletters(
   if (params.featured) query.set("featured", "true");
 
   const qs = query.toString();
-  const url = `${backendUrl}/api/newsletters${qs ? `?${qs}` : ""}`;
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error("Failed to fetch newsletters");
-  }
+  const res = await get(`/api/newsletters${qs ? `?${qs}` : ""}`);
   return (await res.json()) as PaginatedNewsletters;
 }
 
 export async function getNewsletterById(id: string): Promise<Newsletter | null> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const res = await fetch(`${backendUrl}/api/newsletters/${encodeURIComponent(id)}`);
-  if (res.status === 404) {
-    return null;
+  try {
+    const res = await get(`/api/newsletters/${encodeURIComponent(id)}`);
+    return (await res.json()) as Newsletter;
+  } catch (error: any) {
+    if (error instanceof Error && error.message.startsWith("404")) {
+      return null;
+    }
+    throw error;
   }
-  if (!res.ok) {
-    throw new Error("Failed to fetch newsletter");
-  }
-  return (await res.json()) as Newsletter;
 }
 
 export async function incrementNewsletterViews(id: string): Promise<Newsletter> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const res = await fetch(`${backendUrl}/api/newsletters/${encodeURIComponent(id)}/views`, {
-    method: "PATCH",
-  });
-  if (!res.ok) throw new Error("Failed to increment views");
+  const res = await patch(`/api/newsletters/${encodeURIComponent(id)}/views`, undefined);
   return (await res.json()) as Newsletter;
 }
 
 export async function createNewsletter(payload: NewsletterPayload): Promise<Newsletter> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const authHeaders = await getAuthHeaders();
-  const res = await fetch(`${backendUrl}/api/newsletters`, {
-    method: "POST",
-    headers: { ...authHeaders, "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-  if (!res.ok) throw new Error("Failed to create newsletter");
+  const res = await post("/api/newsletters/", payload);
   return (await res.json()) as Newsletter;
 }
 
@@ -101,23 +85,10 @@ export async function updateNewsletter(
   id: string,
   payload: Partial<NewsletterPayload>,
 ): Promise<Newsletter> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const authHeaders = await getAuthHeaders();
-  const res = await fetch(`${backendUrl}/api/newsletters/${encodeURIComponent(id)}`, {
-    method: "PUT",
-    headers: { ...authHeaders, "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-  if (!res.ok) throw new Error("Failed to update newsletter");
+  const res = await put(`/api/newsletters/${encodeURIComponent(id)}`, payload);
   return (await res.json()) as Newsletter;
 }
 
 export async function deleteNewsletter(id: string): Promise<void> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const authHeaders = await getAuthHeaders();
-  const res = await fetch(`${backendUrl}/api/newsletters/${encodeURIComponent(id)}`, {
-    method: "DELETE",
-    headers: authHeaders,
-  });
-  if (!res.ok) throw new Error("Failed to delete newsletter");
+  await del(`/api/newsletters/${encodeURIComponent(id)}`);
 }
