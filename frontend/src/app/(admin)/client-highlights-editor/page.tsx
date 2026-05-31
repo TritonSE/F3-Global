@@ -10,7 +10,6 @@ import {
   type HighlightItem,
   updateClientHighlights,
 } from "@/api/clientHighlights";
-import { AdminSidebar } from "@/components/admin-portal/AdminSidebar";
 import { ConfirmationNotification } from "@/components/admin-portal/ConfirmationNotification";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
 import { HighlightForm } from "@/components/admin-portal/HighlightForm";
@@ -233,8 +232,7 @@ export default function ClientHighlightsEditor() {
 
   return (
     <div className="bg-white min-h-screen relative">
-      <AdminSidebar />
-      <div className="ml-[203px]">
+      <div>
         {toast && (
           <ConfirmationNotification
             message={toast}

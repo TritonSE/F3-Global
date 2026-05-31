@@ -13,7 +13,6 @@ import {
   type MemberPayload,
   updateMember,
 } from "@/api/members";
-import { AdminSidebar } from "@/components/admin-portal/AdminSidebar";
 import { ConfirmationNotification } from "@/components/admin-portal/ConfirmationNotification";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
 import { type MemberFormData, MemberFormModal } from "@/components/admin-portal/MemberFormModal";
@@ -161,20 +160,16 @@ export default function TeamMembersEditorPage() {
   if (isPreview) {
     return (
       <div className="min-h-screen bg-white">
-        <AdminSidebar activeItem="meet-the-team" />
-        <div className="ml-[203px]">
-          <PreviewMode onBack={() => setIsPreview(false)} publishButton={null}>
-            <MembersPreview members={members} />
-          </PreviewMode>
-        </div>
+        <PreviewMode onBack={() => setIsPreview(false)} publishButton={null}>
+          <MembersPreview members={members} />
+        </PreviewMode>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-white">
-      <AdminSidebar activeItem="meet-the-team" />
-      <div className="relative ml-[203px] flex flex-col">
+      <div className="relative flex flex-col">
         {toast && (
           <ConfirmationNotification
             message={toast}
@@ -188,8 +183,21 @@ export default function TeamMembersEditorPage() {
           tags={["MEET THE TEAM"]}
           description="Add or remove current F3 team members, or edit information including member locations, image, and contact links."
           onBack={() => router.push("/admin-portal")}
-          onPreview={() => setIsPreview(true)}
-          actionButton={addButton}
+          actions={
+            <div className="flex items-center gap-[15px]">
+              {addButton}
+              <button
+                type="button"
+                onClick={() => setIsPreview(true)}
+                className="bg-[#012060] flex gap-[10px] items-center justify-center px-[20px] py-[10px] rounded-[99px] cursor-pointer"
+              >
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="white" className="size-[32px]">
+                  <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                </svg>
+                <span className="font-dm-sans font-semibold text-[16px] text-white">PREVIEW</span>
+              </button>
+            </div>
+          }
         />
 
         <div className="flex flex-col gap-[40px] px-[100px] py-[50px]">

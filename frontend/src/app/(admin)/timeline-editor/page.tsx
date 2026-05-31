@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import type { StorageReference } from "firebase/storage";
 
 import { getTimelines, type TimelineItem, updateTimeline } from "@/api/timeline";
+import { useAdmin } from "@/components/admin-portal/AdminContext";
 import { HeaderSection } from "@/components/admin-portal/HeaderSection";
 import { PreviewMode } from "@/components/admin-portal/preview-components/PreviewMode";
 import { PreviewNavBar } from "@/components/admin-portal/preview-components/PreviewNavBar";
@@ -24,6 +25,7 @@ export default function TimelineEditorPage() {
   const [showRevertDialog, setShowRevertDialog] = useState(false);
   const [showBackDialog, setShowBackDialog] = useState(false);
   const [isPreview, setIsPreview] = useState(false);
+  const { setHasChanges } = useAdmin();
 
   useEffect(() => {
     async function loadTimelines() {
@@ -55,6 +57,14 @@ export default function TimelineEditorPage() {
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [hasChanges]);
+
+  useEffect(() => {
+    setHasChanges(hasChanges);
+  }, [hasChanges]);
+
+  useEffect(() => {
+    return () => setHasChanges(false);
+  }, []);
 
   function handleChange(id: string, updated: Partial<TimelineItem>) {
     setTimelines((prev) => prev.map((t) => (t._id === id ? { ...t, ...updated } : t)));

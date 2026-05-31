@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { type FaqItem, type FaqPage, getFaq, putFaqs } from "@/api/faq";
+import { useAdmin } from "@/components/admin-portal/AdminContext";
 import { ConfirmationNotification } from "@/components/admin-portal/ConfirmationNotification";
 import { DraggableSortablePill } from "@/components/admin-portal/DraggableSortablePill";
 import { FaqCard } from "@/components/admin-portal/FaqCard";
@@ -61,6 +62,7 @@ export default function FaqsEditor() {
   const [addForm, setAddForm] = useState({ question: "", answer: "" });
   const [isPreview, setIsPreview] = useState(false);
   const [expandedPreviewId, setExpandedPreviewId] = useState<string | null>(null);
+  const { setHasChanges } = useAdmin();
 
   const addQuestionRef = useRef<HTMLTextAreaElement>(null);
   const addAnswerRef = useRef<HTMLTextAreaElement>(null);
@@ -134,6 +136,14 @@ export default function FaqsEditor() {
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [anyPageHasChanges]);
+
+  useEffect(() => {
+    setHasChanges(hasChanges);
+  }, [hasChanges]);
+
+  useEffect(() => {
+    return () => setHasChanges(false);
+  }, []);
 
   useEffect(() => {
     if (!notification) {

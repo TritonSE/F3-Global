@@ -26,10 +26,10 @@ export const GetHighlights: RequestHandler = async (req, res, next) => {
   try {
     const result = await HighlightModel.findOne();
     if (!result) {
-      return res.status(200).json({ highlights: [] });
+      return res.status(200).json([]);
     }
 
-    res.status(200).json(result);
+    res.status(200).json(result.highlights);
   } catch (error) {
     next(error);
   }
@@ -51,7 +51,7 @@ export const UpdateHighlights: RequestHandler<
     if (!highlightdocument) {
       highlightdocument = new HighlightModel({ highlights });
       await highlightdocument.save();
-      return res.status(201).json(highlightdocument);
+      return res.status(201).json(highlightdocument.highlights);
     }
     // Updated to set and not hashmaps
     const existingIds = new Set<string>();
@@ -104,7 +104,7 @@ export const UpdateHighlights: RequestHandler<
 
     highlightdocument.highlights = updatedHighlights;
     await highlightdocument.save();
-    res.status(200).json(highlightdocument);
+    res.status(200).json(highlightdocument.highlights);
   } catch (error) {
     next(error);
   }

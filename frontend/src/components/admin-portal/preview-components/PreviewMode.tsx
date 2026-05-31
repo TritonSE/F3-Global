@@ -1,6 +1,5 @@
 "use client";
 
-import { AdminSidebar } from "@/components/admin-portal/AdminSidebar";
 import { ConfirmationNotification } from "@/components/admin-portal/ConfirmationNotification";
 
 export function PreviewMode({
@@ -22,8 +21,7 @@ export function PreviewMode({
 }) {
   return (
     <div className="bg-white min-h-screen">
-      <AdminSidebar />
-      <div className="ml-[203px] min-h-screen">
+      <div className="min-h-screen">
         <header className="relative sticky top-0 z-40 bg-white px-[100px] py-[20px]">
           <button
             type="button"

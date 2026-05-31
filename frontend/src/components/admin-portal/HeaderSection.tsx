@@ -1,10 +1,12 @@
+import type { ReactNode } from "react";
+
 type HeaderSectionProps = {
   title: string;
   tags: string[];
   description: string;
   onBack: () => void;
   onPreview?: () => void;
-  actionButton?: React.ReactNode;
+  actions?: ReactNode;
 };
 
 export function HeaderSection({
@@ -13,7 +15,7 @@ export function HeaderSection({
   description,
   onBack,
   onPreview,
-  actionButton,
+  actions,
 }: HeaderSectionProps) {
   return (
     <header className="border-b border-[#C7C7C7] flex flex-col gap-[10px] items-start justify-center px-[100px] py-[50px]">
@@ -39,7 +41,7 @@ export function HeaderSection({
           {title}
         </h1>
         <div className="flex items-center gap-[15px]">
-          {actionButton}
+          {actions}
           {onPreview && (
             <button
               type="button"
