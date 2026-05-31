@@ -24,7 +24,6 @@ import { HeaderSection } from "@/components/admin-portal/HeaderSection";
 import { PreviewMode } from "@/components/admin-portal/preview-components/PreviewMode";
 import { PreviewNavBar } from "@/components/admin-portal/preview-components/PreviewNavBar";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
-import { auth } from "@/firebase/firebase";
 import { rollbackUploads, uploadToStorage } from "@/utils/firebaseStorage";
 
 const PAGE_SIZE = 5;
