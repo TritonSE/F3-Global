@@ -15,7 +15,6 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -27,7 +26,6 @@ import { PreviewNavBar } from "@/components/admin-portal/preview-components/Prev
 import { PublishButton } from "@/components/admin-portal/PublishButton";
 import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
-import { auth } from "@/firebase/firebase";
 
 type CityItem = { id: string; name: string };
 
@@ -47,27 +45,19 @@ export default function CitiesEditor() {
   const [notificationFading, setNotificationFading] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
+    async function loadCities() {
+      try {
+        const fetched = await getAllCities();
+        setOriginalCities(fetched);
+        setCities(fetched.map((name) => ({ id: crypto.randomUUID(), name })));
+      } catch (error) {
+        console.error("Failed to fetch cities:", error);
+      } finally {
         setLoading(false);
-        router.push("/login");
-      } else {
-        async function loadCities() {
-          try {
-            const fetched = await getAllCities();
-            setOriginalCities(fetched);
-            setCities(fetched.map((name) => ({ id: crypto.randomUUID(), name })));
-          } catch (error) {
-            console.error("Failed to fetch cities:", error);
-          } finally {
-            setLoading(false);
-          }
-        }
-        void loadCities();
       }
-    });
-    return () => unsubscribe();
-  }, [router]);
+    }
+    void loadCities();
+  }, []);
 
   function handleNameChange(id: string, name: string) {
     setCities((prev) => prev.map((c) => (c.id === id ? { ...c, name } : c)));

@@ -1,6 +1,5 @@
 "use client";
 
-import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
@@ -21,7 +20,6 @@ import { PublishButton } from "@/components/admin-portal/PublishButton";
 import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { Highlights } from "@/components/Highlights";
-import { auth } from "@/firebase/firebase";
 import { deleteFromStorageUrl, rollbackUploads, uploadToStorage } from "@/utils/firebaseStorage";
 
 function ClientPill({
@@ -83,31 +81,23 @@ export default function ClientHighlightsEditor() {
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
+    async function load() {
+      try {
+        const fetched = await getClientHighlights();
+        const sorted = [...fetched].sort((a, b) => a.order - b.order);
+        setOriginalHighlights(sorted);
+        setHighlights(sorted);
+        const primary = sorted.find((h) => h.order === 0);
+        setPrimaryId(primary?._id ?? null);
+        setSelectedId(primary?._id ?? sorted[0]?._id ?? null);
+      } catch (error) {
+        console.error("Failed to fetch client highlights:", error);
+      } finally {
         setLoading(false);
-        router.push("/login");
-      } else {
-        async function load() {
-          try {
-            const fetched = await getClientHighlights();
-            const sorted = [...fetched].sort((a, b) => a.order - b.order);
-            setOriginalHighlights(sorted);
-            setHighlights(sorted);
-            const primary = sorted.find((h) => h.order === 0);
-            setPrimaryId(primary?._id ?? null);
-            setSelectedId(primary?._id ?? sorted[0]?._id ?? null);
-          } catch (error) {
-            console.error("Failed to fetch client highlights:", error);
-          } finally {
-            setLoading(false);
-          }
-        }
-        void load();
       }
-    });
-    return () => unsubscribe();
-  }, [router]);
+    }
+    void load();
+  }, []);
 
   const originalPrimaryId = originalHighlights.find((o) => o.order === 0)?._id ?? null;
 

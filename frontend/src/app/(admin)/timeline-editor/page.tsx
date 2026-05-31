@@ -1,5 +1,4 @@
 "use client";
-import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -14,7 +13,6 @@ import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { TimelineCard } from "@/components/admin-portal/TimelineCard";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { TimelineDisplay } from "@/components/timeline-section/TimelineDisplay";
-import { auth } from "@/firebase/firebase";
 import { deleteFromStorageUrl, rollbackUploads, uploadToStorage } from "@/utils/firebaseStorage";
 
 export default function TimelineEditorPage() {
@@ -28,27 +26,19 @@ export default function TimelineEditorPage() {
   const [isPreview, setIsPreview] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
+    async function loadTimelines() {
+      try {
+        const fetched = await getTimelines();
+        setOriginalTimelines(fetched);
+        setTimelines(fetched);
+      } catch (error) {
+        console.error("Failed to fetch timelines:", error);
+      } finally {
         setLoading(false);
-        router.push("/login");
-      } else {
-        async function loadTimelines() {
-          try {
-            const fetched = await getTimelines();
-            setOriginalTimelines(fetched);
-            setTimelines(fetched);
-          } catch (error) {
-            console.error("Failed to fetch timelines:", error);
-          } finally {
-            setLoading(false);
-          }
-        }
-        void loadTimelines();
       }
-    });
-    return () => unsubscribe();
-  }, [router]);
+    }
+    void loadTimelines();
+  }, []);
 
   const hasChanges = timelines.some(
     (t, i) =>
