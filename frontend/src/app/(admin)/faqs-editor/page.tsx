@@ -37,11 +37,11 @@ const PAGE_OPTIONS: { key: FaqPage; label: string }[] = [
   { key: "clients", label: "Clients" },
 ];
 
-const PAGES: FaqPage[] = ["donors", "clients", "members"];
+const PAGES: FaqPage[] = ["donors", "members", "clients"];
 const FAQ_PAGE_TO_SIDEBAR_ITEM: Record<FaqPage, string> = {
   donors: "donate",
-  clients: "clients",
   members: "members",
+  clients: "clients",
 };
 
 type FaqWithLocalId = FaqItem & { localId: string };
