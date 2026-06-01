@@ -10,16 +10,24 @@ export const Footer = function Footer() {
   const pathname = usePathname();
 
   if (pathname === "/login") return null;
+
+  const scrollToContact = (element: Element) => {
+    const headerOffset = window.matchMedia("(min-width: 768px)").matches ? 120 : 80;
+    const top = element.getBoundingClientRect().top + window.scrollY - headerOffset;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
+
   // looks for header tags that contain `contact`
   const handleContactClick = () => {
-    const headings = Array.from(document.querySelectorAll("h1, h2, h3, h4, h5, h6"));
-    const contactSection = headings.find((heading) => {
-      const text = heading.textContent?.toLowerCase() || "";
-      return text.includes("contact us");
-    });
+    const contactSection =
+      document.getElementById("contact") ??
+      Array.from(document.querySelectorAll("h1, h2, h3, h4, h5, h6")).find((heading) => {
+        const text = heading.textContent?.toLowerCase() || "";
+        return text.includes("contact us");
+      });
 
     if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth" });
+      scrollToContact(contactSection);
     } else {
       // defaults to home page if not found
       router.push("/?contact=true");

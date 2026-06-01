@@ -34,7 +34,9 @@ export default function Home() {
       const contactSection = document.getElementById("contact");
       if (contactSection) {
         setTimeout(() => {
-          contactSection.scrollIntoView({ behavior: "smooth" });
+          const headerOffset = window.matchMedia("(min-width: 768px)").matches ? 120 : 80;
+          const top = contactSection.getBoundingClientRect().top + window.scrollY - headerOffset;
+          window.scrollTo({ top, behavior: "smooth" });
           window.history.replaceState(null, "", "/"); // clean url after scrolling animation
         }, 100);
       }
