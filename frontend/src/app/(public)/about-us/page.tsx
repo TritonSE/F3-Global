@@ -8,9 +8,9 @@ import { TIMELINE_HEADER, UpdatedTimeline } from "@/components/timeline-section"
 
 export default function About() {
   return (
-    <div className="mx-auto flex flex-col justify-center bg-white w-full">
+    <div className="mx-auto flex w-full max-w-[1512px] flex-col justify-center bg-white">
       {/* Hero */}
-      <div className="flex flex-col md:flex-row w-full items-center justify-between self-stretch px-[30px] md:px-[100px] py-[60px] pt-[100px] md:min-h-screen gap-[40px] md:gap-0">
+      <div className="flex w-full flex-col items-center justify-between gap-[40px] self-stretch px-[30px] pb-[60px] pt-[80px] md:flex-row md:gap-0 md:px-[100px] md:py-[80px]">
         <div className="w-full md:basis-1/2 order-first md:order-last flex justify-center md:justify-end">
           <div className="w-full max-w-[646px] overflow-hidden rounded-[10px]">
             <Image
