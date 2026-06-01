@@ -21,20 +21,20 @@ export type MemberPayload = {
 };
 
 export async function getMembers(): Promise<Member[]> {
-  const res = await get("/api/members/all");
+  const res = await get("/members/all");
   return (await res.json()) as Member[];
 }
 
 export async function createMember(data: MemberPayload): Promise<Member> {
-  const res = await post("/api/members", data);
+  const res = await post("/members", data);
   return (await res.json()) as Member;
 }
 
 export async function updateMember(id: string, data: MemberPayload): Promise<Member> {
-  const res = await put(`/api/members/${encodeURIComponent(id)}`, data);
+  const res = await put(`/members/${encodeURIComponent(id)}`, data);
   return (await res.json()) as Member;
 }
 
 export async function deleteMember(id: string): Promise<void> {
-  await del(`/api/members/${encodeURIComponent(id)}`);
+  await del(`/members/${encodeURIComponent(id)}`);
 }

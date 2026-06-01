@@ -10,7 +10,7 @@ import { getAuthHeaders } from "@/api/auth";
 
 type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL ?? "/api";
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL ?? ""}/api`;
 
 /**
  * A wrapper around the built-in `fetch()` function that abstracts away some of

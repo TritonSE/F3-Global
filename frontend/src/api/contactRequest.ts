@@ -13,7 +13,7 @@ export const sendContactRequest = async (
   contactRequest: ContactRequest,
 ): Promise<ContactResponse> => {
   try {
-    const res = await post("/api/contact", contactRequest);
+    const res = await post("/contact", contactRequest);
     return (await res.json()) as ContactResponse;
   } catch (error) {
     console.error("Error sending contact request:", error);

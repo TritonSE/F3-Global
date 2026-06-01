@@ -12,10 +12,10 @@ export type FaqItem = {
 export type FaqWithLocalId = FaqItem & { localId: string };
 
 export async function getFaq(page: FaqPage): Promise<FaqItem[]> {
-  const res = await get(`/api/faq?page=${page}`);
+  const res = await get(`/faq?page=${page}`);
   return (await res.json()) as FaqItem[];
 }
 
 export async function putFaqs(page: FaqPage, faqs: FaqItem[]): Promise<void> {
-  await put(`/api/faq?page=${page}`, faqs);
+  await put(`/faq?page=${page}`, faqs);
 }

@@ -8,11 +8,11 @@ export type Client = {
 };
 
 export async function getAllClients(): Promise<Client[]> {
-  const res = await get("/api/clients/all");
+  const res = await get("/clients/all");
   return (await res.json()) as Client[];
 }
 
 export async function updateClients(clients: Client[]): Promise<Client[]> {
-  const res = await put("/api/clients/", clients);
+  const res = await put("/clients/", clients);
   return (await res.json()) as Client[];
 }

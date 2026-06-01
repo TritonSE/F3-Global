@@ -15,10 +15,10 @@ export type ImpactMetricResponse = {
 };
 
 export async function getImpactMetric(): Promise<ImpactMetricResponse> {
-  const res = await get("/api/impact-metrics");
+  const res = await get("/impact-metrics");
   return (await res.json()) as ImpactMetricResponse;
 }
 
 export async function updateImpactMetric(metrics: ImpactMetric[]): Promise<void> {
-  await put("/api/impact-metrics/", { metrics });
+  await put("/impact-metrics/", { metrics });
 }

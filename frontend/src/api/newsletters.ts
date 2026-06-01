@@ -55,13 +55,13 @@ export async function getNewsletters(
   if (params.featured) query.set("featured", "true");
 
   const qs = query.toString();
-  const res = await get(`/api/newsletters${qs ? `?${qs}` : ""}`);
+  const res = await get(`/newsletters${qs ? `?${qs}` : ""}`);
   return (await res.json()) as PaginatedNewsletters;
 }
 
 export async function getNewsletterById(id: string): Promise<Newsletter | null> {
   try {
-    const res = await get(`/api/newsletters/${encodeURIComponent(id)}`);
+    const res = await get(`/newsletters/${encodeURIComponent(id)}`);
     return (await res.json()) as Newsletter;
   } catch (error: any) {
     if (error instanceof Error && error.message.startsWith("404")) {
@@ -72,12 +72,12 @@ export async function getNewsletterById(id: string): Promise<Newsletter | null> 
 }
 
 export async function incrementNewsletterViews(id: string): Promise<Newsletter> {
-  const res = await patch(`/api/newsletters/${encodeURIComponent(id)}/views`, undefined);
+  const res = await patch(`/newsletters/${encodeURIComponent(id)}/views`, undefined);
   return (await res.json()) as Newsletter;
 }
 
 export async function createNewsletter(payload: NewsletterPayload): Promise<Newsletter> {
-  const res = await post("/api/newsletters/", payload);
+  const res = await post("/newsletters/", payload);
   return (await res.json()) as Newsletter;
 }
 
@@ -85,10 +85,10 @@ export async function updateNewsletter(
   id: string,
   payload: Partial<NewsletterPayload>,
 ): Promise<Newsletter> {
-  const res = await put(`/api/newsletters/${encodeURIComponent(id)}`, payload);
+  const res = await put(`/newsletters/${encodeURIComponent(id)}`, payload);
   return (await res.json()) as Newsletter;
 }
 
 export async function deleteNewsletter(id: string): Promise<void> {
-  await del(`/api/newsletters/${encodeURIComponent(id)}`);
+  await del(`/newsletters/${encodeURIComponent(id)}`);
 }

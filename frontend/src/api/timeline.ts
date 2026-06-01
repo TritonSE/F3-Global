@@ -9,11 +9,11 @@ export type TimelineItem = {
 };
 
 export async function getTimelines(): Promise<TimelineItem[]> {
-  const res = await get("/api/timeline/all");
+  const res = await get("/timeline/all");
   return (await res.json()) as TimelineItem[];
 }
 
 export async function updateTimeline(items: TimelineItem[]): Promise<TimelineItem[]> {
-  const res = await put("/api/timeline", items);
+  const res = await put("/timeline", items);
   return (await res.json()) as TimelineItem[];
 }

@@ -8,11 +8,11 @@ export type Affiliate = {
 };
 
 export async function getAllAffiliates(): Promise<Affiliate[]> {
-  const res = await get("/api/affiliates/all");
+  const res = await get("/affiliates/all");
   return (await res.json()) as Affiliate[];
 }
 
 export async function updateAffiliates(affiliates: Affiliate[]): Promise<Affiliate[]> {
-  const res = await put("/api/affiliates/", affiliates);
+  const res = await put("/affiliates/", affiliates);
   return (await res.json()) as Affiliate[];
 }

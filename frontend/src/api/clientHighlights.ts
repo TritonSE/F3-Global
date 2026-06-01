@@ -12,13 +12,13 @@ export type HighlightItem = {
 };
 
 export async function getClientHighlights(): Promise<HighlightItem[]> {
-  const res = await get("/api/client-highlights");
+  const res = await get("/client-highlights");
   return (await res.json()) as HighlightItem[];
 }
 
 export async function updateClientHighlights(
   highlights: HighlightItem[],
 ): Promise<HighlightItem[]> {
-  const res = await put("/api/client-highlights/", { highlights });
+  const res = await put("/client-highlights/", { highlights });
   return (await res.json()) as HighlightItem[];
 }
