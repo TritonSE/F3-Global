@@ -33,8 +33,8 @@ import { auth } from "@/firebase/firebase";
 
 const PAGE_OPTIONS: { key: FaqPage; label: string }[] = [
   { key: "donors", label: "Donors" },
-  { key: "clients", label: "Clients" },
   { key: "members", label: "Members" },
+  { key: "clients", label: "Clients" },
 ];
 
 const PAGES: FaqPage[] = ["donors", "clients", "members"];
