@@ -31,7 +31,7 @@ export const FooterDesktop = function Footer({ onContactClick, onTermsClick }: F
   const getFooterHref = (item: FooterLinkItem) => item.href;
 
   return (
-    <div className="mx-auto flex flex-col justify-center px-[5vw] py-[100px] bg-[#f4f4f4] w-full">
+    <div className="mx-auto flex w-full max-w-[1512px] flex-col justify-center bg-[#f4f4f4] px-[5vw] py-[100px]">
       <div className="flex w-full justify-between items-center">
         <div className="flex flex-col items-start gap-[15px] ">
           <div className="flex flex-col w-[392px] h-[60px] justify-center">

@@ -31,7 +31,7 @@ export function FooterMobile({ onContactClick, onTermsClick }: FooterMobileProps
   const getFooterHref = (item: FooterLinkItem) => item.href;
 
   return (
-    <footer className="w-full overflow-hidden rounded-b-[44px] bg-[#f4f4f4] px-[30px] pb-[50px] pt-[50px] shadow-[0_18px_30px_rgba(0,0,0,0.12)]">
+    <footer className="mx-auto w-full max-w-[1512px] overflow-hidden rounded-b-[44px] bg-[#f4f4f4] px-[30px] pb-[50px] pt-[50px] shadow-[0_18px_30px_rgba(0,0,0,0.12)]">
       <div className="grid grid-cols-2 gap-x-10 gap-y-6 pb-6">
         <div className="flex flex-col items-start gap-[14px]">
           <h3 className="text-[12px] font-semibold text-[#172447]">Services</h3>
