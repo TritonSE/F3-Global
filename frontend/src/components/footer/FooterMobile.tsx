@@ -6,9 +6,9 @@ import { usePathname } from "next/navigation";
 import {
   footerContact,
   footerCopyright,
+  type FooterLinkItem,
   footerLinkSections,
   footerSocialLinks,
-  type FooterLinkItem,
 } from "./footerData";
 import { FooterMiniBtn } from "./FooterMiniBtn";
 
