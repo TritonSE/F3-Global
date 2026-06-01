@@ -82,14 +82,15 @@ export function Highlights({
 
   return (
     <section className="relative flex w-full flex-col items-center gap-[20px] md:gap-[50px] border-t border-[#f4f4f4] bg-white py-[50px] md:px-0 box-border overflow-hidden">
-      <div className="flex w-full  px-[30px] md:px-[100px] items-center justify-start">
+      <div className="flex w-full px-[30px] md:px-[100px] items-center justify-start">
         <h2 className="font-dm-sans text-[28px] md:text-[48px] font-medium leading-[150%] tracking-[-0.96px] text-[#172447]">
           Client Highlights
         </h2>
       </div>
 
+      {/* Mobile swipe layout */}
       <div
-        className="md:hidden w-full pb-[20px] md:pb-0"
+        className="md:hidden w-full pb-[20px]"
         onMouseDown={(e) => handleDragStart(e.clientX)}
         onMouseUp={(e) => handleDragEnd(e.clientX)}
         onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
@@ -112,9 +113,15 @@ export function Highlights({
         </div>
       </div>
 
-      <div className="hidden md:relative md:flex w-full items-center justify-center gap-[38px]">
+      {/* Desktop layout — arrows anchor to viewport edges below 1338px (when content no longer fits inline) */}
+      <div className="hidden md:relative md:flex w-full items-center justify-center min-[1338px]:gap-[38px]">
+        {/*
+          At md–1337px: absolute, 20px from the left edge of this w-full container (= viewport edge).
+          At 1338px+: back in flex flow alongside the cards.
+          1338px = 45 + 38 + 322 + 30 + 468 + 30 + 322 + 38 + 45 (arrows + gaps + cards).
+        */}
         <button
-          className="flex h-[45px] w-[45px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[99px] bg-white p-0 text-[#1e1e1e] transition-all duration-200 ease-in-out hover:bg-[#f4f4f4] active:scale-95"
+          className="flex h-[45px] w-[45px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[99px] bg-white p-0 text-[#1e1e1e] transition-all duration-200 ease-in-out hover:bg-[#f4f4f4] active:scale-95 z-10 absolute left-[20px] min-[1338px]:relative min-[1338px]:left-auto"
           onClick={handlePrevious}
           aria-label="Previous highlight"
         >
@@ -152,7 +159,7 @@ export function Highlights({
         </div>
 
         <button
-          className="flex h-[45px] w-[45px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[99px] bg-white p-0 text-[#1e1e1e] transition-all duration-200 ease-in-out hover:bg-[#f4f4f4] active:scale-95"
+          className="flex h-[45px] w-[45px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[99px] bg-white p-0 text-[#1e1e1e] transition-all duration-200 ease-in-out hover:bg-[#f4f4f4] active:scale-95 z-10 absolute right-[20px] min-[1338px]:relative min-[1338px]:right-auto"
           onClick={handleNext}
           aria-label="Next highlight"
         >

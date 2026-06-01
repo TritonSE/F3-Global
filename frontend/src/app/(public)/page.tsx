@@ -97,7 +97,7 @@ export default function Home() {
             <span className="block">Small</span>
             <span className="block">Businesses</span>
           </p>
-          <div className="flex w-full md:w-[754px] md:h-[74px] flex-col justify-center">
+          <div className="flex w-full md:max-w-[754px] md:h-[74px] flex-col justify-center">
             <p className="font-dm-sans text-[#5D5D5D] text-[14px] md:text-[20px] font-normal font-[400] leading-[20px] md:leading-[32px]">
               Join us in our mission to foster economic growth and financial inclusion for
               underserved communities worldwide.

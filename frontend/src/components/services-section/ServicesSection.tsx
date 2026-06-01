@@ -14,8 +14,8 @@ export const ServicesSection = () => {
         Services We Offer
       </h2>
       <div className="mx-auto flex max-w-[1400px] flex-col gap-10">
-        <div className="flex items-start justify-between gap-[50px]">
-          <div className="hidden md:block">
+        <div className="flex items-start gap-[50px]">
+          <div className="hidden min-w-0 md:block md:flex-[1_1_600px]">
             <ImageDeck activeID={activeID} />
           </div>
           <ServiceAccordian activeID={activeID} onServiceChange={(id) => setActiveID(id)} />

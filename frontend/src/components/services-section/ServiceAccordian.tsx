@@ -12,7 +12,7 @@ type ServiceAccordianProps = {
 
 export const ServiceAccordian = ({ activeID, onServiceChange }: ServiceAccordianProps) => {
   return (
-    <div className="w-full shrink-0 md:w-[647px]">
+    <div className="w-full md:flex-[0_1_647px] md:min-w-0">
       <div className="flex flex-col">
         {DEFAULT_SERVICES.map((service_offered) => (
           <ServiceAccordianItem
