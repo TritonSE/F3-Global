@@ -67,9 +67,9 @@ export default function Home() {
   }, [containerWidth, cities]);
 
   return (
-    <div className="relative w-full bg-white flex flex-col overflow-hidden">
+    <div className="relative mx-auto flex w-full max-w-[1512px] flex-col overflow-hidden bg-white">
       {/* hero */}
-      <div className="relative flex flex-col items-center md:min-h-screen">
+      <div className="relative flex flex-col items-center pb-[30px] md:pb-[67px]">
         {/* map gradient */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none select-none overflow-hidden">
           <div className="absolute -top-[10%] left-[5%] w-[100%] h-[95%] opacity-25 md:-top-[35%] md:left-auto md:-right-[55%] md:w-[120%] md:h-[120%]">
