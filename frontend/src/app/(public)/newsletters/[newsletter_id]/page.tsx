@@ -156,7 +156,7 @@ export default function NewsletterDetailPage() {
   });
 
   return (
-    <div className="pt-[60px] md:pt-0 bg-white min-h-screen">
+    <div className="mx-auto w-full max-w-[1512px] pt-[60px] md:pt-0 bg-white min-h-screen">
       {/* Back Button */}
       <div className="px-[15px] md:px-[100px] pt-[42px] md:pt-[40px] pb-[12px]">
         <button
