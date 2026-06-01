@@ -3,7 +3,13 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-import { footerContact, footerCopyright, footerSocialLinks } from "./footerData";
+import {
+  footerContact,
+  footerCopyright,
+  footerLinkSections,
+  footerSocialLinks,
+  type FooterLinkItem,
+} from "./footerData";
 import { FooterMiniBtn } from "./FooterMiniBtn";
 
 type FooterMobileProps = {
@@ -16,63 +22,41 @@ export function FooterMobile({ onContactClick, onTermsClick }: FooterMobileProps
 
   if (pathname === "/login") return null;
 
+  const getFooterAction = (item: FooterLinkItem) => {
+    if (item.action === "contact") return onContactClick;
+    if (item.action === "terms") return onTermsClick;
+    return undefined;
+  };
+
+  const getFooterHref = (item: FooterLinkItem) => item.href;
+
   return (
     <footer className="w-full overflow-hidden rounded-b-[44px] bg-[#f4f4f4] px-[30px] pb-[50px] pt-[50px] shadow-[0_18px_30px_rgba(0,0,0,0.12)]">
       <div className="grid grid-cols-2 gap-x-10 gap-y-6 pb-6">
         <div className="flex flex-col items-start gap-[14px]">
           <h3 className="text-[12px] font-semibold text-[#172447]">Services</h3>
-          <FooterMiniBtn text="Donors" link="/donors" className="text-left text-[12px] leading-6" />
-          <FooterMiniBtn
-            text="Clients"
-            link="/clients"
-            className="text-left text-[12px] leading-6"
-          />
-          <FooterMiniBtn
-            text="Members"
-            link="/members"
-            className="text-left text-[12px] leading-6"
-          />
-          <FooterMiniBtn
-            text="What We Do"
-            link="/about-us"
-            className="text-left text-[12px] leading-6"
-          />
-          <FooterMiniBtn
-            text="Contact"
-            onClick={onContactClick}
-            className="text-left text-[12px] leading-6"
-          />
-          <FooterMiniBtn
-            text="Member Application"
-            link="https://my-apply.vercel.app/org/f3-global-foundation"
-            className="text-left text-[12px] leading-6"
-          />
+          {footerLinkSections.services.map((item) => (
+            <FooterMiniBtn
+              key={item.text}
+              text={item.text}
+              link={getFooterHref(item)}
+              onClick={getFooterAction(item)}
+              className="text-left text-[12px] leading-6"
+            />
+          ))}
         </div>
 
         <div className="flex flex-col items-start gap-[14px]">
           <h3 className="text-[12px] font-semibold text-[#172447]">Company</h3>
-          <FooterMiniBtn
-            text="About"
-            link="/about-us"
-            className="text-left text-[12px] leading-6"
-          />
-          <FooterMiniBtn text="News" className="text-left text-[12px] leading-6" />
-          <FooterMiniBtn text="Events" className="text-left text-[12px] leading-6" />
-          <FooterMiniBtn
-            text="Meet The Team"
-            link="/meet-the-team"
-            className="text-left text-[12px] leading-6"
-          />
-          <FooterMiniBtn
-            text="Privacy Policy"
-            link="/privacy-policy"
-            className="text-left text-[12px] leading-6"
-          />
-          <FooterMiniBtn
-            text="Terms & Conditions"
-            onClick={onTermsClick}
-            className="text-left text-[12px] leading-6"
-          />
+          {footerLinkSections.company.map((item) => (
+            <FooterMiniBtn
+              key={item.text}
+              text={item.text}
+              link={getFooterHref(item)}
+              onClick={getFooterAction(item)}
+              className="text-left text-[12px] leading-6"
+            />
+          ))}
         </div>
       </div>
 
