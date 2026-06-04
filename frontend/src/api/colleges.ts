@@ -1,4 +1,4 @@
-import { getAuthHeaders } from "@/api/auth";
+import { get, put } from "./requests";
 
 export type College = {
   _id?: string;
@@ -8,27 +8,11 @@ export type College = {
 };
 
 export async function getAllColleges(): Promise<College[]> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const res = await fetch(`${backendUrl}/api/colleges/all`);
-  if (!res.ok) {
-    throw new Error("Failed to fetch colleges");
-  }
-  const data = (await res.json()) as College[];
-  return data;
+  const res = await get("/colleges/all");
+  return (await res.json()) as College[];
 }
 
 export async function updateColleges(colleges: College[]): Promise<College[]> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const authHeaders = await getAuthHeaders();
-  const res = await fetch(`${backendUrl}/api/colleges/`, {
-    method: "PUT",
-    headers: { ...authHeaders, "Content-Type": "application/json" },
-    body: JSON.stringify(colleges),
-  });
-  if (!res.ok) {
-    throw new Error("Failed to update colleges");
-  }
-
-  const data = (await res.json()) as College[];
-  return data;
+  const res = await put("/colleges/", colleges);
+  return (await res.json()) as College[];
 }
