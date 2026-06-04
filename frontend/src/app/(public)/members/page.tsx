@@ -33,9 +33,9 @@ export default async function Members() {
   const faqItems = await getFaq("members");
   return (
     <>
-      <div className="flex flex-col bg-white overflow-x-hidden">
+      <div className="mx-auto flex w-full max-w-[1512px] flex-col overflow-x-hidden bg-white">
         {/* Hero Section */}
-        <div className="flex w-full flex-col items-center gap-[20px] px-[30px] pt-[50px] text-center md:min-h-screen md:flex-row md:items-center md:justify-between md:gap-0 md:self-stretch md:px-[100px] md:pt-0 md:text-left">
+        <div className="flex w-full flex-col items-center gap-[20px] px-[30px] pt-[50px] text-center md:flex-row md:items-center md:justify-between md:gap-0 md:self-stretch md:px-[100px] md:pt-0 md:text-left">
           <div className="order-2 flex w-full max-w-[580px] flex-col items-center gap-[20px] md:order-1 md:w-[639px] md:max-w-none md:items-start md:gap-[50px]">
             <h1 className="mt-[20px] font-ethic text-4xl leading-tight font-light text-[#172447] md:mt-0 md:text-[64px] md:leading-[1.1]">
               Become <span className="italic">Part</span> of Our <br /> Team Today!

@@ -236,7 +236,7 @@ export default function MeetTheTeam() {
 
   return (
     <>
-      <div className="bg-white overflow-x-hidden">
+      <div className="mx-auto w-full max-w-[1512px] overflow-x-hidden bg-white">
         <div className="flex w-full flex-col items-center gap-[20px] px-[30px] pt-[50px] text-center md:h-[774px] md:flex-row md:items-center md:justify-between md:px-[100px] md:py-0 md:text-left">
           <div className="order-2 flex w-full max-w-[580px] flex-col items-center gap-[20px] md:order-1 md:items-start md:gap-[50px] md:basis-1/2 md:max-w-[580px]">
             <h1 className="font-ethic text-4xl leading-tight font-light text-[#1E1E1E] mt-[20px] md:text-[64px] md:leading-[1.1]">

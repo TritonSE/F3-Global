@@ -3,6 +3,13 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
+import {
+  footerContact,
+  footerCopyright,
+  type FooterLinkItem,
+  footerLinkSections,
+  footerSocialLinks,
+} from "./footerData";
 import { FooterMiniBtn } from "./FooterMiniBtn";
 
 type FooterDesktopProps = {
@@ -14,8 +21,17 @@ export const FooterDesktop = function Footer({ onContactClick, onTermsClick }: F
   const pathname = usePathname();
 
   if (pathname === "/login") return null;
+
+  const getFooterAction = (item: FooterLinkItem) => {
+    if (item.action === "contact") return onContactClick;
+    if (item.action === "terms") return onTermsClick;
+    return undefined;
+  };
+
+  const getFooterHref = (item: FooterLinkItem) => item.href;
+
   return (
-    <div className="mx-auto flex flex-col justify-center px-[5vw] py-[100px] bg-[#f4f4f4] w-full">
+    <div className="mx-auto flex w-full max-w-[1512px] flex-col justify-center bg-[#f4f4f4] px-[5vw] py-[100px]">
       <div className="flex w-full justify-between items-center">
         <div className="flex flex-col items-start gap-[15px] ">
           <div className="flex flex-col w-[392px] h-[60px] justify-center">
@@ -27,70 +43,58 @@ export const FooterDesktop = function Footer({ onContactClick, onTermsClick }: F
             </p>
           </div>
 
-          <p>949.668.3568</p>
+          <p>{footerContact.phone}</p>
           <a
             className="hover:underline decoration-[7%] decoration-solid underline-offset-2"
-            href="mailto:info@f3-global.org"
+            href={`mailto:${footerContact.email}`}
           >
-            info@f3-global.org
+            {footerContact.email}
           </a>
           <a
-            href="https://maps.app.goo.gl/M1onQnhbgSESpYtU6"
+            href={footerContact.addressHref}
             target="_blank"
+            rel="noopener noreferrer"
             className="hover:underline decoration-[7%] decoration-solid underline-offset-2"
           >
-            8 The Green STE <br /> A Dover, DE 19901
+            {footerContact.addressLines[0]} <br /> {footerContact.addressLines[1]}
           </a>
           <div className="flex items-start gap-[20px]">
-            <a href="https://www.linkedin.com/company/f3global/" target="_blank">
-              <Image
-                src="/imgs/linkedin.png"
-                alt="linkedin icon"
-                width={40}
-                height={40}
-                className="aspect-square rounded-lg hover:opacity-60"
-              />
-            </a>
-
-            <a
-              href="https://www.instagram.com/futureforwardfoundation?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-              target="_blank"
-            >
-              <Image
-                src="/imgs/instagram.png"
-                alt="instagram icon"
-                width={40}
-                height={40}
-                className="aspect-square rounded-lg hover:opacity-60"
-              />
-            </a>
+            {footerSocialLinks.map((social) => (
+              <a key={social.alt} href={social.href} target="_blank" rel="noopener noreferrer">
+                <Image
+                  src={social.src}
+                  alt={`${social.alt} icon`}
+                  width={40}
+                  height={40}
+                  className="aspect-square rounded-lg hover:opacity-60"
+                />
+              </a>
+            ))}
           </div>
-          <p className="text-[#5d5d5d]">
-            ©2025 F3Global. All rights reserved. <br />
-            F3 Global is a 501(c)(3) non-profit organization.
-          </p>
+          <p className="whitespace-pre-wrap text-[#5d5d5d]">{footerCopyright}</p>
         </div>
         <div className="flex w-[554px] items-start gap-[70px] shrink-0">
           <div className="flex flex-col items-start gap-[15px]">
             <h3 className="font-semibold">Services</h3>
-            <FooterMiniBtn text="Donors" link="/donors" />
-            <FooterMiniBtn text="Clients" link="/clients" />
-            <FooterMiniBtn text="Members" link="/members" />
-            <FooterMiniBtn text="What We Do" link="/about-us" />
-            <FooterMiniBtn text="Contact" onClick={onContactClick} />
-            <FooterMiniBtn
-              text="Member Application"
-              link="https://my-apply.vercel.app/org/f3-global-foundation"
-            />
+            {footerLinkSections.services.map((item) => (
+              <FooterMiniBtn
+                key={item.text}
+                text={item.text}
+                link={getFooterHref(item)}
+                onClick={getFooterAction(item)}
+              />
+            ))}
           </div>
           <div className="flex flex-col items-start gap-[15px]">
             <h3 className="font-semibold">Company</h3>
-            <FooterMiniBtn text="About" link="/about-us" />
-            <FooterMiniBtn text="News" />
-            <FooterMiniBtn text="Events" />
-            <FooterMiniBtn text="Meet The Team" link="/meet-the-team" />
-            <FooterMiniBtn text="Privacy Policy" link="/privacy-policy" />
-            <FooterMiniBtn text="Terms & Conditions" onClick={onTermsClick} />
+            {footerLinkSections.company.map((item) => (
+              <FooterMiniBtn
+                key={item.text}
+                text={item.text}
+                link={getFooterHref(item)}
+                onClick={getFooterAction(item)}
+              />
+            ))}
           </div>
         </div>
       </div>
