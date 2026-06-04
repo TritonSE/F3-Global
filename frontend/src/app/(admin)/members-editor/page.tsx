@@ -1,6 +1,5 @@
 "use client";
 
-import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
@@ -23,7 +22,6 @@ import { MembersPreview } from "@/components/admin-portal/preview-components/Mem
 import { PreviewMode } from "@/components/admin-portal/preview-components/PreviewMode";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { Pagination } from "@/components/newsletters-page/Pagination";
-import { auth } from "@/firebase/firebase";
 import { rollbackUploads, uploadToStorage } from "@/utils/firebaseStorage";
 
 const PAGE_SIZE = 6;
@@ -59,19 +57,11 @@ export default function TeamMembersEditorPage() {
   const [toastFading, setToastFading] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        setLoading(false);
-        router.push("/login");
-        return;
-      }
-      void getMembers()
-        .then((fetched) => setMembers(fetched))
-        .catch((error) => console.error("Failed to fetch members:", error))
-        .finally(() => setLoading(false));
-    });
-    return () => unsubscribe();
-  }, [router]);
+    void getMembers()
+      .then((fetched) => setMembers(fetched))
+      .catch((error) => console.error("Failed to fetch members:", error))
+      .finally(() => setLoading(false));
+  }, []);
 
   const countryOptions = useMemo(() => [...new Set(members.map((m) => m.country))], [members]);
 

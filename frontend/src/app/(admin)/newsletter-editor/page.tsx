@@ -1,6 +1,5 @@
 "use client";
 
-import { onAuthStateChanged } from "firebase/auth";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -25,7 +24,6 @@ import { HeaderSection } from "@/components/admin-portal/HeaderSection";
 import { PreviewMode } from "@/components/admin-portal/preview-components/PreviewMode";
 import { PreviewNavBar } from "@/components/admin-portal/preview-components/PreviewNavBar";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
-import { auth } from "@/firebase/firebase";
 import { rollbackUploads, uploadToStorage } from "@/utils/firebaseStorage";
 
 const PAGE_SIZE = 5;
@@ -616,7 +614,6 @@ function NewsletterArticlePreview({
 
 export default function NewsletterArticlesEditor() {
   const router = useRouter();
-  const [authLoading, setAuthLoading] = useState(true);
   const [listLoading, setListLoading] = useState(true);
   const [list, setList] = useState<PaginatedNewsletters | null>(null);
   const [searchInput, setSearchInput] = useState("");
@@ -638,18 +635,6 @@ export default function NewsletterArticlesEditor() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        router.push("/login");
-        return;
-      }
-      setAuthLoading(false);
-    });
-    return () => unsubscribe();
-  }, [router]);
-
-  useEffect(() => {
-    if (authLoading) return;
     setListLoading(true);
     getNewsletters({
       page: currentPage,
@@ -663,7 +648,7 @@ export default function NewsletterArticlesEditor() {
       })
       .catch(() => setError("Failed to load newsletter articles."))
       .finally(() => setListLoading(false));
-  }, [authLoading, currentPage, search, tableSort]);
+  }, [currentPage, search, tableSort]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -805,8 +790,6 @@ export default function NewsletterArticlesEditor() {
       setArticleSaving(false);
     }
   }
-
-  if (authLoading) return null;
 
   if (isPreview) {
     return (

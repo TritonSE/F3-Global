@@ -1,6 +1,5 @@
 "use client";
 
-import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -15,7 +14,6 @@ import { PublishButton } from "@/components/admin-portal/PublishButton";
 import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { ImpactSection } from "@/components/ImpactSection";
-import { auth } from "@/firebase/firebase";
 
 const MONTH_ABBREVS = [
   "JAN",
@@ -55,29 +53,21 @@ export default function ImpactMetricsEditor() {
   const { setHasChanges } = useAdmin();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
+    async function loadMetrics() {
+      try {
+        const data = await getImpactMetric();
+        const sorted = [...data.metrics].sort((a, b) => a.order - b.order);
+        setOriginalMetrics(sorted);
+        setMetrics(sorted);
+        setLastUpdated(data.lastUpdated);
+      } catch (error) {
+        console.error("Failed to fetch impact metrics:", error);
+      } finally {
         setLoading(false);
-        router.push("/login");
-      } else {
-        async function loadMetrics() {
-          try {
-            const data = await getImpactMetric();
-            const sorted = [...data.metrics].sort((a, b) => a.order - b.order);
-            setOriginalMetrics(sorted);
-            setMetrics(sorted);
-            setLastUpdated(data.lastUpdated);
-          } catch (error) {
-            console.error("Failed to fetch impact metrics:", error);
-          } finally {
-            setLoading(false);
-          }
-        }
-        void loadMetrics();
       }
-    });
-    return () => unsubscribe();
-  }, [router]);
+    }
+    void loadMetrics();
+  }, []);
 
   function handleFieldChange(
     order: number,

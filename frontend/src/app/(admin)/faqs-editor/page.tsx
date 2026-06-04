@@ -15,7 +15,6 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -29,7 +28,6 @@ import { PreviewNavBar } from "@/components/admin-portal/preview-components/Prev
 import { PublishButton } from "@/components/admin-portal/PublishButton";
 import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
-import { auth } from "@/firebase/firebase";
 
 const PAGE_OPTIONS: { key: FaqPage; label: string }[] = [
   { key: "donors", label: "Donors" },
@@ -133,16 +131,8 @@ export default function FaqsEditor() {
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        setLoading(false);
-        router.push("/login");
-        return;
-      }
-      void loadAllFaqs();
-    });
-    return () => unsubscribe();
-  }, [router]);
+    void loadAllFaqs();
+  }, []);
 
   useEffect(() => {
     function handleBeforeUnload(e: BeforeUnloadEvent) {
