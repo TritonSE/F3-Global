@@ -138,7 +138,7 @@ export function AdminSidebar({ activeItem }: { activeItem?: string } = {}) {
   const [showLeaveDialog, setShowLeaveDialog] = useState(false);
 
   const isOnHomepage = pathname === "/admin-portal";
-  const { hasChanges } = useAdmin();
+  const { hasChanges, activeSidebarItem, setActiveSidebarItem } = useAdmin();
 
   const routeActiveSection =
     pathname === "/newsletter-editor" || pathname.startsWith("/newsletter-editor/")
@@ -154,6 +154,7 @@ export function AdminSidebar({ activeItem }: { activeItem?: string } = {}) {
 
   const handleNavClick = (id: string) => {
     if (isOnHomepage) {
+      setActiveSidebarItem(null);
       setActiveSection(id);
       const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -162,6 +163,7 @@ export function AdminSidebar({ activeItem }: { activeItem?: string } = {}) {
       setShowLeaveDialog(true);
     } else {
       router.push(`/admin-portal`);
+      setActiveSidebarItem(null);
       sessionStorage.setItem("scrollToSection", id);
     }
   };
@@ -170,6 +172,7 @@ export function AdminSidebar({ activeItem }: { activeItem?: string } = {}) {
     setShowLeaveDialog(false);
     if (pendingSection) {
       router.push(`/admin-portal`);
+      setActiveSidebarItem(null);
       sessionStorage.setItem("scrollToSection", pendingSection);
       setPendingSection(null);
     }
@@ -275,7 +278,7 @@ export function AdminSidebar({ activeItem }: { activeItem?: string } = {}) {
           }}
         >
           {navItems.map((item) => {
-            const isActive = (routeActiveSection ?? activeSection) === item.id;
+            const isActive = (routeActiveSection ?? activeSidebarItem ?? activeSection) === item.id;
             return (
               <div
                 key={item.id}
