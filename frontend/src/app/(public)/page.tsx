@@ -67,9 +67,9 @@ export default function Home() {
   }, [containerWidth, cities]);
 
   return (
-    <div className="relative mx-auto flex w-full max-w-[1512px] flex-col overflow-hidden bg-white">
+    <div className="relative mx-auto flex w-full max-w-[1512px] flex-col bg-white">
       {/* hero */}
-      <div className="relative flex flex-col items-center pb-[30px] md:pb-[67px]">
+      <div className="relative left-1/2 flex w-[100dvw] -translate-x-1/2 flex-col items-center pb-[30px] md:pb-[67px]">
         {/* map gradient */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none select-none overflow-hidden">
           <div className="absolute -top-[10%] left-[5%] w-[100%] h-[95%] opacity-25 md:-top-[35%] md:left-auto md:-right-[55%] md:w-[120%] md:h-[120%]">
@@ -93,7 +93,7 @@ export default function Home() {
           />
         </div>
         {/* hero text */}
-        <div className="relative flex flex-col self-stretch px-[20px] md:px-[100px] pt-[186px] md:pt-[80px] justify-center items-start gap-[10px] md:gap-[32px] w-full md:w-auto">
+        <div className="relative mx-auto flex w-full max-w-[1512px] flex-col items-start justify-center gap-[10px] self-stretch px-[20px] pt-[186px] md:w-full md:gap-[32px] md:px-[100px] md:pt-[80px]">
           <p className="font-ethic text-[60px] md:text-[120px] text-[#172447] font-light [font-feature-settings:'dlig'_on] font-[300] leading-[60px] md:leading-[110px]">
             <span className="block italic">Empowering</span>
             <span className="block">Small</span>
