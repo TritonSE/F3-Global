@@ -57,7 +57,7 @@ export default function NewslettersPage() {
   };
 
   return (
-    <main className="mx-auto bg-white w-full max-w-[1512px] flex flex-col">
+    <main className="mx-auto flex w-full max-w-[1512px] flex-col overflow-x-hidden bg-white">
       {featuredLoading ? (
         <FeaturedSkeleton />
       ) : featured ? (
