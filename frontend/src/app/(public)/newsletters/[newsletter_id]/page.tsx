@@ -325,7 +325,7 @@ export default function NewsletterDetailPage() {
       {/* Article Body */}
       <div className="px-[30px] md:px-[200px] pb-[50px] md:pb-[32px]">
         <div className="w-full md:max-w-[1120px]">
-          <div className="mb-[20px] md:mb-8 max-w-4xl">
+          <div className="mb-[20px] w-full md:mb-8">
             <p className="font-dm-sans text-[12px] md:text-[16px] font-[400] leading-[16px] md:leading-[24px] text-[#1E1E1E]">
               {newsletter.blurb}
             </p>
