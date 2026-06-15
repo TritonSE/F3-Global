@@ -40,6 +40,7 @@ export type GetNewslettersParams = {
   page?: number;
   limit?: number;
   search?: string;
+  searchFields?: Array<"title" | "blurb" | "pdfUrl">;
   sortBy?: SortBy;
   featured?: boolean;
 };
@@ -51,6 +52,7 @@ export async function getNewsletters(
   if (params.page !== undefined) query.set("page", String(params.page));
   if (params.limit !== undefined) query.set("limit", String(params.limit));
   if (params.search) query.set("search", params.search);
+  if (params.searchFields?.length) query.set("searchFields", params.searchFields.join(","));
   if (params.sortBy) query.set("sortBy", params.sortBy);
   if (params.featured) query.set("featured", "true");
 

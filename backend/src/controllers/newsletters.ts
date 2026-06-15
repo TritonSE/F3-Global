@@ -35,6 +35,22 @@ const SORT_OPTIONS: Record<string, Record<string, 1 | -1>> = {
 
 const escapeRegex = (input: string): string => input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
+const SEARCH_FIELDS = ["title", "blurb", "pdfUrl"] as const;
+type SearchField = (typeof SEARCH_FIELDS)[number];
+
+const getSearchFields = (input: unknown): SearchField[] => {
+  if (typeof input !== "string") {
+    return ["title", "blurb"];
+  }
+
+  const requestedFields = input
+    .split(",")
+    .map((field) => field.trim())
+    .filter((field): field is SearchField => SEARCH_FIELDS.includes(field as SearchField));
+
+  return requestedFields.length ? requestedFields : ["title", "blurb"];
+};
+
 export const getNewsletters: RequestHandler = async (req, res, next) => {
   try {
     const errors = validationResult(req);
@@ -45,11 +61,12 @@ export const getNewsletters: RequestHandler = async (req, res, next) => {
 
     const search = (req.query.search as string | undefined)?.trim();
     const featuredOnly = req.query.featured === "true";
+    const searchFields = getSearchFields(req.query.searchFields);
 
     const filter: Record<string, unknown> = {};
     if (search) {
       const searchRegex = { $regex: escapeRegex(search), $options: "i" };
-      filter.$or = [{ title: searchRegex }, { blurb: searchRegex }, { pdfUrl: searchRegex }];
+      filter.$or = searchFields.map((field) => ({ [field]: searchRegex }));
     }
     if (featuredOnly) filter.featured = true;
 
@@ -57,6 +74,27 @@ export const getNewsletters: RequestHandler = async (req, res, next) => {
     const selectedSort = SORT_OPTIONS[sortKey] ?? SORT_OPTIONS.none;
 
     if (featuredOnly) {
+      const skip = (page - 1) * limit;
+      const data = (
+        await NewsletterModel.find(filter).sort(selectedSort).skip(skip).limit(limit)
+      ).map((doc) => ({
+        ...doc.toObject(),
+        imageUrl: doc.imageUrl ?? "",
+      }));
+      const total = await NewsletterModel.countDocuments(filter);
+
+      return res.status(200).json({
+        data,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: Math.ceil(total / limit),
+        },
+      });
+    }
+
+    if (search) {
       const skip = (page - 1) * limit;
       const data = (
         await NewsletterModel.find(filter).sort(selectedSort).skip(skip).limit(limit)
