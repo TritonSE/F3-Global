@@ -4,6 +4,7 @@ import EmailValidatorImport from "email-validator";
 import Image from "next/image";
 import React, { useRef, useState } from "react";
 
+import { sendContactRequest } from "@/api/contactRequest";
 import { Button } from "@/components/button";
 
 type EmailValidatorType = {
@@ -21,6 +22,8 @@ export const ContactUs: React.FC = () => {
   const [fullNameError, setFullNameError] = useState<string>("");
   const [emailError, setEmailError] = useState<string>("");
   const [messageError, setMessageError] = useState<string>("");
+  const [submitError, setSubmitError] = useState<string>("");
+  const [submitting, setSubmitting] = useState<boolean>(false);
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
   const [fadeOut, setFadeOut] = useState<boolean>(false);
   const fadeTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -52,8 +55,9 @@ export const ContactUs: React.FC = () => {
     return fullNameRegex.test(name.trim());
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let valid = true;
+    setSubmitError("");
 
     if (!formData.fullName.trim()) {
       setFullNameError("Please enter a valid full name.");
@@ -84,26 +88,45 @@ export const ContactUs: React.FC = () => {
 
     if (!valid) return;
 
-    setFormData({
-      interestedRole: "",
-      fullName: "",
-      email: "",
-      message: "",
-    });
+    setSubmitting(true);
 
-    setShowConfirm(true);
-    setFadeOut(false);
+    try {
+      await sendContactRequest({
+        fullName: formData.fullName.trim(),
+        email: formData.email.trim(),
+        interestedInBecoming: formData.interestedRole || undefined,
+        message: formData.message.trim(),
+      });
 
-    if (fadeTimeout.current) clearTimeout(fadeTimeout.current);
-    if (hideTimeout.current) clearTimeout(hideTimeout.current);
+      setFormData({
+        interestedRole: "",
+        fullName: "",
+        email: "",
+        message: "",
+      });
 
-    fadeTimeout.current = setTimeout(() => {
-      setFadeOut(true);
-      hideTimeout.current = setTimeout(() => {
-        setShowConfirm(false);
-        setFadeOut(false);
-      }, 450);
-    }, 2000);
+      setShowConfirm(true);
+      setFadeOut(false);
+
+      if (fadeTimeout.current) clearTimeout(fadeTimeout.current);
+      if (hideTimeout.current) clearTimeout(hideTimeout.current);
+
+      fadeTimeout.current = setTimeout(() => {
+        setFadeOut(true);
+        hideTimeout.current = setTimeout(() => {
+          setShowConfirm(false);
+          setFadeOut(false);
+        }, 450);
+      }, 2000);
+    } catch {
+      setSubmitError("We couldn't send your message. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleSubmitClick = () => {
+    void handleSubmit();
   };
 
   return (
@@ -263,11 +286,17 @@ export const ContactUs: React.FC = () => {
                     ) : null}
                   </div>
                   <Button
-                    text="SEND"
-                    className="mt-[-12px] flex self-end rounded-[99px] bg-[#172447] px-[14px] py-[10px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] hover:border-[#1169B0] cursor-pointer"
+                    text={submitting ? "SENDING..." : "SEND"}
+                    className="mt-[-12px] flex self-end rounded-[99px] bg-[#172447] px-[14px] py-[10px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] hover:border-[#1169B0] cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
                     textClassName="font-dm-sans text-[14px] font-light leading-[20px] text-center text-white min-[1312px]:text-[16px] min-[1312px]:leading-[24px]"
-                    onClick={handleSubmit}
+                    disabled={submitting}
+                    onClick={handleSubmitClick}
                   />
+                  {submitError ? (
+                    <p className="mt-[-10px] max-w-[260px] self-end text-right font-dm-sans text-[12px] text-[#B93B3B] min-[1312px]:max-w-none">
+                      {submitError}
+                    </p>
+                  ) : null}
                 </div>
               </div>
             </div>

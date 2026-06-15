@@ -38,7 +38,13 @@ export default function NewslettersPage() {
   useEffect(() => {
     setListLoading(true);
     const timer = setTimeout(() => {
-      getNewsletters({ page: currentPage, limit: PAGE_SIZE, search, sortBy })
+      getNewsletters({
+        page: currentPage,
+        limit: PAGE_SIZE,
+        search,
+        searchFields: ["title"],
+        sortBy,
+      })
         .then(setList)
         .catch(() => setError("Failed to load newsletters"))
         .finally(() => setListLoading(false));
