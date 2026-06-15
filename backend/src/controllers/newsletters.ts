@@ -96,11 +96,12 @@ export const getNewsletters: RequestHandler = async (req, res, next) => {
 
     if (search) {
       const skip = (page - 1) * limit;
-      const data = (await NewsletterModel.find(filter).sort(selectedSort).skip(skip).limit(limit))
-        .map((doc) => ({
-          ...doc.toObject(),
-          imageUrl: doc.imageUrl ?? "",
-        }));
+      const data = (
+        await NewsletterModel.find(filter).sort(selectedSort).skip(skip).limit(limit)
+      ).map((doc) => ({
+        ...doc.toObject(),
+        imageUrl: doc.imageUrl ?? "",
+      }));
       const total = await NewsletterModel.countDocuments(filter);
 
       return res.status(200).json({
