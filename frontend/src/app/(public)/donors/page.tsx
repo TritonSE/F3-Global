@@ -31,9 +31,9 @@ export default function Donors() {
   }, []);
 
   return (
-    <div className="mx-auto flex flex-col justify-center items-center bg-white w-full">
+    <div className="mx-auto flex w-full max-w-[1512px] flex-col items-center justify-center bg-white">
       {/* Donors Hero */}
-      <div className="flex w-full min-h-[632px] flex-col-reverse items-center gap-[40px] self-stretch px-[30px] pb-[100px] pt-[50px] md:min-h-screen md:flex-row md:justify-between md:gap-0 md:px-[100px] md:py-[150px]">
+      <div className="flex w-full min-h-[632px] flex-col-reverse items-center gap-[40px] self-stretch px-[30px] pb-[60px] pt-[80px] md:flex-row md:justify-between md:gap-0 md:px-[100px] md:py-[80px]">
         <div className="flex w-full flex-col items-center gap-[20px] md:w-[639px] md:items-start md:gap-[50px]">
           <h1
             className="text-center text-[36px] font-light leading-[110%] text-[#1E1E1E] md:text-left md:text-[64px] md:text-[#172447]"
@@ -63,7 +63,7 @@ export default function Donors() {
       </div>
       <Parallax />
       <Highlights />
-      <div className="relative left-1/2 right-1/2 flex w-screen -translate-x-1/2">
+      <div className="flex w-full">
         <Carousel data={WaysToGiveCarouselData} />
       </div>
       <ImpactSection title="Our Impact" />

@@ -129,16 +129,21 @@ const navItems: { id: string; label: string; icon: (props: IconProps) => React.J
   { id: "newsletter", label: "Newsletter", icon: NewsletterIcon },
 ];
 
-export function AdminSidebar() {
+export function AdminSidebar({ activeItem }: { activeItem?: string } = {}) {
   const router = useRouter();
   const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
-  const [activeSection, setActiveSection] = useState("home");
+  const [activeSection, setActiveSection] = useState(activeItem ?? "home");
   const [pendingSection, setPendingSection] = useState<string | null>(null);
   const [showLeaveDialog, setShowLeaveDialog] = useState(false);
 
   const isOnHomepage = pathname === "/admin-portal";
-  const { hasChanges } = useAdmin();
+  const { hasChanges, activeSidebarItem, setActiveSidebarItem } = useAdmin();
+
+  const routeActiveSection =
+    pathname === "/newsletter-editor" || pathname.startsWith("/newsletter-editor/")
+      ? "newsletter"
+      : null;
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
@@ -149,6 +154,7 @@ export function AdminSidebar() {
 
   const handleNavClick = (id: string) => {
     if (isOnHomepage) {
+      setActiveSidebarItem(null);
       setActiveSection(id);
       const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -157,6 +163,7 @@ export function AdminSidebar() {
       setShowLeaveDialog(true);
     } else {
       router.push(`/admin-portal`);
+      setActiveSidebarItem(null);
       sessionStorage.setItem("scrollToSection", id);
     }
   };
@@ -165,6 +172,7 @@ export function AdminSidebar() {
     setShowLeaveDialog(false);
     if (pendingSection) {
       router.push(`/admin-portal`);
+      setActiveSidebarItem(null);
       sessionStorage.setItem("scrollToSection", pendingSection);
       setPendingSection(null);
     }
@@ -270,7 +278,7 @@ export function AdminSidebar() {
           }}
         >
           {navItems.map((item) => {
-            const isActive = activeSection === item.id;
+            const isActive = (routeActiveSection ?? activeSidebarItem ?? activeSection) === item.id;
             return (
               <div
                 key={item.id}

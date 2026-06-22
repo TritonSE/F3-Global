@@ -1,4 +1,4 @@
-import { getAuthHeaders } from "./auth";
+import { get, put } from "./requests";
 
 export type Affiliate = {
   _id?: string;
@@ -8,28 +8,11 @@ export type Affiliate = {
 };
 
 export async function getAllAffiliates(): Promise<Affiliate[]> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const res = await fetch(`${backendUrl}/api/affiliates/all`);
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch all affiliates");
-  }
-
+  const res = await get("/affiliates/all");
   return (await res.json()) as Affiliate[];
 }
 
 export async function updateAffiliates(affiliates: Affiliate[]): Promise<Affiliate[]> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const authHeaders = await getAuthHeaders();
-  const res = await fetch(`${backendUrl}/api/affiliates/`, {
-    method: "PUT",
-    headers: { ...authHeaders, "Content-Type": "application/json" },
-    body: JSON.stringify(affiliates),
-  });
-  if (!res.ok) {
-    throw new Error("Failed to update colleges");
-  }
-
-  const data = (await res.json()) as Affiliate[];
-  return data;
+  const res = await put("/affiliates/", affiliates);
+  return (await res.json()) as Affiliate[];
 }

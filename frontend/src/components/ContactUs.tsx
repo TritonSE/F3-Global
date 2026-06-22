@@ -4,6 +4,7 @@ import EmailValidatorImport from "email-validator";
 import Image from "next/image";
 import React, { useRef, useState } from "react";
 
+import { sendContactRequest } from "@/api/contactRequest";
 import { Button } from "@/components/button";
 
 type EmailValidatorType = {
@@ -21,6 +22,8 @@ export const ContactUs: React.FC = () => {
   const [fullNameError, setFullNameError] = useState<string>("");
   const [emailError, setEmailError] = useState<string>("");
   const [messageError, setMessageError] = useState<string>("");
+  const [submitError, setSubmitError] = useState<string>("");
+  const [submitting, setSubmitting] = useState<boolean>(false);
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
   const [fadeOut, setFadeOut] = useState<boolean>(false);
   const fadeTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -52,8 +55,9 @@ export const ContactUs: React.FC = () => {
     return fullNameRegex.test(name.trim());
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let valid = true;
+    setSubmitError("");
 
     if (!formData.fullName.trim()) {
       setFullNameError("Please enter a valid full name.");
@@ -84,58 +88,77 @@ export const ContactUs: React.FC = () => {
 
     if (!valid) return;
 
-    setFormData({
-      interestedRole: "",
-      fullName: "",
-      email: "",
-      message: "",
-    });
+    setSubmitting(true);
 
-    setShowConfirm(true);
-    setFadeOut(false);
+    try {
+      await sendContactRequest({
+        fullName: formData.fullName.trim(),
+        email: formData.email.trim(),
+        interestedInBecoming: formData.interestedRole || undefined,
+        message: formData.message.trim(),
+      });
 
-    if (fadeTimeout.current) clearTimeout(fadeTimeout.current);
-    if (hideTimeout.current) clearTimeout(hideTimeout.current);
+      setFormData({
+        interestedRole: "",
+        fullName: "",
+        email: "",
+        message: "",
+      });
 
-    fadeTimeout.current = setTimeout(() => {
-      setFadeOut(true);
-      hideTimeout.current = setTimeout(() => {
-        setShowConfirm(false);
-        setFadeOut(false);
-      }, 450);
-    }, 2000);
+      setShowConfirm(true);
+      setFadeOut(false);
+
+      if (fadeTimeout.current) clearTimeout(fadeTimeout.current);
+      if (hideTimeout.current) clearTimeout(hideTimeout.current);
+
+      fadeTimeout.current = setTimeout(() => {
+        setFadeOut(true);
+        hideTimeout.current = setTimeout(() => {
+          setShowConfirm(false);
+          setFadeOut(false);
+        }, 450);
+      }, 2000);
+    } catch {
+      setSubmitError("We couldn't send your message. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleSubmitClick = () => {
+    void handleSubmit();
   };
 
   return (
     <>
-      <div className="relative flex w-full flex-col items-center gap-[10px] px-[30px] py-[50px] md:px-0">
-        <div className="relative flex w-full max-w-[1312px] flex-col items-end gap-[20px] rounded-[10px] bg-white px-[30px] py-[30px] shadow-[2.721px_1.633px_6.803px_rgba(1,32,96,0.2)] md:px-[100px] md:py-[40px] md:shadow-[10px_6px_60px_0_rgba(1,32,96,0.20)]">
-          <div className="flex w-full flex-col items-start gap-[20px] self-stretch md:gap-[30px]">
-            <h2 className="self-stretch mb-[-8px] font-ethic text-[48px] text-black md:mb-[-24px] md:text-[80px]">
+      <div className="flex w-full flex-col items-center gap-[10px] px-[30px] py-[50px] min-[1312px]:px-0">
+        <div className="relative flex w-full max-w-[1312px] flex-col items-end gap-[20px] rounded-[10px] bg-white px-[30px] py-[30px] shadow-[2.721px_1.633px_6.803px_rgba(1,32,96,0.2)] min-[1312px]:px-[100px] min-[1312px]:py-[40px] min-[1312px]:shadow-[10px_6px_60px_0_rgba(1,32,96,0.20)]">
+          <div className="flex w-full flex-col items-start gap-[20px] self-stretch min-[1312px]:gap-[30px]">
+            <h2 className="self-stretch mb-[-8px] font-ethic text-[48px] text-black min-[1312px]:mb-[-24px] min-[1312px]:text-[80px]">
               Contact Us
             </h2>
-            <p className="max-w-[290px] font-dm-sans text-[14px] font-normal leading-[20px] md:max-w-none md:text-[20px] md:leading-[32px]">
+            <p className="max-w-[290px] font-dm-sans text-[14px] font-normal leading-[20px] min-[1312px]:max-w-none min-[1312px]:text-[20px] min-[1312px]:leading-[32px]">
               Want to learn more? Fill out the form below to contact one of our representatives!
             </p>
-            <div className="flex w-full flex-col gap-[20px] md:gap-[30px]">
-              <div className="flex w-full flex-col gap-[0px] md:flex-row md:gap-[20px]">
-                <div className="flex w-full flex-col items-start gap-[10px] self-stretch md:w-auto">
-                  <p className="font-dm-sans text-[12px] font-normal leading-[20px] text-black md:text-[16px] md:leading-[24px] md:!font-[400]">
+            <div className="flex w-full flex-col gap-[20px] min-[1312px]:gap-[30px]">
+              <div className="flex w-full flex-col gap-[0px] min-[1312px]:flex-row min-[1312px]:gap-[20px]">
+                <div className="flex w-full flex-col items-start gap-[10px] self-stretch min-[1312px]:w-auto">
+                  <p className="font-dm-sans text-[12px] font-normal leading-[20px] text-black min-[1312px]:text-[16px] min-[1312px]:leading-[24px] min-[1312px]:!font-[400]">
                     I’m interested in becoming... (choose one)
                   </p>
                   {/* role selection buttons */}
-                  <div className="flex flex-wrap items-center gap-[8px] md:gap-[12px]">
+                  <div className="flex flex-wrap items-center gap-[8px] min-[1312px]:gap-[12px]">
                     <Button
                       text="Donor"
                       className={
                         formData.interestedRole === "donor"
-                          ? "rounded-[99px] border bg-[#172447] px-[16px] py-[8px] w-auto md:py-[4px] md:w-[88px]"
-                          : "rounded-[99px] border px-[16px] py-[8px] w-auto md:py-[4px] md:w-[88px] transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2] cursor-pointer"
+                          ? "rounded-[99px] border bg-[#172447] px-[16px] py-[8px] w-auto min-[1312px]:py-[4px] min-[1312px]:w-[88px]"
+                          : "rounded-[99px] border px-[16px] py-[8px] w-auto min-[1312px]:py-[4px] min-[1312px]:w-[88px] transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2] cursor-pointer"
                       }
                       textClassName={
                         formData.interestedRole === "donor"
-                          ? "font-dm-sans text-[12px] text-white !font-[400] md:text-[14px]"
-                          : "font-dm-sans text-[12px] text-black !font-[400] md:text-[14px]"
+                          ? "font-dm-sans text-[12px] text-white !font-[400] min-[1312px]:text-[14px]"
+                          : "font-dm-sans text-[12px] text-black !font-[400] min-[1312px]:text-[14px]"
                       }
                       onClick={() => handleRoleSelect("donor")}
                     />
@@ -143,13 +166,13 @@ export const ContactUs: React.FC = () => {
                       text="Member"
                       className={
                         formData.interestedRole === "member"
-                          ? "rounded-[99px] border bg-[#172447] px-[16px] py-[8px] w-auto md:py-[4px] md:w-[88px]"
-                          : "rounded-[99px] border px-[16px] py-[8px] w-auto md:py-[4px] md:w-[88px] transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2] cursor-pointer"
+                          ? "rounded-[99px] border bg-[#172447] px-[16px] py-[8px] w-auto min-[1312px]:py-[4px] min-[1312px]:w-[88px]"
+                          : "rounded-[99px] border px-[16px] py-[8px] w-auto min-[1312px]:py-[4px] min-[1312px]:w-[88px] transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2] cursor-pointer"
                       }
                       textClassName={
                         formData.interestedRole === "member"
-                          ? "font-dm-sans text-[12px] text-white !font-[400] md:text-[14px]"
-                          : "font-dm-sans text-[12px] text-black !font-[400] md:text-[14px]"
+                          ? "font-dm-sans text-[12px] text-white !font-[400] min-[1312px]:text-[14px]"
+                          : "font-dm-sans text-[12px] text-black !font-[400] min-[1312px]:text-[14px]"
                       }
                       onClick={() => handleRoleSelect("member")}
                     />
@@ -157,13 +180,13 @@ export const ContactUs: React.FC = () => {
                       text="Client"
                       className={
                         formData.interestedRole === "client"
-                          ? "rounded-[99px] border bg-[#172447] px-[16px] py-[8px] w-auto md:py-[4px] md:w-[88px]"
-                          : "rounded-[99px] border px-[16px] py-[8px] w-auto md:py-[4px] md:w-[88px] transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2] cursor-pointer"
+                          ? "rounded-[99px] border bg-[#172447] px-[16px] py-[8px] w-auto min-[1312px]:py-[4px] min-[1312px]:w-[88px]"
+                          : "rounded-[99px] border px-[16px] py-[8px] w-auto min-[1312px]:py-[4px] min-[1312px]:w-[88px] transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2] cursor-pointer"
                       }
                       textClassName={
                         formData.interestedRole === "client"
-                          ? "font-dm-sans text-[12px] text-white !font-[400] md:text-[14px]"
-                          : "font-dm-sans text-[12px] text-black !font-[400] md:text-[14px]"
+                          ? "font-dm-sans text-[12px] text-white !font-[400] min-[1312px]:text-[14px]"
+                          : "font-dm-sans text-[12px] text-black !font-[400] min-[1312px]:text-[14px]"
                       }
                       onClick={() => handleRoleSelect("client")}
                     />
@@ -171,25 +194,25 @@ export const ContactUs: React.FC = () => {
                       text="Other"
                       className={
                         formData.interestedRole === "other"
-                          ? "rounded-[99px] border bg-[#172447] px-[16px] py-[8px] w-auto md:py-[4px] md:w-[88px]"
-                          : "rounded-[99px] border px-[16px] py-[8px] w-auto md:py-[4px] md:w-[88px] transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2] cursor-pointer"
+                          ? "rounded-[99px] border bg-[#172447] px-[16px] py-[8px] w-auto min-[1312px]:py-[4px] min-[1312px]:w-[88px]"
+                          : "rounded-[99px] border px-[16px] py-[8px] w-auto min-[1312px]:py-[4px] min-[1312px]:w-[88px] transition-colors hover:duration-450 hover:ease-in-out hover:bg-[#A5D0F2] cursor-pointer"
                       }
                       textClassName={
                         formData.interestedRole === "other"
-                          ? "font-dm-sans text-[12px] text-white !font-[400] md:text-[14px]"
-                          : "font-dm-sans text-[12px] text-black !font-[400] md:text-[14px]"
+                          ? "font-dm-sans text-[12px] text-white !font-[400] min-[1312px]:text-[14px]"
+                          : "font-dm-sans text-[12px] text-black !font-[400] min-[1312px]:text-[14px]"
                       }
                       onClick={() => handleRoleSelect("other")}
                     />
                   </div>
                   {/* full name input */}
                   <div
-                    className={`mt-[10px] flex w-full items-center gap-[10px] rounded-[10px] px-[15px] py-[10px] md:w-[487px] md:px-[20px]
+                    className={`mt-[10px] flex w-full items-center gap-[10px] rounded-[10px] px-[15px] py-[10px] min-[1312px]:w-[487px] min-[1312px]:px-[20px]
                       ${fullNameError ? "mb-[-2px] border border-[#B93B3B] bg-[#FFDEDE]" : "bg-[#F4F4F4]"}
                     `}
                   >
                     <input
-                      className="w-full bg-transparent font-dm-sans text-[12px] leading-[16px] text-[#1E1E1E] outline-none md:text-[16px] md:leading-[24px]"
+                      className="w-full bg-transparent font-dm-sans text-[14px] leading-[20px] text-[#1E1E1E] outline-none min-[1312px]:text-[16px] min-[1312px]:leading-[24px]"
                       type="text"
                       name="fullName"
                       placeholder="Full Name *"
@@ -207,17 +230,17 @@ export const ContactUs: React.FC = () => {
                       </p>
                     </div>
                   ) : (
-                    <div className="mt-[-10px] md:mt-[8px]"></div>
+                    <div className="mt-[-10px] min-[1312px]:mt-[8px]"></div>
                   )}
 
                   {/* email input */}
                   <div
-                    className={`flex w-full items-center gap-[10px] rounded-[10px] px-[15px] py-[10px] md:w-[487px] md:px-[20px]
+                    className={`flex w-full items-center gap-[10px] rounded-[10px] px-[15px] py-[10px] min-[1312px]:w-[487px] min-[1312px]:px-[20px]
                       ${emailError ? "border border-[#B93B3B] bg-[#FFDEDE]" : "bg-[#F4F4F4]"}
                     `}
                   >
                     <input
-                      className="w-full bg-transparent font-dm-sans text-[12px] leading-[16px] text-[#1E1E1E] outline-none md:text-[16px] md:leading-[24px]"
+                      className="w-full bg-transparent font-dm-sans text-[14px] leading-[20px] text-[#1E1E1E] outline-none min-[1312px]:text-[16px] min-[1312px]:leading-[24px]"
                       type="email"
                       name="email"
                       placeholder="Email *"
@@ -229,7 +252,7 @@ export const ContactUs: React.FC = () => {
                   {/* email error message */}
 
                   {emailError ? (
-                    <div className="relative left-0 top-[-4px] w-full pointer-events-none h-[8px] mb-[10px] md:mb-0 ">
+                    <div className="relative left-0 top-[-4px] w-full pointer-events-none h-[8px] mb-[10px] min-[1312px]:mb-0 ">
                       <p className="m-0 p-0 font-dm-sans text-[12px] text-[#B93B3B]">
                         {emailError}
                       </p>
@@ -238,15 +261,15 @@ export const ContactUs: React.FC = () => {
                     <div></div>
                   )}
                 </div>
-                <div className="flex flex-col gap-[20px] md:items-end">
+                <div className="flex flex-col gap-[20px] min-[1312px]:items-end">
                   {/* message input */}
                   <div
-                    className={`flex h-[208px] w-full items-start gap-[10px] rounded-[10px] px-[15px] py-[10px] md:w-[605px] md:px-[20px] md:py-[14px]
+                    className={`flex h-[208px] w-full items-start gap-[10px] rounded-[10px] px-[15px] py-[10px] min-[1312px]:w-[605px] min-[1312px]:px-[20px] min-[1312px]:py-[14px]
                       ${messageError ? "border border-[#B93B3B] bg-[#FFDEDE]" : "bg-[#F4F4F4]"}
                     `}
                   >
                     <textarea
-                      className="h-full w-full resize-none bg-transparent font-dm-sans text-[12px] leading-[16px] text-[#1E1E1E] outline-none md:text-[16px] md:leading-[24px]"
+                      className="h-full w-full resize-none bg-transparent font-dm-sans text-[14px] leading-[20px] text-[#1E1E1E] outline-none min-[1312px]:text-[16px] min-[1312px]:leading-[24px]"
                       name="message"
                       placeholder="Message *"
                       value={formData.message}
@@ -263,11 +286,17 @@ export const ContactUs: React.FC = () => {
                     ) : null}
                   </div>
                   <Button
-                    text="SEND"
-                    className="mt-[-12px] flex self-end rounded-[99px] bg-[#172447] px-[14px] py-[10px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] hover:border-[#1169B0] cursor-pointer"
-                    textClassName="font-dm-sans text-[14px] font-light leading-[20px] text-center text-white md:text-[16px] md:leading-[24px]"
-                    onClick={handleSubmit}
+                    text={submitting ? "SENDING..." : "SEND"}
+                    className="mt-[-12px] flex self-end rounded-[99px] bg-[#172447] px-[14px] py-[10px] transition-colors duration-450 ease-in-out hover:bg-[#1169B0] hover:border-[#1169B0] cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+                    textClassName="font-dm-sans text-[14px] font-light leading-[20px] text-center text-white min-[1312px]:text-[16px] min-[1312px]:leading-[24px]"
+                    disabled={submitting}
+                    onClick={handleSubmitClick}
                   />
+                  {submitError ? (
+                    <p className="mt-[-10px] max-w-[260px] self-end text-right font-dm-sans text-[12px] text-[#B93B3B] min-[1312px]:max-w-none">
+                      {submitError}
+                    </p>
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -278,7 +307,7 @@ export const ContactUs: React.FC = () => {
             className={`absolute inset-0 z-50 flex items-center justify-center transition-opacity duration-450 ${fadeOut ? "opacity-0" : "opacity-100"}`}
           >
             <div
-              className="flex flex-col justify-center items-center gap-[10px] md:gap-[20px] py-[30px] md:py-[50px] px-[30px] md:px-[100px] bg-white rounded-[16px] border border-[#F4F4F4]"
+              className="flex flex-col items-center justify-center gap-[10px] min-[1312px]:gap-[20px] rounded-[16px] border border-[#F4F4F4] bg-white py-[30px] px-[30px] min-[1312px]:py-[50px] min-[1312px]:px-[100px]"
               style={{ boxShadow: "0 4px 10px 0 rgba(0,0,0,0.10)" }}
             >
               <Image

@@ -8,7 +8,7 @@ import { ServiceAccordian } from "./ServiceAccordian";
 export const ServicesSection = () => {
   const [activeID, setActiveID] = useState("Microloans");
   const containerRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(1);
+  const [_scale, setScale] = useState(1);
 
   useEffect(() => {
     const calculate = () => {
@@ -33,13 +33,10 @@ export const ServicesSection = () => {
       <h2 className="m-0 mb-[20px] font-dm-sans text-[28px] font-medium leading-[1.5] tracking-[-0.56px] text-[#172447] md:mb-[80px] md:text-5xl md:tracking-[-0.96px]">
         Services We Offer
       </h2>
-      <div ref={containerRef} className="mx-auto flex max-w-[1400px] flex-col gap-10">
-        <div className="flex items-start justify-between gap-[50px]">
-          <div
-            className="hidden md:block"
-            style={{ width: 600 * scale, height: 658 * scale, flexShrink: 0 }}
-          >
-            <ImageDeck activeID={activeID} scale={scale} />
+      <div className="mx-auto flex max-w-[1400px] flex-col gap-10">
+        <div className="flex items-start gap-[50px]">
+          <div className="hidden min-w-0 md:block md:flex-[1_1_600px]">
+            <ImageDeck activeID={activeID} />
           </div>
           <ServiceAccordian activeID={activeID} onServiceChange={(id) => setActiveID(id)} />
         </div>

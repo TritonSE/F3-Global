@@ -2,10 +2,12 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import type { Metadata } from "next";
 
+import { AdminProvider } from "@/components/admin-portal/AdminContext";
+
 import "./globals.css";
 
-import { AdminProvider } from "@/components/admin-portal/AdminContext";
 import { AdminSidebar } from "@/components/admin-portal/AdminSidebar";
+import { ProtectedLayout } from "@/components/admin-portal/ProtectedLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,10 +35,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <AdminProvider>
-          <AdminSidebar />
-          <div className="ml-[203px]">{children}</div>
-        </AdminProvider>
+        <ProtectedLayout>
+          <AdminProvider>
+            <AdminSidebar />
+            <div className="ml-[203px]">{children}</div>
+          </AdminProvider>
+        </ProtectedLayout>
       </body>
     </html>
   );

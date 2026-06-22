@@ -15,7 +15,6 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -29,15 +28,19 @@ import { PreviewNavBar } from "@/components/admin-portal/preview-components/Prev
 import { PublishButton } from "@/components/admin-portal/PublishButton";
 import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
-import { auth } from "@/firebase/firebase";
 
 const PAGE_OPTIONS: { key: FaqPage; label: string }[] = [
   { key: "donors", label: "Donors" },
-  { key: "clients", label: "Clients" },
   { key: "members", label: "Members" },
+  { key: "clients", label: "Clients" },
 ];
 
-const PAGES: FaqPage[] = ["donors", "clients", "members"];
+const PAGES: FaqPage[] = ["donors", "members", "clients"];
+const FAQ_PAGE_TO_SIDEBAR_ITEM: Record<FaqPage, string> = {
+  donors: "donate",
+  members: "members",
+  clients: "clients",
+};
 
 type FaqWithLocalId = FaqItem & { localId: string };
 type FaqsRecord = Record<FaqPage, FaqWithLocalId[]>;
@@ -64,7 +67,7 @@ export default function FaqsEditor() {
   const [addForm, setAddForm] = useState({ question: "", answer: "" });
   const [isPreview, setIsPreview] = useState(false);
   const [expandedPreviewId, setExpandedPreviewId] = useState<string | null>(null);
-  const { setHasChanges } = useAdmin();
+  const { setHasChanges, setActiveSidebarItem } = useAdmin();
 
   const addQuestionRef = useRef<HTMLTextAreaElement>(null);
   const addAnswerRef = useRef<HTMLTextAreaElement>(null);
@@ -128,16 +131,8 @@ export default function FaqsEditor() {
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        setLoading(false);
-        router.push("/login");
-        return;
-      }
-      void loadAllFaqs();
-    });
-    return () => unsubscribe();
-  }, [router]);
+    void loadAllFaqs();
+  }, []);
 
   useEffect(() => {
     function handleBeforeUnload(e: BeforeUnloadEvent) {
@@ -149,11 +144,18 @@ export default function FaqsEditor() {
 
   useEffect(() => {
     setHasChanges(hasChanges);
-  }, [hasChanges]);
+  }, [hasChanges, setHasChanges]);
 
   useEffect(() => {
-    return () => setHasChanges(false);
-  }, []);
+    setActiveSidebarItem(FAQ_PAGE_TO_SIDEBAR_ITEM[selectedPage]);
+  }, [selectedPage, setActiveSidebarItem]);
+
+  useEffect(() => {
+    return () => {
+      setHasChanges(false);
+      setActiveSidebarItem(null);
+    };
+  }, [setActiveSidebarItem, setHasChanges]);
 
   useEffect(() => {
     if (!notification) {
@@ -419,12 +421,11 @@ export default function FaqsEditor() {
                 }`}
               >
                 {label}
-                {selectedPage === key && (
-                  <svg viewBox="0 0 16 16" fill="none" className="size-[16px] shrink-0">
-                    <circle cx="8" cy="8" r="7.5" stroke="#C7C7C7" />
-                    <circle cx="8" cy="8" r="5" fill="#1169B0" />
-                  </svg>
-                )}
+
+                <svg viewBox="0 0 16 16" fill="none" className="size-[16px] shrink-0">
+                  <circle cx="8" cy="8" r="7.5" stroke="#C7C7C7" />
+                  {selectedPage === key && <circle cx="8" cy="8" r="5" fill="#1169B0" />}
+                </svg>
               </button>
             ))}
           </div>

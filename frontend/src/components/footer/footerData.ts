@@ -18,8 +18,8 @@ export const footerLinkSections = {
   ],
   company: [
     { text: "About", href: "/about-us" },
-    { text: "News" },
-    { text: "Events" },
+    { text: "News", href: "/newsletters" },
+    { text: "Home", href: "/" },
     { text: "Meet The Team", href: "/meet-the-team" },
     { text: "Privacy Policy", href: "/privacy-policy" },
     { text: "Terms & Conditions", action: "terms" },

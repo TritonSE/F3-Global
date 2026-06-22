@@ -5,7 +5,9 @@ import { useEffect, useRef, useState } from "react";
 
 import type { SortBy } from "@/api/newsletters";
 
-const SORT_LABELS: Record<SortBy, string> = {
+type PublicSortBy = Extract<SortBy, "newest" | "oldest" | "mostViewed" | "leastViewed">;
+
+const SORT_LABELS: Record<PublicSortBy, string> = {
   newest: "Most Recent",
   oldest: "Oldest",
   mostViewed: "Most Viewed",
@@ -15,8 +17,8 @@ const SORT_LABELS: Record<SortBy, string> = {
 type Props = {
   search: string;
   onSearchChange: (value: string) => void;
-  sortBy: SortBy;
-  onSortChange: (value: SortBy) => void;
+  sortBy: PublicSortBy;
+  onSortChange: (value: PublicSortBy) => void;
 };
 
 export function NewsletterFilter({ search, onSearchChange, sortBy, onSortChange }: Props) {
@@ -81,7 +83,7 @@ export function NewsletterFilter({ search, onSearchChange, sortBy, onSortChange 
             }`}
           >
             <span className="grid items-center md:pl-[10px] md:h-[32px]">
-              {(Object.keys(SORT_LABELS) as SortBy[]).map((key) => (
+              {(Object.keys(SORT_LABELS) as PublicSortBy[]).map((key) => (
                 <span
                   key={key}
                   aria-hidden={key !== sortBy}
@@ -108,7 +110,7 @@ export function NewsletterFilter({ search, onSearchChange, sortBy, onSortChange 
               role="listbox"
               className="absolute left-0 right-0 top-full z-10 bg-white border border-[#c7c7c7] border-t-0 rounded-b-[20px] overflow-hidden pb-[2px]"
             >
-              {(Object.keys(SORT_LABELS) as SortBy[])
+              {(Object.keys(SORT_LABELS) as PublicSortBy[])
                 .filter((key) => key !== sortBy)
                 .map((key) => (
                   <li key={key}>

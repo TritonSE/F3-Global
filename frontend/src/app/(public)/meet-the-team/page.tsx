@@ -236,8 +236,8 @@ export default function MeetTheTeam() {
 
   return (
     <>
-      <div className="bg-white overflow-x-hidden">
-        <div className="flex w-full flex-col items-center gap-[20px] px-[30px] pt-[50px] text-center md:h-[774px] md:flex-row md:items-center md:justify-between md:px-[100px] md:py-0 md:text-left">
+      <div className="mx-auto w-full max-w-[1512px] overflow-x-hidden bg-white">
+        <div className="flex w-full flex-col items-center gap-[20px] px-[30px] pb-[60px] pt-[80px] text-center md:flex-row md:items-center md:justify-between md:px-[100px] md:py-[80px] md:text-left">
           <div className="order-2 flex w-full max-w-[580px] flex-col items-center gap-[20px] md:order-1 md:items-start md:gap-[50px] md:basis-1/2 md:max-w-[580px]">
             <h1 className="font-ethic text-4xl leading-tight font-light text-[#1E1E1E] mt-[20px] md:text-[64px] md:leading-[1.1]">
               Meet the Team <br /> Without <span className="italic">Borders</span>
@@ -250,7 +250,7 @@ export default function MeetTheTeam() {
               Our professional team brings expertise from all over the world. Explore the clickable
               map of where our team members are from below.
             </p>
-            <div className="pb-[50px] md:pb-0">
+            <div>
               <Button
                 text="JOIN OUR TEAM"
                 onClick_link="https://my-apply.vercel.app/org/f3-global-foundation"

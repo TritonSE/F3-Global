@@ -14,20 +14,42 @@ type NewsletterPayload = {
   uploadDate: Date;
   views: number;
   blurb: string;
-  authorName: string;
   pdfUrl: string;
   imageUrl: string;
   featured?: boolean;
 };
 
 const SORT_OPTIONS: Record<string, Record<string, 1 | -1>> = {
+  none: {},
   newest: { uploadDate: -1 },
   oldest: { uploadDate: 1 },
   mostViewed: { views: -1 },
   leastViewed: { views: 1 },
+  titleAsc: { title: 1 },
+  titleDesc: { title: -1 },
+  dateAsc: { uploadDate: 1 },
+  dateDesc: { uploadDate: -1 },
+  viewsAsc: { views: 1 },
+  viewsDesc: { views: -1 },
 };
 
 const escapeRegex = (input: string): string => input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+const SEARCH_FIELDS = ["title", "blurb", "pdfUrl"] as const;
+type SearchField = (typeof SEARCH_FIELDS)[number];
+
+const getSearchFields = (input: unknown): SearchField[] => {
+  if (typeof input !== "string") {
+    return ["title", "blurb"];
+  }
+
+  const requestedFields = input
+    .split(",")
+    .map((field) => field.trim())
+    .filter((field): field is SearchField => SEARCH_FIELDS.includes(field as SearchField));
+
+  return requestedFields.length ? requestedFields : ["title", "blurb"];
+};
 
 export const getNewsletters: RequestHandler = async (req, res, next) => {
   try {
@@ -36,25 +58,77 @@ export const getNewsletters: RequestHandler = async (req, res, next) => {
 
     const page = Math.max(1, Number.parseInt(req.query.page as string) || 1);
     const limit = Math.max(1, Number.parseInt(req.query.limit as string) || 10);
-    const skip = (page - 1) * limit;
 
     const search = (req.query.search as string | undefined)?.trim();
     const featuredOnly = req.query.featured === "true";
+    const searchFields = getSearchFields(req.query.searchFields);
 
     const filter: Record<string, unknown> = {};
-    if (search) filter.title = { $regex: escapeRegex(search), $options: "i" };
+    if (search) {
+      const searchRegex = { $regex: escapeRegex(search), $options: "i" };
+      filter.$or = searchFields.map((field) => ({ [field]: searchRegex }));
+    }
     if (featuredOnly) filter.featured = true;
 
-    const sortKey = (req.query.sortBy as string | undefined) ?? "newest";
-    const sort = SORT_OPTIONS[sortKey] ?? SORT_OPTIONS.newest;
+    const sortKey = (req.query.sortBy as string | undefined) ?? "none";
+    const selectedSort = SORT_OPTIONS[sortKey] ?? SORT_OPTIONS.none;
 
-    const data = (await NewsletterModel.find(filter).sort(sort).skip(skip).limit(limit)).map(
-      (doc) => ({
+    if (featuredOnly) {
+      const skip = (page - 1) * limit;
+      const data = (
+        await NewsletterModel.find(filter).sort(selectedSort).skip(skip).limit(limit)
+      ).map((doc) => ({
         ...doc.toObject(),
         imageUrl: doc.imageUrl ?? "",
-      }),
-    );
-    const total = await NewsletterModel.countDocuments(filter);
+      }));
+      const total = await NewsletterModel.countDocuments(filter);
+
+      return res.status(200).json({
+        data,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: Math.ceil(total / limit),
+        },
+      });
+    }
+
+    if (search) {
+      const skip = (page - 1) * limit;
+      const data = (
+        await NewsletterModel.find(filter).sort(selectedSort).skip(skip).limit(limit)
+      ).map((doc) => ({
+        ...doc.toObject(),
+        imageUrl: doc.imageUrl ?? "",
+      }));
+      const total = await NewsletterModel.countDocuments(filter);
+
+      return res.status(200).json({
+        data,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: Math.ceil(total / limit),
+        },
+      });
+    }
+
+    const featuredDoc = await NewsletterModel.findOne({ ...filter, featured: true });
+    const nonFeaturedFilter = { ...filter, featured: { $ne: true } };
+    const nonFeaturedLimit = featuredDoc ? Math.max(1, limit - 1) : limit;
+    const skip = (page - 1) * nonFeaturedLimit;
+
+    const nonFeaturedDocs = await NewsletterModel.find(nonFeaturedFilter)
+      .sort(selectedSort)
+      .skip(skip)
+      .limit(nonFeaturedLimit);
+    const total = await NewsletterModel.countDocuments(nonFeaturedFilter);
+    const data = [...(featuredDoc ? [featuredDoc] : []), ...nonFeaturedDocs].map((doc) => ({
+      ...doc.toObject(),
+      imageUrl: doc.imageUrl ?? "",
+    }));
 
     res.status(200).json({
       data,
@@ -62,7 +136,7 @@ export const getNewsletters: RequestHandler = async (req, res, next) => {
         page,
         limit,
         total,
-        pages: Math.ceil(total / limit),
+        pages: Math.ceil(total / nonFeaturedLimit),
       },
     });
   } catch (error) {
@@ -94,13 +168,17 @@ export const createNewsletter: RequestHandler<
     const errors = validationResult(req);
     validationErrorParser(errors);
 
-    const { title, uploadDate, views, blurb, authorName, pdfUrl, imageUrl, featured } = req.body;
+    const { title, uploadDate, views, blurb, pdfUrl, imageUrl, featured } = req.body;
+
+    if (featured === true) {
+      await NewsletterModel.updateMany({ featured: true }, { $set: { featured: false } });
+    }
+
     const doc = await NewsletterModel.create({
       title,
       uploadDate,
       views,
       blurb,
-      authorName,
       pdfUrl,
       imageUrl,
       featured,
@@ -125,6 +203,13 @@ export const updateNewsletter: RequestHandler<
     const existingDoc = await NewsletterModel.findById(id);
     if (!existingDoc) {
       return res.status(404).json({ message: "Newsletter not found" });
+    }
+
+    if (updateData.featured === true) {
+      await NewsletterModel.updateMany(
+        { _id: { $ne: id }, featured: true },
+        { $set: { featured: false } },
+      );
     }
 
     if (updateData.pdfUrl && updateData.pdfUrl !== existingDoc.pdfUrl) {

@@ -1,29 +1,7 @@
 "use client";
-import { onAuthStateChanged } from "firebase/auth";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-
 import { Section } from "@/components/admin-portal/Section";
-import { auth } from "@/firebase/firebase";
 
 export default function AdminPortal() {
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        router.push("/login");
-      } else {
-        setLoading(false);
-      }
-    });
-
-    return () => unsubscribe();
-  }, [router]);
-
-  if (loading) return null;
-
   const HomeComponents = [
     {
       name: "Rotating Cities",
@@ -146,7 +124,7 @@ export default function AdminPortal() {
       description:
         "Add or remove newsletter articles, or edit information including the newsletter external PDF link and summary. Track how many views each article has. By default, articles appear sorted by date of upload, and the Featured article is always sticky to the top.",
       tags: ["Newsletter"],
-      href: "/newsletter-articles-editor",
+      href: "/newsletter-editor",
     },
   ];
 

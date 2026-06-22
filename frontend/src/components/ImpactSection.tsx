@@ -70,7 +70,7 @@ export const ImpactSection = ({ title = "Our Impact", data }: ImpactSectionProps
         ))}
       </div>
       {formattedDate && (
-        <p className="md:mt-4 self-start text-[#5D5D5D] font-dm-sans text-[10px] md:text-[16px] font-bold leading-[1.5] uppercase">
+        <p className="mt-4 self-start text-[#5D5D5D] font-dm-sans text-[12px] font-bold leading-[1.5] uppercase md:text-[16px]">
           *Data from {formattedDate}
         </p>
       )}

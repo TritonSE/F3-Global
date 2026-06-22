@@ -34,7 +34,9 @@ export default function Home() {
       const contactSection = document.getElementById("contact");
       if (contactSection) {
         setTimeout(() => {
-          contactSection.scrollIntoView({ behavior: "smooth" });
+          const headerOffset = window.matchMedia("(min-width: 768px)").matches ? 120 : 80;
+          const top = contactSection.getBoundingClientRect().top + window.scrollY - headerOffset;
+          window.scrollTo({ top, behavior: "smooth" });
           window.history.replaceState(null, "", "/"); // clean url after scrolling animation
         }, 100);
       }
@@ -65,9 +67,9 @@ export default function Home() {
   }, [containerWidth, cities]);
 
   return (
-    <div className="relative w-full bg-white flex flex-col overflow-hidden">
+    <div className="relative mx-auto flex w-full max-w-[1512px] flex-col bg-white">
       {/* hero */}
-      <div className="relative flex flex-col items-center md:min-h-screen">
+      <div className="relative left-1/2 flex w-[100dvw] -translate-x-1/2 flex-col items-center pb-[30px] md:pb-[67px]">
         {/* map gradient */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none select-none overflow-hidden">
           <div className="absolute -top-[10%] left-[5%] w-[100%] h-[95%] opacity-25 md:-top-[35%] md:left-auto md:-right-[55%] md:w-[120%] md:h-[120%]">
@@ -91,13 +93,13 @@ export default function Home() {
           />
         </div>
         {/* hero text */}
-        <div className="relative flex flex-col self-stretch px-[20px] md:px-[100px] pt-[186px] md:pt-[80px] justify-center items-start gap-[10px] md:gap-[32px] w-full md:w-auto">
+        <div className="relative mx-auto flex w-full max-w-[1512px] flex-col items-start justify-center gap-[10px] self-stretch px-[20px] pt-[186px] md:w-full md:gap-[32px] md:px-[100px] md:pt-[80px]">
           <p className="font-ethic text-[60px] md:text-[120px] text-[#172447] font-light [font-feature-settings:'dlig'_on] font-[300] leading-[60px] md:leading-[110px]">
             <span className="block italic">Empowering</span>
             <span className="block">Small</span>
             <span className="block">Businesses</span>
           </p>
-          <div className="flex w-full md:w-[754px] md:h-[74px] flex-col justify-center">
+          <div className="flex w-full md:max-w-[754px] md:h-[74px] flex-col justify-center">
             <p className="font-dm-sans text-[#5D5D5D] text-[14px] md:text-[20px] font-normal font-[400] leading-[20px] md:leading-[32px]">
               Join us in our mission to foster economic growth and financial inclusion for
               underserved communities worldwide.

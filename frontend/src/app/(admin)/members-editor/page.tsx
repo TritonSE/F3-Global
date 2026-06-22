@@ -1,6 +1,5 @@
 "use client";
 
-import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
@@ -23,7 +22,6 @@ import { MembersPreview } from "@/components/admin-portal/preview-components/Mem
 import { PreviewMode } from "@/components/admin-portal/preview-components/PreviewMode";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { Pagination } from "@/components/newsletters-page/Pagination";
-import { auth } from "@/firebase/firebase";
 import { rollbackUploads, uploadToStorage } from "@/utils/firebaseStorage";
 
 const PAGE_SIZE = 6;
@@ -59,19 +57,11 @@ export default function TeamMembersEditorPage() {
   const [toastFading, setToastFading] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        setLoading(false);
-        router.push("/login");
-        return;
-      }
-      void getMembers()
-        .then((fetched) => setMembers(fetched))
-        .catch((error) => console.error("Failed to fetch members:", error))
-        .finally(() => setLoading(false));
-    });
-    return () => unsubscribe();
-  }, [router]);
+    void getMembers()
+      .then((fetched) => setMembers(fetched))
+      .catch((error) => console.error("Failed to fetch members:", error))
+      .finally(() => setLoading(false));
+  }, []);
 
   const countryOptions = useMemo(() => [...new Set(members.map((m) => m.country))], [members]);
 
@@ -193,8 +183,21 @@ export default function TeamMembersEditorPage() {
           tags={["MEET THE TEAM"]}
           description="Add or remove current F3 team members, or edit information including member locations, image, and contact links."
           onBack={() => router.push("/admin-portal")}
-          onPreview={() => setIsPreview(true)}
-          actionButton={addButton}
+          actions={
+            <div className="flex items-center gap-[15px]">
+              {addButton}
+              <button
+                type="button"
+                onClick={() => setIsPreview(true)}
+                className="bg-[#012060] flex gap-[10px] items-center justify-center px-[20px] py-[10px] rounded-[99px] cursor-pointer"
+              >
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="white" className="size-[32px]">
+                  <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                </svg>
+                <span className="font-dm-sans font-semibold text-[16px] text-white">PREVIEW</span>
+              </button>
+            </div>
+          }
         />
 
         <div className="flex flex-col gap-[40px] px-[100px] py-[50px]">

@@ -19,7 +19,7 @@ export const CountrySection: React.FC<CountrySectionProps> = ({ id, countryName,
   const memberCount = members.length;
 
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [containerWidth, setContainerWidth] = useState<number>(0);
+  const [_containerWidth, setContainerWidth] = useState<number>(0);
   const [membersPerRow, setMembersPerRow] = useState<number>(0);
 
   useEffect(() => {

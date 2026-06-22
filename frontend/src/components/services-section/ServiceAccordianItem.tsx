@@ -45,7 +45,7 @@ export const ServiceAccordianItem: React.FC<ServiceAccordianItemProps> = ({
         onClick={onClick}
       >
         <span
-          className={`pl-[0px] font-dm-sans text-[18px] font-medium tracking-[-0.36px] transition-colors duration-300 md:pl-[20px] md:text-[28px] md:tracking-[-0.56px] ${
+          className={`pl-[0px] text-left font-dm-sans text-[18px] font-medium tracking-[-0.36px] transition-colors duration-300 md:pl-[20px] md:text-[28px] md:tracking-[-0.56px] ${
             isExpanded ? "text-[#012060]" : "text-[#5d5d5d]"
           }`}
         >

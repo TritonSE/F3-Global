@@ -16,13 +16,14 @@ import { FeaturedSkeleton, GridSkeleton } from "@/components/newsletters-page/Sk
 import { Toast } from "@/components/newsletters-page/Toast";
 
 const PAGE_SIZE = 6;
+type PublicSortBy = Extract<SortBy, "newest" | "oldest" | "mostViewed" | "leastViewed">;
 
 export default function NewslettersPage() {
   const [featured, setFeatured] = useState<Newsletter | null>(null);
   const [featuredLoading, setFeaturedLoading] = useState(true);
   const [list, setList] = useState<PaginatedNewsletters | null>(null);
   const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState<SortBy>("newest");
+  const [sortBy, setSortBy] = useState<PublicSortBy>("newest");
   const [currentPage, setCurrentPage] = useState(1);
   const [listLoading, setListLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -37,7 +38,13 @@ export default function NewslettersPage() {
   useEffect(() => {
     setListLoading(true);
     const timer = setTimeout(() => {
-      getNewsletters({ page: currentPage, limit: PAGE_SIZE, search, sortBy })
+      getNewsletters({
+        page: currentPage,
+        limit: PAGE_SIZE,
+        search,
+        searchFields: ["title"],
+        sortBy,
+      })
         .then(setList)
         .catch(() => setError("Failed to load newsletters"))
         .finally(() => setListLoading(false));
@@ -50,13 +57,13 @@ export default function NewslettersPage() {
     setCurrentPage(1);
   };
 
-  const handleSortChange = (value: SortBy) => {
+  const handleSortChange = (value: PublicSortBy) => {
     setSortBy(value);
     setCurrentPage(1);
   };
 
   return (
-    <main className="bg-white w-full flex flex-col">
+    <main className="mx-auto flex w-full max-w-[1512px] flex-col overflow-x-hidden bg-white">
       {featuredLoading ? (
         <FeaturedSkeleton />
       ) : featured ? (

@@ -14,7 +14,6 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
-import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -31,7 +30,6 @@ import { PublishButton } from "@/components/admin-portal/PublishButton";
 import { RevertButton } from "@/components/admin-portal/RevertButton";
 import { ConfirmationDialog } from "@/components/ConfirmationDialog";
 import { LogoCarouselOnly } from "@/components/LogoCarouselSection";
-import { auth } from "@/firebase/firebase";
 import { deleteFromStorageUrl, rollbackUploads, uploadToStorage } from "@/utils/firebaseStorage";
 
 type BaseItem = { _id?: string; name: string; imageUrl: string; order: number };
@@ -72,28 +70,20 @@ export function LogoEditorPage({
   const { setHasChanges } = useAdmin();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
+    async function load() {
+      try {
+        const fetched = await fetchItems();
+        const sorted = fetched.sort((a, b) => a.order - b.order);
+        setOriginalItems(sorted);
+        setItems(sorted.map((c) => ({ ...c, id: crypto.randomUUID() })));
+      } catch (error) {
+        console.error("Failed to fetch items:", error);
+      } finally {
         setLoading(false);
-        router.push("/login");
-      } else {
-        async function load() {
-          try {
-            const fetched = await fetchItems();
-            const sorted = fetched.sort((a, b) => a.order - b.order);
-            setOriginalItems(sorted);
-            setItems(sorted.map((c) => ({ ...c, id: crypto.randomUUID() })));
-          } catch (error) {
-            console.error("Failed to fetch items:", error);
-          } finally {
-            setLoading(false);
-          }
-        }
-        void load();
       }
-    });
-    return () => unsubscribe();
-  }, [router, fetchItems]);
+    }
+    void load();
+  }, [fetchItems]);
 
   function handleImageSelect(e: React.ChangeEvent<HTMLInputElement>, id?: string) {
     const file = e.target.files?.[0];

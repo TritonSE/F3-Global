@@ -1,4 +1,4 @@
-import { getAuthHeaders } from "./auth";
+import { del, get, post, put } from "./requests";
 
 export type Member = {
   _id: string;
@@ -21,44 +21,20 @@ export type MemberPayload = {
 };
 
 export async function getMembers(): Promise<Member[]> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const res = await fetch(`${backendUrl}/api/members/all`);
-  if (!res.ok) {
-    throw new Error("Failed to fetch members");
-  }
+  const res = await get("/members/all");
   return (await res.json()) as Member[];
 }
 
 export async function createMember(data: MemberPayload): Promise<Member> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const authHeaders = await getAuthHeaders();
-  const res = await fetch(`${backendUrl}/api/members`, {
-    method: "POST",
-    headers: { ...authHeaders, "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  if (!res.ok) throw new Error("Failed to create member");
+  const res = await post("/members", data);
   return (await res.json()) as Member;
 }
 
 export async function updateMember(id: string, data: MemberPayload): Promise<Member> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const authHeaders = await getAuthHeaders();
-  const res = await fetch(`${backendUrl}/api/members/${encodeURIComponent(id)}`, {
-    method: "PUT",
-    headers: { ...authHeaders, "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-  if (!res.ok) throw new Error("Failed to update member");
+  const res = await put(`/members/${encodeURIComponent(id)}`, data);
   return (await res.json()) as Member;
 }
 
 export async function deleteMember(id: string): Promise<void> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const authHeaders = await getAuthHeaders();
-  const res = await fetch(`${backendUrl}/api/members/${encodeURIComponent(id)}`, {
-    method: "DELETE",
-    headers: authHeaders,
-  });
-  if (!res.ok) throw new Error("Failed to delete member");
+  await del(`/members/${encodeURIComponent(id)}`);
 }

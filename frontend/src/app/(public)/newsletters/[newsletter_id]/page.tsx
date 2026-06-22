@@ -156,7 +156,7 @@ export default function NewsletterDetailPage() {
   });
 
   return (
-    <div className="pt-[60px] md:pt-0 bg-white min-h-screen">
+    <div className="mx-auto w-full max-w-[1512px] pt-[60px] md:pt-0 bg-white min-h-screen">
       {/* Back Button */}
       <div className="px-[15px] md:px-[100px] pt-[42px] md:pt-[40px] pb-[12px]">
         <button
@@ -325,10 +325,7 @@ export default function NewsletterDetailPage() {
       {/* Article Body */}
       <div className="px-[30px] md:px-[200px] pb-[50px] md:pb-[32px]">
         <div className="w-full md:max-w-[1120px]">
-          <div className="mb-[20px] md:mb-8 max-w-4xl">
-            <h3 className="font-dm-sans font-[700] text-[18px] md:text-[28px] leading-[1.5] md:leading-[42px] tracking-[-0.36px] md:tracking-[-0.56px] text-[#1E1E1E] mb-[20px] md:mb-4">
-              {newsletter.authorName}
-            </h3>
+          <div className="mb-[20px] w-full md:mb-8">
             <p className="font-dm-sans text-[12px] md:text-[16px] font-[400] leading-[16px] md:leading-[24px] text-[#1E1E1E]">
               {newsletter.blurb}
             </p>

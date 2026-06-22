@@ -1,16 +1,16 @@
 export function FeaturedSkeleton() {
   return (
-    <section className="flex flex-col-reverse md:flex-row items-center justify-between gap-[40px] md:gap-[50px] px-[30px] md:px-[100px] pt-[50px] pb-[20px] md:py-0 md:h-[774px] animate-pulse">
-      <div className="flex flex-col gap-[20px] md:gap-[50px] items-start w-full md:w-[639px] md:shrink-0">
+    <section className="flex animate-pulse flex-col-reverse items-center justify-between gap-[30px] px-[30px] pb-[40px] pt-[50px] xl:h-[774px] xl:flex-row xl:gap-[clamp(24px,3vw,50px)] xl:px-[100px] xl:py-0">
+      <div className="flex w-full min-w-0 flex-col items-start gap-[24px] xl:max-w-[639px] xl:flex-1 xl:gap-[50px]">
         <div className="flex flex-col gap-[20px] items-start w-full">
           <div className="h-[20px] md:h-[24px] w-[200px] md:w-[260px] bg-[#f4f4f4] rounded" />
           <div className="h-[40px] md:h-[64px] w-full bg-[#f4f4f4] rounded" />
           <div className="h-[40px] md:h-[64px] w-3/4 bg-[#f4f4f4] rounded" />
           <div className="h-[60px] md:h-[120px] w-full md:w-[611px] bg-[#f4f4f4] rounded" />
         </div>
-        <div className="hidden md:block h-[24px] w-[140px] bg-[#f4f4f4] rounded" />
+        <div className="h-[24px] w-[140px] rounded bg-[#f4f4f4]" />
       </div>
-      <div className="w-full aspect-[342/158] md:w-[646px] md:aspect-[646/581] bg-[#f4f4f4] md:shrink-0" />
+      <div className="aspect-[342/190] w-full rounded-[10px] bg-[#f4f4f4] md:aspect-[646/360] xl:aspect-[646/581] xl:w-[min(43vw,646px)] xl:min-w-[360px] xl:shrink" />
     </section>
   );
 }

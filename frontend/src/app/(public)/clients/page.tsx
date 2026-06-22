@@ -43,8 +43,8 @@ export default function About() {
 
   return (
     <>
-      <div className="bg-white overflow-x-hidden">
-        <div className="flex w-full flex-col-reverse lg:flex-row items-center justify-between self-stretch px-6 sm:px-10 lg:px-[100px] py-12 lg:py-0 lg:min-h-screen gap-10 lg:gap-0">
+      <div className="mx-auto w-full max-w-[1512px] overflow-x-hidden bg-white">
+        <div className="flex w-full flex-col-reverse items-center justify-between gap-[40px] self-stretch px-[30px] pb-[60px] pt-[80px] lg:flex-row lg:gap-0 lg:px-[100px] lg:py-[80px]">
           <div className="flex w-full lg:w-[639px] flex-col items-center lg:items-start gap-6 lg:gap-[50px] text-center lg:text-left">
             <h1 className="text-[#172447] text-[40px] sm:text-[52px] lg:text-[64px] font-ethic font-light leading-[1.1]">
               Services That Create <br /> <span className="italic">Lasting</span> Impact
