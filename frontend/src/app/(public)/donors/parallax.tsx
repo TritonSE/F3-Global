@@ -51,7 +51,8 @@ export default function Parallax() {
       <div className="flex flex-col gap-[250px] pt-0 pb-[120px] md:gap-[500px] md:py-[500px]">
         {parallaxSections.map((section) => (
           <div key={section.number} id={`step-${section.number}`} className="flex items-start">
-            <div className="box-border w-full px-[30px] md:px-0 md:pr-[17.85%] md:pl-[43.32%]">
+            <div className="box-border w-full px-[30px] md:px-0 md:pr-[17.85%]">
+              {" "}
               <h1 className="flex items-baseline gap-[0.25em] pb-[10px] font-['Ethic_New'] text-[48px] leading-[110%] font-light text-white md:text-[64px]">
                 <span className="shrink-0">{section.number}.</span>
                 <span className="min-w-0 flex-1">
