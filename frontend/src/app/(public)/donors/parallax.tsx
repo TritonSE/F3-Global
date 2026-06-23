@@ -48,27 +48,24 @@ export default function Parallax() {
           How You Can Help
         </h2>
       </div>
-      {parallaxSections.map((section, index) => (
-        <div
-          key={section.number}
-          id={`step-${section.number}`}
-          className={`flex items-start md:h-screen md:items-center ${
-            index < parallaxSections.length - 1 ? "pb-[250px] md:pb-0" : "pb-[62px] md:pb-0"
-          }`}
-        >
-          <div className="box-border w-full px-[30px] md:px-0 md:pr-[17.85%] md:pl-[43.32%]">
-            <h1 className="flex items-baseline gap-[0.25em] pb-[10px] font-['Ethic_New'] text-[48px] leading-[110%] font-light text-white md:text-[64px]">
-              <span className="shrink-0">{section.number}.</span>
-              <span className="min-w-0 flex-1">
-                {section.title1} <i>{section.title2}</i>
-              </span>
-            </h1>
-            <p className="text-white font-['DM_Sans'] text-[16px] md:text-[24px] font-medium leading-[150%] tracking-[-0.48px]">
-              {section.content}
-            </p>
+      <div className="flex flex-col gap-[250px] pt-0 pb-[120px] md:gap-[500px] md:py-[500px]">
+        {parallaxSections.map((section) => (
+          <div key={section.number} id={`step-${section.number}`} className="flex items-start">
+            <div className="box-border w-full px-[30px] md:px-0 md:pr-[17.85%]">
+              {" "}
+              <h1 className="flex items-baseline gap-[0.25em] pb-[10px] font-['Ethic_New'] text-[48px] leading-[110%] font-light text-white md:text-[64px]">
+                <span className="shrink-0">{section.number}.</span>
+                <span className="min-w-0 flex-1">
+                  {section.title1} <i>{section.title2}</i>
+                </span>
+              </h1>
+              <p className="text-white font-['DM_Sans'] text-[16px] md:text-[24px] font-medium leading-[150%] tracking-[-0.48px]">
+                {section.content}
+              </p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </Background>
   );
 }

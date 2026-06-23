@@ -1,12 +1,32 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { ImageDeck } from "./ImageDeck";
 import { ServiceAccordian } from "./ServiceAccordian";
 
 export const ServicesSection = () => {
   const [activeID, setActiveID] = useState("Microloans");
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [_scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const calculate = () => {
+      if (!containerRef.current) return;
+      const containerWidth = containerRef.current.offsetWidth;
+      const accordionWidth = 647;
+      const gap = 50;
+      const deckNaturalWidth = 600;
+      const available = containerWidth - accordionWidth - gap;
+      const newScale = Math.min(1, Math.max(0.4, available / deckNaturalWidth));
+      setScale(newScale);
+    };
+
+    calculate();
+    const observer = new ResizeObserver(calculate);
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section className="w-full bg-white px-[30px] py-[50px] md:px-[100px]">

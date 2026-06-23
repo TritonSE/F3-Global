@@ -6,7 +6,7 @@ import { ServiceAccordianItem } from "./ServiceAccordianItem";
 import { DEFAULT_SERVICES } from "./types";
 
 type ServiceAccordianProps = {
-  activeID: string; //The expanded Item's String
+  activeID: string;
   onServiceChange: (id: string) => void;
 };
 

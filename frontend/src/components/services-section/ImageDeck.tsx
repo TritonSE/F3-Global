@@ -7,14 +7,15 @@ import { DEFAULT_SERVICES } from "./types";
 
 type ImageDeckProps = {
   activeID: string;
+  scale?: number;
 };
 
 const NATURAL_WIDTH = 600;
 const NATURAL_HEIGHT = 658;
 
 const POSITION_CONFIGS = [
-  { width: 501, height: 658, rotation: 0, hasOverlay: false, zIndex: 4, bottom: 0, opacity: 1 }, // Front
-  { width: 418, height: 530, rotation: -3.86, hasOverlay: true, zIndex: 3, bottom: 80, opacity: 1 }, // Second
+  { width: 501, height: 658, rotation: 0, hasOverlay: false, zIndex: 4, bottom: 0, opacity: 1 },
+  { width: 418, height: 530, rotation: -3.86, hasOverlay: true, zIndex: 3, bottom: 80, opacity: 1 },
   {
     width: 340,
     height: 470,
@@ -23,7 +24,7 @@ const POSITION_CONFIGS = [
     zIndex: 2,
     bottom: 110,
     opacity: 1,
-  }, // Third
+  },
   {
     width: 340,
     height: 470,
@@ -32,12 +33,12 @@ const POSITION_CONFIGS = [
     zIndex: 1,
     bottom: 110,
     opacity: 0,
-  }, // Fourth (fades and shrinks away)
+  },
 ];
 
 const POSITION_LEFT = [120, 95, 55, 55];
 
-export const ImageDeck = ({ activeID }: ImageDeckProps) => {
+export const ImageDeck = ({ activeID, scale: _scale = 1 }: ImageDeckProps) => {
   const activeIndex = DEFAULT_SERVICES.findIndex((service) => service.id === activeID);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
