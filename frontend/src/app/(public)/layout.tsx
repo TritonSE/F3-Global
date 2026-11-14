@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 export const metadata: Metadata = {
   title: "F3 Global Foundation | Nonprofit Organization",
-  description: "F3 Global's Website",
+  description: "F3 Global's Website, test",
   icons: {
     icon: "/f3logo.png",
   },
